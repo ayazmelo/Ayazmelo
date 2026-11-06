@@ -1,258 +1,560 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ayaz Melo 2026 | Official Website</title>
-<meta name="description" content="The official digital home of Ayaz Melo — celebrating Sindhi literature, culture and the legacy of Shaikh Ayaz.">
-<style>
-:root{
- --navy:#102b3b;--navy2:#183d4b;--rust:#9e4938;
- --gold:#d6ad69;--cream:#f6f0e5;--ink:#20313a;
- --muted:#66747a;--white:#fff;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--cream);color:var(--ink);font-family:Georgia,serif;line-height:1.7}
-a{color:inherit;text-decoration:none}
-button{font:inherit;cursor:pointer}
-.topline{height:5px;background:repeating-linear-gradient(90deg,var(--rust) 0 18px,var(--gold) 18px 36px,var(--navy) 36px 54px)}
-header{background:var(--navy);color:white;padding:17px 6%;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.brand{font-size:23px;font-weight:bold;letter-spacing:2px}
-.brand span{color:var(--gold)}
-nav{display:flex;gap:17px;flex-wrap:wrap;align-items:center}
-nav a{font:12px Arial,sans-serif;color:#f2eee7}
-nav a:hover{color:var(--gold)}
-.lang{border:1px solid var(--gold);background:transparent;color:var(--gold);padding:7px 13px;border-radius:3px}
-.hero{min-height:590px;background:linear-gradient(90deg,rgba(9,30,42,.94),rgba(12,40,49,.72)),url('https://images.unsplash.com/photo-1519682337058-a94d519337bc?auto=format&fit=crop&w=1800&q=85') center/cover;display:flex;align-items:center;color:white;padding:80px 9%;position:relative}
-.hero:after{content:"";position:absolute;inset:14px;border:1px solid rgba(214,173,105,.35);pointer-events:none}
-.hero-content{max-width:800px;position:relative;z-index:1}
-.kicker{font:12px Arial,sans-serif;letter-spacing:5px;color:var(--gold);text-transform:uppercase}
-.hero h1{font-size:clamp(48px,9vw,92px);line-height:1.05;margin:20px 0;color:white}
-.hero h1 span{color:var(--gold)}
-.hero p{font:17px/1.8 Arial,sans-serif;color:#e8e6df;max-width:650px}
-.event-date{margin:28px 0;color:var(--gold);font-size:22px;letter-spacing:2px}
-.primary-btn{display:inline-block;background:var(--gold);color:var(--navy);padding:12px 23px;font: bold 13px Arial,sans-serif;border-radius:2px}
-section{padding:82px 8%}
-.section-head{text-align:center;margin:0 auto 38px;max-width:760px}
-.eyebrow{font:11px Arial,sans-serif;letter-spacing:4px;color:var(--rust);text-transform:uppercase}
-h2{font-size:clamp(30px,5vw,43px);color:var(--navy);line-height:1.2;margin:10px 0 16px}
-.goldline{height:3px;width:65px;background:var(--gold);margin:18px auto}
-.lead{font:16px/1.9 Arial,sans-serif;color:var(--muted)}
-.about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:45px;align-items:center}
-.about-art{min-height:320px;background:linear-gradient(145deg,var(--navy),var(--rust));display:flex;align-items:center;justify-content:center;text-align:center;color:white;padding:30px;outline:1px solid var(--gold);outline-offset:-12px}
-.about-art strong{font-size:36px;line-height:1.25;color:var(--gold)}
-.copy p{font:15px/1.9 Arial,sans-serif;color:#53636a;margin:12px 0}
-.dark{background:var(--navy);color:white}
-.dark h2{color:white}
-.dark .lead{color:#d3dcdd}
-.timeline{max-width:850px;margin:auto;position:relative}
-.timeline:before{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;background:var(--gold)}
-.year{width:50%;padding:0 35px 32px 0;position:relative}
-.year:nth-child(even){margin-left:50%;padding:0 0 32px 35px}
-.year:after{content:"";position:absolute;right:-7px;top:8px;width:12px;height:12px;border-radius:50%;background:var(--gold)}
-.year:nth-child(even):after{right:auto;left:-5px}
-.year strong{font-size:28px;color:var(--gold)}
-.year p{font:14px/1.7 Arial,sans-serif;color:#d4dadd}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
-.card{background:white;border:1px solid #e5dac8;padding:25px;box-shadow:0 5px 18px #142b3b0b}
-.card h3{color:var(--rust);font-size:20px;margin-bottom:9px}
-.card p{font:14px/1.8 Arial,sans-serif;color:var(--muted)}
-.person{border-top:3px solid var(--gold)}
-.person h3{color:var(--navy)}
-.role{font:11px Arial,sans-serif;letter-spacing:1px;color:var(--rust);text-transform:uppercase;margin-bottom:8px}
-.khan{background:#eee4d3}
-.edition{background:var(--rust);color:white;text-align:center}
-.edition h2{color:white}
-.edition .lead{color:#f4e7df}
-.edition-number{font-size:clamp(48px,9vw,86px);color:var(--gold);line-height:1.1}
-.edition-date{font-size:24px;color:white;margin:20px 0}
-.archive{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
-.archive div{padding:18px;background:white;border-bottom:3px solid var(--gold);text-align:center}
-.archive strong{font-size:26px;color:var(--rust)}
-.archive p{font:12px Arial,sans-serif;color:var(--muted)}
-footer{background:#091e29;color:#d4d9d9;text-align:center;padding:38px 8%;font:13px/2 Arial,sans-serif}
-footer strong{color:var(--gold)}
-[dir="rtl"] body{font-family:Arial,sans-serif}
-[dir="rtl"] .timeline:before{left:auto;right:50%}
-[dir="rtl"] .year{padding:0 0 32px 35px}
-[dir="rtl"] .year:nth-child(even){margin-left:0;margin-right:50%;padding:0 35px 32px 0}
-[dir="rtl"] .year:after{right:auto;left:-5px}
-[dir="rtl"] .year:nth-child(even):after{left:auto;right:-5px}
-@media(max-width:760px){
- header{justify-content:center;text-align:center}
- nav{justify-content:center;gap:12px}
- .hero{min-height:520px;padding:65px 8%}
- section{padding:60px 7%}
- .about-grid{grid-template-columns:1fr}
- .timeline:before{left:7px}
- .year,.year:nth-child(even){width:100%;margin:0;padding:0 0 30px 30px}
- .year:after,.year:nth-child(even):after{left:1px;right:auto}
- [dir="rtl"] .timeline:before{left:auto;right:7px}
- [dir="rtl"] .year,[dir="rtl"] .year:nth-child(even){margin:0;padding:0 30px 30px 0}
- [dir="rtl"] .year:after,[dir="rtl"] .year:nth-child(even):after{right:1px;left:auto}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ayaz Melo 2026 | Official Website</title>
+
+    <meta name="description" content="Official website of Ayaz Melo 2026 — celebrating Shaikh Ayaz, Sindhi literature, language, culture and arts.">
+    <meta name="theme-color" content="#123d2b">
+
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-<div class="topline"></div>
-<header>
- <a class="brand" href="#">AYAZ <span>MELO</span> 2026</a>
- <nav>
-  <a href="#about" data-en="About" data-sd="تعارف">About</a>
-  <a href="#history" data-en="History" data-sd="تاريخ">History</a>
-  <a href="#khanabadosh" data-en="Khanabadosh" data-sd="خانه بدوش">Khanabadosh</a>
-  <a href="#committee" data-en="Committee" data-sd="ڪميٽي">Committee</a>
-  <a href="#archive" data-en="Archive" data-sd="آرڪائيو">Archive</a>
-  <a href="#contact" data-en="Contact" data-sd="رابطو">Contact</a>
- </nav>
- <button class="lang" onclick="toggleLanguage()" id="languageButton">سنڌي</button>
-</header>
 
-<main>
-<div class="hero">
- <div class="hero-content">
-  <div class="kicker" data-en="Literature · Culture · Heritage" data-sd="ادب · ثقافت · ورثو">Literature · Culture · Heritage</div>
-  <h1>12th <span>AYAZ MELO</span><br>2026</h1>
-  <p data-en="A celebration of the life, poetry and intellectual legacy of Shaikh Ayaz — bringing together literature, art, culture and people." data-sd="شيخ اياز جي زندگي، شاعري ۽ فڪري ورثي جو جشن — ادب، فن، ثقافت ۽ ماڻهن کي هڪ هنڌ گڏ ڪرڻ.">A celebration of the life, poetry and intellectual legacy of Shaikh Ayaz — bringing together literature, art, culture and people.</p>
-  <div class="event-date">19 — 21 DECEMBER 2026</div>
-  <p>Hyderabad, Sindh, Pakistan</p><br>
-  <a class="primary-btn" href="#about" data-en="EXPLORE AYAZ MELO" data-sd="اياز ميلو بابت پڙهو">EXPLORE AYAZ MELO</a>
- </div>
-</div>
+    <!-- HEADER -->
+    <header class="site-header">
+        <div class="container nav-container">
 
-<section id="about">
- <div class="about-grid">
-  <div class="copy">
-   <div class="eyebrow">The Festival</div>
-   <h2 data-en="A Living Celebration of Sindhi Literature" data-sd="سنڌي ادب جو زندهه جشن">A Living Celebration of Sindhi Literature</h2>
-   <p data-en="Ayaz Melo is an annual literary and cultural gathering inspired by the poetry, ideas and legacy of Shaikh Ayaz. It brings writers, poets, artists, readers, students and cultural communities together for dialogue, creativity and celebration." data-sd="اياز ميلو شيخ اياز جي شاعري، فڪر ۽ ورثي کان متاثر هڪ ساليانو ادبي ۽ ثقافتي ميڙ آهي. هتي اديب، شاعر، فنڪار، پڙهندڙ، شاگرد ۽ ثقافتي ساٿي گڏ ٿين ٿا.">Ayaz Melo is an annual literary and cultural gathering inspired by the poetry, ideas and legacy of Shaikh Ayaz. It brings writers, poets, artists, readers, students and cultural communities together for dialogue, creativity and celebration.</p>
-   <p data-en="The festival honours the richness of Sindhi language and culture while creating space for new voices, ideas and generations." data-sd="هي ميلو سنڌي ٻولي ۽ ثقافت جي شاهوڪاريءَ کي ڀيٽا پيش ڪندي نون آوازن، خيالن ۽ نسلن لاءِ جاءِ پيدا ڪري ٿو.">The festival honours the richness of Sindhi language and culture while creating space for new voices, ideas and generations.</p>
-  </div>
-  <div class="about-art"><strong>EVERY STORY<br>DESERVES<br>A VOICE</strong></div>
- </div>
-</section>
+            <a href="#home" class="site-logo">
+                AYAZ MELO <span>2026</span>
+            </a>
 
-<section class="dark" id="history">
- <div class="section-head">
-  <div class="eyebrow">Our Journey</div>
-  <h2 data-en="A Decade of Ayaz Melo" data-sd="اياز ميلي جو ڏهاڪو">A Decade of Ayaz Melo</h2>
-  <div class="goldline"></div>
-  <p class="lead" data-en="A journey of literature, dialogue, culture and collective effort. Explore the milestones of Ayaz Melo and its continuing story." data-sd="ادب، گفتگو، ثقافت ۽ گڏيل جدوجهد جو سفر. اياز ميلي جا اهم سنگ ميل ۽ ان جي جاري ڪهاڻي.">A journey of literature, dialogue, culture and collective effort. Explore the milestones of Ayaz Melo and its continuing story.</p>
- </div>
- <div class="timeline">
-  <div class="year"><strong>2015</strong><p>Beginning of the Ayaz Melo journey. The first edition and its historical details will be added to the archive.</p></div>
-  <div class="year"><strong>2016</strong><p>Second edition of Ayaz Melo, continuing the literary and cultural gathering.</p></div>
-  <div class="year"><strong>2019</strong><p>Fifth edition — another milestone in the festival's journey.</p></div>
-  <div class="year"><strong>2024</strong><p>Tenth edition — a decade of literary and cultural celebration.</p></div>
-  <div class="year"><strong>2025</strong><p>Eleventh edition — continuing the legacy and bringing communities together.</p></div>
-  <div class="year"><strong>2026</strong><p>Twelfth edition — the journey continues from 19 to 21 December.</p></div>
- </div>
-</section>
+            <nav class="main-nav">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#legacy">Shaikh Ayaz</a>
+                <a href="#history">History</a>
+                <a href="#programmes">Programmes</a>
+                <a href="#team">Organising Team</a>
+                <a href="#contact">Contact</a>
+            </nav>
 
-<section class="khan" id="khanabadosh">
- <div class="section-head">
-  <div class="eyebrow">The Organising Institution</div>
-  <h2>Khanabadosh Writers' Cafe</h2>
-  <div class="goldline"></div>
-  <p class="lead" data-en="Khanabadosh Writers' Cafe is closely associated with the literary and cultural journey of Ayaz Melo. This section will document its history, initiatives, people and contribution to Sindhi literary life." data-sd="خانه بدوش رائٽرز ڪيفي اياز ميلي جي ادبي ۽ ثقافتي سفر سان ويجهڙائيءَ سان لاڳاپيل آهي. هن حصي ۾ اداري جي تاريخ، سرگرمين، ماڻهن ۽ سنڌي ادبي زندگيءَ ۾ ڪردار کي محفوظ ڪيو ويندو.">Khanabadosh Writers' Cafe is closely associated with the literary and cultural journey of Ayaz Melo. This section will document its history, initiatives, people and contribution to Sindhi literary life.</p>
- </div>
-</section>
+        </div>
+    </header>
 
-<section id="committee">
- <div class="section-head">
-  <div class="eyebrow">People Behind the Festival</div>
-  <h2 data-en="Organising Committee & Literary Personalities" data-sd="انتظامي ڪميٽي ۽ ادبي شخصيتون">Organising Committee & Literary Personalities</h2>
-  <div class="goldline"></div>
-  <p class="lead" data-en="Recognising the people associated with the organisation, literary journey and cultural activities of Ayaz Melo. Specific roles for the 2026 edition will be published after confirmation." data-sd="اياز ميلي جي انتظام، ادبي سفر ۽ ثقافتي سرگرمين سان لاڳاپيل شخصيتن کي ڀيٽا. 2026 جي مخصوص عهدن جي تصديق کان پوءِ ڄاڻ شايع ڪئي ويندي.">Recognising the people associated with the organisation, literary journey and cultural activities of Ayaz Melo. Specific roles for the 2026 edition will be published after confirmation.</p>
- </div>
- <div class="cards">
-  <div class="card person"><div class="role">Convener</div><h3>Amar Sindhu</h3><p>Convener associated with the leadership and organisation of Ayaz Melo.</p></div>
-  <div class="card person"><div class="role">Co-Organiser</div><h3>Prof. Dr. Arfana Mallah</h3><p>Academic and literary figure associated with Khanabadosh and Ayaz Melo.</p></div>
-  <div class="card person"><div class="role">Organising Committee</div><h3>Advocate Irfan Ali Chandio</h3><p>Chief Head & Member, Ayaz Melo Organising Committee.</p></div>
-  <div class="card person"><div class="role">Literary Personality</div><h3>Taj Joyo</h3><p>Poet, writer and intellectual.</p></div>
-  <div class="card person"><div class="role">Literary Personality</div><h3>Imdad Chandio</h3><p>Intellectual and literary activist.</p></div>
-  <div class="card person"><div class="role">Academic & Literary Figure</div><h3>Dr. Abdul Majeed Chandio</h3><p>Academic and literary personality.</p></div>
-  <div class="card person"><div class="role">Literary Personality</div><h3>Zakia Aijaz</h3><p>Associated with literary and cultural activities.</p></div>
-  <div class="card person"><div class="role">Academic & Literary Figure</div><h3>Dr. Rehana Mallah</h3><p>Academic and literary personality.</p></div>
-  <div class="card person"><div class="role">Literary Personality</div><h3>Haseen Musarrat</h3><p>Associated with Ayaz Melo's literary circle.</p></div>
-  <div class="card person"><div class="role">Cultural Contributor</div><h3>Atlas Abeer Shah</h3><p>Associated personality — further profile details to be added.</p></div>
-  <div class="card person"><div class="role">Cultural Contributor</div><h3>Naseem Jalbani</h3><p>Associated personality — further profile details to be added.</p></div>
-  <div class="card person"><div class="role">Cultural Contributor</div><h3>Uzma Memon</h3><p>Associated personality — further profile details to be added.</p></div>
- </div>
-</section>
 
-<section class="edition" id="current">
- <div class="eyebrow">The Upcoming Festival</div>
- <div class="edition-number">12th</div>
- <h2>AYAZ MELO 2026</h2>
- <div class="edition-date">19 — 21 December 2026</div>
- <p class="lead">Hyderabad, Sindh, Pakistan</p>
- <p class="lead" style="margin-top:16px">Three days celebrating literature, poetry, art, music and Sindhi culture.</p>
-</section>
+    <!-- HERO SECTION -->
+    <main>
 
-<section id="programme">
- <div class="section-head">
-  <div class="eyebrow">Festival Activities</div>
-  <h2>Programme & Activities</h2>
-  <div class="goldline"></div>
-  <p class="lead">The official programme, session timings and venue details will be published after confirmation.</p>
- </div>
- <div class="cards">
-  <div class="card"><h3>Literary Sessions</h3><p>Discussions, conversations, book launches and literary dialogue.</p></div>
-  <div class="card"><h3>Poetry & Music</h3><p>Poetry recitals, musical performances and cultural expressions.</p></div>
-  <div class="card"><h3>Book Stalls</h3><p>A space for publishers, booksellers, readers and literary discoveries.</p></div>
-  <div class="card"><h3>Cultural Stalls</h3><p>Celebrating Sindhi crafts, heritage, traditional art and creativity.</p></div>
-  <div class="card"><h3>Volunteers</h3><p>Recognising the volunteers and teams who help bring the festival together.</p></div>
-  <div class="card"><h3>Gallery & Archives</h3><p>Photographs, videos and memories from past and present editions.</p></div>
- </div>
-</section>
+    <section class="hero" id="home">
+        <div class="hero-content">
 
-<section class="khan" id="archive">
- <div class="section-head">
-  <div class="eyebrow">Preserving Our Journey</div>
-  <h2>Ayaz Melo Archives</h2>
-  <div class="goldline"></div>
-  <p class="lead">A growing digital archive of previous editions, photographs, media coverage, programmes and historical documents.</p>
- </div>
- <div class="archive">
-  <div><strong>2015</strong><p>First Edition</p></div>
-  <div><strong>2016</strong><p>Second Edition</p></div>
-  <div><strong>2019</strong><p>Fifth Edition</p></div>
-  <div><strong>2024</strong><p>Tenth Edition</p></div>
-  <div><strong>2025</strong><p>Eleventh Edition</p></div>
-  <div><strong>2026</strong><p>Twelfth Edition</p></div>
- </div>
-</section>
+            <p class="hero-subtitle">
+                سنڌ جي ادب، ٻولي ۽ ثقافت جو جشن
+            </p>
 
-<section id="contact">
- <div class="section-head">
-  <div class="eyebrow">Connect With Us</div>
-  <h2>Contact & Official Updates</h2>
-  <div class="goldline"></div>
-  <p class="lead">Official contact details, social media links and announcements will be added here by the organising team.</p>
- </div>
-</section>
-</main>
+            <h1>AYAZ MELO 2026</h1>
 
-<footer>
- <strong>AYAZ MELO 2026</strong><br>
- Celebrating Literature, Culture & the Legacy of Shaikh Ayaz.<br>
- Hyderabad, Sindh, Pakistan<br>
- © 2026 Ayaz Melo. All Rights Reserved.
-</footer>
+            <h2>
+                Celebrating the Legacy of Shaikh Ayaz
+            </h2>
 
-<script>
-let sindhi=false;
-function toggleLanguage(){
- sindhi=!sindhi;
- document.documentElement.lang=sindhi?'sd':'en';
- document.documentElement.dir=sindhi?'rtl':'ltr';
- document.querySelectorAll('[data-en]').forEach(el=>{
-  el.textContent=sindhi?el.getAttribute('data-sd'):el.getAttribute('data-en');
- });
- document.getElementById('languageButton').textContent=sindhi?'English':'سنڌي';
-}
-</script>
+            <p>
+                A Literary and Cultural Celebration of Sindh
+            </p>
+
+            <div class="hero-date">
+                19 – 21 December 2026
+            </div>
+
+            <div class="hero-buttons">
+                <a href="#about" class="btn btn-primary">
+                    Explore Ayaz Melo
+                </a>
+
+                <a href="#contact" class="btn btn-secondary">
+                    Contact Organisers
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ABOUT SECTION -->
+    <section class="section" id="about">
+        <div class="container">
+
+            <div class="section-heading">
+                <span>ABOUT THE FESTIVAL</span>
+                <h2>About Ayaz Melo</h2>
+                <h3>اياز ميلو بابت</h3>
+            </div>
+
+            <div class="about-grid">
+
+                <div>
+                    <p>
+                        Ayaz Melo is a literary and cultural celebration
+                        inspired by the life, poetry and intellectual legacy
+                        of the legendary Sindhi poet Shaikh Ayaz.
+                    </p>
+
+                    <p>
+                        The festival brings together writers, poets,
+                        intellectuals, artists, students, researchers and
+                        cultural communities to celebrate Sindhi language,
+                        literature, identity and artistic expression.
+                    </p>
+                </div>
+
+                <div>
+                    <p dir="rtl">
+                        اياز ميلو سنڌ جي نامياري شاعر شيخ اياز جي فڪر،
+                        شاعري ۽ علمي ورثي کي ڀيٽا پيش ڪرڻ جو ادبي ۽
+                        ثقافتي ميلو آهي.
+                    </p>
+
+                    <p dir="rtl">
+                        هن ميلي ۾ اديب، شاعر، دانشور، فنڪار، شاگرد ۽
+                        ثقافت سان لاڳاپيل ماڻهو گڏجي سنڌي ٻولي، ادب،
+                        سڃاڻپ ۽ فن جو جشن ملهائيندا آهن.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- SHAikh AYAZ LEGACY -->
+    <section class="section legacy-section" id="legacy">
+        <div class="container">
+
+            <div class="section-heading">
+                <span>THE LEGACY</span>
+                <h2>Shaikh Ayaz</h2>
+                <h3>شيخ اياز</h3>
+            </div>
+
+            <div class="legacy-content">
+
+                <div class="legacy-image">
+                    <img
+                        src="images/shaikh-ayaz.jpg"
+                        alt="Portrait of Shaikh Ayaz"
+                    >
+                </div>
+
+                <div class="legacy-text">
+                    <h3>A Voice of Sindh</h3>
+
+                    <p>
+                        Shaikh Ayaz was one of the most influential
+                        poets and literary figures in Sindhi literature.
+                        His poetry and ideas continue to inspire generations.
+                    </p>
+
+                    <p dir="rtl">
+                        شيخ اياز سنڌي ادب جو هڪ وڏو نالو ۽ جديد سنڌي
+                        شاعريءَ جي اهم ترين شاعرن مان هڪ هو. سندس
+                        شاعري ۽ فڪر اڄ به نئين نسل لاءِ اتساهه جو سبب آهن.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- EVENT INFORMATION -->
+    <section class="event-highlight">
+        <div class="container">
+
+            <span>12th Edition</span>
+
+            <h2>AYAZ MELO 2026</h2>
+
+            <p>
+                19, 20 & 21 December 2026
+            </p>
+
+            <p>
+                Three days of literature, dialogue, culture and creativity.
+            </p>
+
+        </div>
+    </section>
+
+
+    <!-- HISTORY -->
+    <section class="section" id="history">
+        <div class="container">
+
+            <div class="section-heading">
+                <span>OUR JOURNEY</span>
+                <h2>History & Archives</h2>
+                <h3>اياز ميلي جو سفر</h3>
+            </div>
+
+            <p class="section-intro" dir="rtl">
+                اياز ميلي جو سفر سنڌ جي ادب، ثقافت ۽ فڪري گفتگو
+                سان جڙيل هڪ اهم ادبي روايت آهي.
+            </p>
+
+            <div class="timeline">
+
+                <div class="timeline-item">
+                    <h3>2015</h3>
+                    <p>Beginning of the Ayaz Melo journey.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h3>2016</h3>
+                    <p>Second edition of Ayaz Melo.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h3>2021</h3>
+                    <p>Seventh edition.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h3>2022</h3>
+                    <p>Eighth edition.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h3>2023</h3>
+                    <p>Ninth edition.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h3>2024</h3>
+                    <p>Tenth edition.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h3>2025</h3>
+                    <p>Eleventh edition.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h3>2026</h3>
+                    <p>Twelfth edition — 19 to 21 December.</p>
+                </div>
+
+            </div>
+
+            <p class="archive-note">
+                Previous editions' photographs, videos and documents
+                will be added to the digital archive.
+            </p>
+
+        </div>
+    </section>
+
+
+    <!-- KHANABADOSH -->
+    <section class="section khanabadosh-section" id="khanabadosh">
+        <div class="container">
+
+            <div class="section-heading">
+                <span>OUR CULTURAL SPACE</span>
+                <h2>Khanabadosh Writers' Cafe</h2>
+                <h3>خانه بدوش رائٽرس ڪيفي</h3>
+            </div>
+
+            <p>
+                Khanabadosh Writers' Cafe is a space for literary
+                interaction, intellectual dialogue, creativity and
+                cultural engagement.
+            </p>
+
+            <p dir="rtl">
+                خانه بدوش رائٽرس ڪيفي ادبي ويهڪن، فڪري گفتگو،
+                تخليقي سرگرمين ۽ ثقافتي رابطن لاءِ هڪ اهم جاءِ آهي.
+            </p>
+
+        </div>
+    </section>
+
+
+    <!-- PROGRAMMES -->
+    <section class="section" id="programmes">
+        <div class="container">
+
+            <div class="section-heading">
+                <span>FESTIVAL ACTIVITIES</span>
+                <h2>Programmes & Activities</h2>
+                <h3>پروگرام ۽ سرگرميون</h3>
+            </div>
+
+            <div class="program-grid">
+
+                <div class="program-card">
+                    <h3>Literary Sessions</h3>
+                    <p>Poetry, discussions and literary conversations.</p>
+                </div>
+
+                <div class="program-card">
+                    <h3>Music & Performing Arts</h3>
+                    <p>Musical performances and cultural presentations.</p>
+                </div>
+
+                <div class="program-card">
+                    <h3>Book Stalls</h3>
+                    <p>A platform for publishers, writers and booksellers.</p>
+                </div>
+
+                <div class="program-card">
+                    <h3>Cultural Stalls</h3>
+                    <p>Showcasing Sindh's traditional art and heritage.</p>
+                </div>
+
+                <div class="program-card">
+                    <h3>Photography & Art</h3>
+                    <p>Visual storytelling, photography and artistic work.</p>
+                </div>
+
+                <div class="program-card">
+                    <h3>Volunteer Participation</h3>
+                    <p>Young people contributing to the festival.</p>
+                </div>
+
+            </div>
+
+            <p class="archive-note">
+                The detailed programme schedule will be announced officially.
+            </p>
+
+        </div>
+    </section>
+
+
+    <!-- ORGANISING TEAM -->
+    <section class="section" id="team">
+        <div class="container">
+
+            <div class="section-heading">
+                <span>THE PEOPLE BEHIND THE FESTIVAL</span>
+                <h2>Organising Team</h2>
+                <h3>انتظامي ٽيم</h3>
+            </div>
+
+            <div class="committee-grid">
+
+                <div class="committee-card">
+                    <h3>Prof. Amar Sindhu</h3>
+                    <p>Convener, Ayaz Melo</p>
+                </div>
+
+                <div class="committee-card">
+                    <h3>Advocate Irfan Ali Chandio</h3>
+                    <p>Chief Head & Member, Organising Committee</p>
+                </div>
+
+                <div class="committee-card">
+                    <h3>Prof. Dr. Arfana Mallah</h3>
+                </div>
+
+                <div class="committee-card">
+                    <h3>Zakia Aijaz</h3>
+                </div>
+
+                <div class="committee-card">
+                    <h3>Dr. Abdul Majeed Chandio</h3>
+                </div>
+
+                <div class="committee-card">
+                    <h3>Taj Joyo</h3>
+                </div>
+
+                <div class="committee-card">
+                    <h3>Imdad Chandio</h3>
+                </div>
+
+                <div class="committee-card">
+                    <h3>Rehana Mallah</h3>
+                </div>
+
+                <div class="committee-card">
+                    <h3>Haseen Musarrat</h3>
+                </div>
+
+                <div class="committee-card">
+                    <h3>Atlas Abeer Shah</h3>
+                </div>
+
+                <div class="committee-card">
+                    <h3>Naseem Jalbani</h3>
+                </div>
+
+                <div class="committee-card">
+                    <h3>Uzma Memon</h3>
+                </div>
+
+            </div>
+
+            <p class="archive-note">
+                Further committee details and official designations
+                will be updated after confirmation.
+            </p>
+
+        </div>
+    </section>
+
+
+    <!-- REGISTRATION -->
+    <section class="section registration-section" id="registration">
+        <div class="container">
+
+            <div class="section-heading">
+                <span>BE PART OF THE FESTIVAL</span>
+                <h2>Registration & Participation</h2>
+                <h3>رجسٽريشن ۽ شرڪت</h3>
+            </div>
+
+            <p>
+                Registration information for visitors, volunteers
+                and participants will be announced through official channels.
+            </p>
+
+        </div>
+    </section>
+
+
+    <!-- GALLERY -->
+    <section class="section" id="gallery">
+        <div class="container">
+
+            <div class="section-heading">
+                <span>MEMORIES & MOMENTS</span>
+                <h2>Photo & Video Gallery</h2>
+                <h3>تصويرون ۽ وڊيوز</h3>
+            </div>
+
+            <p>
+                Explore memories from previous editions of Ayaz Melo.
+                Photographs and videos will be added to this archive.
+            </p>
+
+            <div class="gallery-placeholder">
+                <p>Official festival photographs coming soon.</p>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- CONTACT -->
+    <section class="section contact-section" id="contact">
+        <div class="container">
+
+            <div class="section-heading">
+                <span>GET IN TOUCH</span>
+                <h2>Contact Ayaz Melo</h2>
+                <h3>رابطو ڪريو</h3>
+            </div>
+
+            <p>
+                For registration, volunteering, book stalls,
+                cultural stalls and general information, contact
+                the organising team.
+            </p>
+
+            <div class="contact-buttons">
+
+                <a href="tel:03422564593" class="btn btn-primary">
+                    Call: 03422564593
+                </a>
+
+                <a
+                    href="https://wa.me/923422564593"
+                    target="_blank"
+                    rel="noopener"
+                    class="btn btn-secondary"
+                >
+                    WhatsApp Us
+                </a>
+
+            </div>
+
+        </div>
+    </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container">
+
+            <h2>AYAZ MELO 2026</h2>
+
+            <p>Celebrating Literature, Language, Culture & Art</p>
+
+            <p dir="rtl">
+                ادب، ٻولي، ثقافت ۽ فن جو جشن
+            </p>
+
+            <p>19 – 21 December 2026</p>
+
+            <p class="copyright">
+                © 2026 Ayaz Melo. All Rights Reserved.
+            </p>
+
+        </div>
+    </footer>
+
+
+    <!-- CHATBOT BUTTON -->
+    <button id="ayaz-chat-button" aria-label="Open Ayaz Melo chatbot">
+        💬
+    </button>
+
+
+    <!-- CHATBOT WINDOW -->
+    <div id="ayaz-chat-box">
+
+        <div class="ayaz-header">
+
+            <div class="ayaz-logo">
+                <strong>Ask Ayaz Melo</strong>
+                <span>اياز ميلي کان پڇو</span>
+            </div>
+
+            <button id="ayaz-close" aria-label="Close chatbot">
+                ×
+            </button>
+
+        </div>
+
+        <div id="ayaz-messages"></div>
+
+        <div id="ayaz-options"></div>
+
+        <div class="ayaz-input-area">
+
+            <input
+                type="text"
+                id="ayaz-input"
+                placeholder="Write your question..."
+            >
+
+            <button id="ayaz-send">
+                Send
+            </button>
+
+        </div>
+
+        <div class="ayaz-contact">
+            <a href="https://wa.me/923422564593" target="_blank" rel="noopener">
+                Contact Organising Team
+            </a>
+        </div>
+
+    </div>
+
+
+    <!-- JavaScript File -->
+    <script src="script.js"></script>
+
 </body>
-             </html>
+ </html>
