@@ -2,215 +2,280 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#21164d">
-
-<title>Visitor Registration | Ayaz Melo 2026</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ayaz Melo 2026 | Free Entry Pass</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#f6f0e7;color:#21164d;font-family:Arial,sans-serif}
-header{background:#21164d;color:white;text-align:center;padding:30px 15px}
-header h1{color:#d9ae62;margin:0;font-size:30px}
-header p{letter-spacing:2px}
-.container{max-width:550px;margin:35px auto;padding:15px}
-.card{background:white;padding:30px;border-radius:16px;box-shadow:0 8px 30px #0001}
-h2{text-align:center}
-label{display:block;margin-top:17px;font-weight:bold;font-size:13px}
-input{width:100%;padding:14px;margin-top:7px;border:1px solid #ddd;border-radius:8px;font-size:15px}
-button{width:100%;padding:15px;margin-top:20px;border:0;background:#842c3c;color:white;border-radius:8px;font-weight:bold;cursor:pointer}
+body{
+  margin:0;
+  padding:20px;
+  font-family:Arial,sans-serif;
+  background:#101b18;
+  color:#fff;
+}
+.container{
+  max-width:520px;
+  margin:30px auto;
+  padding:28px;
+  background:#192a25;
+  border:1px solid #b99b58;
+  border-radius:16px;
+}
+h1{text-align:center;color:#e5c477}
+.subtitle{text-align:center;color:#ddd;line-height:1.6}
+label{display:block;margin-top:15px;margin-bottom:6px}
+input{
+  width:100%;
+  padding:13px;
+  border-radius:8px;
+  border:1px solid #777;
+  background:#fff;
+  font-size:16px;
+}
+button{
+  width:100%;
+  padding:15px;
+  margin-top:20px;
+  border:0;
+  border-radius:8px;
+  background:#d4ad59;
+  color:#17231e;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
+}
 button:disabled{opacity:.6}
-#welcome,#qrBox{display:none;text-align:center;margin-top:25px}
-#welcome{background:#e3f5e6;color:#14532d;padding:20px;border-radius:10px}
-#qrcode{display:flex;justify-content:center;margin:20px auto}
-#qrcode img{max-width:100%;height:auto}
-#message{text-align:center;margin-top:15px;font-size:14px;overflow-wrap:anywhere}
-footer{text-align:center;padding:25px;color:#777;font-size:12px}
+#message{text-align:center;margin-top:15px}
+#pass{
+  display:none;
+  margin-top:25px;
+  padding:22px;
+  background:#fff;
+  color:#17231e;
+  border-radius:12px;
+  text-align:center;
+}
+#qrcode{
+  display:flex;
+  justify-content:center;
+  margin:20px auto;
+}
+.pass-title{color:#98732d}
+.small{font-size:13px;color:#555}
 </style>
 </head>
 
 <body>
 
-<header>
-<h1>KHANABADOSH</h1>
-<h2>AYAZ MELO 2026</h2>
-<p>OFFICIAL VISITOR REGISTRATION</p>
-<p>19–21 DECEMBER 2026</p>
-</header>
-
 <div class="container">
-<div class="card">
 
-<h2>Visitor Registration</h2>
-<p style="text-align:center;color:#777">
-Welcome to Ayaz Melo 2026
+<h1>AYAZ MELO 2026</h1>
+
+<p class="subtitle">
+Three Days of Literature, Culture & Celebration<br>
+19 – 21 December 2026<br>
+<strong>FREE ENTRY REGISTRATION</strong>
 </p>
 
 <form id="visitorForm">
 
 <label>Full Name *</label>
-<input id="name" required maxlength="150" autocomplete="name">
+<input id="name" required>
 
 <label>Father's Name *</label>
-<input id="father" required maxlength="150">
+<input id="father" required>
 
 <label>Contact Number *</label>
-<input id="contact" type="tel" required maxlength="25" autocomplete="tel">
+<input id="phone" type="tel" required>
 
 <label>City *</label>
-<input id="city" required maxlength="100">
+<input id="city" required>
 
 <label>Designation *</label>
-<input id="designation" required maxlength="100">
+<input id="designation" required>
 
 <label>Email Address *</label>
-<input id="email" type="email" required maxlength="254" autocomplete="email">
+<input id="email" type="email" required>
 
-<button id="submitBtn" type="submit">REGISTER NOW</button>
+<button id="submitBtn" type="submit">
+GET FREE ENTRY PASS
+</button>
 
 </form>
 
-<div id="message" role="status"></div>
+<div id="message"></div>
 
-<div id="welcome">
-<h2>🎉 Welcome to Ayaz Melo!</h2>
-<p>آپ کی رجسٹریشن کامیابی سے مکمل ہوگئی ہے۔</p>
-<p>We warmly welcome you to Ayaz Melo 2026.</p>
-<p>Please save your QR code for entry verification.</p>
+<div id="pass">
+  <h2 class="pass-title">AYAZ MELO 2026</h2>
+  <h3>YOUR ENTRY PASS</h3>
+
+  <p><strong id="passName"></strong></p>
+  <p id="passCity"></p>
+  <p><strong id="passID"></strong></p>
+
+  <div id="qrcode"></div>
+
+  <p><strong>19 – 21 DECEMBER 2026</strong></p>
+  <p class="small">Show this QR Pass at the entrance gate.</p>
+
+  <button onclick="downloadPass()">DOWNLOAD PASS</button>
 </div>
 
-<div id="qrBox">
-<h3>Your Visitor QR Code</h3>
-<div id="qrcode"></div>
-<p id="regId"></p>
-<button id="downloadBtn" type="button">DOWNLOAD QR CODE</button>
 </div>
-
-</div>
-</div>
-
-<footer>
-Hosted by Khanabadosh Writers' Cafe
-<br>© Ayaz Melo 2026
-</footer>
 
 <script>
-const SUPABASE_URL =
-"https://fstkhwoxbgdcdfwycggu.supabase.co";
+const SUPABASE_URL = "https://fstkhwoxbgdcdfwycggu.supabase.co";
+const SUPABASE_KEY = "sb_publishable_BNRfiLDVM-892aVwO_hJw_OAhEgTrq";
 
-const SUPABASE_KEY =
-"sb_publishable_BNRQfiLDVM-892aVwO_hJw_OAhEgTrq";
-
-const db = window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
+const supabaseClient = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
 );
 
-let qrImage = "";
+let currentPassCanvas = null;
 
-const form = document.getElementById("visitorForm");
-const btn = document.getElementById("submitBtn");
-const message = document.getElementById("message");
+document.getElementById("visitorForm").addEventListener("submit", async function(e){
 
-form.addEventListener("submit", async function(e){
+  e.preventDefault();
 
-e.preventDefault();
+  const button = document.getElementById("submitBtn");
+  const message = document.getElementById("message");
 
-if(!form.reportValidity()) return;
+  button.disabled = true;
+  button.innerText = "PLEASE WAIT...";
+  message.innerText = "";
 
-btn.disabled = true;
-btn.textContent = "PLEASE WAIT...";
-message.textContent = "Processing registration...";
+  const fullName = document.getElementById("name").value.trim();
+  const fatherName = document.getElementById("father").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const city = document.getElementById("city").value.trim();
+  const designation = document.getElementById("designation").value.trim();
+  const email = document.getElementById("email").value.trim();
 
-try{
+  try {
 
-const {data,error} = await db.rpc(
-"register_visitor",
-{
-p_full_name:document.getElementById("name").value.trim(),
-p_father_name:document.getElementById("father").value.trim(),
-p_contact_number:document.getElementById("contact").value.trim(),
-p_city:document.getElementById("city").value.trim(),
-p_designation:document.getElementById("designation").value.trim(),
-p_email:document.getElementById("email").value.trim().toLowerCase()
-}
-);
+    const { data, error } = await supabaseClient.rpc("register_visitor", {
+      p_full_name: fullName,
+      p_father_name: fatherName,
+      p_contact_number: phone,
+      p_city: city,
+      p_designation: designation,
+      p_email: email
+    });
 
-if(error) throw error;
+    if(error) throw error;
 
-const visitor = Array.isArray(data) ? data[0] : data;
+    const registration = data[0];
 
-if(!visitor || !visitor.registration_id || !visitor.qr_token){
-throw new Error("Registration information missing.");
-}
+    const verificationURL =
+      window.location.origin +
+      "/Ayazmelo/verify.html?id=" +
+      encodeURIComponent(registration.registration_id) +
+      "&token=" +
+      encodeURIComponent(registration.qr_token);
 
-const verifyURL = new URL(
-"https://ayazmelo.github.io/Ayazmelo/verify.html"
-);
+    document.getElementById("visitorForm").style.display = "none";
 
-verifyURL.searchParams.set("id",visitor.registration_id);
-verifyURL.searchParams.set("token",visitor.qr_token);
+    message.innerHTML =
+      "<h2 style='color:#e5c477'>Welcome to Ayaz Melo 2026!</h2>" +
+      "<p>Your registration has been completed successfully.</p>";
 
-document.getElementById("regId").textContent =
-"Registration ID: "+visitor.registration_id;
+    document.getElementById("pass").style.display = "block";
+    document.getElementById("passName").innerText = fullName;
+    document.getElementById("passCity").innerText = city;
+    document.getElementById("passID").innerText =
+      "Registration ID: " + registration.registration_id;
 
-document.getElementById("qrcode").innerHTML = "";
+    document.getElementById("qrcode").innerHTML = "";
 
-new QRCode(
-document.getElementById("qrcode"),
-{
-text:verifyURL.toString(),
-width:320,
-height:320,
-correctLevel:QRCode.CorrectLevel.H
-}
-);
+    new QRCode(document.getElementById("qrcode"), {
+      text: verificationURL,
+      width: 190,
+      height: 190,
+      correctLevel: QRCode.CorrectLevel.H
+    });
 
-const canvas = document.querySelector("#qrcode canvas");
+    setTimeout(createPassImage, 500);
 
-if(!canvas){
-throw new Error("QR Code could not be generated.");
-}
+  } catch(error) {
 
-qrImage = canvas.toDataURL("image/png");
+    message.innerText = "Registration failed: " + error.message;
+    button.disabled = false;
+    button.innerText = "GET FREE ENTRY PASS";
 
-form.style.display = "none";
-document.getElementById("welcome").style.display = "block";
-document.getElementById("qrBox").style.display = "block";
-
-message.textContent = "Registration successful!";
-
-}catch(error){
-
-console.error(error);
-
-message.textContent = "Registration Error: "+error.message;
-
-btn.disabled = false;
-btn.textContent = "REGISTER NOW";
-
-}
+  }
 
 });
 
-document.getElementById("downloadBtn").addEventListener("click",function(){
+function createPassImage(){
 
-if(!qrImage){
-message.textContent = "QR image is not ready.";
-return;
+  const qrCanvas = document.querySelector("#qrcode canvas");
+  if(!qrCanvas) return;
+
+  const canvas = document.createElement("canvas");
+  canvas.width = 700;
+  canvas.height = 950;
+
+  const ctx = canvas.getContext("2d");
+
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0,0,700,950);
+
+  ctx.strokeStyle = "#b99b58";
+  ctx.lineWidth = 12;
+  ctx.strokeRect(20,20,660,910);
+
+  ctx.textAlign = "center";
+
+  ctx.fillStyle = "#18352b";
+  ctx.font = "bold 48px Arial";
+  ctx.fillText("AYAZ MELO 2026",350,110);
+
+  ctx.fillStyle = "#98732d";
+  ctx.font = "bold 30px Arial";
+  ctx.fillText("OFFICIAL ENTRY PASS",350,165);
+
+  ctx.fillStyle = "#222";
+  ctx.font = "bold 34px Arial";
+  ctx.fillText(document.getElementById("passName").innerText,350,245);
+
+  ctx.font = "25px Arial";
+  ctx.fillText(document.getElementById("passCity").innerText,350,300);
+
+  ctx.font = "bold 24px Arial";
+  ctx.fillText(document.getElementById("passID").innerText,350,360);
+
+  ctx.drawImage(qrCanvas,230,400,240,240);
+
+  ctx.fillStyle = "#18352b";
+  ctx.font = "bold 30px Arial";
+  ctx.fillText("19 – 21 DECEMBER 2026",350,720);
+
+  ctx.font = "22px Arial";
+  ctx.fillText("FREE ENTRY • SHOW QR AT GATE",350,780);
+
+  ctx.font = "19px Arial";
+  ctx.fillText("Every Story, Every Voice, One Melo",350,850);
+
+  currentPassCanvas = canvas;
 }
 
-const link = document.createElement("a");
-link.href = qrImage;
-link.download = "Ayaz-Melo-Visitor-QR.png";
-document.body.appendChild(link);
-link.click();
-link.remove();
+function downloadPass(){
 
-});
+  if(!currentPassCanvas){
+    alert("Please wait. Your pass is being prepared.");
+    return;
+  }
+
+  const link = document.createElement("a");
+  link.download = "Ayaz-Melo-2026-Entry-Pass.png";
+  link.href = currentPassCanvas.toDataURL("image/png");
+  link.click();
+}
 </script>
 
 </body>
