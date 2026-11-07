@@ -1,1020 +1,701 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayaz Melo 2026 | Visitor Registration</title>
 
-<title>Ayaz Melo 2026 | Visitor Registration</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #f3f5f4;
+            color: #222;
+        }
 
-body {
-    font-family: Arial, sans-serif;
-    background: #f3f5f4;
-    color: #222;
-    padding: 20px;
-}
+        .container {
+            max-width: 850px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
 
-.container {
-    max-width: 850px;
-    margin: auto;
-}
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
 
-.header {
-    background: #172c25;
-    color: white;
-    text-align: center;
-    padding: 35px 20px;
-    border-radius: 12px;
-    margin-bottom: 25px;
-}
+        .header h1 {
+            color: #176b45;
+            margin-bottom: 8px;
+        }
 
-.header h1 {
-    font-size: 30px;
-    margin-bottom: 10px;
-}
+        .header p {
+            color: #666;
+            line-height: 1.6;
+        }
 
-.header p {
-    margin-top: 7px;
-    color: #d6e5dc;
-}
+        .free-badge {
+            display: inline-block;
+            background: #e4f6eb;
+            color: #176b45;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-weight: bold;
+            margin-top: 8px;
+        }
 
-.card {
-    background: white;
-    padding: 25px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    box-shadow: 0 3px 12px rgba(0,0,0,.06);
-}
+        h2 {
+            color: #176b45;
+            font-size: 20px;
+            margin-top: 25px;
+        }
 
-h2 {
-    font-size: 20px;
-    color: #172c25;
-    margin-bottom: 20px;
-}
+        label {
+            display: block;
+            font-weight: bold;
+            margin: 14px 0 7px;
+        }
 
-label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 7px;
-}
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 15px;
+            background: white;
+        }
 
-input, select {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 7px;
-    font-size: 15px;
-    margin-bottom: 17px;
-    background: white;
-}
+        input:focus, select:focus {
+            outline: none;
+            border-color: #176b45;
+        }
 
-input:focus, select:focus {
-    outline: none;
-    border-color: #247b53;
-}
+        .dates {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 10px;
+        }
 
-.grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-}
+        .date-option {
+            flex: 1;
+            min-width: 150px;
+            border: 1px solid #ddd;
+            padding: 14px;
+            border-radius: 8px;
+            background: #fafafa;
+        }
 
-.date-option {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 14px 0;
-}
+        .date-option label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0;
+            cursor: pointer;
+        }
 
-.date-option input {
-    width: auto;
-    margin: 0;
-}
+        .date-option input {
+            width: auto;
+        }
 
-.date-option label {
-    margin: 0;
-}
+        .member-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 18px;
+            margin-top: 18px;
+            background: #fcfcfc;
+        }
 
-.member-card {
-    border: 1px solid #e5e5e5;
-    border-radius: 9px;
-    padding: 18px;
-    margin-bottom: 15px;
-    background: #fafafa;
-}
+        .member-card h3 {
+            color: #176b45;
+            margin-top: 0;
+        }
 
-.member-card h3 {
-    margin-bottom: 15px;
-    color: #247b53;
-}
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
 
-button {
-    border: none;
-    padding: 13px 20px;
-    border-radius: 7px;
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: bold;
-}
+        button {
+            cursor: pointer;
+            border: none;
+            border-radius: 7px;
+            padding: 13px 20px;
+            font-size: 15px;
+            font-weight: bold;
+        }
 
-.primary-btn {
-    background: #247b53;
-    color: white;
-    width: 100%;
-}
+        .primary-btn {
+            width: 100%;
+            margin-top: 25px;
+            background: #176b45;
+            color: white;
+        }
 
-.secondary-btn {
-    background: #172c25;
-    color: white;
-    margin-bottom: 15px;
-}
+        .primary-btn:hover {
+            background: #105536;
+        }
 
-.remove-btn {
-    background: #c0392b;
-    color: white;
-    margin-top: 5px;
-}
+        .secondary-btn {
+            background: #e8f2ec;
+            color: #176b45;
+            margin-top: 15px;
+        }
 
-button:disabled {
-    opacity: .6;
-    cursor: not-allowed;
-}
+        .remove-btn {
+            background: #ffe8e8;
+            color: #b42318;
+            margin-top: 12px;
+        }
 
-.hidden {
-    display: none !important;
-}
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
 
-#message {
-    padding: 13px;
-    border-radius: 7px;
-    margin-bottom: 15px;
-    display: none;
-    overflow-wrap: anywhere;
-}
+        #message {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 7px;
+            display: none;
+            line-height: 1.5;
+        }
 
-.success {
-    background: #dff5e6;
-    color: #176b36;
-}
+        .success {
+            display: block !important;
+            background: #e4f6eb;
+            color: #176b45;
+        }
 
-.error {
-    background: #ffe2e2;
-    color: #a12626;
-}
+        .error {
+            display: block !important;
+            background: #ffe8e8;
+            color: #b42318;
+        }
 
-.pass-card {
-    border: 1px solid #ddd;
-    padding: 22px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    text-align: center;
-    background: white;
-    page-break-inside: avoid;
-}
+        #results {
+            margin-top: 30px;
+        }
 
-.qr-code {
-    display: flex;
-    justify-content: center;
-    margin: 20px auto;
-}
+        .pass-card {
+            border: 2px dashed #176b45;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            page-break-inside: avoid;
+        }
 
-.pass-card p {
-    margin: 9px;
-    overflow-wrap: anywhere;
-}
+        .pass-card h3 {
+            color: #176b45;
+        }
 
-.download-btn {
-    background: #172c25;
-    color: white;
-    margin-top: 10px;
-}
+        .qr-box {
+            display: flex;
+            justify-content: center;
+            margin: 18px auto;
+        }
 
-.footer {
-    text-align: center;
-    color: #777;
-    padding: 20px;
-}
+        .pass-card p {
+            overflow-wrap: anywhere;
+        }
 
-@media(max-width:600px) {
-    .grid {
-        grid-template-columns: 1fr;
-        gap: 0;
-    }
+        .pass-actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
 
-    .card {
-        padding: 17px;
-    }
+        .pass-actions button {
+            background: #176b45;
+            color: white;
+        }
 
-    .header h1 {
-        font-size: 24px;
-    }
-}
+        .hidden {
+            display: none !important;
+        }
 
-@media print {
-    body {
-        background: white;
-        padding: 0;
-    }
+        @media(max-width: 600px) {
+            .container {
+                padding: 18px;
+            }
 
-    .header,
-    #registrationForm,
-    .footer,
-    .download-btn,
-    #newRegistration,
-    #printButton,
-    #message {
-        display: none !important;
-    }
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
 
-    #resultSection {
-        display: block !important;
-    }
+            .dates {
+                flex-direction: column;
+            }
+        }
 
-    .pass-card {
-        box-shadow: none;
-        border: 1px solid #aaa;
-        page-break-after: always;
-    }
-}
-</style>
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                box-shadow: none;
+                margin: 0;
+                max-width: 100%;
+            }
+
+            .header,
+            form,
+            #message,
+            .pass-actions,
+            .print-heading {
+                display: none !important;
+            }
+
+            #results {
+                display: block !important;
+            }
+
+            .pass-card {
+                break-inside: avoid;
+                margin: 15px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
 <div class="container">
 
-<header class="header">
-    <h1>AYAZ MELO 2026</h1>
-    <p>Official Visitor Registration Portal</p>
-    <p>18–20 December 2026</p>
-</header>
+    <div class="header">
+        <h1>AYAZ MELO 2026</h1>
+        <p>
+            Visitor Registration<br>
+            19 – 21 December 2026
+        </p>
+        <div class="free-badge">100% FREE REGISTRATION</div>
+    </div>
 
-<div id="message" role="status" aria-live="polite"></div>
-
-<form id="registrationForm">
-
-    <section class="card">
+    <form id="registrationForm">
 
         <h2>Registration Information</h2>
 
-        <label for="registrationType">Registration Type *</label>
-
+        <label for="registrationType">Registration Type</label>
         <select id="registrationType" required>
             <option value="individual">Individual Registration</option>
             <option value="family">Family Registration</option>
         </select>
 
-        <div id="familyInfo" class="hidden">
-            Family registration allows 2 to 8 members.
+        <h2>Select Event Days</h2>
+
+        <p>Select the days you want to attend.</p>
+
+        <div class="dates">
+
+            <div class="date-option">
+                <label>
+                    <input type="checkbox" name="eventDates" value="2026-12-19">
+                    19 December 2026
+                </label>
+            </div>
+
+            <div class="date-option">
+                <label>
+                    <input type="checkbox" name="eventDates" value="2026-12-20">
+                    20 December 2026
+                </label>
+            </div>
+
+            <div class="date-option">
+                <label>
+                    <input type="checkbox" name="eventDates" value="2026-12-21">
+                    21 December 2026
+                </label>
+            </div>
+
         </div>
 
-    </section>
+        <h2>Attendance Centre</h2>
 
-    <section class="card">
-
-        <h2>Select Event Dates *</h2>
-
-        <p>Select one, two or three event days.</p>
-
-        <div class="date-option">
-            <input type="checkbox" name="eventDate"
-            id="date19" value="2026-12-19">
-            <label for="date19">19 December 2026</label>
-        </div>
-
-        <div class="date-option">
-            <input type="checkbox" name="eventDate"
-            id="date20" value="2026-12-20">
-            <label for="date20">20 December 2026</label>
-        </div>
-
-        <div class="date-option">
-            <input type="checkbox" name="eventDate"
-            id="date21" value="2026-12-21">
-            <label for="date21">21 December 2026</label>
-        </div>
-
-    </section>
-
-    <section class="card">
-
-        <h2>Member Details</h2>
-
-        <div id="membersContainer"></div>
-
-        <button type="button"
-        class="secondary-btn hidden"
-        id="addMember">
-            + Add Family Member
-        </button>
-
-    </section>
-
-    <section class="card">
-
-        <h2>Payment & Attendance</h2>
-
-        <label for="paymentSelection">
-            Payment Selection *
-        </label>
-
-        <input
-            type="text"
-            id="paymentSelection"
-            maxlength="100"
-            placeholder="Enter payment selection"
-            required
-        >
-
-        <label for="attendanceCenter">
-            Attendance Centre *
-        </label>
-
+        <label for="attendanceCenter">Select / Enter Attendance Centre</label>
         <input
             type="text"
             id="attendanceCenter"
-            maxlength="150"
             placeholder="Enter attendance centre"
             required
         >
 
-    </section>
+        <h2>Visitor Details</h2>
 
-    <section class="card">
+        <div id="membersContainer"></div>
 
-        <button type="submit"
-        class="primary-btn"
-        id="submitBtn">
-            Submit Registration
+        <button type="button" id="addMemberBtn" class="secondary-btn hidden">
+            + Add Family Member
         </button>
 
-    </section>
+        <button type="submit" id="submitBtn" class="primary-btn">
+            Submit Free Registration
+        </button>
 
-</form>
+    </form>
 
-<section id="resultSection" class="hidden">
+    <div id="message"></div>
 
-    <div class="card">
-        <h2>Registration Successful!</h2>
-        <p>Your registration has been submitted successfully.</p>
-        <p>Please download and save your QR passes.</p>
-    </div>
-
-    <div id="passesContainer"></div>
-
-    <button id="printButton"
-    class="primary-btn">
-        Print All Passes
-    </button>
-
-    <br><br>
-
-    <button id="newRegistration"
-    class="secondary-btn">
-        New Registration
-    </button>
-
-</section>
-
-<footer class="footer">
-    <p>Ayaz Melo 2026 | Official Registration System</p>
-</footer>
+    <div id="results"></div>
 
 </div>
 
 <script>
-
-// ========================================
-// 1. SUPABASE CONFIGURATION
-// ========================================
-
-const SUPABASE_URL =
-"https://fstkhwoxbgdcdfwycggu.supabase.co";
-
-const SUPABASE_ANON_KEY =
-"YOUR_SB_PUBLISHABLE_KEY";
-
-const supabaseClient =
-window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
-);
-
-
-// ========================================
-// 2. ELEMENTS
-// ========================================
-
-const form = document.getElementById("registrationForm");
-
-const membersContainer =
-document.getElementById("membersContainer");
-
-const registrationType =
-document.getElementById("registrationType");
-
-const addMemberBtn =
-document.getElementById("addMember");
-
-const familyInfo =
-document.getElementById("familyInfo");
-
-const message =
-document.getElementById("message");
-
-const submitBtn =
-document.getElementById("submitBtn");
-
-const resultSection =
-document.getElementById("resultSection");
-
-const passesContainer =
-document.getElementById("passesContainer");
-
-let memberCount = 0;
-let selectedDates = [];
-
-
-// ========================================
-// 3. MESSAGE
-// ========================================
-
-function showMessage(text, type) {
-
-    message.textContent = text;
-
-    message.className = type;
-
-    message.style.display = "block";
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
-}
-
-
-// ========================================
-// 4. MEMBER FORM
-// ========================================
-
-function createMemberForm() {
-
-    if (memberCount >= 8) return;
-
-    memberCount++;
-
-    const member = document.createElement("div");
-
-    member.className = "member-card";
-
-    member.innerHTML = `
-
-        <h3>Member ${memberCount}</h3>
-
-        <label>Full Name *</label>
-
-        <input type="text"
-        class="fullName"
-        maxlength="150"
-        required>
-
-        <label>Father Name *</label>
-
-        <input type="text"
-        class="fatherName"
-        maxlength="150"
-        required>
-
-        <div class="grid">
-
-            <div>
-                <label>Contact Number *</label>
-                <input type="tel"
-                class="contactNumber"
-                maxlength="30"
-                required>
-            </div>
-
-            <div>
-                <label>City *</label>
-                <input type="text"
-                class="city"
-                maxlength="100"
-                required>
-            </div>
-
-        </div>
-
-        <label>Designation *</label>
-
-        <input type="text"
-        class="designation"
-        maxlength="100"
-        required>
-
-        <label>Email Address *</label>
-
-        <input type="email"
-        class="email"
-        maxlength="254"
-        required>
-
-        <label>Gender *</label>
-
-        <select class="gender" required>
-            <option value="">Select Gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-        </select>
-
-        <button type="button"
-        class="remove-btn">
-            Remove Member
-        </button>
-
-    `;
-
-    member.querySelector(".remove-btn")
-    .addEventListener("click", () => {
-
-        if (memberCount <= 2) return;
-
-        member.remove();
-
-        memberCount--;
-
-        renumberMembers();
-
-        updateMemberButtons();
-
-    });
-
-    membersContainer.appendChild(member);
-
-    updateMemberButtons();
-
-}
-
-
-// ========================================
-// 5. RENUMBER MEMBERS
-// ========================================
-
-function renumberMembers() {
-
-    document.querySelectorAll(".member-card")
-    .forEach((card, index) => {
-
-        card.querySelector("h3").textContent =
-        "Member " + (index + 1);
-
-    });
-
-}
-
-
-// ========================================
-// 6. BUTTON VISIBILITY
-// ========================================
-
-function updateMemberButtons() {
-
-    const isFamily =
-    registrationType.value === "family";
-
-    addMemberBtn.classList.toggle(
-        "hidden",
-        !isFamily || memberCount >= 8
+    // =====================================
+    // SUPABASE CONFIGURATION
+    // =====================================
+
+    const SUPABASE_URL =
+        "https://fstkhwoxbgdcdfwycggu.supabase.co";
+
+    const SUPABASE_PUBLISHABLE_KEY =
+        "YOUR_SB_PUBLISHABLE_KEY";
+
+    const supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
     );
 
-    document.querySelectorAll(".remove-btn")
-    .forEach(button => {
+    // =====================================
+    // ELEMENTS
+    // =====================================
 
-        button.classList.toggle(
+    const form = document.getElementById("registrationForm");
+    const registrationType = document.getElementById("registrationType");
+    const membersContainer = document.getElementById("membersContainer");
+    const addMemberBtn = document.getElementById("addMemberBtn");
+    const submitBtn = document.getElementById("submitBtn");
+    const message = document.getElementById("message");
+    const results = document.getElementById("results");
+
+    let memberCount = 0;
+
+    // =====================================
+    // MESSAGE
+    // =====================================
+
+    function showMessage(text, type) {
+        message.textContent = text;
+        message.className = type;
+        message.style.display = "block";
+    }
+
+    // =====================================
+    // MEMBER FORM
+    // =====================================
+
+    function addMember() {
+
+        if (memberCount >= 8) {
+            showMessage("Maximum 8 family members are allowed.", "error");
+            return;
+        }
+
+        memberCount++;
+
+        const card = document.createElement("div");
+        card.className = "member-card";
+        card.dataset.member = memberCount;
+
+        card.innerHTML = `
+            <h3>Member ${memberCount}</h3>
+
+            <div class="grid">
+
+                <div>
+                    <label>Full Name *</label>
+                    <input type="text" name="full_name" required>
+                </div>
+
+                <div>
+                    <label>Father Name *</label>
+                    <input type="text" name="father_name" required>
+                </div>
+
+                <div>
+                    <label>Contact Number *</label>
+                    <input type="tel" name="contact_number" required>
+                </div>
+
+                <div>
+                    <label>City *</label>
+                    <input type="text" name="city" required>
+                </div>
+
+                <div>
+                    <label>Designation *</label>
+                    <input type="text" name="designation" required>
+                </div>
+
+                <div>
+                    <label>Email *</label>
+                    <input type="email" name="email" required>
+                </div>
+
+                <div>
+                    <label>Gender *</label>
+                    <select name="gender" required>
+                        <option value="">Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+
+            </div>
+
+            ${
+                memberCount > 1
+                ? `<button type="button" class="remove-btn">Remove Member</button>`
+                : ""
+            }
+        `;
+
+        const removeButton = card.querySelector(".remove-btn");
+
+        if (removeButton) {
+            removeButton.addEventListener("click", function() {
+                card.remove();
+                updateMemberNumbers();
+            });
+        }
+
+        membersContainer.appendChild(card);
+        updateMemberNumbers();
+    }
+
+    // =====================================
+    // UPDATE MEMBER NUMBERS
+    // =====================================
+
+    function updateMemberNumbers() {
+
+        const cards = membersContainer.querySelectorAll(".member-card");
+
+        memberCount = cards.length;
+
+        cards.forEach((card, index) => {
+            card.querySelector("h3").textContent =
+                "Member " + (index + 1);
+        });
+
+        addMemberBtn.classList.toggle(
             "hidden",
-            !isFamily || memberCount <= 2
+            registrationType.value !== "family" || memberCount >= 8
         );
-
-    });
-
-}
-
-
-// ========================================
-// 7. REGISTRATION TYPE
-// ========================================
-
-registrationType.addEventListener("change", () => {
-
-    membersContainer.innerHTML = "";
-
-    memberCount = 0;
-
-    const isFamily =
-    registrationType.value === "family";
-
-    familyInfo.classList.toggle("hidden", !isFamily);
-
-    createMemberForm();
-
-    if (isFamily) {
-        createMemberForm();
     }
 
-    updateMemberButtons();
+    // =====================================
+    // REGISTRATION TYPE CHANGE
+    // =====================================
 
-});
+    registrationType.addEventListener("change", function() {
 
+        membersContainer.innerHTML = "";
+        memberCount = 0;
 
-// ========================================
-// 8. ADD MEMBER
-// ========================================
+        addMember();
 
-addMemberBtn.addEventListener("click", () => {
-
-    if (memberCount < 8) {
-        createMemberForm();
-    }
-
-    updateMemberButtons();
-
-});
-
-
-// INITIAL FORM
-
-createMemberForm();
-
-
-// ========================================
-// 9. COLLECT MEMBERS
-// ========================================
-
-function collectMembers() {
-
-    const cards =
-    document.querySelectorAll(".member-card");
-
-    return Array.from(cards).map(card => ({
-
-        full_name:
-        card.querySelector(".fullName").value.trim(),
-
-        father_name:
-        card.querySelector(".fatherName").value.trim(),
-
-        contact_number:
-        card.querySelector(".contactNumber").value.trim(),
-
-        city:
-        card.querySelector(".city").value.trim(),
-
-        designation:
-        card.querySelector(".designation").value.trim(),
-
-        email:
-        card.querySelector(".email").value.trim().toLowerCase(),
-
-        gender:
-        card.querySelector(".gender").value
-
-    }));
-
-}
-
-
-// ========================================
-// 10. SELECTED EVENT DATES
-// ========================================
-
-function getSelectedDates() {
-
-    return Array.from(
-        document.querySelectorAll(
-            'input[name="eventDate"]:checked'
-        )
-    ).map(input => input.value);
-
-}
-
-
-// ========================================
-// 11. HTML ESCAPE
-// ========================================
-
-function escapeHTML(value) {
-
-    return String(value ?? "").replace(
-        /[&<>"']/g,
-        char => ({
-            "&": "&amp;",
-            "<": "&lt;",
-            ">": "&gt;",
-            '"': "&quot;",
-            "'": "&#039;"
-        })[char]
-    );
-
-}
-
-
-// ========================================
-// 12. QR PASS
-// ========================================
-
-function createPass(member, index) {
-
-    const pass = document.createElement("div");
-
-    pass.className = "pass-card";
-
-    const heading = document.createElement("h2");
-
-    heading.textContent = "AYAZ MELO 2026";
-
-    const subtitle = document.createElement("h3");
-
-    subtitle.textContent = "OFFICIAL VISITOR PASS";
-
-    pass.appendChild(heading);
-
-    pass.appendChild(subtitle);
-
-    const details = [
-        ["Name", member.full_name],
-        ["Registration ID", member.registration_id],
-        ["Event Dates", selectedDates.join(", ")],
-        ["Member", index + 1]
-    ];
-
-    details.forEach(([label, value]) => {
-
-        const p = document.createElement("p");
-
-        const strong = document.createElement("strong");
-
-        strong.textContent = label + ": ";
-
-        p.appendChild(strong);
-
-        p.appendChild(
-            document.createTextNode(String(value))
+        addMemberBtn.classList.toggle(
+            "hidden",
+            this.value !== "family"
         );
 
-        pass.appendChild(p);
-
+        message.style.display = "none";
+        results.innerHTML = "";
     });
 
-    const qr = document.createElement("div");
+    addMemberBtn.addEventListener("click", addMember);
 
-    qr.className = "qr-code";
+    // First member
+    addMember();
 
-    pass.appendChild(qr);
+    // =====================================
+    // GET MEMBERS DATA
+    // =====================================
 
-    const downloadBtn =
-    document.createElement("button");
+    function getMembersData() {
 
-    downloadBtn.className = "download-btn";
+        const cards = membersContainer.querySelectorAll(".member-card");
 
-    downloadBtn.textContent = "Download QR Pass";
+        const members = [];
 
-    pass.appendChild(downloadBtn);
+        cards.forEach(card => {
 
-    passesContainer.appendChild(pass);
+            const member = {};
 
-    new QRCode(qr, {
-        text: member.qr_token,
-        width: 190,
-        height: 190,
-        correctLevel: QRCode.CorrectLevel.H
-    });
+            card.querySelectorAll("input, select").forEach(input => {
+                member[input.name] = input.value.trim();
+            });
 
-    downloadBtn.addEventListener("click", () => {
+            members.push(member);
+        });
 
-        const canvas = qr.querySelector("canvas");
+        return members;
+    }
 
-        if (!canvas) {
-            showMessage("QR code is not ready yet.", "error");
+    // =====================================
+    // GENERATE REGISTRATION PASSES
+    // =====================================
+
+    function generatePasses(data, selectedDates, attendanceCenter) {
+
+        results.innerHTML = `
+            <h2 class="print-heading">Registration Successful!</h2>
+            <p class="print-heading">
+                Your Ayaz Melo 2026 registration is confirmed.
+                Your registration is completely free.
+            </p>
+        `;
+
+        data.forEach((member, index) => {
+
+            const pass = document.createElement("div");
+            pass.className = "pass-card";
+
+            const qrId = "qr_" + index;
+
+            pass.innerHTML = `
+                <h3>AYAZ MELO 2026</h3>
+                <p><strong>OFFICIAL VISITOR PASS</strong></p>
+
+                <p><strong>Name:</strong> ${escapeHTML(member.full_name)}</p>
+
+                <p><strong>Registration ID:</strong>
+                    ${escapeHTML(member.registration_id)}
+                </p>
+
+                <p><strong>Attendance Centre:</strong>
+                    ${escapeHTML(attendanceCenter)}
+                </p>
+
+                <p><strong>Event Dates:</strong>
+                    ${selectedDates.join(", ")}
+                </p>
+
+                <p><strong>Entry:</strong> FREE</p>
+
+                <div class="qr-box" id="${qrId}"></div>
+
+                <div class="pass-actions">
+                    <button type="button" class="download-btn">
+                        Download QR
+                    </button>
+                </div>
+            `;
+
+            results.appendChild(pass);
+
+            const qrContainer = pass.querySelector("#" + qrId);
+
+            new QRCode(qrContainer, {
+                text: member.qr_token,
+                width: 190,
+                height: 190,
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            pass.querySelector(".download-btn").addEventListener(
+                "click",
+                function() {
+                    downloadQR(qrContainer, member.registration_id);
+                }
+            );
+
+        });
+
+        const printButton = document.createElement("button");
+
+        printButton.type = "button";
+        printButton.className = "primary-btn";
+        printButton.textContent = "Print All Visitor Passes";
+
+        printButton.addEventListener("click", function() {
+            window.print();
+        });
+
+        results.appendChild(printButton);
+
+        results.scrollIntoView({
+            behavior: "smooth"
+        });
+    }
+
+    // =====================================
+    // HTML ESCAPE
+    // =====================================
+
+    function escapeHTML(value) {
+
+        return String(value ?? "").replace(/[&<>"']/g, function(char) {
+            return {
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#039;"
+            }[char];
+        });
+    }
+
+    // =====================================
+    // DOWNLOAD QR
+    // =====================================
+
+    function downloadQR(container, registrationId) {
+
+        const canvas = container.querySelector("canvas");
+        const image = container.querySelector("img");
+
+        let imageURL;
+
+        if (canvas) {
+            imageURL = canvas.toDataURL("image/png");
+        } else if (image) {
+            imageURL = image.src;
+        } else {
+            alert("QR Code is not ready yet.");
             return;
         }
 
         const link = document.createElement("a");
 
-        link.href = canvas.toDataURL("image/png");
+        link.href = imageURL;
+        link.download = "AyazMelo-" + registrationId + ".png";
 
-        link.download =
-        "Ayaz-Melo-" +
-        member.registration_id +
-        ".png";
-
+        document.body.appendChild(link);
         link.click();
-
-    });
-
-}
-
-
-// ========================================
-// 13. REGISTRATION SUBMISSION
-// ========================================
-
-form.addEventListener("submit", async event => {
-
-    event.preventDefault();
-
-    message.style.display = "none";
-
-    if (!SUPABASE_ANON_KEY ||
-        SUPABASE_ANON_KEY === "YOUR_SB_PUBLISHABLE_KEY") {
-
-        showMessage(
-            "Please configure your Supabase Publishable Key.",
-            "error"
-        );
-
-        return;
-
+        link.remove();
     }
 
-    const type = registrationType.value;
+    // =====================================
+    // FORM SUBMISSION
+    // =====================================
 
-    const members = collectMembers();
+    form.addEventListener("submit", async function(event) {
 
-    selectedDates = getSelectedDates();
+        event.preventDefault();
 
-    const paymentSelection =
-    document.getElementById("paymentSelection")
-    .value.trim();
+        message.style.display = "none";
+        results.innerHTML = "";
 
-    const attendanceCenter =
-    document.getElementById("attendanceCenter")
-    .value.trim();
+        const type = registrationType.value;
 
-
-    if (selectedDates.length < 1 ||
-        selectedDates.length > 3) {
-
-        showMessage(
-            "Please select 1 to 3 event dates.",
-            "error"
-        );
-
-        return;
-
-    }
-
-    if (type === "individual" && members.length !== 1) {
-
-        showMessage(
-            "Individual registration requires one member.",
-            "error"
-        );
-
-        return;
-
-    }
-
-    if (type === "family" &&
-        (members.length < 2 || members.length > 8)) {
-
-        showMessage(
-            "Family registration requires 2 to 8 members.",
-            "error"
-        );
-
-        return;
-
-    }
-
-    if (!paymentSelection || !attendanceCenter) {
-
-        showMessage(
-            "Payment selection and attendance centre are required.",
-            "error"
-        );
-
-        return;
-
-    }
-
-    submitBtn.disabled = true;
-
-    submitBtn.textContent = "Submitting...";
-
-    try {
-
-        const { data, error } =
-        await supabaseClient.rpc(
-            "register_visitor_v2",
-            {
-                p_registration_type: type,
-                p_event_dates: selectedDates,
-                p_members: members,
-                p_payment_selection: paymentSelection,
-                p_attendance_center: attendanceCenter
-            }
-        );
-
-        if (error) throw error;
-
-        if (!Array.isArray(data) ||
-            data.length !== members.length) {
-
-            throw new Error(
-                "Unexpected registration response. Contact the administrator before retrying."
-            );
-
-        }
-
-        for (const member of data) {
-
-            if (!member.registration_id ||
-                !member.qr_token) {
-
-                throw new Error(
-                    "A QR pass could not be generated. Contact the administrator."
-                );
-
-            }
-
-        }
-
-        passesContainer.innerHTML = "";
-
-        data.forEach((member, index) => {
-
-            createPass(member, index);
-
-        });
-
-        form.classList.add("hidden");
-
-        resultSection.classList.remove("hidden");
-
-        showMessage(
-            "Registration completed successfully!",
-            "success"
-        );
-
-        resultSection.scrollIntoView({
-            behavior: "smooth"
-        });
-
-    } catch (error) {
-
-        console.error("Registration Error:", error);
-
-        showMessage(
-            error.message || "Registration failed.",
-            "error"
-        );
-
-    } finally {
-
-        submitBtn.disabled = false;
-
-        submitBtn.textContent = "Submit Registration";
-
-    }
-
-});
-
-
-// ========================================
-// 14. PRINT PASSES
-// ========================================
-
-document.getElementById("printButton")
-.addEventListener("click", () => {
-
-    window.print();
-
-});
-
-
-// ========================================
-// 15. NEW REGISTRATION
-// ========================================
-
-document.getElementById("newRegistration")
-.addEventListener("click", () => {
-
-    window.location.reload();
-
-});
-
-</script>
-
-</body>
-</html>
+        const selectedDates = Array.from(
+            document.querySelectorAll(
