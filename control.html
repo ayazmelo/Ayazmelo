@@ -1,38 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#21164d">
-<title>Ayaz Melo | Admin Login</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
+<title>Ayaz Melo 2026 | Admin Portal</title><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
 :root {
  --blue:#21164d;
  --maroon:#842c3c;
  --gold:#d9ae62;
  --cream:#faf5eb;
  --dark:#171323;
+ --white:#fff;
+ --muted:#777;
+ --border:#e9e4dc;
+ --green:#247a50;
 }
 
-* {
- box-sizing:border-box;
- margin:0;
- padding:0;
-}
+* {box-sizing:border-box;margin:0;padding:0}
 
 body {
+ background:#f5f2ed;
+ color:var(--dark);
+ font-family:'Montserrat',sans-serif;
+ min-height:100vh;
+}
+
+button,input,select {font-family:inherit}
+button {cursor:pointer}
+
+.hidden {display:none!important}
+
+/* LOGIN */
+
+.login-screen {
  min-height:100vh;
  display:flex;
  align-items:center;
  justify-content:center;
  padding:20px;
  background:var(--blue);
- font-family:'Montserrat',sans-serif;
 }
 
 .login-box {
@@ -52,7 +59,7 @@ body {
  margin-bottom:15px;
 }
 
-h1 {
+.login-box h1 {
  font-family:'Cormorant Garamond',serif;
  color:var(--blue);
  font-size:38px;
@@ -66,22 +73,19 @@ h1 {
  margin:8px 0 30px;
 }
 
-input {
+.login-box input {
  width:100%;
  padding:15px;
  margin:9px 0;
  border:1px solid #ddd;
  border-radius:5px;
- font-family:inherit;
  font-size:13px;
  outline:none;
 }
 
-input:focus {
- border-color:var(--gold);
-}
+.login-box input:focus {border-color:var(--gold)}
 
-button {
+.primary-btn {
  width:100%;
  padding:15px;
  margin-top:15px;
@@ -91,18 +95,15 @@ button {
  border-radius:5px;
  font-weight:800;
  letter-spacing:2px;
- cursor:pointer;
 }
 
-button:disabled {
- opacity:.6;
- cursor:wait;
-}
+.primary-btn:disabled {opacity:.6;cursor:wait}
 
 .message {
  margin-top:18px;
  font-size:12px;
  line-height:1.8;
+ overflow-wrap:anywhere;
 }
 
 .back {
@@ -111,31 +112,370 @@ button:disabled {
  color:var(--blue);
  font-size:11px;
  font-weight:700;
+ text-decoration:none;
 }
 
-.hidden {
- display:none;
+/* DASHBOARD */
+
+#dashboard {
+ min-height:100vh;
 }
-</style>
-</head>
 
-<body>
+.topbar {
+ background:var(--blue);
+ color:white;
+ padding:15px 4%;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:15px;
+ flex-wrap:wrap;
+}
 
-<div class="login-box">
+.brand {
+ display:flex;
+ align-items:center;
+ gap:12px;
+}
 
-<img class="logo"
+.brand img {
+ width:48px;
+ height:48px;
+ object-fit:contain;
+}
+
+.brand h2 {
+ font-family:'Cormorant Garamond',serif;
+ font-size:27px;
+}
+
+.brand p {
+ font-size:9px;
+ letter-spacing:2px;
+ color:var(--gold);
+ font-weight:800;
+}
+
+.top-actions {
+ display:flex;
+ gap:10px;
+ align-items:center;
+ flex-wrap:wrap;
+}
+
+.admin-label {
+ font-size:11px;
+ color:#eee;
+}
+
+.top-btn {
+ border:1px solid #ffffff66;
+ background:transparent;
+ color:white;
+ padding:10px 15px;
+ border-radius:5px;
+ font-size:10px;
+ font-weight:800;
+}
+
+.top-btn:hover {background:var(--maroon)}
+
+.container {
+ max-width:1400px;
+ margin:auto;
+ padding:28px 4%;
+}
+
+.page-heading {
+ margin-bottom:25px;
+}
+
+.page-heading h1 {
+ color:var(--blue);
+ font-family:'Cormorant Garamond',serif;
+ font-size:36px;
+}
+
+.page-heading p {
+ color:var(--muted);
+ font-size:12px;
+ margin-top:5px;
+}
+
+.stats {
+ display:grid;
+ grid-template-columns:repeat(4,minmax(0,1fr));
+ gap:15px;
+ margin-bottom:25px;
+}
+
+.stat-card {
+ background:white;
+ border:1px solid var(--border);
+ border-radius:9px;
+ padding:22px;
+ border-top:4px solid var(--gold);
+}
+
+.stat-card p {
+ color:var(--muted);
+ font-size:10px;
+ font-weight:800;
+ letter-spacing:1px;
+ text-transform:uppercase;
+}
+
+.stat-card h2 {
+ font-size:30px;
+ color:var(--blue);
+ margin-top:12px;
+}
+
+.stat-card small {
+ color:var(--muted);
+ font-size:10px;
+}
+
+.tabs {
+ display:flex;
+ gap:8px;
+ flex-wrap:wrap;
+ margin-bottom:18px;
+}
+
+.tab-btn {
+ background:white;
+ border:1px solid var(--border);
+ color:var(--blue);
+ padding:12px 19px;
+ border-radius:5px;
+ font-size:11px;
+ font-weight:800;
+}
+
+.tab-btn.active {
+ background:var(--maroon);
+ border-color:var(--maroon);
+ color:white;
+}
+
+.panel {
+ background:white;
+ border:1px solid var(--border);
+ border-radius:9px;
+ padding:22px;
+ margin-bottom:20px;
+}
+
+.panel-heading {
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:12px;
+ flex-wrap:wrap;
+ margin-bottom:18px;
+}
+
+.panel-heading h2 {
+ color:var(--blue);
+ font-family:'Cormorant Garamond',serif;
+ font-size:26px;
+}
+
+.panel-heading p {
+ color:var(--muted);
+ font-size:10px;
+ margin-top:3px;
+}
+
+.tools {
+ display:flex;
+ gap:9px;
+ flex-wrap:wrap;
+ margin-bottom:17px;
+}
+
+.tools input,.tools select {
+ min-width:150px;
+ flex:1;
+ padding:12px;
+ border:1px solid var(--border);
+ border-radius:5px;
+ font-size:11px;
+ outline:none;
+ background:white;
+}
+
+.tools input:focus,.tools select:focus {
+ border-color:var(--gold);
+}
+
+.action-btn {
+ border:0;
+ border-radius:5px;
+ padding:11px 15px;
+ font-size:10px;
+ font-weight:800;
+ color:white;
+ background:var(--blue);
+}
+
+.action-btn.gold {background:var(--maroon)}
+.action-btn.green {background:var(--green)}
+
+.table-wrap {
+ width:100%;
+ overflow-x:auto;
+}
+
+table {
+ width:100%;
+ border-collapse:collapse;
+ min-width:750px;
+}
+
+th {
+ background:#f7f3ec;
+ color:var(--blue);
+ text-align:left;
+ font-size:10px;
+ text-transform:uppercase;
+ letter-spacing:.5px;
+ padding:13px 11px;
+ white-space:nowrap;
+}
+
+td {
+ border-bottom:1px solid #eee;
+ padding:13px 11px;
+ font-size:11px;
+ vertical-align:middle;
+}
+
+tr:hover td {background:#fdfbf7}
+
+.badge {
+ display:inline-block;
+ padding:5px 8px;
+ border-radius:20px;
+ background:#e8f4ed;
+ color:var(--green);
+ font-size:9px;
+ font-weight:800;
+}
+
+.badge.red {
+ background:#f8e9eb;
+ color:var(--maroon);
+}
+
+.badge.gold {
+ background:#f8f0dc;
+ color:#85621d;
+}
+
+.view-btn {
+ background:var(--blue);
+ color:white;
+ border:0;
+ border-radius:4px;
+ padding:8px 11px;
+ font-size:9px;
+ font-weight:800;
+}
+
+.empty {
+ text-align:center;
+ color:var(--muted);
+ padding:35px!important;
+}
+
+.detail-grid {
+ display:grid;
+ grid-template-columns:repeat(3,minmax(0,1fr));
+ gap:12px;
+}
+
+.detail-item {
+ background:#faf8f4;
+ border:1px solid var(--border);
+ padding:13px;
+ border-radius:5px;
+ min-width:0;
+}
+
+.detail-item small {
+ display:block;
+ color:var(--muted);
+ font-size:9px;
+ font-weight:800;
+ text-transform:uppercase;
+ margin-bottom:7px;
+}
+
+.detail-item strong {
+ color:var(--blue);
+ font-size:12px;
+ overflow-wrap:anywhere;
+}
+
+.detail-title {
+ color:var(--maroon);
+ font-family:'Cormorant Garamond',serif;
+ font-size:25px;
+ margin-bottom:15px;
+}
+
+.close-btn {
+ background:var(--maroon);
+ color:white;
+ border:0;
+ border-radius:4px;
+ padding:8px 13px;
+ font-size:10px;
+ font-weight:800;
+}
+
+.footer {
+ text-align:center;
+ color:var(--muted);
+ font-size:10px;
+ padding:25px 10px;
+}
+
+.status-message {
+ font-size:11px;
+ margin:12px 0;
+ color:var(--muted);
+ line-height:1.7;
+}
+
+@media(max-width:850px) {
+ .stats {grid-template-columns:repeat(2,minmax(0,1fr))}
+ .detail-grid {grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+@media(max-width:520px) {
+ .login-box {padding:32px 22px}
+ .topbar {padding:13px 4%}
+ .brand h2 {font-size:22px}
+ .brand img {width:40px;height:40px}
+ .container {padding:22px 4%}
+ .stats {gap:9px}
+ .stat-card {padding:15px}
+ .stat-card h2 {font-size:25px}
+ .stat-card p {font-size:9px}
+ .panel {padding:14px}
+ .detail-grid {grid-template-columns:1fr}
+ .page-heading h1 {font-size:30px}
+}
+</style></head><body><!-- LOGIN SCREEN --><section class="login-screen" id="loginScreen"><div class="login-box"><img class="logo"
 src="assets/ayaz-melo-2026.png"
 alt="Ayaz Melo Logo">
 
-<h1>Admin Portal</h1>
-
-<div class="subtitle">
+<h1>Admin Portal</h1><div class="subtitle">
 AYAZ MELO 2026 · ADMINISTRATION
-</div>
-
-<form id="loginForm">
-
-<input
+</div><form id="loginForm"><input
 type="email"
 id="email"
 placeholder="Admin Email Address"
@@ -149,37 +489,141 @@ placeholder="Admin Password"
 autocomplete="current-password"
 required>
 
-<button type="submit" id="loginBtn">
+<button type="submit" class="primary-btn" id="loginBtn">
 ADMIN LOGIN
-</button>
-
-</form>
-
-<div class="message" id="message"></div>
-
-<div id="dashboard" class="hidden">
-
-<h2 style="color:#21164d;margin-top:20px;">
-Welcome, Administrator
-</h2>
-
-<p style="font-size:12px;margin-top:10px;">
-Your Admin account has been authenticated.
-</p>
-
-<button id="logoutBtn">
-LOG OUT
-</button>
-
-</div>
-
-<a href="index.html" class="back">
+</button></form><div class="message" id="loginMessage"></div><a href="index.html" class="back">
 ← BACK TO WEBSITE
-</a>
-
+</a></div>
+</section><!-- ADMIN DASHBOARD --><section id="dashboard" class="hidden"><header class="topbar"><div class="brand">
+<img src="assets/ayaz-melo-2026.png" alt="Ayaz Melo">
+<div>
+<h2>Ayaz Melo 2026</h2>
+<p>ADMINISTRATION PORTAL</p>
 </div>
+</div><div class="top-actions">
+<span class="admin-label">Administrator</span>
+<button class="top-btn" id="refreshBtn">↻ REFRESH</button>
+<button class="top-btn" id="logoutBtn">LOG OUT</button>
+</div></header><main class="container"><div class="page-heading">
+<h1>Admin Dashboard</h1>
+<p>Visitor Registration & Attendance Management · 19–21 December 2026</p>
+</div><!-- STATISTICS --><div class="stats"><div class="stat-card">
+<p>Total Registered Visitors</p>
+<h2 id="totalVisitors">—</h2>
+<small>All registered visitors</small>
+</div><div class="stat-card">
+<p>Total Cities</p>
+<h2 id="totalCities">—</h2>
+<small>Unique registered cities</small>
+</div><div class="stat-card">
+<p>Total Check-ins</p>
+<h2 id="totalCheckins">—</h2>
+<small>Recorded attendance entries</small>
+</div><div class="stat-card">
+<p>Today's Check-ins</p>
+<h2 id="todayCheckins">—</h2>
+<small>Pakistan local date</small>
+</div></div><!-- NAVIGATION --><div class="tabs">
+<button class="tab-btn active" data-tab="overview">OVERVIEW</button>
+<button class="tab-btn" data-tab="visitors">ALL VISITORS</button>
+<button class="tab-btn" data-tab="attendance">ATTENDANCE</button>
+</div><!-- OVERVIEW --><section id="overviewTab" class="tab-content"><div class="panel"><div class="panel-heading">
+<div>
+<h2>Recent Registrations</h2>
+<p>Latest registered visitors</p>
+</div><button class="action-btn" id="goVisitors">
+VIEW ALL VISITORS
+</button>
+</div><div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Registration ID</th>
+<th>Full Name</th>
+<th>Contact</th>
+<th>City</th>
+<th>Registration Date</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody id="recentVisitorsBody">
+<tr><td colspan="6" class="empty">Loading records...</td></tr>
+</tbody>
+</table>
+</div></div></section><!-- ALL VISITORS --><section id="visitorsTab" class="tab-content hidden"><div class="panel"><div class="panel-heading">
+<div>
+<h2>Registered Visitors</h2>
+<p>Search and manage visitor records</p>
+</div><button class="action-btn green" id="exportBtn">
+↓ EXPORT CSV
+</button>
+</div><div class="tools"><input
+type="search"
+id="visitorSearch"
+placeholder="Search name, phone, city or registration ID...">
 
-<script>
+<select id="cityFilter">
+<option value="">All Cities</option>
+</select><button class="action-btn gold" id="clearSearch">
+CLEAR
+</button></div><div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Registration ID</th>
+<th>Full Name</th>
+<th>Father Name</th>
+<th>Contact</th>
+<th>City</th>
+<th>Designation</th>
+<th>Registration Date</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody id="visitorsBody">
+<tr><td colspan="8" class="empty">Loading records...</td></tr>
+</tbody>
+</table>
+</div><p class="status-message" id="visitorCount"></p></div><!-- VISITOR PROFILE --><div class="panel hidden" id="visitorProfile"><div class="panel-heading">
+<div>
+<h2>Visitor Profile</h2>
+<p>Complete registration information</p>
+</div>
+<button class="close-btn" id="closeProfile">CLOSE</button>
+</div><div id="visitorDetails"></div></div></section><!-- ATTENDANCE --><section id="attendanceTab" class="tab-content hidden"><div class="panel"><div class="panel-heading">
+<div>
+<h2>Attendance Records</h2>
+<p>Visitor check-in history</p>
+</div>
+</div><div class="tools"><input
+type="search"
+id="attendanceSearch"
+placeholder="Search registration ID or visitor name...">
+
+<input
+type="date"
+id="attendanceDate">
+
+<button class="action-btn gold" id="clearAttendance">
+CLEAR
+</button></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Registration ID</th>
+<th>Visitor Name</th>
+<th>Event Date</th>
+<th>Scanned At</th>
+<th>Check-in Status</th>
+</tr>
+</thead><tbody id="attendanceBody">
+<tr><td colspan="5" class="empty">Loading attendance...</td></tr>
+</tbody></table>
+</div><p class="status-message" id="attendanceCount"></p></div></section><div class="footer">
+AYAZ MELO 2026 · KHANABADOSH WRITERS' CAFE · HYDERABAD, SINDH
+</div></main>
+</section><script>
+/* SUPABASE CONFIGURATION */
+
 const SUPABASE_URL =
 "https://fstkhwoxbgdcdfwycggu.supabase.co";
 
@@ -190,64 +634,714 @@ const ADMIN_UID =
 "327072bb-a41b-4387-aadc-10b2c38ecfe4";
 
 const db = window.supabase.createClient(
- SUPABASE_URL,
- SUPABASE_KEY
+SUPABASE_URL,
+SUPABASE_KEY
 );
 
-const form = document.getElementById("loginForm");
-const message = document.getElementById("message");
-const loginBtn = document.getElementById("loginBtn");
+
+/* ELEMENTS */
+
+const loginScreen = document.getElementById("loginScreen");
 const dashboard = document.getElementById("dashboard");
+const loginForm = document.getElementById("loginForm");
+const loginMessage = document.getElementById("loginMessage");
+const loginBtn = document.getElementById("loginBtn");
 
-form.addEventListener("submit", async function(e) {
+let visitors = [];
+let checkins = [];
 
- e.preventDefault();
 
- loginBtn.disabled = true;
- loginBtn.textContent = "VERIFYING...";
- message.textContent = "";
+/* HELPERS */
 
- const email = document.getElementById("email").value.trim();
- const password = document.getElementById("password").value;
+function escapeHTML(value) {
+return String(value ?? "").replace(/[&<>"']/g, function(char) {
+return {
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
+}[char];
+});
+}
 
- const { data, error } = await db.auth.signInWithPassword({
-  email: email,
-  password: password
- });
+function displayValue(value) {
+if(value === null || value === undefined || value === "") {
+return "—";
+}
 
- loginBtn.disabled = false;
- loginBtn.textContent = "ADMIN LOGIN";
+if(Array.isArray(value)) {
+return value.length ? value.join(", ") : "—";
+}
 
- if(error) {
-  message.style.color = "#842c3c";
-  message.textContent = error.message;
-  return;
- }
+return String(value);
+}
 
- if(!data.user || data.user.id !== ADMIN_UID) {
+function formatDate(value) {
+if(!value) return "—";
 
-  await db.auth.signOut();
+const date = new Date(value);
 
-  message.style.color = "#842c3c";
-  message.textContent = "Access denied. You are not an authorized administrator.";
-  return;
- }
+if(Number.isNaN(date.getTime())) return "—";
 
- form.classList.add("hidden");
- dashboard.classList.remove("hidden");
+return date.toLocaleDateString("en-GB", {
+day:"2-digit",
+month:"short",
+year:"numeric"
+});
+}
 
- message.style.color = "green";
- message.textContent = "Admin authentication successful.";
+function formatDateTime(value) {
+if(!value) return "—";
+
+const date = new Date(value);
+
+if(Number.isNaN(date.getTime())) return "—";
+
+return date.toLocaleString("en-GB", {
+day:"2-digit",
+month:"short",
+year:"numeric",
+hour:"2-digit",
+minute:"2-digit"
+});
+}
+
+function pakistanToday() {
+return new Intl.DateTimeFormat("en-CA", {
+timeZone:"Asia/Karachi",
+year:"numeric",
+month:"2-digit",
+day:"2-digit"
+}).format(new Date());
+}
+
+function showLoginError(message) {
+loginMessage.style.color = "#842c3c";
+loginMessage.textContent = message;
+}
+
+function showDashboard() {
+loginScreen.classList.add("hidden");
+dashboard.classList.remove("hidden");
+}
+
+
+/* AUTHENTICATION */
+
+loginForm.addEventListener("submit", async function(e) {
+
+e.preventDefault();
+
+loginBtn.disabled = true;
+loginBtn.textContent = "VERIFYING...";
+loginMessage.textContent = "";
+
+try {
+
+const email = document.getElementById("email").value.trim();
+const password = document.getElementById("password").value;
+
+const {data,error} = await db.auth.signInWithPassword({
+email,
+password
+});
+
+if(error) throw error;
+
+if(!data.user || data.user.id !== ADMIN_UID) {
+
+await db.auth.signOut();
+
+throw new Error(
+"Access denied. This account is not an authorized administrator."
+);
+
+}
+
+showDashboard();
+await loadDashboard();
+
+} catch(error) {
+
+showLoginError(error.message || "Login failed. Please try again.");
+
+} finally {
+
+loginBtn.disabled = false;
+loginBtn.textContent = "ADMIN LOGIN";
+
+}
 
 });
+
+
+/* CHECK EXISTING SESSION */
+
+async function checkExistingSession() {
+
+try {
+
+const {data,error} = await db.auth.getSession();
+
+if(error) throw error;
+
+const user = data.session?.user;
+
+if(!user) return;
+
+if(user.id !== ADMIN_UID) {
+await db.auth.signOut();
+return;
+}
+
+showDashboard();
+await loadDashboard();
+
+} catch(error) {
+
+console.error("Session check:", error);
+
+}
+
+}
+
+
+/* LOGOUT */
 
 document.getElementById("logoutBtn").addEventListener("click", async function() {
 
- await db.auth.signOut();
- window.location.reload();
+const {error} = await db.auth.signOut();
+
+if(error) {
+alert("Logout failed: " + error.message);
+return;
+}
+
+window.location.reload();
 
 });
-</script>
 
-</body>
+
+/* LOAD DATABASE RECORDS */
+
+async function loadDashboard() {
+
+const refreshBtn = document.getElementById("refreshBtn");
+
+refreshBtn.disabled = true;
+refreshBtn.textContent = "LOADING...";
+
+try {
+
+/* Load visitors */
+
+const visitorsResult = await db
+.from("visitors")
+.select("*")
+.order("registration_date", {ascending:false})
+.limit(5000);
+
+if(visitorsResult.error) throw visitorsResult.error;
+
+visitors = visitorsResult.data || [];
+
+
+/* Load check-ins */
+
+const checkinsResult = await db
+.from("visitor_checkins")
+.select("*")
+.order("scanned_at", {ascending:false})
+.limit(5000);
+
+if(checkinsResult.error) throw checkinsResult.error;
+
+checkins = checkinsResult.data || [];
+
+
+/* Update dashboard */
+
+updateStatistics();
+renderRecentVisitors();
+renderVisitors();
+renderAttendance();
+populateCityFilter();
+
+} catch(error) {
+
+console.error("Dashboard loading:", error);
+
+alert(
+"Could not load dashboard records.\n\n" +
+error.message +
+"\n\nPlease check your Supabase RLS SELECT permissions."
+);
+
+} finally {
+
+refreshBtn.disabled = false;
+refreshBtn.textContent = "↻ REFRESH";
+
+}
+
+}
+
+
+/* STATISTICS */
+
+function updateStatistics() {
+
+const cities = new Set(
+visitors
+.map(v => (v.city || "").trim().toLowerCase())
+.filter(Boolean)
+);
+
+const today = pakistanToday();
+
+const todaysCount = checkins.filter(c => {
+return c.event_date === today;
+}).length;
+
+document.getElementById("totalVisitors").textContent =
+visitors.length;
+
+document.getElementById("totalCities").textContent =
+cities.size;
+
+document.getElementById("totalCheckins").textContent =
+checkins.length;
+
+document.getElementById("todayCheckins").textContent =
+todaysCount;
+
+}
+
+
+/* RECENT VISITORS */
+
+function renderRecentVisitors() {
+
+const tbody = document.getElementById("recentVisitorsBody");
+
+const recent = visitors.slice(0,8);
+
+if(!recent.length) {
+tbody.innerHTML =
+'<tr><td colspan="6" class="empty">No visitor records found.</td></tr>';
+return;
+}
+
+tbody.innerHTML = recent.map(v => `
+
+<tr>
+<td>${escapeHTML(displayValue(v.registration_id))}</td>
+<td>${escapeHTML(displayValue(v.full_name))}</td>
+<td>${escapeHTML(displayValue(v.contact_number))}</td>
+<td>${escapeHTML(displayValue(v.city))}</td>
+<td>${escapeHTML(formatDate(v.registration_date))}</td>
+<td>
+<button class="view-btn" data-view="${escapeHTML(v.id)}">
+VIEW
+</button>
+</td>
+</tr>
+
+`).join("");
+
+}
+
+
+/* CITY FILTER */
+
+function populateCityFilter() {
+
+const select = document.getElementById("cityFilter");
+const previous = select.value;
+
+const cities = [...new Set(
+visitors.map(v => (v.city || "").trim()).filter(Boolean)
+)].sort((a,b) => a.localeCompare(b));
+
+select.innerHTML =
+'<option value="">All Cities</option>' +
+cities.map(city => `
+<option value="${escapeHTML(city)}">${escapeHTML(city)}</option>
+`).join("");
+
+select.value = previous;
+
+}
+
+
+/* ALL VISITORS */
+
+function renderVisitors() {
+
+const tbody = document.getElementById("visitorsBody");
+
+const query = document
+.getElementById("visitorSearch")
+.value.trim().toLowerCase();
+
+const selectedCity = document
+.getElementById("cityFilter")
+.value;
+
+const filtered = visitors.filter(v => {
+
+const searchable = [
+v.registration_id,
+v.full_name,
+v.father_name,
+v.contact_number,
+v.city,
+v.designation,
+v.email
+].join(" ").toLowerCase();
+
+const matchesSearch = searchable.includes(query);
+const matchesCity = !selectedCity || v.city === selectedCity;
+
+return matchesSearch && matchesCity;
+
+});
+
+if(!filtered.length) {
+
+tbody.innerHTML =
+'<tr><td colspan="8" class="empty">No matching visitors found.</td></tr>';
+
+} else {
+
+tbody.innerHTML = filtered.map(v => `
+
+<tr>
+<td>${escapeHTML(displayValue(v.registration_id))}</td>
+<td>${escapeHTML(displayValue(v.full_name))}</td>
+<td>${escapeHTML(displayValue(v.father_name))}</td>
+<td>${escapeHTML(displayValue(v.contact_number))}</td>
+<td>${escapeHTML(displayValue(v.city))}</td>
+<td>${escapeHTML(displayValue(v.designation))}</td>
+<td>${escapeHTML(formatDate(v.registration_date))}</td>
+<td>
+<button class="view-btn" data-view="${escapeHTML(v.id)}">
+VIEW
+</button>
+</td>
+</tr>
+
+`).join("");
+
+}
+
+document.getElementById("visitorCount").textContent =
+"Showing " + filtered.length + " of " + visitors.length + " visitors.";
+
+}
+
+
+/* VISITOR PROFILE */
+
+function openVisitorProfile(id) {
+
+const visitor = visitors.find(v => String(v.id) === String(id));
+
+if(!visitor) return;
+
+const details = [
+["Registration ID",visitor.registration_id],
+["Full Name",visitor.full_name],
+["Father Name",visitor.father_name],
+["Contact Number",visitor.contact_number],
+["Email",visitor.email],
+["City",visitor.city],
+["Designation",visitor.designation],
+["Gender",visitor.gender],
+["Attendance Type",visitor.attendance_type],
+["Family Members",visitor.family_members],
+["Registration Date",formatDateTime(visitor.registration_date)],
+["Entry Status",visitor.entry_status],
+["Entry Time",formatDateTime(visitor.entry_time)],
+["Gate Operator",visitor.gate_operator],
+["Attendance Days",visitor.attendance_days],
+["Allowed Event Dates",visitor.allowed_event_dates],
+["Attendance Center",visitor.attendance_center],
+["Family Group ID",visitor.family_group_id]
+];
+
+const html = `
+
+<h3 class="detail-title">
+${escapeHTML(displayValue(visitor.full_name))}
+</h3>
+
+<div class="detail-grid">
+
+${details.map(item => `
+
+<div class="detail-item">
+<small>${escapeHTML(item[0])}</small>
+<strong>${escapeHTML(displayValue(item[1]))}</strong>
+</div>
+
+`).join("")}
+
+</div>
+
+`;
+
+document.getElementById("visitorDetails").innerHTML = html;
+
+const profile = document.getElementById("visitorProfile");
+
+profile.classList.remove("hidden");
+
+profile.scrollIntoView({
+behavior:"smooth",
+block:"start"
+});
+
+}
+
+
+/* VISITOR PROFILE CLICK EVENTS */
+
+document.addEventListener("click", function(e) {
+
+const button = e.target.closest("[data-view]");
+
+if(button) {
+openVisitorProfile(button.dataset.view);
+}
+
+});
+
+
+document.getElementById("closeProfile").addEventListener("click", function() {
+
+document.getElementById("visitorProfile").classList.add("hidden");
+
+});
+
+
+/* ATTENDANCE */
+
+function renderAttendance() {
+
+const tbody = document.getElementById("attendanceBody");
+
+const query = document
+.getElementById("attendanceSearch")
+.value.trim().toLowerCase();
+
+const selectedDate = document
+.getElementById("attendanceDate")
+.value;
+
+const filtered = checkins.filter(c => {
+
+const visitor = visitors.find(v => Number(v.id) === Number(c.visitor_id));
+
+const registrationId = visitor?.registration_id || "";
+const name = visitor?.full_name || "";
+
+const matchesSearch = (
+registrationId + " " + name
+).toLowerCase().includes(query);
+
+const matchesDate = !selectedDate || c.event_date === selectedDate;
+
+return matchesSearch && matchesDate;
+
+});
+
+if(!filtered.length) {
+
+tbody.innerHTML =
+'<tr><td colspan="5" class="empty">No attendance records found.</td></tr>';
+
+} else {
+
+tbody.innerHTML = filtered.map(c => {
+
+const visitor = visitors.find(v => Number(v.id) === Number(c.visitor_id));
+
+return `
+
+<tr>
+<td>${escapeHTML(displayValue(visitor?.registration_id))}</td>
+<td>${escapeHTML(displayValue(visitor?.full_name))}</td>
+<td>${escapeHTML(formatDate(c.event_date))}</td>
+<td>${escapeHTML(formatDateTime(c.scanned_at))}</td>
+<td><span class="badge">CHECKED IN</span></td>
+</tr>
+
+`;
+
+}).join("");
+
+}
+
+document.getElementById("attendanceCount").textContent =
+"Showing " + filtered.length + " of " + checkins.length + " attendance records.";
+
+}
+
+
+/* TAB NAVIGATION */
+
+function showTab(tabName) {
+
+document.querySelectorAll(".tab-btn").forEach(btn => {
+
+btn.classList.toggle(
+"active",
+btn.dataset.tab === tabName
+);
+
+});
+
+document.querySelectorAll(".tab-content").forEach(section => {
+
+section.classList.add("hidden");
+
+});
+
+document.getElementById(tabName + "Tab").classList.remove("hidden");
+
+}
+
+document.querySelectorAll(".tab-btn").forEach(btn => {
+
+btn.addEventListener("click", function() {
+
+showTab(this.dataset.tab);
+
+});
+
+});
+
+document.getElementById("goVisitors").addEventListener("click", function() {
+
+showTab("visitors");
+
+});
+
+
+/* SEARCH EVENTS */
+
+document.getElementById("visitorSearch").addEventListener("input", renderVisitors);
+
+document.getElementById("cityFilter").addEventListener("change", renderVisitors);
+
+document.getElementById("clearSearch").addEventListener("click", function() {
+
+document.getElementById("visitorSearch").value = "";
+document.getElementById("cityFilter").value = "";
+
+renderVisitors();
+
+});
+
+document.getElementById("attendanceSearch").addEventListener("input", renderAttendance);
+
+document.getElementById("attendanceDate").addEventListener("change", renderAttendance);
+
+document.getElementById("clearAttendance").addEventListener("click", function() {
+
+document.getElementById("attendanceSearch").value = "";
+document.getElementById("attendanceDate").value = "";
+
+renderAttendance();
+
+});
+
+
+/* CSV EXPORT */
+
+function downloadCSV() {
+
+if(!visitors.length) {
+alert("There are no visitor records to export.");
+return;
+}
+
+const columns = [
+"id",
+"registration_id",
+"full_name",
+"father_name",
+"contact_number",
+"email",
+"city",
+"designation",
+"gender",
+"attendance_type",
+"family_members",
+"attendance_days",
+"allowed_event_dates",
+"attendance_center",
+"registration_date",
+"entry_status",
+"entry_time",
+"gate_operator"
+];
+
+function csvValue(value) {
+
+if(Array.isArray(value)) {
+value = value.join("; ");
+}
+
+if(value === null || value === undefined) {
+value = "";
+}
+
+return '"' + String(value).replace(/"/g,'""') + '"';
+
+}
+
+const rows = [
+columns.map(csvValue).join(","),
+...visitors.map(visitor =>
+columns.map(column => csvValue(visitor[column])).join(",")
+)
+];
+
+const csv = "\uFEFF" + rows.join("\r\n");
+
+const blob = new Blob([csv], {
+type:"text/csv;charset=utf-8;"
+});
+
+const url = URL.createObjectURL(blob);
+
+const link = document.createElement("a");
+
+link.href = url;
+link.download = "Ayaz-Melo-2026-Visitors.csv";
+
+document.body.appendChild(link);
+link.click();
+link.remove();
+
+URL.revokeObjectURL(url);
+
+}
+
+document.getElementById("exportBtn").addEventListener("click", downloadCSV);
+
+
+/* REFRESH */
+
+document.getElementById("refreshBtn").addEventListener("click", loadDashboard);
+
+
+/* START */
+
+checkExistingSession();
+
+</script></body>
 </html>
