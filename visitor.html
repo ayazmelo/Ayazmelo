@@ -5,31 +5,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#21164d">
 
-<title>Ayaz Melo 2026 | Visitor Registration</title>
+<title>Visitor Registration | Ayaz Melo 2026</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#f6f0e7;font-family:Arial,sans-serif;color:#21164d}
+body{margin:0;background:#f6f0e7;color:#21164d;font-family:Arial,sans-serif}
 header{background:#21164d;color:white;text-align:center;padding:30px 15px}
-header h1{color:#d9ae62;margin:0;letter-spacing:3px}
-header h2{margin:10px 0}
-.container{max-width:550px;margin:35px auto;padding:20px}
-.card{background:white;padding:30px;border-radius:15px;box-shadow:0 8px 25px #0001}
+header h1{color:#d9ae62;margin:0;font-size:30px}
+header p{letter-spacing:2px}
+.container{max-width:550px;margin:35px auto;padding:15px}
+.card{background:white;padding:30px;border-radius:16px;box-shadow:0 8px 30px #0001}
 h2{text-align:center}
-label{display:block;margin-top:17px;font-size:13px;font-weight:bold}
-input{width:100%;padding:14px;margin-top:7px;border:1px solid #ddd;border-radius:7px;font-size:15px}
-button{width:100%;padding:15px;margin-top:20px;border:0;background:#842c3c;color:white;border-radius:7px;font-weight:bold;cursor:pointer}
+label{display:block;margin-top:17px;font-weight:bold;font-size:13px}
+input{width:100%;padding:14px;margin-top:7px;border:1px solid #ddd;border-radius:8px;font-size:15px}
+button{width:100%;padding:15px;margin-top:20px;border:0;background:#842c3c;color:white;border-radius:8px;font-weight:bold;cursor:pointer}
 button:disabled{opacity:.6}
-#welcome{display:none;background:#e3f5e6;color:#14532d;padding:20px;border-radius:10px;margin-top:20px;text-align:center}
-#qrBox{display:none;text-align:center;margin-top:25px}
-#qrcode{display:flex;justify-content:center;align-items:center;margin:20px auto;padding:24px;background:white;width:max-content;max-width:100%;border:1px solid #eee}
-#qrcode canvas{display:block;width:300px;height:300px;max-width:100%}
-#message{margin-top:15px;text-align:center;font-size:13px;overflow-wrap:anywhere}
+#welcome,#qrBox{display:none;text-align:center;margin-top:25px}
+#welcome{background:#e3f5e6;color:#14532d;padding:20px;border-radius:10px}
+#qrcode{display:flex;justify-content:center;margin:20px auto}
+#qrcode img{max-width:100%;height:auto}
+#message{text-align:center;margin-top:15px;font-size:14px;overflow-wrap:anywhere}
 footer{text-align:center;padding:25px;color:#777;font-size:12px}
-.note{font-size:12px;color:#777;text-align:center}
 </style>
 </head>
 
@@ -46,48 +45,48 @@ footer{text-align:center;padding:25px;color:#777;font-size:12px}
 <div class="card">
 
 <h2>Visitor Registration</h2>
-<p style="text-align:center;color:#777">Welcome to Ayaz Melo 2026.</p>
+<p style="text-align:center;color:#777">
+Welcome to Ayaz Melo 2026
+</p>
 
 <form id="visitorForm">
 
 <label>Full Name *</label>
-<input id="name" required maxlength="150" placeholder="Enter your full name">
+<input id="name" required maxlength="150" autocomplete="name">
 
 <label>Father's Name *</label>
-<input id="father" required maxlength="150" placeholder="Enter father's name">
-
-<label>Email Address *</label>
-<input id="email" type="email" required maxlength="254" placeholder="Enter your email address">
+<input id="father" required maxlength="150">
 
 <label>Contact Number *</label>
-<input id="contact" type="tel" required maxlength="25" placeholder="+92">
+<input id="contact" type="tel" required maxlength="25" autocomplete="tel">
 
 <label>City *</label>
-<input id="city" required maxlength="100" placeholder="Your city">
+<input id="city" required maxlength="100">
 
 <label>Designation *</label>
-<input id="designation" required maxlength="150" placeholder="Your designation">
+<input id="designation" required maxlength="100">
+
+<label>Email Address *</label>
+<input id="email" type="email" required maxlength="254" autocomplete="email">
 
 <button id="submitBtn" type="submit">REGISTER NOW</button>
-
-<p class="note">Please check all information before submitting.</p>
 
 </form>
 
 <div id="message" role="status"></div>
 
 <div id="welcome">
-<h2>🎉 Welcome to Ayaz Melo 2026!</h2>
-<p>خوش آمدید! آپ کی رجسٹریشن کامیابی سے مکمل ہوگئی ہے۔</p>
-<p>ہم آپ کو Ayaz Melo میں خوش آمدید کہتے ہیں۔</p>
-<p>اپنا QR Code محفوظ کرلیں اور ایونٹ میں داخلے کے وقت دکھائیں۔</p>
+<h2>🎉 Welcome to Ayaz Melo!</h2>
+<p>آپ کی رجسٹریشن کامیابی سے مکمل ہوگئی ہے۔</p>
+<p>We warmly welcome you to Ayaz Melo 2026.</p>
+<p>Please save your QR code for entry verification.</p>
 </div>
 
 <div id="qrBox">
 <h3>Your Visitor QR Code</h3>
 <div id="qrcode"></div>
 <p id="regId"></p>
-<button type="button" id="downloadBtn">DOWNLOAD QR CODE</button>
+<button id="downloadBtn" type="button">DOWNLOAD QR CODE</button>
 </div>
 
 </div>
@@ -124,25 +123,21 @@ if(!form.reportValidity()) return;
 
 btn.disabled = true;
 btn.textContent = "PLEASE WAIT...";
-message.textContent = "Registering your information...";
+message.textContent = "Processing registration...";
 
 try{
 
-const fullName = document.getElementById("name").value.trim();
-const fatherName = document.getElementById("father").value.trim();
-const email = document.getElementById("email").value.trim().toLowerCase();
-const contact = document.getElementById("contact").value.trim();
-const city = document.getElementById("city").value.trim();
-const designation = document.getElementById("designation").value.trim();
-
-const {data,error} = await db.rpc("register_visitor",{
-p_full_name:fullName,
-p_father_name:fatherName,
-p_contact_number:contact,
-p_city:city,
-p_designation:designation,
-p_email:email
-});
+const {data,error} = await db.rpc(
+"register_visitor",
+{
+p_full_name:document.getElementById("name").value.trim(),
+p_father_name:document.getElementById("father").value.trim(),
+p_contact_number:document.getElementById("contact").value.trim(),
+p_city:document.getElementById("city").value.trim(),
+p_designation:document.getElementById("designation").value.trim(),
+p_email:document.getElementById("email").value.trim().toLowerCase()
+}
+);
 
 if(error) throw error;
 
@@ -152,68 +147,47 @@ if(!visitor || !visitor.registration_id || !visitor.qr_token){
 throw new Error("Registration information missing.");
 }
 
-const registrationId = visitor.registration_id;
-const token = visitor.qr_token;
-
 const verifyURL = new URL(
 "https://ayazmelo.github.io/Ayazmelo/verify.html"
 );
 
-verifyURL.searchParams.set("id",registrationId);
-verifyURL.searchParams.set("token",token);
+verifyURL.searchParams.set("id",visitor.registration_id);
+verifyURL.searchParams.set("token",visitor.qr_token);
 
-const qrContainer = document.getElementById("qrcode");
-qrContainer.innerHTML = "";
-qrImage = "";
+document.getElementById("regId").textContent =
+"Registration ID: "+visitor.registration_id;
 
-new QRCode(qrContainer,{
+document.getElementById("qrcode").innerHTML = "";
+
+new QRCode(
+document.getElementById("qrcode"),
+{
 text:verifyURL.toString(),
-width:300,
-height:300,
-correctLevel:QRCode.CorrectLevel.M
-});
+width:320,
+height:320,
+correctLevel:QRCode.CorrectLevel.H
+}
+);
+
+const canvas = document.querySelector("#qrcode canvas");
+
+if(!canvas){
+throw new Error("QR Code could not be generated.");
+}
+
+qrImage = canvas.toDataURL("image/png");
 
 form.style.display = "none";
 document.getElementById("welcome").style.display = "block";
 document.getElementById("qrBox").style.display = "block";
 
-document.getElementById("regId").textContent =
-"Registration ID: " + registrationId;
-
-message.textContent = "Registration successful! Your QR Code is ready.";
-
-setTimeout(function(){
-
-const canvas = qrContainer.querySelector("canvas");
-
-if(!canvas){
-message.textContent = "QR Code image could not be prepared. Please contact support.";
-return;
-}
-
-// Preserve the original QR modules and add a white quiet zone.
-const margin = 32;
-const output = document.createElement("canvas");
-
-output.width = canvas.width + margin * 2;
-output.height = canvas.height + margin * 2;
-
-const ctx = output.getContext("2d");
-
-ctx.fillStyle = "#ffffff";
-ctx.fillRect(0,0,output.width,output.height);
-
-ctx.imageSmoothingEnabled = false;
-ctx.drawImage(canvas,margin,margin);
-
-qrImage = output.toDataURL("image/png");
-
-},500);
+message.textContent = "Registration successful!";
 
 }catch(error){
 
 console.error(error);
-message.textContent = "Registration Error: " + error.message;
+
+message.textContent = "Registration Error: "+error.message;
 
 btn.disabled = false;
 btn.textContent = "REGISTER NOW";
@@ -225,14 +199,13 @@ btn.textContent = "REGISTER NOW";
 document.getElementById("downloadBtn").addEventListener("click",function(){
 
 if(!qrImage){
-alert("QR Code is not ready. Please wait a moment.");
+message.textContent = "QR image is not ready.";
 return;
 }
 
 const link = document.createElement("a");
 link.href = qrImage;
 link.download = "Ayaz-Melo-Visitor-QR.png";
-
 document.body.appendChild(link);
 link.click();
 link.remove();
