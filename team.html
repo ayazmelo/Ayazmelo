@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Organising Team | Ayaz Melo 2026</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --blue: #21164d;
+    --maroon: #842c3c;
+    --gold: #d9ae62;
+    --cream: #faf5eb;
+    --white: #ffffff;
+    --dark: #171323;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--cream);
+    color: var(--dark);
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.7;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* HEADER */
+
+header {
+    background: var(--blue);
+    color: white;
+    padding: 18px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 27px;
+    font-weight: 700;
+    color: var(--gold);
+}
+
+.header-link {
+    color: white;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* HERO */
+
+.hero {
+    background: linear-gradient(135deg, var(--blue), #38245f);
+    color: white;
+    text-align: center;
+    padding: 75px 20px;
+}
+
+.hero .eyebrow {
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(42px, 7vw, 68px);
+    line-height: 1.1;
+    margin: 15px 0;
+}
+
+.hero p {
+    max-width: 650px;
+    margin: auto;
+    color: #eee7f4;
+    font-size: 14px;
+}
+
+/* MAIN */
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 65px 0;
+}
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.section-heading span {
+    color: var(--maroon);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.section-heading h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 43px;
+    color: var(--blue);
+    margin-top: 8px;
+}
+
+/* TEAM GRID */
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.member-card {
+    background: white;
+    border: 1px solid #e9dfd0;
+    text-align: center;
+    padding: 28px 20px;
+    transition: 0.3s;
+    cursor: pointer;
+    display: block;
+}
+
+.member-card:hover {
+    transform: translateY(-7px);
+    border-color: var(--gold);
+    box-shadow: 0 12px 30px rgba(33, 22, 77, 0.10);
+}
+
+.member-image {
+    width: 145px;
+    height: 145px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    overflow: hidden;
+    background: var(--blue);
+    border: 4px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.member-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.initials {
+    color: var(--gold);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px;
+    font-weight: 700;
+}
+
+.member-card h3 {
+    color: var(--blue);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 25px;
+    line-height: 1.2;
+    margin-bottom: 8px;
+}
+
+.member-role {
+    color: var(--maroon);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.3px;
+    text-transform: uppercase;
+}
+
+.view-profile {
+    display: inline-block;
+    margin-top: 18px;
+    color: var(--blue);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 3px;
+}
+
+/* PROFILE PAGE */
+
+.profile-page {
+    display: none;
+}
+
+.profile-box {
+    max-width: 900px;
+    margin: auto;
+    background: white;
+    padding: 45px;
+    border: 1px solid #e9dfd0;
+    box-shadow: 0 10px 35px rgba(33, 22, 77, 0.07);
+}
+
+.profile-top {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.profile-photo {
+    width: 175px;
+    height: 175px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 20px;
+    border: 5px solid var(--gold);
+    background: var(--blue);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-top h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 43px;
+    color: var(--blue);
+    line-height: 1.15;
+}
+
+.profile-top .member-role {
+    display: block;
+    margin-top: 10px;
+    font-size: 11px;
+}
+
+.profile-intro {
+    font-size: 15px;
+    line-height: 2;
+    color: #403b45;
+    text-align: justify;
+    white-space: pre-line;
+}
+
+.back-button {
+    display: inline-block;
+    margin-bottom: 25px;
+    padding: 12px 22px;
+    background: var(--blue);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+.back-button:hover {
+    background: var(--maroon);
+}
+
+/* FOOTER */
+
+footer {
+    background: var(--blue);
+    color: white;
+    text-align: center;
+    padding: 35px 15px;
+}
+
+footer h3 {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--gold);
+    font-size: 26px;
+}
+
+footer p {
+    font-size: 11px;
+    color: #ddd6e8;
+    margin-top: 8px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 850px) {
+    .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 550px) {
+    header {
+        padding: 15px 5%;
+    }
+
+    .team-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero {
+        padding: 55px 18px;
+    }
+
+    .container {
+        width: 92%;
+        padding: 45px 0;
+    }
+
+    .profile-box {
+        padding: 25px 18px;
+    }
+
+    .profile-top h1 {
+        font-size: 34px;
+    }
+
+    .profile-intro {
+        font-size: 13px;
+        text-align: left;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <a href="index.html" class="logo">AYAZ MELO 2026</a>
+    <a href="index.html" class="header-link">← Back to Home</a>
+</header>
+
+<section class="hero">
+    <div class="eyebrow">The People Behind the Festival</div>
+    <h1>Meet Our Organising Team</h1>
+    <p>
+        The people whose vision, dedication and collective efforts
+        bring Ayaz Melo to life.
+    </p>
+</section>
+
+<main class="container">
+
+    <!-- TEAM LIST -->
+
+    <section id="teamSection">
+
+        <div class="section-heading">
+            <span>Ayaz Melo 2026</span>
+            <h2>Our Organising Committee</h2>
+        </div>
+
+        <div class="team-grid" id="teamGrid"></div>
+
+    </section>
+
+    <!-- INDIVIDUAL PROFILE -->
+
+    <section class="profile-page" id="profileSection">
+
+        <a href="team.html" class="back-button" id="backButton">
+            ← Back to Organising Team
+        </a>
+
+        <div class="profile-box">
+
+            <div class="profile-top">
+
+                <div class="profile-photo" id="profilePhoto"></div>
+
+                <h1 id="profileName"></h1>
+
+                <span class="member-role" id="profileRole"></span>
+
+            </div>
+
+            <div class="profile-intro" id="profileIntro"></div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    <h3>Ayaz Melo 2026</h3>
+    <p>Hosted by Khanabadosh Writers' Cafe</p>
+    <p>19–21 December 2026 | Hyderabad, Sindh</p>
+    <p>Every Voice. Every Story. Every Generation.</p>
+</footer>
+
+<script>
+
+/* TEAM MEMBER INFORMATION */
+
+const members = [
+
+{
+    id: "amar-sindhu",
+    name: "Prof. Amar Sindhu",
+    role: "Convener, Ayaz Melo",
+    initials: "AS",
+    image: "assets/team/amar-sindhu.jpg",
+    intro: `Prof. Amar Sindhu is the Convener of Ayaz Melo and one of the most prominent progressive voices in Sindh. She teaches Philosophy at the University of Sindh and is the founder of Khanabadosh Writers Cafe in Hyderabad, a permanent space where writers, students and intellectuals gather to debate literature, politics and culture.
+
+As Convener, she pioneered Ayaz Melo in 2015 alongside Prof. Dr. Arfana Mallah and has sustained it for over a decade. She chairs organising committee meetings, sets the festival agenda, and approves the formation of sub-committees for volunteer management, finance, media publicity, and cultural and literary sessions.
+
+She reviews preparations, finalises dates, and ensures every committee submits a work plan. She remains the public face of the Melo, welcoming guests and crediting Shaikh Ayaz for instilling a new consciousness among the people of Sindh.
+
+Her contribution is the vision, leadership and institutional platform that make the festival possible year after year.`
+},
+
+{
+    id: "arfana-mallah",
+    name: "Prof. Dr. Arfana Mallah",
+    role: "Co-Founder & Coordinator",
+    initials: "AM",
+    image: "assets/team/arfana-mallah.jpg",
+    intro: `Prof. Dr. Arfana Mallah is the Co-Founder and Coordinator of Ayaz Melo, and one of the moving forces behind the festival. She is a professor, writer and leading women's rights activist associated with the University of Sindh, and has been a consistent voice for democratic and progressive politics in Sindh.
+
+In official records she has served as stage secretary for the Melo, throwing light on Shaikh Ayaz's work and on the history of the festival.
+
+As Coordinator, she manages stage and session coordination, briefs speakers and panellists before their sessions, and moderates discussions with articulate interventions. She is one of the chief organisers responsible for confirming participation numbers across panel discussions, singers and poets, and for ensuring that the multi-day programme runs smoothly despite external pressure.
+
+Along with Prof. Amar Sindhu, she has faced gender-based extremism yet remained steadfast in organising the festival.
+
+Her contribution is the coordination and continuity that hold the Melo together.`
+},
+
+{
+    id: "taj-joyo",
+    name: "Taj Joyo",
+    role: "Organising Committee Member",
+    initials: "TJ",
+    image: "assets/team/taj-joyo.jpg",
+    intro: `Taj Joyo is a well-known literary figure from Sindh and a member of the Ayaz Melo Organising Committee. He belongs to the progressive literary tradition of Sindh and is recognised among Sindhi writers, poets and intellectuals who have kept the region's literary and cultural discourse alive.
+
+His presence on the committee connects Ayaz Melo to that wider literary circle and to the generation of writers shaped by Shaikh Ayaz's legacy.
+
+As a literary member of the Organising Committee, his contribution is intellectual and creative guidance: helping shape session themes, recommending writers and poets for participation, and ensuring that the festival's programme reflects the depth of Sindhi literature rather than surface-level entertainment.
+
+He also participates in committee meetings and supports the festival's literary sessions and cultural content.`
+},
+
+{
+    id: "abdul-majeed-chandio",
+    name: "Dr. Abdul Majeed Chandio",
+    role: "Organising Committee Member",
+    initials: "AC",
+    image: "assets/team/abdul-majeed-chandio.jpg",
+    intro: `Dr. Abdul Majeed Chandio is a writer and professor serving as a member of the Ayaz Melo Organising Committee. He is part of the supporting core team that works alongside the Convener and Coordinator to plan and deliver the festival each December.
+
+As an academic and literary figure on the committee, his contribution is intellectual and literary guidance: helping shape session themes, recommending speakers and topics connected to Shaikh Ayaz's work and Sindh's literary tradition, and ensuring that the festival remains rooted in serious cultural and critical content rather than becoming purely entertainment-driven.
+
+He also participates in committee meetings, reviews programme proposals, and supports academic participation from universities.`
+},
+
+{
+    id: "haseen-musarrat-shah",
+    name: "Dr. Haseen Musarrat Shah",
+    role: "Organising Committee Member",
+    initials: "HS",
+    image: "assets/team/haseen-musarrat-shah.jpg",
+    intro: `Dr. Haseen Musarrat Shah is a scholar and academic, and a member of the Ayaz Melo Organising Committee. She is recognised as one of the four key women who set the stage for Ayaz Melo every December, alongside Prof. Amar Sindhu, Prof. Dr. Arfana Mallah and Zakia Aijaz.
+
+Her role in the festival is both visible and behind the scenes: she moderates sessions, anchors discussions and provides organising support across the event.
+
+She appears in committee meetings and press briefings, helping communicate the festival's programme and preparations. Her hard work has been publicly credited with adding charm to the event, and she has remained steadfast in her commitment to the Melo even in the face of gender-based extremism directed at the women organisers.
+
+Her contribution combines session moderation with steady organising support, making her one of the anchors of the festival's annual delivery.`
+},
+
+{
+    id: "imdad-chandio",
+    name: "Dr. Imdad Chandio",
+    role: "Organising Committee Member",
+    initials: "IC",
+    image: "assets/team/imdad-chandio.jpg",
+    intro: `Dr. Imdad Chandio is a member of the Ayaz Melo Organising Committee and a former student activist who led the Democratic Student Federation (DSF) during the 1980s.
+
+His activist background makes him particularly well suited to the on-ground and volunteer side of the festival. In documented accounts of the Melo, his contribution is described as training the young volunteers who help maintain order at the event, and providing ample support to the core organising team in navigating arrangements.
+
+This includes orienting volunteers before the festival, deploying them during sessions, and helping ensure that crowds, queues and venue movement remain managed and peaceful.
+
+He also participates in committee meetings and supports logistics planning.
+
+His contribution to Ayaz Melo is the discipline, volunteer capacity and ground-level reliability that allow a large public festival to run safely and smoothly.`
+},
+
+{
+    id: "rehana-mallah",
+    name: "Dr. Rehana Mallah",
+    role: "Organising Committee Member",
+    initials: "RM",
+    image: "assets/team/rehana-mallah.jpg",
+    intro: `Dr. Rehana Mallah is an Assistant Professor in the Department of Sindhi at the University of Sindh, and a member of the Ayaz Melo Organising Committee.
+
+Her academic work is rooted in Sindhi language and literature, which places her close to the intellectual core of a festival dedicated to Shaikh Ayaz.
+
+As a Sindhi literature academic on the committee, her contribution is support for the Melo's literary content: helping review session proposals, recommending topics connected to Shaikh Ayaz's poetry and prose, and encouraging academic participation from the university.
+
+She also participates in committee meetings and supports the festival's broader effort to keep Sindhi literary traditions central to its programme.`
+},
+
+{
+    id: "zakia-aijaz",
+    name: "Zakia Aijaz",
+    role: "Organising Committee Member",
+    initials: "ZA",
+    image: "assets/team/zakia-aijaz.jpg",
+    intro: `Zakia Aijaz is a writer and a member of the Ayaz Melo Organising Committee, recognised as one of the four moving forces behind the festival alongside Prof. Amar Sindhu, Prof. Dr. Arfana Mallah and Dr. Haseen Musarrat Shah.
+
+She is known as an accomplished session moderator and anchors some of the festival's most prominent book launches and literary discussions, including launches of books by leading journalists and writers.
+
+Her articulate interventions keep discussions focused, engaging and respectful of the audience's time, and her moderation is a key reason why sessions draw active audience participation.
+
+Beyond the stage, she participates in committee meetings and supports the planning of the literary programme.
+
+Her contribution to Ayaz Melo is the quality of public conversation on its stages: she turns panels and book launches into lively, substantive discussions rather than formal readings.`
+},
+
+{
+    id: "naseem-jalbani",
+    name: "Naseem Jalbani",
+    role: "Organising Committee Member",
+    initials: "NJ",
+    image: "assets/team/naseem-jalbani.jpg",
+    intro: `Naseem Jalbani is a member of the Ayaz Melo Organising Committee and has been part of the festival committee since at least 2017, when she appeared alongside Prof. Amar Sindhu, Dr. Haseen Musarrat Shah and Ali Akash in press briefings announcing the festival.
+
+Her contribution sits largely in communication and coordination: supporting press briefings, helping communicate the festival's programme, dates and themes to the media, and assisting with the general organising arrangements of the Melo.
+
+She also participates in committee meetings and works with the core team on logistics and publicity support as assigned.`
+},
+
+{
+    id: "irfan-ali-chandio",
+    name: "Advocate Irfan Ali Chandio",
+    role: "Logistics Coordinator & Head of Volunteers",
+    initials: "IA",
+    image: "assets/team/irfan-ali-chandio.jpg",
+    intro: `Advocate Irfan Ali Chandio is the Logistics Coordinator and Head of Volunteers for Ayaz Melo. He is a lawyer enrolled with the Sindh Bar Council as a Lower Court advocate, and brings a professional, procedural approach to the festival's ground operations.
+
+In this role he manages on-ground logistics: venue arrangements, volunteer deployment and coordination during the event, and the practical details that keep sessions, stages and audience movement running on time.
+
+The Organising Committee has specifically resolved to formulate a Volunteer Coordination Committee and to conduct orientation sessions in advance for smooth event management, and his role is central to that effort.
+
+He works closely with committee members who train volunteers, and with the core team on planning and execution.
+
+His contribution to Ayaz Melo is operational reliability: the logistics and volunteer backbone that a large public literary festival depends on.`
+},
+
+{
+    id: "uzma-memon",
+    name: "Uzma Memon",
+    role: "Organising Committee Member",
+    initials: "UM",
+    image: "assets/team/uzma-memon.jpg",
+    intro: `Uzma Memon is a member of the Ayaz Melo team, listed in the Organising Team structure for the 2026 edition of the festival.
+
+As a member of the team, her contribution is general organising support: assisting with sessions, guest coordination, registrations and the day-to-day arrangements that the Organising Committee assigns during the planning period and at the event itself.
+
+She works alongside the Convener, Coordinator and other committee members, supporting the smooth delivery of the programme and helping ensure that guests, speakers and audiences are looked after during the festival.`
+},
+
+{
+    id: "atlas-abeer-shah",
+    name: "Atlas Abeer Shah",
+    role: "Content Writer",
+    initials: "AS",
+    image: "assets/team/atlas-abeer-shah.jpg",
+    intro: `Atlas Abeer Shah is the Content Writer for Ayaz Melo, listed in the Organising Team structure for the 2026 edition.
+
+Her contribution is written content: drafting and managing event descriptions, session summaries, social media posts, announcements and publicity material for the festival.
+
+This work supports the Media and Publicity Committee, which the Organising Committee has resolved to formulate as part of its planning, and helps translate the festival's literary and cultural purpose into clear, accessible language for a wider audience.
+
+She also supports documentation of sessions and helps keep the festival's public communication consistent across platforms.`
+}
+
+];
+
+
+/* IMAGE WITH FALLBACK */
+
+function createImage(member, className) {
+
+    return `
+        <div class="${className}">
+            <img
+                src="${member.image}"
+                alt="${member.name}"
+                onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\\'initials\\'>${member.initials}</span>';"
+            >
+        </div>
+    `;
+}
+
+
+/* DISPLAY TEAM CARDS */
+
+function showTeam() {
+
+    const grid = document.getElementById("teamGrid");
+
+    grid.innerHTML = members.map((member, index) => `
+
+        <a class="member-card"
+           href="team.html?member=${member.id}">
+
+            ${createImage(member, "member-image")}
+
+            <h3>${index + 1}. ${member.name}</h3>
+
+            <div class="member-role">${member.role}</div>
+
+            <span class="view-profile">VIEW INTRODUCTION →</span>
+
+        </a>
+
+    `).join("");
+
+}
+
+
+/* DISPLAY INDIVIDUAL PROFILE */
+
+function showProfile(member) {
+
+    document.getElementById("teamSection").style.display = "none";
+
+    document.getElementById("profileSection").style.display = "block";
+
+    document.getElementById("profilePhoto").innerHTML =
+        `<img src="${member.image}" alt="${member.name}"
+        onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\\'initials\\'>${member.initials}</span>';">`;
+
+    document.getElementById("profileName").textContent = member.name;
+
+    document.getElementById("profileRole").textContent = member.role;
+
+    document.getElementById("profileIntro").textContent = member.intro;
+
+    document.title = member.name + " | Ayaz Melo 2026";
+
+}
+
+
+/* PAGE INITIALIZATION */
+
+showTeam();
+
+const urlParams = new URLSearchParams(window.location.search);
+
+const selectedMember = urlParams.get("member");
+
+if (selectedMember) {
+
+    const member = members.find(item => item.id === selectedMember);
+
+    if (member) {
+        showProfile(member);
+    }
+
+}
+
+</script>
+
+</body>
+  </html>
