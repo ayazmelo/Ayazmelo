@@ -3,130 +3,97 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ayaz Melo 2026 - Visitor Verification</title>
+<title>Ayaz Melo | Visitor Verification</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://unpkg.com/html5-qrcode"></script>
 
 <style>
-* {
-    box-sizing: border-box;
+*{box-sizing:border-box}
+body{
+ margin:0;
+ background:#f5f0e8;
+ color:#201b35;
+ font-family:Arial,sans-serif;
 }
-
-body {
-    margin: 0;
-    padding: 20px;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #101827;
-    font-family: Arial, sans-serif;
-    color: white;
+header{
+ background:#30205d;
+ color:white;
+ padding:25px;
+ text-align:center;
 }
-
-.card {
-    width: 100%;
-    max-width: 430px;
-    background: #1d293b;
-    padding: 30px 22px;
-    border-radius: 18px;
-    text-align: center;
-    box-shadow: 0 10px 35px rgba(0,0,0,0.35);
+header h1{margin:0;color:#f5ae35}
+.container{
+ max-width:550px;
+ margin:40px auto;
+ padding:25px;
 }
-
-.logo {
-    font-size: 30px;
-    font-weight: bold;
-    color: #f5c451;
-    margin-bottom: 8px;
+.card{
+ background:white;
+ padding:30px;
+ border-radius:18px;
+ box-shadow:0 8px 30px #0001;
 }
-
-.subtitle {
-    color: #cbd5e1;
-    font-size: 14px;
-    margin-bottom: 25px;
+h2{text-align:center}
+button{
+ width:100%;
+ padding:15px;
+ border:0;
+ border-radius:8px;
+ background:#30205d;
+ color:white;
+ font-weight:bold;
+ cursor:pointer;
+ margin-top:15px;
 }
-
-.status {
-    font-size: 23px;
-    font-weight: bold;
-    margin: 20px 0;
+#reader{margin-top:20px}
+#result{
+ margin-top:25px;
+ padding:20px;
+ border-radius:12px;
+ display:none;
 }
-
-.valid {
-    color: #4ade80;
+.success{background:#d9f4df;color:#14532d}
+.error{background:#ffe0e0;color:#8b1717}
+.info{
+ padding:10px;
+ border-bottom:1px solid #eee;
 }
-
-.invalid {
-    color: #fb7185;
-}
-
-.waiting {
-    color: #facc15;
-}
-
-.details {
-    color: #e2e8f0;
-    line-height: 1.7;
-    font-size: 15px;
-}
-
-button {
-    width: 100%;
-    border: none;
-    padding: 14px;
-    border-radius: 9px;
-    background: #f5c451;
-    color: #101827;
-    font-size: 15px;
-    font-weight: bold;
-    margin-top: 22px;
-    cursor: pointer;
-}
-
-.footer {
-    color: #94a3b8;
-    font-size: 12px;
-    margin-top: 25px;
-}
+footer{text-align:center;padding:25px;color:#777}
 </style>
 </head>
 
 <body>
 
+<header>
+<h1>KHANABADOSH</h1>
+<p>AYAZ MELO 2026</p>
+<small>OFFICIAL VISITOR VERIFICATION PORTAL</small>
+</header>
+
+<div class="container">
 <div class="card">
 
-    <div class="logo">AYAZ MELO 2026</div>
+<h2>Visitor Entry Verification</h2>
 
-    <div class="subtitle">
-        Official Visitor Verification Portal
-    </div>
+<p style="text-align:center">
+Scan the visitor's QR code to verify registration.
+</p>
 
-    <div id="loader" class="status waiting">
-        Checking Registration...
-    </div>
+<div id="reader"></div>
 
-    <div id="result" style="display:none;">
+<button onclick="startScanner()">
+SCAN VISITOR QR CODE
+</button>
 
-        <div id="status" class="status"></div>
-
-        <div id="details" class="details"></div>
-
-        <a href="visitor.html">
-            <button>VISITOR REGISTRATION</button>
-        </a>
-
-        <a href="index.html">
-            <button style="background:#334155;color:white;">
-                BACK TO WEBSITE
-            </button>
-        </a>
-
-    </div>
-
-    <div class="footer">
-        Ayaz Melo 2026 | Khanabadosh
-    </div>
+<div id="result"></div>
 
 </div>
+</div>
+
+<footer>
+© 2026 Ayaz Melo · Khanabadosh Writers' Cafe
+</footer>
 
 <script>
 
@@ -136,137 +103,192 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "sb_publishable_BNRQfiLDVM-892aVwO_hJw_OAhEgTrq";
 
-const loader = document.getElementById("loader");
-const result = document.getElementById("result");
-const statusBox = document.getElementById("status");
-const details = document.getElementById("details");
+const supabase = window.supabase.createClient(
+ SUPABASE_URL,
+ SUPABASE_KEY
+);
 
-function show(title, type, message) {
+let scanner = null;
+let processing = false;
 
-    loader.style.display = "none";
-    result.style.display = "block";
+function showResult(html,type){
 
-    statusBox.textContent = title;
-    statusBox.className = "status " + type;
+ const box=document.getElementById("result");
 
-    details.innerHTML = message;
-}
-
-async function verifyVisitor() {
-
-    const params = new URLSearchParams(window.location.search);
-
-    const id = params.get("id");
-    const token = params.get("token");
-
-    // If page is opened without scanning a QR code
-
-    if (!id || !token) {
-
-        show(
-            "AYAZ MELO 2026",
-            "valid",
-            `
-            <h3>Visitor Verification Portal</h3>
-            <p>
-            Welcome to Ayaz Melo 2026.
-            </p>
-            <p>
-            Please scan a registered visitor QR code
-            to verify registration.
-            </p>
-            `
-        );
-
-        return;
-    }
-
-    try {
-
-        const response = await fetch(
-            SUPABASE_URL + "/rest/v1/rpc/verify_visitor",
-            {
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json",
-                    "apikey": SUPABASE_KEY,
-                    "Authorization": "Bearer " + SUPABASE_KEY
-                },
-
-                body: JSON.stringify({
-                    p_registration_id: id,
-                    p_qr_token: token
-                })
-            }
-        );
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(
-                data.message || "Verification request failed."
-            );
-        }
-
-        const visitor = Array.isArray(data) ? data[0] : data;
-
-        if (!visitor || !visitor.registration_id) {
-
-            show(
-                "INVALID QR CODE",
-                "invalid",
-                "This registration could not be verified."
-            );
-
-            return;
-        }
-
-        if (visitor.entry_status === "NOT ENTERED") {
-
-            show(
-                "VALID REGISTRATION",
-                "valid",
-                `
-                <h3>Registration Verified</h3>
-                <p><b>Registration ID:</b><br>
-                ${visitor.registration_id}</p>
-                <p><b>Entry Status:</b><br>
-                NOT ENTERED</p>
-                <p>Please proceed to the entry desk.</p>
-                `
-            );
-
-        } else {
-
-            show(
-                "ALREADY ENTERED",
-                "waiting",
-                `
-                <h3>Visitor Already Checked In</h3>
-                <p><b>Registration ID:</b><br>
-                ${visitor.registration_id}</p>
-                <p><b>Entry Status:</b><br>
-                ${visitor.entry_status}</p>
-                `
-            );
-
-        }
-
-    } catch (error) {
-
-        show(
-            "VERIFICATION ERROR",
-            "invalid",
-            "Unable to verify this QR code. Please try again.<br><br>" +
-            error.message
-        );
-
-    }
+ box.style.display="block";
+ box.className=type;
+ box.innerHTML=html;
 
 }
 
-verifyVisitor();
+async function verifyVisitor(registrationId,qrToken){
+
+ if(processing)return;
+
+ if(!registrationId || !qrToken){
+
+ showResult(
+ "Invalid QR Code. Registration information is missing.",
+ "error"
+ );
+
+ return;
+ }
+
+ processing=true;
+
+ showResult("Verifying visitor...","");
+
+ try{
+
+ const {data,error}=await supabase.rpc(
+ "verify_visitor",
+ {
+  p_registration_id:registrationId,
+  p_qr_token:qrToken
+ }
+ );
+
+ if(error)throw error;
+
+ const visitor=Array.isArray(data)?data[0]:data;
+
+ if(!visitor){
+ throw new Error("Visitor record not found.");
+ }
+
+ const status=String(
+ visitor.entry_status || ""
+ ).toUpperCase();
+
+ if(status==="ENTERED" || status==="ALREADY_ENTERED"){
+
+ showResult(`
+ <h2>⚠️ ALREADY ENTERED</h2>
+ <p>This QR code has already been used.</p>
+ `,"error");
+
+ }else if(
+ status==="VERIFIED" ||
+ status==="SUCCESS" ||
+ status==="VALID"
+ ){
+
+ showResult(`
+ <h2>✓ VISITOR VERIFIED</h2>
+ <div class="info">
+ Registration ID: ${escapeHTML(visitor.registration_id)}
+ </div>
+ <div class="info">
+ Entry Status: ${escapeHTML(status)}
+ </div>
+ <p>Visitor verification successful.</p>
+ `,"success");
+
+ }else{
+
+ showResult(`
+ <h2>VERIFICATION RESULT</h2>
+ <pre>${escapeHTML(JSON.stringify(visitor,null,2))}</pre>
+ `,"success");
+
+ }
+
+ }catch(error){
+
+ showResult(
+ "Verification Failed: "+escapeHTML(error.message),
+ "error"
+ );
+
+ }finally{
+
+ processing=false;
+
+ }
+
+}
+
+function escapeHTML(value){
+
+ return String(value ?? "").replace(/[&<>"']/g,char=>({
+  "&":"&amp;",
+  "<":"&lt;",
+  ">":"&gt;",
+  '"':"&quot;",
+  "'":"&#39;"
+ })[char]);
+
+}
+
+async function startScanner(){
+
+ if(!scanner){
+
+ scanner=new Html5Qrcode("reader");
+
+ }
+
+ try{
+
+ await scanner.start(
+  {facingMode:"environment"},
+  {fps:10,qrbox:250},
+
+  async(decodedText)=>{
+
+  await scanner.stop();
+
+  try{
+
+   const url=new URL(decodedText);
+
+   const id=url.searchParams.get("registration_id");
+
+   const token=
+    url.searchParams.get("qr_token") ||
+    url.searchParams.get("token");
+
+   await verifyVisitor(id,token);
+
+  }catch(e){
+
+   showResult("Invalid QR link.","error");
+
+  }
+
+  },
+
+  ()=>{}
+
+ );
+
+ }catch(error){
+
+ showResult(
+ "Camera error: "+escapeHTML(error.message),
+ "error"
+ );
+
+ }
+
+}
+
+// Automatically verify when QR link opens directly.
+
+const params=new URLSearchParams(location.search);
+
+const registrationId=params.get("registration_id");
+
+const qrToken=
+ params.get("qr_token") ||
+ params.get("token");
+
+if(registrationId && qrToken){
+
+ verifyVisitor(registrationId,qrToken);
+
+}
 
 </script>
 
