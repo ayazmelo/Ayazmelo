@@ -2,64 +2,95 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ayaz Melo | Visitor Verification</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ayaz Melo 2026 | Visitor Registration</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://unpkg.com/html5-qrcode"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <style>
 *{box-sizing:border-box}
 body{
  margin:0;
- background:#f5f0e8;
- color:#201b35;
+ background:#f6f0e7;
  font-family:Arial,sans-serif;
+ color:#21164d;
 }
 header{
- background:#30205d;
+ background:#21164d;
  color:white;
- padding:25px;
  text-align:center;
+ padding:30px 15px;
 }
-header h1{margin:0;color:#f5ae35}
+header h1{color:#d9ae62;margin:0}
 .container{
  max-width:550px;
- margin:40px auto;
- padding:25px;
+ margin:35px auto;
+ padding:20px;
 }
 .card{
  background:white;
  padding:30px;
- border-radius:18px;
- box-shadow:0 8px 30px #0001;
+ border-radius:15px;
+ box-shadow:0 8px 25px #0001;
 }
 h2{text-align:center}
+label{
+ display:block;
+ margin-top:17px;
+ font-size:13px;
+ font-weight:bold;
+}
+input{
+ width:100%;
+ padding:14px;
+ margin-top:7px;
+ border:1px solid #ddd;
+ border-radius:7px;
+ font-size:15px;
+}
 button{
  width:100%;
  padding:15px;
+ margin-top:20px;
  border:0;
- border-radius:8px;
- background:#30205d;
+ background:#842c3c;
  color:white;
+ border-radius:7px;
  font-weight:bold;
  cursor:pointer;
- margin-top:15px;
 }
-#reader{margin-top:20px}
-#result{
- margin-top:25px;
- padding:20px;
- border-radius:12px;
+button:disabled{opacity:.6}
+#welcome{
  display:none;
+ background:#e3f5e6;
+ color:#14532d;
+ padding:20px;
+ border-radius:10px;
+ margin-top:20px;
+ text-align:center;
 }
-.success{background:#d9f4df;color:#14532d}
-.error{background:#ffe0e0;color:#8b1717}
-.info{
- padding:10px;
- border-bottom:1px solid #eee;
+#qrBox{
+ display:none;
+ text-align:center;
+ margin-top:25px;
 }
-footer{text-align:center;padding:25px;color:#777}
+#qrcode{
+ display:flex;
+ justify-content:center;
+ padding:15px;
+}
+#message{
+ margin-top:15px;
+ text-align:center;
+ font-size:13px;
+}
+footer{
+ text-align:center;
+ padding:25px;
+ color:#777;
+ font-size:12px;
+}
 </style>
 </head>
 
@@ -67,32 +98,67 @@ footer{text-align:center;padding:25px;color:#777}
 
 <header>
 <h1>KHANABADOSH</h1>
-<p>AYAZ MELO 2026</p>
-<small>OFFICIAL VISITOR VERIFICATION PORTAL</small>
+<h2>AYAZ MELO 2026</h2>
+<p>OFFICIAL VISITOR REGISTRATION</p>
+<p>19–21 DECEMBER 2026</p>
 </header>
 
 <div class="container">
 <div class="card">
 
-<h2>Visitor Entry Verification</h2>
+<h2>Visitor Registration</h2>
 
-<p style="text-align:center">
-Scan the visitor's QR code to verify registration.
+<p style="text-align:center;color:#777">
+Welcome to Ayaz Melo 2026.
 </p>
 
-<div id="reader"></div>
+<form id="visitorForm">
 
-<button onclick="startScanner()">
-SCAN VISITOR QR CODE
+<label>Full Name *</label>
+<input id="name" required placeholder="Enter your full name">
+
+<label>Father's Name *</label>
+<input id="father" required placeholder="Enter father's name">
+
+<label>Contact Number *</label>
+<input id="contact" type="tel" required placeholder="+92">
+
+<label>City *</label>
+<input id="city" required placeholder="Your city">
+
+<label>Designation *</label>
+<input id="designation" required placeholder="Your designation">
+
+<button id="submitBtn" type="submit">
+REGISTER NOW
 </button>
 
-<div id="result"></div>
+</form>
+
+<div id="message"></div>
+
+<div id="welcome">
+<h2>🎉 Welcome to Ayaz Melo 2026!</h2>
+<p>
+خوش آمدید! آپ کی Ayaz Melo 2026 میں رجسٹریشن کامیابی سے مکمل ہوگئی ہے۔
+ہم آپ کو Ayaz Melo میں خوش آمدید کہتے ہیں۔
+</p>
+<p>اپنا QR Code محفوظ کرلیں اور ایونٹ میں داخلے کے وقت دکھائیں۔</p>
+</div>
+
+<div id="qrBox">
+<h3>Your Visitor QR Code</h3>
+<div id="qrcode"></div>
+<p id="regId"></p>
+<button onclick="downloadQR()">DOWNLOAD QR CODE</button>
+</div>
 
 </div>
 </div>
 
 <footer>
-© 2026 Ayaz Melo · Khanabadosh Writers' Cafe
+Hosted by Khanabadosh Writers' Cafe
+<br>© Ayaz Melo 2026
 </footer>
 
 <script>
@@ -103,194 +169,125 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "sb_publishable_BNRQfiLDVM-892aVwO_hJw_OAhEgTrq";
 
-const supabase = window.supabase.createClient(
- SUPABASE_URL,
- SUPABASE_KEY
+const db = window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
 );
 
-let scanner = null;
-let processing = false;
+let qrImage = "";
 
-function showResult(html,type){
+document.getElementById("visitorForm")
+.addEventListener("submit",async function(e){
 
- const box=document.getElementById("result");
+e.preventDefault();
 
- box.style.display="block";
- box.className=type;
- box.innerHTML=html;
+const btn=document.getElementById("submitBtn");
+const message=document.getElementById("message");
+
+btn.disabled=true;
+btn.textContent="PLEASE WAIT...";
+
+message.textContent="Registering your information...";
+
+try{
+
+const {data,error}=await db.rpc(
+"register_visitor",
+{
+p_full_name:document.getElementById("name").value.trim(),
+p_father_name:document.getElementById("father").value.trim(),
+p_contact_number:document.getElementById("contact").value.trim(),
+p_city:document.getElementById("city").value.trim(),
+p_designation:document.getElementById("designation").value.trim()
+}
+);
+
+if(error)throw error;
+
+const visitor=Array.isArray(data)?data[0]:data;
+
+if(!visitor || !visitor.registration_id || !visitor.qr_token){
+throw new Error("Registration information missing.");
+}
+
+const registrationId=visitor.registration_id;
+const token=visitor.qr_token;
+
+const verifyURL=new URL(
+"https://ayazmelo.github.io/Ayazmelo/verify.html"
+);
+
+verifyURL.searchParams.set("id",registrationId);
+verifyURL.searchParams.set("token",token);
+verifyURL.searchParams.set("registration_id",registrationId);
+verifyURL.searchParams.set("qr_token",token);
+
+document.getElementById("visitorForm").style.display="none";
+
+document.getElementById("welcome").style.display="block";
+document.getElementById("qrBox").style.display="block";
+
+document.getElementById("regId").textContent=
+"Registration ID: "+registrationId;
+
+document.getElementById("qrcode").innerHTML="";
+
+new QRCode(
+document.getElementById("qrcode"),
+{
+text:verifyURL.toString(),
+width:700,
+height:700,
+correctLevel:QRCode.CorrectLevel.H
+}
+);
+
+setTimeout(()=>{
+
+const canvas=document.querySelector("#qrcode canvas");
+
+if(canvas){
+qrImage=canvas.toDataURL("image/png");
+}
+
+},500);
+
+message.textContent="Registration successful!";
+
+}catch(error){
+
+message.textContent="Error: "+error.message;
+
+btn.disabled=false;
+btn.textContent="REGISTER NOW";
 
 }
 
-async function verifyVisitor(registrationId,qrToken){
+});
 
- if(processing)return;
+function downloadQR(){
 
- if(!registrationId || !qrToken){
+if(!qrImage){
+const canvas=document.querySelector("#qrcode canvas");
 
- showResult(
- "Invalid QR Code. Registration information is missing.",
- "error"
- );
-
- return;
- }
-
- processing=true;
-
- showResult("Verifying visitor...","");
-
- try{
-
- const {data,error}=await supabase.rpc(
- "verify_visitor",
- {
-  p_registration_id:registrationId,
-  p_qr_token:qrToken
- }
- );
-
- if(error)throw error;
-
- const visitor=Array.isArray(data)?data[0]:data;
-
- if(!visitor){
- throw new Error("Visitor record not found.");
- }
-
- const status=String(
- visitor.entry_status || ""
- ).toUpperCase();
-
- if(status==="ENTERED" || status==="ALREADY_ENTERED"){
-
- showResult(`
- <h2>⚠️ ALREADY ENTERED</h2>
- <p>This QR code has already been used.</p>
- `,"error");
-
- }else if(
- status==="VERIFIED" ||
- status==="SUCCESS" ||
- status==="VALID"
- ){
-
- showResult(`
- <h2>✓ VISITOR VERIFIED</h2>
- <div class="info">
- Registration ID: ${escapeHTML(visitor.registration_id)}
- </div>
- <div class="info">
- Entry Status: ${escapeHTML(status)}
- </div>
- <p>Visitor verification successful.</p>
- `,"success");
-
- }else{
-
- showResult(`
- <h2>VERIFICATION RESULT</h2>
- <pre>${escapeHTML(JSON.stringify(visitor,null,2))}</pre>
- `,"success");
-
- }
-
- }catch(error){
-
- showResult(
- "Verification Failed: "+escapeHTML(error.message),
- "error"
- );
-
- }finally{
-
- processing=false;
-
- }
-
+if(canvas){
+qrImage=canvas.toDataURL("image/png");
+}
 }
 
-function escapeHTML(value){
-
- return String(value ?? "").replace(/[&<>"']/g,char=>({
-  "&":"&amp;",
-  "<":"&lt;",
-  ">":"&gt;",
-  '"':"&quot;",
-  "'":"&#39;"
- })[char]);
-
+if(!qrImage){
+alert("QR Code is not ready.");
+return;
 }
 
-async function startScanner(){
+const link=document.createElement("a");
 
- if(!scanner){
-
- scanner=new Html5Qrcode("reader");
-
- }
-
- try{
-
- await scanner.start(
-  {facingMode:"environment"},
-  {fps:10,qrbox:250},
-
-  async(decodedText)=>{
-
-  await scanner.stop();
-
-  try{
-
-   const url=new URL(decodedText);
-
-   const id=url.searchParams.get("registration_id");
-
-   const token=
-    url.searchParams.get("qr_token") ||
-    url.searchParams.get("token");
-
-   await verifyVisitor(id,token);
-
-  }catch(e){
-
-   showResult("Invalid QR link.","error");
-
-  }
-
-  },
-
-  ()=>{}
-
- );
-
- }catch(error){
-
- showResult(
- "Camera error: "+escapeHTML(error.message),
- "error"
- );
-
- }
-
-}
-
-// Automatically verify when QR link opens directly.
-
-const params=new URLSearchParams(location.search);
-
-const registrationId=params.get("registration_id");
-
-const qrToken=
- params.get("qr_token") ||
- params.get("token");
-
-if(registrationId && qrToken){
-
- verifyVisitor(registrationId,qrToken);
+link.href=qrImage;
+link.download="Ayaz-Melo-Visitor-QR.png";
+link.click();
 
 }
 
 </script>
-
 </body>
 </html>
