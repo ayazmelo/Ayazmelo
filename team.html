@@ -361,44 +361,40 @@ footer p {
 
 <main class="container">
 
-    <!-- TEAM LIST -->
+<section id="teamSection">
 
-    <section id="teamSection">
+    <div class="section-heading">
+        <span>Ayaz Melo 2026</span>
+        <h2>Our Organising Committee</h2>
+    </div>
 
-        <div class="section-heading">
-            <span>Ayaz Melo 2026</span>
-            <h2>Our Organising Committee</h2>
-        </div>
+    <div class="team-grid" id="teamGrid"></div>
 
-        <div class="team-grid" id="teamGrid"></div>
+</section>
 
-    </section>
+<section class="profile-page" id="profileSection">
 
-    <!-- INDIVIDUAL PROFILE -->
+    <a href="team.html" class="back-button">
+        ← Back to Organising Team
+    </a>
 
-    <section class="profile-page" id="profileSection">
+    <div class="profile-box">
 
-        <a href="team.html" class="back-button" id="backButton">
-            ← Back to Organising Team
-        </a>
+        <div class="profile-top">
 
-        <div class="profile-box">
+            <div class="profile-photo" id="profilePhoto"></div>
 
-            <div class="profile-top">
+            <h1 id="profileName"></h1>
 
-                <div class="profile-photo" id="profilePhoto"></div>
-
-                <h1 id="profileName"></h1>
-
-                <span class="member-role" id="profileRole"></span>
-
-            </div>
-
-            <div class="profile-intro" id="profileIntro"></div>
+            <span class="member-role" id="profileRole"></span>
 
         </div>
 
-    </section>
+        <div class="profile-intro" id="profileIntro"></div>
+
+    </div>
+
+</section>
 
 </main>
 
@@ -411,17 +407,15 @@ footer p {
 
 <script>
 
-/* TEAM MEMBER INFORMATION */
-
 const members = [
 
 {
-    id: "amar-sindhu",
-    name: "Prof. Amar Sindhu",
-    role: "Convener, Ayaz Melo",
-    initials: "AS",
-    image: "assets/team/amar-sindhu.jpg",
-    intro: `Prof. Amar Sindhu is the Convener of Ayaz Melo and one of the most prominent progressive voices in Sindh. She teaches Philosophy at the University of Sindh and is the founder of Khanabadosh Writers Cafe in Hyderabad, a permanent space where writers, students and intellectuals gather to debate literature, politics and culture.
+id: "amar-sindhu",
+name: "Prof. Amar Sindhu",
+role: "Convener, Ayaz Melo",
+initials: "AS",
+image: "team/amar-sindhu.jpg",
+intro: `Prof. Amar Sindhu is the Convener of Ayaz Melo and one of the most prominent progressive voices in Sindh. She teaches Philosophy at the University of Sindh and is the founder of Khanabadosh Writers Cafe in Hyderabad, a permanent space where writers, students and intellectuals gather to debate literature, politics and culture.
 
 As Convener, she pioneered Ayaz Melo in 2015 alongside Prof. Dr. Arfana Mallah and has sustained it for over a decade. She chairs organising committee meetings, sets the festival agenda, and approves the formation of sub-committees for volunteer management, finance, media publicity, and cultural and literary sessions.
 
@@ -431,12 +425,12 @@ Her contribution is the vision, leadership and institutional platform that make 
 },
 
 {
-    id: "arfana-mallah",
-    name: "Prof. Dr. Arfana Mallah",
-    role: "Co-Founder & Coordinator",
-    initials: "AM",
-    image: "assets/team/arfana-mallah.jpg",
-    intro: `Prof. Dr. Arfana Mallah is the Co-Founder and Coordinator of Ayaz Melo, and one of the moving forces behind the festival. She is a professor, writer and leading women's rights activist associated with the University of Sindh, and has been a consistent voice for democratic and progressive politics in Sindh.
+id: "arfana-mallah",
+name: "Prof. Dr. Arfana Mallah",
+role: "Co-Founder & Coordinator",
+initials: "AM",
+image: "team/arfana-mallah.jpg",
+intro: `Prof. Dr. Arfana Mallah is the Co-Founder and Coordinator of Ayaz Melo, and one of the moving forces behind the festival. She is a professor, writer and leading women's rights activist associated with the University of Sindh, and has been a consistent voice for democratic and progressive politics in Sindh.
 
 In official records she has served as stage secretary for the Melo, throwing light on Shaikh Ayaz's work and on the history of the festival.
 
@@ -448,12 +442,12 @@ Her contribution is the coordination and continuity that hold the Melo together.
 },
 
 {
-    id: "taj-joyo",
-    name: "Taj Joyo",
-    role: "Organising Committee Member",
-    initials: "TJ",
-    image: "assets/team/taj-joyo.jpg",
-    intro: `Taj Joyo is a well-known literary figure from Sindh and a member of the Ayaz Melo Organising Committee. He belongs to the progressive literary tradition of Sindh and is recognised among Sindhi writers, poets and intellectuals who have kept the region's literary and cultural discourse alive.
+id: "taj-joyo",
+name: "Taj Joyo",
+role: "Organising Committee Member",
+initials: "TJ",
+image: "team/taj-joyo.jpg",
+intro: `Taj Joyo is a well-known literary figure from Sindh and a member of the Ayaz Melo Organising Committee. He belongs to the progressive literary tradition of Sindh and is recognised among Sindhi writers, poets and intellectuals who have kept the region's literary and cultural discourse alive.
 
 His presence on the committee connects Ayaz Melo to that wider literary circle and to the generation of writers shaped by Shaikh Ayaz's legacy.
 
@@ -463,12 +457,12 @@ He also participates in committee meetings and supports the festival's literary 
 },
 
 {
-    id: "abdul-majeed-chandio",
-    name: "Dr. Abdul Majeed Chandio",
-    role: "Organising Committee Member",
-    initials: "AC",
-    image: "assets/team/abdul-majeed-chandio.jpg",
-    intro: `Dr. Abdul Majeed Chandio is a writer and professor serving as a member of the Ayaz Melo Organising Committee. He is part of the supporting core team that works alongside the Convener and Coordinator to plan and deliver the festival each December.
+id: "abdul-majeed-chandio",
+name: "Dr. Abdul Majeed Chandio",
+role: "Organising Committee Member",
+initials: "AC",
+image: "team/abdul-majeed-chandio.jpg",
+intro: `Dr. Abdul Majeed Chandio is a writer and professor serving as a member of the Ayaz Melo Organising Committee. He is part of the supporting core team that works alongside the Convener and Coordinator to plan and deliver the festival each December.
 
 As an academic and literary figure on the committee, his contribution is intellectual and literary guidance: helping shape session themes, recommending speakers and topics connected to Shaikh Ayaz's work and Sindh's literary tradition, and ensuring that the festival remains rooted in serious cultural and critical content rather than becoming purely entertainment-driven.
 
@@ -476,12 +470,12 @@ He also participates in committee meetings, reviews programme proposals, and sup
 },
 
 {
-    id: "haseen-musarrat-shah",
-    name: "Dr. Haseen Musarrat Shah",
-    role: "Organising Committee Member",
-    initials: "HS",
-    image: "assets/team/haseen-musarrat-shah.jpg",
-    intro: `Dr. Haseen Musarrat Shah is a scholar and academic, and a member of the Ayaz Melo Organising Committee. She is recognised as one of the four key women who set the stage for Ayaz Melo every December, alongside Prof. Amar Sindhu, Prof. Dr. Arfana Mallah and Zakia Aijaz.
+id: "haseen-musarrat-shah",
+name: "Dr. Haseen Musarrat Shah",
+role: "Organising Committee Member",
+initials: "HS",
+image: "team/haseen-musarrat-shah.jpg",
+intro: `Dr. Haseen Musarrat Shah is a scholar and academic, and a member of the Ayaz Melo Organising Committee. She is recognised as one of the four key women who set the stage for Ayaz Melo every December, alongside Prof. Amar Sindhu, Prof. Dr. Arfana Mallah and Zakia Aijaz.
 
 Her role in the festival is both visible and behind the scenes: she moderates sessions, anchors discussions and provides organising support across the event.
 
@@ -491,12 +485,12 @@ Her contribution combines session moderation with steady organising support, mak
 },
 
 {
-    id: "imdad-chandio",
-    name: "Dr. Imdad Chandio",
-    role: "Organising Committee Member",
-    initials: "IC",
-    image: "assets/team/imdad-chandio.jpg",
-    intro: `Dr. Imdad Chandio is a member of the Ayaz Melo Organising Committee and a former student activist who led the Democratic Student Federation (DSF) during the 1980s.
+id: "imdad-chandio",
+name: "Dr. Imdad Chandio",
+role: "Organising Committee Member",
+initials: "IC",
+image: "team/imdad-chandio.jpg",
+intro: `Dr. Imdad Chandio is a member of the Ayaz Melo Organising Committee and a former student activist who led the Democratic Student Federation (DSF) during the 1980s.
 
 His activist background makes him particularly well suited to the on-ground and volunteer side of the festival. In documented accounts of the Melo, his contribution is described as training the young volunteers who help maintain order at the event, and providing ample support to the core organising team in navigating arrangements.
 
@@ -508,12 +502,12 @@ His contribution to Ayaz Melo is the discipline, volunteer capacity and ground-l
 },
 
 {
-    id: "rehana-mallah",
-    name: "Dr. Rehana Mallah",
-    role: "Organising Committee Member",
-    initials: "RM",
-    image: "assets/team/rehana-mallah.jpg",
-    intro: `Dr. Rehana Mallah is an Assistant Professor in the Department of Sindhi at the University of Sindh, and a member of the Ayaz Melo Organising Committee.
+id: "rehana-mallah",
+name: "Dr. Rehana Mallah",
+role: "Organising Committee Member",
+initials: "RM",
+image: "team/rehana-mallah.jpg",
+intro: `Dr. Rehana Mallah is an Assistant Professor in the Department of Sindhi at the University of Sindh, and a member of the Ayaz Melo Organising Committee.
 
 Her academic work is rooted in Sindhi language and literature, which places her close to the intellectual core of a festival dedicated to Shaikh Ayaz.
 
@@ -523,12 +517,12 @@ She also participates in committee meetings and supports the festival's broader 
 },
 
 {
-    id: "zakia-aijaz",
-    name: "Zakia Aijaz",
-    role: "Organising Committee Member",
-    initials: "ZA",
-    image: "assets/team/zakia-aijaz.jpg",
-    intro: `Zakia Aijaz is a writer and a member of the Ayaz Melo Organising Committee, recognised as one of the four moving forces behind the festival alongside Prof. Amar Sindhu, Prof. Dr. Arfana Mallah and Dr. Haseen Musarrat Shah.
+id: "zakia-aijaz",
+name: "Zakia Aijaz",
+role: "Organising Committee Member",
+initials: "ZA",
+image: "team/zakia-aijaz.jpg",
+intro: `Zakia Aijaz is a writer and a member of the Ayaz Melo Organising Committee, recognised as one of the four moving forces behind the festival alongside Prof. Amar Sindhu, Prof. Dr. Arfana Mallah and Dr. Haseen Musarrat Shah.
 
 She is known as an accomplished session moderator and anchors some of the festival's most prominent book launches and literary discussions, including launches of books by leading journalists and writers.
 
@@ -540,12 +534,12 @@ Her contribution to Ayaz Melo is the quality of public conversation on its stage
 },
 
 {
-    id: "naseem-jalbani",
-    name: "Naseem Jalbani",
-    role: "Organising Committee Member",
-    initials: "NJ",
-    image: "assets/team/naseem-jalbani.jpg",
-    intro: `Naseem Jalbani is a member of the Ayaz Melo Organising Committee and has been part of the festival committee since at least 2017, when she appeared alongside Prof. Amar Sindhu, Dr. Haseen Musarrat Shah and Ali Akash in press briefings announcing the festival.
+id: "naseem-jalbani",
+name: "Naseem Jalbani",
+role: "Organising Committee Member",
+initials: "NJ",
+image: "team/naseem-jalbani.jpg",
+intro: `Naseem Jalbani is a member of the Ayaz Melo Organising Committee and has been part of the festival committee since at least 2017, when she appeared alongside Prof. Amar Sindhu, Dr. Haseen Musarrat Shah and Ali Akash in press briefings announcing the festival.
 
 Her contribution sits largely in communication and coordination: supporting press briefings, helping communicate the festival's programme, dates and themes to the media, and assisting with the general organising arrangements of the Melo.
 
@@ -553,12 +547,12 @@ She also participates in committee meetings and works with the core team on logi
 },
 
 {
-    id: "irfan-ali-chandio",
-    name: "Advocate Irfan Ali Chandio",
-    role: "Logistics Coordinator & Head of Volunteers",
-    initials: "IA",
-    image: "assets/team/irfan-ali-chandio.jpg",
-    intro: `Advocate Irfan Ali Chandio is the Logistics Coordinator and Head of Volunteers for Ayaz Melo. He is a lawyer enrolled with the Sindh Bar Council as a Lower Court advocate, and brings a professional, procedural approach to the festival's ground operations.
+id: "irfan-ali-chandio",
+name: "Advocate Irfan Ali Chandio",
+role: "Logistics Coordinator & Head of Volunteers",
+initials: "IA",
+image: "team/irfan-ali-chandio.jpg",
+intro: `Advocate Irfan Ali Chandio is the Logistics Coordinator and Head of Volunteers for Ayaz Melo. He is a lawyer enrolled with the Sindh Bar Council as a Lower Court advocate, and brings a professional, procedural approach to the festival's ground operations.
 
 In this role he manages on-ground logistics: venue arrangements, volunteer deployment and coordination during the event, and the practical details that keep sessions, stages and audience movement running on time.
 
@@ -570,12 +564,12 @@ His contribution to Ayaz Melo is operational reliability: the logistics and volu
 },
 
 {
-    id: "uzma-memon",
-    name: "Uzma Memon",
-    role: "Organising Committee Member",
-    initials: "UM",
-    image: "assets/team/uzma-memon.jpg",
-    intro: `Uzma Memon is a member of the Ayaz Melo team, listed in the Organising Team structure for the 2026 edition of the festival.
+id: "uzma-memon",
+name: "Uzma Memon",
+role: "Organising Committee Member",
+initials: "UM",
+image: "team/uzma-memon.jpg",
+intro: `Uzma Memon is a member of the Ayaz Melo team, listed in the Organising Team structure for the 2026 edition of the festival.
 
 As a member of the team, her contribution is general organising support: assisting with sessions, guest coordination, registrations and the day-to-day arrangements that the Organising Committee assigns during the planning period and at the event itself.
 
@@ -583,12 +577,12 @@ She works alongside the Convener, Coordinator and other committee members, suppo
 },
 
 {
-    id: "atlas-abeer-shah",
-    name: "Atlas Abeer Shah",
-    role: "Content Writer",
-    initials: "AS",
-    image: "assets/team/atlas-abeer-shah.jpg",
-    intro: `Atlas Abeer Shah is the Content Writer for Ayaz Melo, listed in the Organising Team structure for the 2026 edition.
+id: "atlas-abeer-shah",
+name: "Atlas Abeer Shah",
+role: "Content Writer",
+initials: "AS",
+image: "team/atlas-abeer-shah.jpg",
+intro: `Atlas Abeer Shah is the Content Writer for Ayaz Melo, listed in the Organising Team structure for the 2026 edition.
 
 Her contribution is written content: drafting and managing event descriptions, session summaries, social media posts, announcements and publicity material for the festival.
 
@@ -600,7 +594,7 @@ She also supports documentation of sessions and helps keep the festival's public
 ];
 
 
-/* IMAGE WITH FALLBACK */
+/* CREATE IMAGE */
 
 function createImage(member, className) {
 
@@ -613,10 +607,11 @@ function createImage(member, className) {
             >
         </div>
     `;
+
 }
 
 
-/* DISPLAY TEAM CARDS */
+/* DISPLAY TEAM */
 
 function showTeam() {
 
@@ -633,7 +628,9 @@ function showTeam() {
 
             <div class="member-role">${member.role}</div>
 
-            <span class="view-profile">VIEW INTRODUCTION →</span>
+            <span class="view-profile">
+                VIEW INTRODUCTION →
+            </span>
 
         </a>
 
@@ -642,7 +639,7 @@ function showTeam() {
 }
 
 
-/* DISPLAY INDIVIDUAL PROFILE */
+/* DISPLAY PROFILE */
 
 function showProfile(member) {
 
@@ -650,9 +647,13 @@ function showProfile(member) {
 
     document.getElementById("profileSection").style.display = "block";
 
-    document.getElementById("profilePhoto").innerHTML =
-        `<img src="${member.image}" alt="${member.name}"
-        onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\\'initials\\'>${member.initials}</span>';">`;
+    document.getElementById("profilePhoto").innerHTML = `
+        <img
+            src="${member.image}"
+            alt="${member.name}"
+            onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\\'initials\\'>${member.initials}</span>';"
+        >
+    `;
 
     document.getElementById("profileName").textContent = member.name;
 
@@ -665,7 +666,7 @@ function showProfile(member) {
 }
 
 
-/* PAGE INITIALIZATION */
+/* INITIALIZE PAGE */
 
 showTeam();
 
@@ -686,4 +687,4 @@ if (selectedMember) {
 </script>
 
 </body>
-  </html>
+</html>
