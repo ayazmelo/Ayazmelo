@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Feedback | Ayaz Melo 2026</title>
+<meta name="description" content="Share your experience and feedback about Ayaz Melo 2026.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root {
+    --blue: #21164d;
+    --maroon: #842c3c;
+    --gold: #d9ae62;
+    --cream: #faf5eb;
+    --white: #ffffff;
+    --dark: #171323;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--cream);
+    color: var(--dark);
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.7;
+}
+
+a {
+    text-decoration: none;
+}
+
+header {
+    background: var(--blue);
+    padding: 15px 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.brand img {
+    width: 65px;
+    height: 65px;
+    object-fit: contain;
+}
+
+.brand-name {
+    color: var(--white);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 27px;
+    font-weight: 700;
+}
+
+.brand-name span {
+    display: block;
+    color: var(--gold);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: var(--white);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+nav a:hover {
+    color: var(--gold);
+}
+
+.hero {
+    background: linear-gradient(135deg, rgba(33,22,77,.97), rgba(132,44,60,.94));
+    text-align: center;
+    padding: 75px 20px;
+    color: var(--white);
+}
+
+.hero .eyebrow {
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+.hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(45px, 8vw, 72px);
+    line-height: 1.1;
+    margin: 15px 0;
+}
+
+.hero p {
+    max-width: 650px;
+    margin: auto;
+    color: #eee8f3;
+    font-size: 14px;
+}
+
+.gold-line {
+    width: 75px;
+    height: 3px;
+    background: var(--gold);
+    margin: 22px auto;
+}
+
+.container {
+    width: min(850px, 92%);
+    margin: auto;
+}
+
+.intro {
+    text-align: center;
+    padding: 55px 0 30px;
+}
+
+.intro h2 {
+    color: var(--blue);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 39px;
+    margin-bottom: 10px;
+}
+
+.intro p {
+    color: #625d68;
+    font-size: 13px;
+}
+
+.form-card {
+    background: var(--white);
+    padding: 38px;
+    border-radius: 16px;
+    margin: 10px auto 70px;
+    border: 1px solid #eee4d4;
+    box-shadow: 0 10px 35px rgba(33,22,77,.08);
+}
+
+.form-group {
+    margin-bottom: 23px;
+}
+
+.form-group label,
+.rating-title {
+    display: block;
+    color: var(--blue);
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 9px;
+}
+
+.required {
+    color: var(--maroon);
+}
+
+.optional {
+    color: #888;
+    font-size: 11px;
+    font-weight: 400;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 14px 15px;
+    border: 1px solid #ded8e5;
+    border-radius: 8px;
+    background: #fffefa;
+    color: var(--dark);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: .2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(217,174,98,.15);
+}
+
+textarea {
+    min-height: 115px;
+    resize: vertical;
+}
+
+.rating-box {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 9px;
+    margin: 12px 0 5px;
+}
+
+.rating-box input {
+    display: none;
+}
+
+.rating-box label {
+    font-size: 35px;
+    color: #d8d3dc;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.rating-box label:hover,
+.rating-box label:hover ~ label,
+.rating-box input:checked ~ label {
+    color: var(--gold);
+}
+
+.rating-help {
+    font-size: 11px;
+    color: #777;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 8px;
+    background: var(--maroon);
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.submit-btn:hover {
+    background: var(--blue);
+    transform: translateY(-2px);
+}
+
+.submit-btn:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#formMessage {
+    display: none;
+    padding: 14px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    text-align: center;
+}
+
+.success {
+    display: block !important;
+    color: #155724;
+    background: #d4edda;
+}
+
+.error {
+    display: block !important;
+    color: #721c24;
+    background: #f8d7da;
+}
+
+.privacy-note {
+    text-align: center;
+    font-size: 11px;
+    color: #777;
+    margin-top: 17px;
+}
+
+footer {
+    background: var(--dark);
+    color: var(--white);
+    padding: 35px 7%;
+    text-align: center;
+}
+
+.footer-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+}
+
+.footer-logos img {
+    height: 58px;
+    max-width: 130px;
+    object-fit: contain;
+}
+
+footer p {
+    font-size: 11px;
+    color: #c8c2ce;
+}
+
+footer .tagline {
+    color: var(--gold);
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+@media(max-width:700px) {
+    header {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .brand {
+        justify-content: center;
+    }
+
+    nav {
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .form-card {
+        padding: 24px 18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <a href="index.html" class="brand">
+        <img src="assets/ayaz-melo-2026.png" alt="Ayaz Melo 2026 Logo">
+        <div class="brand-name">
+            Ayaz Melo
+            <span>The 12th Edition · 2026</span>
+        </div>
+    </a>
+
+    <nav>
+        <a href="index.html">HOME</a>
+        <a href="team.html">TEAM</a>
+        <a href="visitor.html">VISITORS</a>
+        <a href="volunteer.html">VOLUNTEERS</a>
+        <a href="archive.html">ARCHIVE</a>
+        <a href="stalls.html">STALLS</a>
+        <a href="contact.html">CONTACT</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <div class="eyebrow">Ayaz Melo 2026 · Hyderabad, Sindh</div>
+    <h1>Share Your Feedback</h1>
+    <div class="gold-line"></div>
+    <p>
+        Your voice matters. Share your experience, thoughts and suggestions
+        to help us make Ayaz Melo better.
+    </p>
+</section>
+
+<main class="container">
+
+    <section class="intro">
+        <h2>We Value Your Opinion</h2>
+        <p>
+            Whether you joined us as a visitor, volunteer, guest or stall participant,
+            we would love to hear about your experience.
+        </p>
+    </section>
+
+    <form class="form-card" id="feedbackForm">
+
+        <div id="formMessage" role="status" aria-live="polite"></div>
+
+        <div class="form-group">
+            <label for="fullName">
+                Full Name <span class="required">*</span>
+            </label>
+            <input
+                type="text"
+                id="fullName"
+                maxlength="100"
+                placeholder="Enter your full name"
+                autocomplete="name"
+                required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">
+                Email Address <span class="optional">(Optional)</span>
+            </label>
+            <input
+                type="email"
+                id="email"
+                maxlength="254"
+                placeholder="Enter your email address"
+                autocomplete="email">
+        </div>
+
+        <div class="form-group">
+            <label for="participantType">
+                You Are a <span class="required">*</span>
+            </label>
+            <select id="participantType" required>
+                <option value="">Select your category</option>
+                <option value="Visitor">Visitor</option>
+                <option value="Volunteer">Volunteer</option>
+                <option value="Guest">Guest</option>
+                <option value="Stall Participant">Stall Participant</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <span class="rating-title">
+                How would you rate your overall experience?
+                <span class="required">*</span>
+            </span>
+
+            <div class="rating-box">
+                <input type="radio" id="star5" name="rating" value="5" required>
+                <label for="star5" title="Excellent">★</label>
+
+                <input type="radio" id="star4" name="rating" value="4">
+                <label for="star4" title="Very Good">★</label>
+
+                <input type="radio" id="star3" name="rating" value="3">
+                <label for="star3" title="Good">★</label>
+
+                <input type="radio" id="star2" name="rating" value="2">
+                <label for="star2" title="Fair">★</label>
+
+                <input type="radio" id="star1" name="rating" value="1">
+                <label for="star1" title="Poor">★</label>
+            </div>
+
+            <div class="rating-help">1 = Poor · 5 = Excellent</div>
+        </div>
+
+        <div class="form-group">
+            <label for="likedMost">
+                What Did You Like Most About Ayaz Melo?
+                <span class="required">*</span>
+            </label>
+            <textarea
+                id="likedMost"
+                maxlength="2000"
+                placeholder="Tell us about your favourite sessions, activities, performances or experiences..."
+                required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="suggestions">
+                Your Suggestions for Improvement
+                <span class="optional">(Optional)</span>
+            </label>
+            <textarea
+                id="suggestions"
+                maxlength="2000"
+                placeholder="How can we make the next Ayaz Melo even better?"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="comments">
+                Additional Comments
+                <span class="optional">(Optional)</span>
+            </label>
+            <textarea
+                id="comments"
+                maxlength="2000"
+                placeholder="Anything else you would like to share..."></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">
+            <i class="fa-solid fa-paper-plane"></i>
+            Submit Your Feedback
+        </button>
+
+        <p class="privacy-note">
+            Thank you for helping us celebrate literature, culture and creativity.
+        </p>
+
+    </form>
+</main>
+
+<footer>
+    <div class="footer-logos">
+        <img src="assets/ayaz-melo-2026.png" alt="Ayaz Melo Logo">
+        <img src="assets/khanabadosh-logo.png" alt="Khanabadosh Writers Cafe Logo">
+    </div>
+
+    <p class="tagline">Where Words Become Heritage.</p>
+    <p>© 2026 Ayaz Melo. All Rights Reserved.</p>
+    <p>Hosted by Khanabadosh Writer’s Cafe · Hyderabad, Sindh</p>
+</footer>
+
+<script>
+const SUPABASE_URL = 'https://fstkhwoxbgdcdfwycggu.supabase.co';
+
+const SUPABASE_ANON_KEY =
+    'sb_publishable_BNRQfiLDVM-892aVwO_hJw_OAhEgTrq';
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+);
+
+const form = document.getElementById('feedbackForm');
+const message = document.getElementById('formMessage');
+const submitBtn = document.getElementById('submitBtn');
+
+function showMessage(text, type) {
+    message.textContent = text;
+    message.className = type;
+    message.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+    });
+}
+
+form.addEventListener('submit', async function(event) {
+    event.preventDefault();
+
+    message.className = '';
+    message.textContent = '';
+
+    const fullName = document.getElementById('fullName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const participantType = document.getElementById('participantType').value;
+    const rating = document.querySelector('input[name="rating"]:checked');
+    const likedMost = document.getElementById('likedMost').value.trim();
+    const suggestions = document.getElementById('suggestions').value.trim();
+    const comments = document.getElementById('comments').value.trim();
+
+    if (!fullName || !participantType || !rating || !likedMost) {
+        showMessage('Please complete all required fields.', 'error');
+        return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.innerHTML =
+        '<i class="fa-solid fa-spinner fa-spin"></i> Submitting...';
+
+    try {
+        const { error } = await supabaseClient
+            .from('feedback_submissions')
+            .insert([{
+                full_name: fullName,
+                email: email || null,
+                participant_type: participantType,
+                rating: Number(rating.value),
+                liked_most: likedMost,
+                suggestions: suggestions || null,
+                additional_comments: comments || null
+            }]);
+
+        if (error) {
+            throw error;
+        }
+
+        form.reset();
+
+        showMessage(
+            'Thank you! Your feedback has been submitted successfully. We appreciate your time and suggestions.',
+            'success'
+        );
+
+    } catch (error) {
+        console.error('Feedback submission error:', error);
+
+        showMessage(
+            'Sorry, your feedback could not be submitted. Please check your internet connection and try again.',
+            'error'
+        );
+
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML =
+            '<i class="fa-solid fa-paper-plane"></i> Submit Your Feedback';
+    }
+});
+</script>
+
+</body>
+  </html>
