@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Archive | Ayaz Melo</title>
+<meta name="description" content="Explore the historical journey of Ayaz Melo from 2015 to 2025 through literary sessions, cultural performances, guests, books and historical posters.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+ --blue:#21164d;
+ --maroon:#842c3c;
+ --gold:#d9ae62;
+ --cream:#faf5eb;
+ --white:#ffffff;
+ --dark:#171323;
+ --muted:#77717c;
+}
+
+* {margin:0;padding:0;box-sizing:border-box;}
+
+body {
+ background:var(--cream);
+ color:var(--dark);
+ font-family:'Montserrat',sans-serif;
+ line-height:1.7;
+}
+
+header {
+ background:var(--blue);
+ color:white;
+ padding:18px 6%;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:15px;
+ flex-wrap:wrap;
+}
+
+.brand {
+ font-family:'Cormorant Garamond',serif;
+ font-size:27px;
+ font-weight:700;
+ color:var(--gold);
+}
+
+header a {
+ color:white;
+ text-decoration:none;
+ font-size:13px;
+}
+
+.hero {
+ background:linear-gradient(135deg,#21164d,#46264e,#842c3c);
+ color:white;
+ text-align:center;
+ padding:90px 20px;
+}
+
+.hero .eyebrow {
+ color:var(--gold);
+ letter-spacing:4px;
+ font-size:12px;
+ font-weight:700;
+}
+
+.hero h1 {
+ font-family:'Cormorant Garamond',serif;
+ font-size:clamp(42px,7vw,76px);
+ margin:15px 0;
+}
+
+.hero p {
+ max-width:760px;
+ margin:auto;
+ font-size:14px;
+ color:#eee6e7;
+}
+
+.container {
+ max-width:1150px;
+ margin:auto;
+ padding:65px 20px;
+}
+
+.section-title {
+ font-family:'Cormorant Garamond',serif;
+ font-size:42px;
+ color:var(--blue);
+ text-align:center;
+ margin-bottom:15px;
+}
+
+.section-intro {
+ text-align:center;
+ max-width:800px;
+ margin:0 auto 45px;
+ color:var(--muted);
+ font-size:14px;
+}
+
+.intro-box {
+ background:white;
+ padding:30px;
+ border-left:5px solid var(--gold);
+ border-radius:8px;
+ margin-bottom:50px;
+ box-shadow:0 8px 25px rgba(0,0,0,.05);
+}
+
+.intro-box h2 {
+ font-family:'Cormorant Garamond',serif;
+ color:var(--maroon);
+ font-size:30px;
+ margin-bottom:12px;
+}
+
+.timeline {
+ position:relative;
+ max-width:900px;
+ margin:auto;
+}
+
+.timeline:before {
+ content:"";
+ position:absolute;
+ left:22px;
+ top:0;
+ bottom:0;
+ width:2px;
+ background:var(--gold);
+}
+
+.year-card {
+ position:relative;
+ margin:0 0 35px 55px;
+ background:white;
+ padding:28px;
+ border-radius:10px;
+ box-shadow:0 8px 25px rgba(0,0,0,.06);
+}
+
+.year-card:before {
+ content:"";
+ position:absolute;
+ left:-43px;
+ top:30px;
+ width:17px;
+ height:17px;
+ background:var(--maroon);
+ border:4px solid var(--cream);
+ border-radius:50%;
+}
+
+.year-top {
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ flex-wrap:wrap;
+ gap:10px;
+ border-bottom:1px solid #eee;
+ padding-bottom:15px;
+ margin-bottom:18px;
+}
+
+.year-top h3 {
+ font-family:'Cormorant Garamond',serif;
+ font-size:35px;
+ color:var(--blue);
+}
+
+.badge {
+ background:#f5e9d2;
+ color:#704c1d;
+ padding:6px 13px;
+ border-radius:30px;
+ font-size:11px;
+ font-weight:700;
+}
+
+.year-card h4 {
+ color:var(--maroon);
+ margin:18px 0 8px;
+ font-size:14px;
+}
+
+.year-card p {
+ font-size:13px;
+ color:#625d65;
+}
+
+.year-card ul {
+ padding-left:20px;
+ color:#625d65;
+ font-size:13px;
+}
+
+.year-card li {margin-bottom:6px;}
+
+.note {
+ background:#fff8e9;
+ border:1px solid #ead9b8;
+ padding:13px;
+ margin-top:15px;
+ border-radius:6px;
+ font-size:12px;
+ color:#745a32;
+}
+
+.poster-section {
+ background:var(--blue);
+ color:white;
+ padding:70px 20px;
+}
+
+.poster-section .section-title {color:var(--gold);}
+
+.poster-section .section-intro {color:#ddd5e6;}
+
+.poster-grid {
+ max-width:1100px;
+ margin:35px auto;
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+ gap:18px;
+}
+
+.poster-card {
+ background:#ffffff12;
+ border:1px solid #ffffff25;
+ padding:22px;
+ border-radius:9px;
+ text-align:center;
+}
+
+.poster-card h3 {
+ font-family:'Cormorant Garamond',serif;
+ font-size:27px;
+ color:var(--gold);
+}
+
+.poster-card p {
+ font-size:12px;
+ color:#e3dce8;
+ margin:8px 0 15px;
+}
+
+.poster-card a {
+ display:inline-block;
+ background:var(--gold);
+ color:var(--blue);
+ text-decoration:none;
+ padding:9px 15px;
+ border-radius:4px;
+ font-size:11px;
+ font-weight:700;
+}
+
+footer {
+ background:#171323;
+ color:#c9c1ce;
+ text-align:center;
+ padding:30px 15px;
+ font-size:12px;
+}
+
+footer a {
+ color:var(--gold);
+ text-decoration:none;
+}
+
+@media(max-width:600px) {
+ .hero {padding:65px 18px;}
+ .container {padding:45px 15px;}
+ .year-card {padding:20px;margin-left:43px;}
+ .timeline:before {left:15px;}
+ .year-card:before {left:-36px;}
+ .year-top h3 {font-size:29px;}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <div class="brand">AYAZ MELO</div>
+ <a href="index.html">← Back to Home</a>
+</header>
+
+<section class="hero">
+ <div class="eyebrow">PRESERVING OUR HISTORY</div>
+ <h1>Digital Archive</h1>
+ <p>
+ The historical journey of Ayaz Melo from 2015 to 2025.
+ A living record of literature, ideas, poetry, music, books
+ and the cultural heritage of Sindh.
+ </p>
+</section>
+
+<main class="container">
+
+ <section class="intro-box">
+  <h2>A Decade of Literature & Culture</h2>
+  <p>
+   Ayaz Melo is a literary and cultural gathering inspired by
+   the life, poetry and intellectual legacy of Shaikh Ayaz.
+   Since its beginning, it has brought together writers,
+   poets, scholars, artists, musicians, students and cultural
+   communities on one platform.
+  </p>
+  <br>
+  <p>
+   Traditionally, Ayaz Melo is associated with the last weekend
+   of December. Across its editions, the festival has featured
+   literary discussions, poetry sessions, book launches,
+   music, singing, theatre, art exhibitions and cultural
+   performances.
+  </p>
+  <br>
+  <p>
+   This archive preserves the journey of Ayaz Melo from
+   2015 to 2025 through historical records, programme details,
+   guests, photographs, posters and media coverage.
+  </p>
+ </section>
+
+ <h2 class="section-title">The Journey: 2015–2025</h2>
+ <p class="section-intro">
+  Explore the editions and their duration. Historical
+  programme details will be expanded as verified records
+  and original posters are collected.
+ </p>
+
+ <div class="timeline">
+
+  <article class="year-card">
+   <div class="year-top">
+    <h3>2015</h3>
+    <span class="badge">8 DAYS</span>
+   </div>
+   <p><strong>First Edition of Ayaz Melo</strong></p>
+   <h4>Literary Beginning</h4>
+   <ul>
+    <li>Literary and intellectual sessions.</li>
+    <li>Discussions inspired by the poetry and legacy of Shaikh Ayaz.</li>
+    <li>Beginning of a cultural platform dedicated to literature and ideas.</li>
+   </ul>
+   <div class="note">Detailed session titles, guest names and original posters are being documented.</div>
+  </article>
+
+  <article class="year-card">
+   <div class="year-top">
+    <h3>2016</h3>
+    <span class="badge">8 DAYS</span>
+   </div>
+   <p><strong>Second Edition</strong></p>
+   <h4>Literature & Poetry</h4>
+   <ul>
+    <li>Literary and academic discussions.</li>
+    <li>Poetry sessions and mushairas.</li>
+    <li>Musical gatherings and cultural activities.</li>
+   </ul>
+   <div class="note">Original programme and complete guest list require further verification.</div>
+  </article>
+
+  <article class="year-card">
+   <div class="year-top">
+    <h3>2017</h3>
+    <span class="badge">5 DAYS</span>
+   </div>
+   <p><strong>Third Edition</strong></p>
+   <h4>Literary & Cultural Activities</h4>
+   <ul>
+    <li>Academic discussions and literary sessions.</li>
+    <li>Poetry gatherings and mushairas.</li>
+    <li>Book fair and cultural activities.</li>
+    <li>Art and photography exhibitions.</li>
+    <li>Music and performances.</li>
+   </ul>
+   <div class="note">Session titles and complete participants list will be added from original records.</div>
+  </article>
+
+  <article class="year-card">
+   <div class="year-top">
+    <h3>2018</h3>
+    <span class="badge">5 DAYS</span>
+   </div>
+   <p><strong>Fourth Edition</strong></p>
+   <h4>Literature, Art & Music</h4>
+   <ul>
+    <li>Discussions on the life and literary contributions of Shaikh Ayaz.</li>
+    <li>Photographic exhibitions.</li>
+    <li>Literary gatherings and musical performances.</li>
+   </ul>
+   <div class="note">Original posters and session-wise guest details are awaited.</div>
+  </article>
+
+  <article class="year-card">
+   <div class="year-top">
+    <h3>2019</h3>
+    <span class="badge">5 DAYS</span>
+   </div>
+   <p><strong>Fifth Edition</strong></p>
+   <h4>Literature & Intellectual Dialogue</h4>
+   <ul>
+    <li>Panel discussions and literary conversations.</li>
+    <li>Mushairas and poetry sessions.</li>
+    <li>Music, theatre and cultural performances.</li>
+    <li>Book and cultural stalls.</li>
+   </ul>
+   <div class="note">Historical media and photographs are available for further archival documentation.</div>
+  </article>
+
+  <article class="year-card">
+   <div class="year-top">
+    <h3>2020</h3>
+    <span class="badge">2 DAYS</span>
+   </div>
+   <p><strong>Sixth Edition</strong></p>
+   <h4>Edition During COVID-19</h4>
+   <ul>
+    <li>Literary discussions and poetry.</li>
+    <li>Cultural and musical performances.</li>
+    <li>Specially shortened two-day edition during the COVID-19 period.</li>
+   </ul>
+   <div class="note">The edition duration and COVID-19 context are recorded from the organisers' information.</div>
+  </article>
+
+  <article class="year-card">
+   <div class="year-top">
+    <h3>2021</h3>
+    <span class="badge">5 DAYS</span>
+   </div>
+   <p><strong>Seventh Edition</strong></p>
+   <h4>Books, Ideas & Performance</h4>
+   <ul>
+    <li>Literary sessions and discussions.</li>
+    <li>Book launches and literary presentations.</li>
+    <li>Theatre and cultural performances.</li>
+    <li>Poetry and musical gatherings.</li>
+   </ul>
+   <div class="note">Session-wise titles and all participants will be added after verification.</div>
+  </article>
+
+  <article class="year-card">
+   <div class="year-top">
+    <h3>2022</h3>
+    <span class="badge">5 DAYS</span>
+   </div>
+   <p><strong>Eighth Edition</strong></p>
+   <h4>Literature, Books & Music</h4>
+   <ul>
+    <li>Literary and intellectual discussions.</li>
+    <li>Book launches and poetry sessions.</li>
+    <li>Sufi music and cultural performances.</li>
+    <li>Conversations on literature and society.</li>
+   </ul>
+   <div class="note">More historical programme details and original posters will be added.</div>
+  </article>
+
+  <article class="year-card">
+   <div class="year-top">
+    <h3>2023</h3>
+    <span class="badge">3 DAYS</span>
+   </div>
+   <p><strong>Ninth Edition</strong></p>
+   <h4>Literature & Cultural Heritage</h4>
+   <ul>
+    <li>Sessions on Sindhu River and cultural heritage.</li>
+    <li>Literary conversations and poetry.</li>
+    <li>Discussions on books, writers and society.</li>
+    <li>Music and cultural performances.</li>
+   </ul>
+   <div class="note">Published session titles and participants will be expanded using verified records.</div>
+  </article>
+
+  <article class="year-card">
+   <div class="year-top">
+    <h3>2024</h3>
+    <span class="badge">3 DAYS</span>
+   </div>
+   <p><strong>Tenth Edition</strong></p>
+   <h4>Literature, Society & Arts</h4>
+   <ul>
+    <li>Literary and intellectual sessions.</li>
+    <li>Discussions on water, society, culture and tolerance.</li>
+    <li>Mushaira and musical performances.</li>
+    <li>Art exhibitions and cultural activities.</li>
+   </ul>
+   <div class="note">The complete session programme and speaker details will be added from original sources.</div>
+  </article>
+
+  <article class="year-card">
+   <div class="year-top">
+    <h3>2025</h3>
+    <span class="badge">3 DAYS</span>
+   </div>
+   <p><strong>Eleventh Edition</strong></p>
+   <h4>Contemporary Ideas & Cultural Expression</h4>
+   <ul>
+    <li>Literary discussions and book launches.</li>
+    <li>Sessions on culture, art, society, democracy and human rights.</li>
+    <li>Discussions on artificial intelligence and creative arts.</li>
+    <li>Music, classical dance and cultural performances.</li>
+   </ul>
+   <div class="note">Complete programme, guest list and original posters will be documented.</div>
+  </article>
+
+ </div>
+</main>
+
+<section class="poster-section">
+ <h2 class="section-title">Historical Posters & Memories</h2>
+ <p class="section-intro">
+  Original posters, programme announcements, guest introductions,
+  book launches, photographs and media memories from previous
+  editions of Ayaz Melo.
+ </p>
+
+ <div class="poster-grid">
+
+  <div class="poster-card">
+   <h3>2015</h3>
+   <p>First Edition — Historical Posters & Programme</p>
+   <a href="mailto:archive@ayazmelo.org">Archive Contribution</a>
+  </div>
+
+  <div class="poster-card">
+   <h3>2016</h3>
+   <p>Second Edition — Historical Posters & Programme</p>
+   <a href="mailto:archive@ayazmelo.org">Archive Contribution</a>
+  </div>
+
+  <div class="poster-card">
+   <h3>2017</h3>
+   <p>Third Edition — Historical Posters & Programme</p>
+   <a href="mailto:archive@ayazmelo.org">Archive Contribution</a>
+  </div>
+
+  <div class="poster-card">
+   <h3>2018</h3>
+   <p>Fourth Edition — Historical Posters & Programme</p>
+   <a href="mailto:archive@ayazmelo.org">Archive Contribution</a>
+  </div>
+
+  <div class="poster-card">
+   <h3>2019</h3>
+   <p>Fifth Edition — Historical Posters & Programme</p>
+   <a href="mailto:archive@ayazmelo.org">Archive Contribution</a>
+  </div>
+
+  <div class="poster-card">
+   <h3>2020</h3>
+   <p>Sixth Edition — Historical Posters & Programme</p>
+   <a href="mailto:archive@ayazmelo.org">Archive Contribution</a>
+  </div>
+
+  <div class="poster-card">
+   <h3>2021</h3>
+   <p>Seventh Edition — Historical Posters & Programme</p>
+   <a href="mailto:archive@ayazmelo.org">Archive Contribution</a>
+  </div>
+
+  <div class="poster-card">
+   <h3>2022</h3>
+   <p>Eighth Edition — Historical Posters & Programme</p>
+   <a href="mailto:archive@ayazmelo.org">Archive Contribution</a>
+  </div>
+
+  <div class="poster-card">
+   <h3>2023</h3>
+   <p>Ninth Edition — Historical Posters & Programme</p>
+   <a href="mailto:archive@ayazmelo.org">Archive Contribution</a>
+  </div>
+
+  <div class="poster-card">
+   <h3>2024</h3>
+   <p>Tenth Edition — Historical Posters & Programme</p>
+   <a href="mailto:archive@ayazmelo.org">Archive Contribution</a>
+  </div>
+
+  <div class="poster-card">
+   <h3>2025</h3>
+   <p>Eleventh Edition — Historical Posters & Programme</p>
+   <a href="mailto:archive@ayazmelo.org">Archive Contribution</a>
+  </div>
+
+ </div>
+</section>
+
+<footer>
+ <p>AYAZ MELO — Digital Historical Archive</p>
+ <p>Preserving Literature, Culture & Heritage</p>
+ <p><a href="index.html">Return to Ayaz Melo 2026</a></p>
+ <p style="margin-top:12px;">© 2026 Ayaz Melo. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>
