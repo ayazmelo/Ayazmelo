@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Khanabadosh Writers' Cafe | Ayaz Melo 2026</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --blue: #21164d;
+    --maroon: #842c3c;
+    --gold: #d9ae62;
+    --cream: #faf5eb;
+    --white: #ffffff;
+    --dark: #171323;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--cream);
+    color: var(--dark);
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.8;
+}
+
+/* HEADER */
+
+header {
+    background: var(--blue);
+    color: white;
+    padding: 14px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    border-bottom: 3px solid var(--gold);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.brand img {
+    width: 65px;
+    height: 65px;
+    object-fit: contain;
+}
+
+.brand h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 25px;
+    line-height: 1.1;
+}
+
+.brand span {
+    color: var(--gold);
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+.back-link {
+    color: white;
+    text-decoration: none;
+    border: 1px solid var(--gold);
+    padding: 8px 18px;
+    border-radius: 30px;
+    font-size: 12px;
+}
+
+.back-link:hover {
+    background: var(--gold);
+    color: var(--blue);
+}
+
+/* HERO */
+
+.hero {
+    background: linear-gradient(135deg, #21164d, #39275f, #842c3c);
+    color: white;
+    text-align: center;
+    padding: 85px 20px;
+}
+
+.hero-logo {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    margin-bottom: 20px;
+    background: rgba(255,255,255,0.95);
+    border-radius: 50%;
+    padding: 12px;
+}
+
+.hero-label {
+    color: var(--gold);
+    letter-spacing: 4px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(42px, 7vw, 72px);
+    line-height: 1.1;
+    margin: 12px 0;
+}
+
+.hero h3 {
+    color: var(--gold);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 25px;
+    font-weight: 500;
+}
+
+.hero p {
+    max-width: 720px;
+    margin: 20px auto 0;
+    font-size: 14px;
+    color: #eee7f4;
+}
+
+.gold-line {
+    width: 70px;
+    height: 3px;
+    background: var(--gold);
+    margin: 22px auto;
+}
+
+/* COMMON */
+
+.container {
+    max-width: 1120px;
+    margin: auto;
+    padding: 65px 22px;
+}
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.section-heading h2 {
+    color: var(--blue);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 5vw, 46px);
+}
+
+.section-heading p {
+    max-width: 700px;
+    margin: 8px auto;
+    color: #68616b;
+    font-size: 13px;
+}
+
+/* INTRODUCTION */
+
+.intro-box {
+    background: white;
+    padding: 38px;
+    border-left: 5px solid var(--gold);
+    border-radius: 8px;
+    box-shadow: 0 8px 30px rgba(33,22,77,0.07);
+}
+
+.intro-box h3 {
+    color: var(--maroon);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 31px;
+    margin-bottom: 15px;
+}
+
+.intro-box p {
+    color: #514b56;
+    font-size: 13px;
+    line-height: 2.1;
+}
+
+/* HISTORY */
+
+.history-section {
+    background: #f1e9dc;
+}
+
+.history-card {
+    background: white;
+    padding: 32px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 6px 20px rgba(33,22,77,0.05);
+}
+
+.history-card h3 {
+    color: var(--maroon);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 29px;
+    margin-bottom: 10px;
+}
+
+.history-card p {
+    color: #514b56;
+    font-size: 13px;
+    line-height: 2;
+}
+
+/* VALUES */
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+}
+
+.value-card {
+    background: var(--blue);
+    color: white;
+    padding: 25px;
+    text-align: center;
+    border-radius: 8px;
+    border-bottom: 4px solid var(--gold);
+}
+
+.value-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--gold);
+    font-size: 25px;
+    margin-bottom: 8px;
+}
+
+.value-card p {
+    font-size: 12px;
+    line-height: 1.9;
+}
+
+/* ACTIVITIES */
+
+.activities-section {
+    background: #f1e9dc;
+}
+
+.activities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 20px;
+}
+
+.activity-card {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    border-top: 4px solid var(--gold);
+}
+
+.activity-card h3 {
+    color: var(--blue);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 25px;
+    margin-bottom: 8px;
+}
+
+.activity-card p {
+    font-size: 12px;
+    color: #625c66;
+    line-height: 1.9;
+}
+
+/* AYAZ MELO */
+
+.ayaz-section {
+    background: var(--blue);
+    color: white;
+    text-align: center;
+    padding: 70px 22px;
+}
+
+.ayaz-section h2 {
+    color: var(--gold);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 43px;
+}
+
+.ayaz-section p {
+    max-width: 760px;
+    margin: 18px auto;
+    font-size: 13px;
+    line-height: 2;
+    color: #eee7f4;
+}
+
+.ayaz-section a {
+    display: inline-block;
+    margin-top: 15px;
+    background: var(--gold);
+    color: var(--blue);
+    padding: 12px 28px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.ayaz-section a:hover {
+    background: white;
+}
+
+/* FOOTER */
+
+footer {
+    background: var(--dark);
+    color: white;
+    text-align: center;
+    padding: 30px 15px;
+    font-size: 11px;
+}
+
+footer img {
+    width: 75px;
+    height: 75px;
+    object-fit: contain;
+    margin-bottom: 12px;
+}
+
+footer span {
+    color: var(--gold);
+}
+
+/* MOBILE */
+
+@media(max-width:600px) {
+
+    header {
+        padding: 13px 5%;
+    }
+
+    .brand h2 {
+        font-size: 21px;
+    }
+
+    .brand img {
+        width: 52px;
+        height: 52px;
+    }
+
+    .hero {
+        padding: 65px 18px;
+    }
+
+    .hero-logo {
+        width: 120px;
+        height: 120px;
+    }
+
+    .container {
+        padding: 45px 17px;
+    }
+
+    .intro-box,
+    .history-card {
+        padding: 23px;
+    }
+
+    .ayaz-section h2 {
+        font-size: 34px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header>
+
+    <div class="brand">
+
+        <img src="assets/khanabadosh-logo.png"
+             alt="Khanabadosh Writers Cafe">
+
+        <div>
+            <h2>Khanabadosh Writers' Cafe</h2>
+            <span>HYDERABAD · SINDH · PAKISTAN</span>
+        </div>
+
+    </div>
+
+    <a href="index.html" class="back-link">
+        ← Back to Home
+    </a>
+
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <img src="assets/khanabadosh-logo.png"
+         alt="Khanabadosh Logo"
+         class="hero-logo">
+
+    <div class="hero-label">
+        A SPACE FOR LITERATURE & IDEAS
+    </div>
+
+    <h1>Khanabadosh</h1>
+
+    <h3>Writers' Cafe</h3>
+
+    <div class="gold-line"></div>
+
+    <p>
+        A home for writers, poets, thinkers, artists and dreamers.
+        A place where literature meets culture, ideas find expression
+        and conversations bring people together.
+    </p>
+
+</section>
+
+
+<!-- INTRODUCTION -->
+
+<section class="container">
+
+    <div class="section-heading">
+        <h2>What is Khanabadosh?</h2>
+        <p>A Literary and Cultural Space in Hyderabad</p>
+    </div>
+
+    <div class="intro-box">
+
+        <h3>A Place for Ideas, Dialogue and Creativity</h3>
+
+        <p>
+            Khanabadosh Writers' Cafe is an independent literary and
+            cultural space established in Hyderabad, Sindh, in 2015.
+            Located within the premises of the Sindh Museum, it was
+            envisioned as a welcoming meeting place for writers,
+            poets, intellectuals, students, artists and people from
+            different walks of life. Khanabadosh provides an open
+            environment where people can meet, exchange ideas,
+            discuss literature, share creative thoughts and participate
+            in cultural activities. It seeks to revive the tradition
+            of intellectual gatherings and meaningful conversations
+            in Hyderabad. More than a cafe, Khanabadosh represents
+            a shared space built around freedom of expression,
+            inclusivity, creativity, dialogue and cultural connection.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- HISTORY -->
+
+<section class="history-section">
+
+<div class="container">
+
+    <div class="section-heading">
+        <h2>History & Origins</h2>
+        <p>The Beginning of a Literary Journey in 2015</p>
+    </div>
+
+    <div class="history-card">
+
+        <h3>The Beginning</h3>
+
+        <p>
+            Khanabadosh Writers' Cafe came into existence in 2015
+            with the vision of creating a shared public space for
+            literature, intellectual discussion and cultural
+            engagement in Hyderabad. The idea was conceived by
+            Professor Amar Sindhu, with collaborative efforts
+            associated with Haseen Shah and Professor Dr. Arfana
+            Mallah. The cafe was established within the premises
+            of the Sindh Museum, providing a space where creative
+            minds and members of the community could come
+            together without barriers of background or identity.
+        </p>
+
+    </div>
+
+    <div class="history-card">
+
+        <h3>Why the Name Khanabadosh?</h3>
+
+        <p>
+            The word Khanabadosh refers to a nomadic spirit —
+            one that travels, explores, discovers and remains
+            open to new experiences. The name reflects a spirit
+            of intellectual freedom, curiosity and creative
+            exploration. Like travelling minds that cross
+            boundaries and discover new horizons, Khanabadosh
+            welcomes diverse thoughts, voices and perspectives.
+            It represents a journey of ideas that does not remain
+            confined to one place, one tradition or one way of thinking.
+        </p>
+
+    </div>
+
+    <div class="history-card">
+
+        <h3>A Space for Everyone</h3>
+
+        <p>
+            Khanabadosh was envisioned as an inclusive public
+            gathering place where women, young people, students,
+            writers, artists and intellectuals could participate
+            in meaningful conversations and cultural activities.
+            It helped create an environment in which literature,
+            philosophy, art, music and social questions could
+            be discussed openly. Its identity grew around the
+            idea of an open literary gathering place rather than
+            an exclusive institution.
+        </p>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- LITERARY HISTORY -->
+
+<section class="container">
+
+    <div class="section-heading">
+
+        <h2>Literary & Intellectual History</h2>
+
+        <p>
+            Conversations, creativity and cultural expression
+        </p>
+
+    </div>
+
+    <div class="intro-box">
+
+        <h3>A Meeting Ground for Creative Minds</h3>
+
+        <p>
+            Since its establishment, Khanabadosh has served as
+            a gathering place for literary and intellectual
+            activities in Hyderabad. It has hosted book launches,
+            poetry readings, mushairas, literary discussions,
+            seminars, musical programmes and cultural gatherings.
+            Writers, poets, researchers, students, journalists
+            and artists have come together to exchange ideas
+            and share their work. The cafe has also provided
+            opportunities for emerging voices and young people
+            to engage with literature, philosophy and the arts.
+            Its environment encourages dialogue across
+            generations, languages and creative traditions.
+            Through these activities, Khanabadosh has contributed
+            to the continuing cultural and intellectual life
+            of Hyderabad and Sindh.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- CULTURAL ACTIVITIES -->
+
+<section class="activities-section">
+
+<div class="container">
+
+    <div class="section-heading">
+
+        <h2>What Happens at Khanabadosh?</h2>
+
+        <p>
+            A living space for literature, art, music and culture
+        </p>
+
+    </div>
+
+    <div class="activities-grid">
+
+        <div class="activity-card">
+
+            <h3>Literary Conversations</h3>
+
+            <p>
+                Discussions on literature, philosophy, society,
+                language, history and contemporary ideas bring
+                people together for meaningful intellectual exchange.
+            </p>
+
+        </div>
+
+        <div class="activity-card">
+
+            <h3>Book Launches & Readings</h3>
+
+            <p>
+                Authors and readers come together to introduce
+                books, share literary work and celebrate
+                creative writing and publishing.
+            </p>
+
+        </div>
+
+        <div class="activity-card">
+
+            <h3>Poetry & Mushairas</h3>
+
+            <p>
+                Poetry gatherings and mushairas provide a platform
+                for poets and literary voices to share their
+                expressions and connect with audiences.
+            </p>
+
+        </div>
+
+        <div class="activity-card">
+
+            <h3>Music & Performing Arts</h3>
+
+            <p>
+                Musical programmes and artistic performances
+                celebrate the diverse cultural traditions
+                and creative talents of Sindh.
+            </p>
+
+        </div>
+
+        <div class="activity-card">
+
+            <h3>Women & Youth Participation</h3>
+
+            <p>
+                Khanabadosh encourages women, students and
+                young people to participate in cultural,
+                literary and intellectual activities.
+            </p>
+
+        </div>
+
+        <div class="activity-card">
+
+            <h3>Art & Cultural Activities</h3>
+
+            <p>
+                Cultural gatherings, artistic expression
+                and creative activities help connect
+                communities through shared experiences.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- VALUES -->
+
+<section class="container">
+
+    <div class="section-heading">
+
+        <h2>The Spirit of Khanabadosh</h2>
+
+        <p>The values that define its identity</p>
+
+    </div>
+
+    <div class="values-grid">
+
+        <div class="value-card">
+
+            <h3>Freedom</h3>
+
+            <p>
+                Encouraging independent thought,
+                open expression and intellectual curiosity.
+            </p>
+
+        </div>
+
+        <div class="value-card">
+
+            <h3>Inclusivity</h3>
+
+            <p>
+                Welcoming people from different backgrounds,
+                generations and creative traditions.
+            </p>
+
+        </div>
+
+        <div class="value-card">
+
+            <h3>Dialogue</h3>
+
+            <p>
+                Building understanding through conversations,
+                discussions and the exchange of ideas.
+            </p>
+
+        </div>
+
+        <div class="value-card">
+
+            <h3>Culture</h3>
+
+            <p>
+                Celebrating Sindh's literary heritage,
+                artistic expression and cultural identity.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- AYAZ MELO CONNECTION -->
+
+<section class="ayaz-section">
+
+    <h2>Khanabadosh & Ayaz Melo</h2>
+
+    <div class="gold-line"></div>
+
+    <p>
+        Khanabadosh Writers' Cafe has been closely associated
+        with Ayaz Melo since its first edition in 2015.
+        Dedicated to the legacy, poetry and intellectual
+        contribution of the legendary Sindhi poet Shaikh Ayaz,
+        the festival brings together writers, poets, scholars,
+        artists, students and audiences from different
+        backgrounds. Through literary sessions, poetry,
+        discussions, music and cultural performances,
+        Ayaz Melo reflects the very spirit of Khanabadosh:
+        freedom of expression, creative exploration and
+        the celebration of literature and culture.
+    </p>
+
+    <a href="index.html">
+        Explore Ayaz Melo 2026
+    </a>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <img src="assets/khanabadosh-logo.png"
+         alt="Khanabadosh Writers Cafe">
+
+    <p>
+        <span>KHANABADOSH WRITERS' CAFE</span>
+    </p>
+
+    <p>
+        A Space for Literature, Ideas & Culture
+    </p>
+
+    <p style="margin-top:10px;">
+        Hyderabad, Sindh, Pakistan
+    </p>
+
+    <p style="margin-top:12px;">
+        Part of the Ayaz Melo 2026 Digital Platform
+    </p>
+
+</footer>
+
+</body>
+          </html>
