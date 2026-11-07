@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ayaz Melo 2026 | Free Registration</title>
+<title>Ayaz Melo 2026 - Free Registration</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -11,14 +11,14 @@
 <style>
 *{box-sizing:border-box}
 body{margin:0;padding:20px;font-family:Arial,sans-serif;background:#f3f5f4;color:#222}
-.container{max-width:850px;margin:20px auto;background:#fff;padding:30px;border-radius:14px;box-shadow:0 4px 20px #0001}
+.container{max-width:850px;margin:20px auto;background:white;padding:30px;border-radius:14px;box-shadow:0 4px 20px #0001}
 .header{text-align:center;margin-bottom:30px}
 .header h1{color:#176b45}
 .header p{color:#666;line-height:1.6}
 .badge{display:inline-block;background:#e4f6eb;color:#176b45;padding:9px 20px;border-radius:30px;font-weight:bold}
 h2{color:#176b45;font-size:20px;margin-top:28px}
 label{display:block;font-weight:bold;margin:14px 0 7px}
-input,select{width:100%;padding:12px;border:1px solid #ccc;border-radius:7px;font-size:15px;background:#fff}
+input,select{width:100%;padding:12px;border:1px solid #ccc;border-radius:7px;font-size:15px;background:white}
 input:focus,select:focus{outline:none;border-color:#176b45}
 .dates{display:flex;gap:12px;flex-wrap:wrap}
 .date-option{flex:1;min-width:150px;border:1px solid #ddd;padding:14px;border-radius:8px;background:#fafafa}
@@ -28,7 +28,7 @@ input:focus,select:focus{outline:none;border-color:#176b45}
 .member-card h3{color:#176b45;margin-top:0}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 button{cursor:pointer;border:0;border-radius:7px;padding:13px 20px;font-size:15px;font-weight:bold}
-.primary{width:100%;margin-top:25px;background:#176b45;color:#fff}
+.primary{width:100%;margin-top:25px;background:#176b45;color:white}
 .secondary{background:#e8f2ec;color:#176b45;margin-top:15px}
 .remove{background:#ffe8e8;color:#b42318;margin-top:12px}
 button:disabled{opacity:.6;cursor:not-allowed}
@@ -47,7 +47,7 @@ button:disabled{opacity:.6;cursor:not-allowed}
 .dates{flex-direction:column}
 }
 @media print{
-body{background:#fff;padding:0}
+body{background:white;padding:0}
 .container{box-shadow:none;margin:0;max-width:100%}
 .header,form,#message,.pass-actions,.print-heading{display:none!important}
 #results{display:block!important}
@@ -105,6 +105,7 @@ body{background:#fff;padding:0}
 
 <div id="message"></div>
 <div id="results"></div>
+
 </div>
 
 <script>
@@ -143,36 +144,15 @@ return;
 const card=document.createElement("div");
 card.className="member-card";
 
-const number=cards.length+1;
-const title=family?"Member "+number:"Visitor Information";
-
 card.innerHTML=`
-<h3>${title}</h3>
+<h3></h3>
 <div class="grid">
-<div>
-<label>Full Name *</label>
-<input type="text" name="full_name" required>
-</div>
-<div>
-<label>Father Name *</label>
-<input type="text" name="father_name" required>
-</div>
-<div>
-<label>Contact Number *</label>
-<input type="tel" name="contact_number" required>
-</div>
-<div>
-<label>City *</label>
-<input type="text" name="city" required>
-</div>
-<div>
-<label>Designation *</label>
-<input type="text" name="designation" required>
-</div>
-<div>
-<label>Email *</label>
-<input type="email" name="email" required>
-</div>
+<div><label>Full Name *</label><input type="text" name="full_name" required></div>
+<div><label>Father Name *</label><input type="text" name="father_name" required></div>
+<div><label>Contact Number *</label><input type="tel" name="contact_number" required></div>
+<div><label>City *</label><input type="text" name="city" required></div>
+<div><label>Designation *</label><input type="text" name="designation" required></div>
+<div><label>Email *</label><input type="email" name="email" required></div>
 <div>
 <label>Gender *</label>
 <select name="gender" required>
@@ -182,7 +162,7 @@ card.innerHTML=`
 </select>
 </div>
 </div>
-${family && number>1?'<button type="button" class="remove">Remove Member</button>':''}
+${family && cards.length>0?'<button type="button" class="remove">Remove Member</button>':''}
 `;
 
 const removeBtn=card.querySelector(".remove");
@@ -206,11 +186,6 @@ detailsHeading.textContent=family?"Family Members":"Visitor Information";
 cards.forEach((card,index)=>{
 card.querySelector("h3").textContent=
 family?"Member "+(index+1):"Visitor Information";
-
-const removeBtn=card.querySelector(".remove");
-if(removeBtn){
-removeBtn.style.display=index===0?"none":"inline-block";
-}
 });
 
 addMemberBtn.classList.toggle("hidden",!family||cards.length>=8);
@@ -280,9 +255,7 @@ pass.innerHTML=`
 <p><strong>Event Dates:</strong> ${dates.join(", ")}</p>
 <p><strong>ENTRY: FREE</strong></p>
 <div class="qr-box" id="${qrId}"></div>
-<div class="pass-actions">
-<button type="button" class="primary download-btn">Download QR</button>
-</div>
+<div class="pass-actions"><button type="button" class="primary download-btn">Download QR</button></div>
 `;
 
 results.appendChild(pass);
@@ -367,7 +340,7 @@ p_attendance_center:center
 }
 );
 
-if(error) throw error;
+if(error)throw error;
 
 if(!data||data.length!==members.length){
 throw new Error("Registration response is incomplete.");
@@ -391,5 +364,6 @@ submitBtn.textContent="Submit Free Registration";
 
 addMember();
 </script>
+
 </body>
 </html>
