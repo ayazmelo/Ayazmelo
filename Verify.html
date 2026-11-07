@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#21164b">
+
+<title>QR Verification | Ayaz Melo 2026</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+font-family:Arial,sans-serif;
+background:#21164b;
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+}
+
+.card{
+background:#fff9ef;
+width:100%;
+max-width:480px;
+padding:35px 25px;
+border-radius:20px;
+text-align:center;
+}
+
+.logo{
+font-size:27px;
+font-weight:bold;
+color:#21164b;
+}
+
+.subtitle{
+font-size:11px;
+letter-spacing:3px;
+color:#a04c35;
+margin-top:8px;
+}
+
+.loader{
+margin:35px auto;
+width:45px;
+height:45px;
+border:5px solid #ddd;
+border-top-color:#f4a21d;
+border-radius:50%;
+animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+to{transform:rotate(360deg)}
+}
+
+.status{
+font-size:25px;
+font-weight:bold;
+margin:20px 0;
+}
+
+.valid{color:#18834b}
+.invalid{color:#c62828}
+.warning{color:#b7791f}
+
+.info{
+background:white;
+padding:20px;
+border-radius:12px;
+margin-top:20px;
+line-height:2;
+}
+
+.info b{color:#21164b}
+
+button{
+margin-top:25px;
+padding:13px 25px;
+background:#21164b;
+color:white;
+border:0;
+border-radius:30px;
+cursor:pointer;
+}
+
+footer{
+margin-top:25px;
+font-size:11px;
+color:#777;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<div class="logo">AYAZ MELO 2026</div>
+
+<div class="subtitle">
+VISITOR VERIFICATION SYSTEM
+</div>
+
+<div id="loader" class="loader"></div>
+
+<div id="result" style="display:none">
+
+<div id="status" class="status"></div>
+
+<div id="details" class="info"></div>
+
+<button onclick="location.href='index.html'">
+BACK TO WEBSITE
+</button>
+
+</div>
+
+<footer>
+Hosted by Khanabadosh Writers' Cafe<br>
+Hyderabad, Sindh, Pakistan
+</footer>
+
+</div>
+
+<script>
+
+const SUPABASE_URL =
+"https://fstkhwoxbgdcdfwycggu.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_BNRQfiLDVM-892aVwO_hJw_OAhEgTrq";
+
+async function verifyVisitor(){
+
+const params = new URLSearchParams(location.search);
+
+const id = params.get("id");
+const token = params.get("token");
+
+const loader = document.getElementById("loader");
+const result = document.getElementById("result");
+const status = document.getElementById("status");
+const details = document.getElementById("details");
+
+function show(message, className, extra){
+
+loader.style.display="none";
+result.style.display="block";
+
+status.textContent=message;
+status.className="status "+className;
+
+details.innerHTML=extra;
+
+}
+
+if(!id || !token){
+
+show(
+"INVALID QR CODE",
+"invalid",
+"Registration information is missing."
+);
+
+return;
+}
+
+try{
+
+const response=await fetch(
+SUPABASE_URL+"/rest/v1/rpc/verify_visitor",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json",
+"apikey":SUPABASE_KEY
+},
+body:JSON.stringify({
+p_registration_id:id,
+p_qr_token:token
+})
+}
+);
+
+if(!response.ok){
+throw new Error("Verification service unavailable");
+}
+
+const data=await response.json();
+
+if(!Array.isArray(data) || data.length===0){
+
+show(
+"INVALID QR CODE",
+"invalid",
+"This registration could not be verified."
+);
+
+return;
+
+}
+
+const visitor=data[0];
+
+if(visitor.entry_status==="NOT ENTERED"){
+
+show(
+"✓ VALID REGISTRATION",
+"valid",
+"<b>Visitor ID:</b> "+visitor.registration_id+
+"<br><b>Entry Status:</b> NOT ENTERED"+
+"<br><br>Registration successfully verified."
+);
+
+}else{
+
+show(
+"⚠ ALREADY ENTERED",
+"warning",
+"<b>Visitor ID:</b> "+visitor.registration_id+
+"<br><b>Entry Status:</b> "+visitor.entry_status
+);
+
+}
+
+}catch(error){
+
+show(
+"VERIFICATION ERROR",
+"invalid",
+"Please contact the Ayaz Melo administration."
+);
+
+}
+
+}
+
+verifyVisitor();
+
+</script>
+
+</body>
+</html>
