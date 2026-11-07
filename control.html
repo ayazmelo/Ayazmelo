@@ -1,1347 +1,857 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#21164d">
-<title>Ayaz Melo 2026 | Admin Portal</title><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
-:root {
- --blue:#21164d;
- --maroon:#842c3c;
- --gold:#d9ae62;
- --cream:#faf5eb;
- --dark:#171323;
- --white:#fff;
- --muted:#777;
- --border:#e9e4dc;
- --green:#247a50;
+<title>Ayaz Melo 2026 | Super Admin</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+<style>
+:root{
+--blue:#21164d;--maroon:#842c3c;--gold:#d9ae62;
+--cream:#faf5eb;--dark:#171323;--muted:#777;
+--border:#e9e4dc;--green:#247a50;--red:#b42318;
 }
-
-* {box-sizing:border-box;margin:0;padding:0}
-
-body {
- background:#f5f2ed;
- color:var(--dark);
- font-family:'Montserrat',sans-serif;
- min-height:100vh;
-}
-
-button,input,select {font-family:inherit}
-button {cursor:pointer}
-
-.hidden {display:none!important}
-
-/* LOGIN */
-
-.login-screen {
- min-height:100vh;
- display:flex;
- align-items:center;
- justify-content:center;
- padding:20px;
- background:var(--blue);
-}
-
-.login-box {
- width:100%;
- max-width:430px;
- background:var(--cream);
- padding:40px 30px;
- border-radius:12px;
- box-shadow:0 15px 50px #0004;
- text-align:center;
-}
-
-.logo {
- width:105px;
- height:105px;
- object-fit:contain;
- margin-bottom:15px;
-}
-
-.login-box h1 {
- font-family:'Cormorant Garamond',serif;
- color:var(--blue);
- font-size:38px;
-}
-
-.subtitle {
- color:var(--maroon);
- font-size:10px;
- font-weight:800;
- letter-spacing:3px;
- margin:8px 0 30px;
-}
-
-.login-box input {
- width:100%;
- padding:15px;
- margin:9px 0;
- border:1px solid #ddd;
- border-radius:5px;
- font-size:13px;
- outline:none;
-}
-
-.login-box input:focus {border-color:var(--gold)}
-
-.primary-btn {
- width:100%;
- padding:15px;
- margin-top:15px;
- background:var(--maroon);
- color:white;
- border:0;
- border-radius:5px;
- font-weight:800;
- letter-spacing:2px;
-}
-
-.primary-btn:disabled {opacity:.6;cursor:wait}
-
-.message {
- margin-top:18px;
- font-size:12px;
- line-height:1.8;
- overflow-wrap:anywhere;
-}
-
-.back {
- display:inline-block;
- margin-top:25px;
- color:var(--blue);
- font-size:11px;
- font-weight:700;
- text-decoration:none;
-}
-
-/* DASHBOARD */
-
-#dashboard {
- min-height:100vh;
-}
-
-.topbar {
- background:var(--blue);
- color:white;
- padding:15px 4%;
- display:flex;
- align-items:center;
- justify-content:space-between;
- gap:15px;
- flex-wrap:wrap;
-}
-
-.brand {
- display:flex;
- align-items:center;
- gap:12px;
-}
-
-.brand img {
- width:48px;
- height:48px;
- object-fit:contain;
-}
-
-.brand h2 {
- font-family:'Cormorant Garamond',serif;
- font-size:27px;
-}
-
-.brand p {
- font-size:9px;
- letter-spacing:2px;
- color:var(--gold);
- font-weight:800;
-}
-
-.top-actions {
- display:flex;
- gap:10px;
- align-items:center;
- flex-wrap:wrap;
-}
-
-.admin-label {
- font-size:11px;
- color:#eee;
-}
-
-.top-btn {
- border:1px solid #ffffff66;
- background:transparent;
- color:white;
- padding:10px 15px;
- border-radius:5px;
- font-size:10px;
- font-weight:800;
-}
-
-.top-btn:hover {background:var(--maroon)}
-
-.container {
- max-width:1400px;
- margin:auto;
- padding:28px 4%;
-}
-
-.page-heading {
- margin-bottom:25px;
-}
-
-.page-heading h1 {
- color:var(--blue);
- font-family:'Cormorant Garamond',serif;
- font-size:36px;
-}
-
-.page-heading p {
- color:var(--muted);
- font-size:12px;
- margin-top:5px;
-}
-
-.stats {
- display:grid;
- grid-template-columns:repeat(4,minmax(0,1fr));
- gap:15px;
- margin-bottom:25px;
-}
-
-.stat-card {
- background:white;
- border:1px solid var(--border);
- border-radius:9px;
- padding:22px;
- border-top:4px solid var(--gold);
-}
-
-.stat-card p {
- color:var(--muted);
- font-size:10px;
- font-weight:800;
- letter-spacing:1px;
- text-transform:uppercase;
-}
-
-.stat-card h2 {
- font-size:30px;
- color:var(--blue);
- margin-top:12px;
-}
-
-.stat-card small {
- color:var(--muted);
- font-size:10px;
-}
-
-.tabs {
- display:flex;
- gap:8px;
- flex-wrap:wrap;
- margin-bottom:18px;
-}
-
-.tab-btn {
- background:white;
- border:1px solid var(--border);
- color:var(--blue);
- padding:12px 19px;
- border-radius:5px;
- font-size:11px;
- font-weight:800;
-}
-
-.tab-btn.active {
- background:var(--maroon);
- border-color:var(--maroon);
- color:white;
-}
-
-.panel {
- background:white;
- border:1px solid var(--border);
- border-radius:9px;
- padding:22px;
- margin-bottom:20px;
-}
-
-.panel-heading {
- display:flex;
- justify-content:space-between;
- align-items:center;
- gap:12px;
- flex-wrap:wrap;
- margin-bottom:18px;
-}
-
-.panel-heading h2 {
- color:var(--blue);
- font-family:'Cormorant Garamond',serif;
- font-size:26px;
-}
-
-.panel-heading p {
- color:var(--muted);
- font-size:10px;
- margin-top:3px;
-}
-
-.tools {
- display:flex;
- gap:9px;
- flex-wrap:wrap;
- margin-bottom:17px;
-}
-
-.tools input,.tools select {
- min-width:150px;
- flex:1;
- padding:12px;
- border:1px solid var(--border);
- border-radius:5px;
- font-size:11px;
- outline:none;
- background:white;
-}
-
-.tools input:focus,.tools select:focus {
- border-color:var(--gold);
-}
-
-.action-btn {
- border:0;
- border-radius:5px;
- padding:11px 15px;
- font-size:10px;
- font-weight:800;
- color:white;
- background:var(--blue);
-}
-
-.action-btn.gold {background:var(--maroon)}
-.action-btn.green {background:var(--green)}
-
-.table-wrap {
- width:100%;
- overflow-x:auto;
-}
-
-table {
- width:100%;
- border-collapse:collapse;
- min-width:750px;
-}
-
-th {
- background:#f7f3ec;
- color:var(--blue);
- text-align:left;
- font-size:10px;
- text-transform:uppercase;
- letter-spacing:.5px;
- padding:13px 11px;
- white-space:nowrap;
-}
-
-td {
- border-bottom:1px solid #eee;
- padding:13px 11px;
- font-size:11px;
- vertical-align:middle;
-}
-
-tr:hover td {background:#fdfbf7}
-
-.badge {
- display:inline-block;
- padding:5px 8px;
- border-radius:20px;
- background:#e8f4ed;
- color:var(--green);
- font-size:9px;
- font-weight:800;
-}
-
-.badge.red {
- background:#f8e9eb;
- color:var(--maroon);
-}
-
-.badge.gold {
- background:#f8f0dc;
- color:#85621d;
-}
-
-.view-btn {
- background:var(--blue);
- color:white;
- border:0;
- border-radius:4px;
- padding:8px 11px;
- font-size:9px;
- font-weight:800;
-}
-
-.empty {
- text-align:center;
- color:var(--muted);
- padding:35px!important;
-}
-
-.detail-grid {
- display:grid;
- grid-template-columns:repeat(3,minmax(0,1fr));
- gap:12px;
-}
-
-.detail-item {
- background:#faf8f4;
- border:1px solid var(--border);
- padding:13px;
- border-radius:5px;
- min-width:0;
-}
-
-.detail-item small {
- display:block;
- color:var(--muted);
- font-size:9px;
- font-weight:800;
- text-transform:uppercase;
- margin-bottom:7px;
-}
-
-.detail-item strong {
- color:var(--blue);
- font-size:12px;
- overflow-wrap:anywhere;
-}
-
-.detail-title {
- color:var(--maroon);
- font-family:'Cormorant Garamond',serif;
- font-size:25px;
- margin-bottom:15px;
-}
-
-.close-btn {
- background:var(--maroon);
- color:white;
- border:0;
- border-radius:4px;
- padding:8px 13px;
- font-size:10px;
- font-weight:800;
-}
-
-.footer {
- text-align:center;
- color:var(--muted);
- font-size:10px;
- padding:25px 10px;
-}
-
-.status-message {
- font-size:11px;
- margin:12px 0;
- color:var(--muted);
- line-height:1.7;
-}
-
-@media(max-width:850px) {
- .stats {grid-template-columns:repeat(2,minmax(0,1fr))}
- .detail-grid {grid-template-columns:repeat(2,minmax(0,1fr))}
-}
-
-@media(max-width:520px) {
- .login-box {padding:32px 22px}
- .topbar {padding:13px 4%}
- .brand h2 {font-size:22px}
- .brand img {width:40px;height:40px}
- .container {padding:22px 4%}
- .stats {gap:9px}
- .stat-card {padding:15px}
- .stat-card h2 {font-size:25px}
- .stat-card p {font-size:9px}
- .panel {padding:14px}
- .detail-grid {grid-template-columns:1fr}
- .page-heading h1 {font-size:30px}
-}
-</style></head><body><!-- LOGIN SCREEN --><section class="login-screen" id="loginScreen"><div class="login-box"><img class="logo"
-src="assets/ayaz-melo-2026.png"
-alt="Ayaz Melo Logo">
-
-<h1>Admin Portal</h1><div class="subtitle">
-AYAZ MELO 2026 · ADMINISTRATION
-</div><form id="loginForm"><input
-type="email"
-id="email"
-placeholder="Admin Email Address"
-autocomplete="username"
-required>
-
-<input
-type="password"
-id="password"
-placeholder="Admin Password"
-autocomplete="current-password"
-required>
-
-<button type="submit" class="primary-btn" id="loginBtn">
-ADMIN LOGIN
-</button></form><div class="message" id="loginMessage"></div><a href="index.html" class="back">
-← BACK TO WEBSITE
-</a></div>
-</section><!-- ADMIN DASHBOARD --><section id="dashboard" class="hidden"><header class="topbar"><div class="brand">
-<img src="assets/ayaz-melo-2026.png" alt="Ayaz Melo">
-<div>
-<h2>Ayaz Melo 2026</h2>
-<p>ADMINISTRATION PORTAL</p>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Montserrat,sans-serif;background:#f5f2ed;color:var(--dark);min-height:100vh}
+button,input,select,textarea{font-family:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+.login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--blue)}
+.login-box{width:100%;max-width:420px;background:var(--cream);padding:38px 28px;border-radius:12px;text-align:center}
+.logo{width:100px;height:100px;object-fit:contain;margin-bottom:15px}
+.login-box h1,.brand h2,.page-heading h1,.panel-heading h2{font-family:"Cormorant Garamond",serif}
+.login-box h1{font-size:38px;color:var(--blue)}
+.subtitle{color:var(--maroon);font-size:10px;font-weight:800;letter-spacing:3px;margin:8px 0 25px}
+.login-box input{width:100%;padding:14px;margin:8px 0;border:1px solid #ddd;border-radius:5px;font-size:13px}
+.primary-btn{width:100%;padding:15px;margin-top:12px;background:var(--maroon);color:white;border:0;border-radius:5px;font-weight:800}
+.message{margin-top:15px;font-size:12px;line-height:1.7;overflow-wrap:anywhere}
+.back{display:inline-block;margin-top:22px;color:var(--blue);font-size:11px;font-weight:700;text-decoration:none}
+.topbar{background:var(--blue);color:white;padding:13px 4%;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{width:46px;height:46px;object-fit:contain}
+.brand h2{font-size:27px}
+.brand p{font-size:9px;letter-spacing:2px;color:var(--gold);font-weight:800}
+.top-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.admin-label{font-size:10px}
+.top-btn{border:1px solid #ffffff66;background:transparent;color:white;padding:10px 13px;border-radius:5px;font-size:10px;font-weight:800}
+.container{max-width:1500px;margin:auto;padding:25px 3%}
+.page-heading{margin-bottom:22px}
+.page-heading h1{font-size:36px;color:var(--blue)}
+.page-heading p{font-size:11px;color:var(--muted);margin-top:5px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:22px}
+.stat-card,.panel{background:white;border:1px solid var(--border);border-radius:9px}
+.stat-card{padding:19px;border-top:4px solid var(--gold)}
+.stat-card p{font-size:9px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.6px}
+.stat-card h2{font-size:29px;color:var(--blue);margin-top:10px}
+.tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:17px}
+.tab-btn{border:1px solid var(--border);background:white;color:var(--blue);padding:11px 14px;border-radius:5px;font-size:10px;font-weight:800}
+.tab-btn.active{background:var(--maroon);border-color:var(--maroon);color:white}
+.panel{padding:20px;margin-bottom:18px}
+.panel-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.panel-heading h2{font-size:25px;color:var(--blue)}
+.panel-heading p{font-size:10px;color:var(--muted);margin-top:3px}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.tools input,.tools select,.field input,.field select,.field textarea{min-width:130px;flex:1;padding:11px;border:1px solid var(--border);border-radius:5px;background:white;font-size:11px;outline:none}
+.action-btn{border:0;border-radius:5px;padding:10px 13px;font-size:10px;font-weight:800;color:white;background:var(--blue)}
+.action-btn.gold{background:var(--maroon)}
+.action-btn.green{background:var(--green)}
+.action-btn.red{background:var(--red)}
+.action-btn:disabled{opacity:.5;cursor:wait}
+.table-wrap{width:100%;overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:650px}
+th{background:#f7f3ec;color:var(--blue);text-align:left;font-size:9px;text-transform:uppercase;padding:12px;white-space:nowrap}
+td{border-bottom:1px solid #eee;padding:11px;font-size:10px;vertical-align:middle}
+tr:hover td{background:#fdfbf7}
+.badge{display:inline-block;padding:5px 8px;border-radius:20px;background:#e8f4ed;color:var(--green);font-size:9px;font-weight:800}
+.badge.red{background:#f8e9eb;color:var(--maroon)}
+.badge.gold{background:#f8f0dc;color:#85621d}
+.view-btn{background:var(--blue);color:white;border:0;border-radius:4px;padding:7px 10px;font-size:9px;font-weight:800;margin:2px}
+.empty{text-align:center;color:var(--muted);padding:30px!important}
+.status-message{font-size:10px;color:var(--muted);margin-top:12px;line-height:1.7}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field label{font-size:10px;font-weight:800;color:var(--blue)}
+.field textarea{min-height:100px;resize:vertical}
+.field.full{grid-column:1/-1}
+.detail-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.detail-item{background:#faf8f4;border:1px solid var(--border);padding:12px;border-radius:5px;overflow-wrap:anywhere}
+.detail-item small{display:block;color:var(--muted);font-size:9px;font-weight:800;margin-bottom:6px}
+.detail-item strong{font-size:11px;color:var(--blue)}
+.modal{position:fixed;inset:0;background:#0009;display:flex;align-items:center;justify-content:center;padding:15px;z-index:10;overflow:auto}
+.modal-box{width:100%;max-width:650px;max-height:90vh;overflow:auto;background:white;border-radius:9px;padding:22px}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:17px}
+.modal-head h2{font-family:"Cormorant Garamond",serif;color:var(--blue);font-size:27px}
+.modal-actions{display:flex;gap:9px;justify-content:flex-end;margin-top:18px;flex-wrap:wrap}
+.notice{padding:12px;background:#fff8e8;border:1px solid #eed8a5;border-radius:6px;font-size:10px;line-height:1.7;margin-bottom:15px}
+.footer{text-align:center;color:var(--muted);font-size:9px;padding:22px}
+@media(max-width:850px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.detail-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.container{padding:18px 3%}.panel{padding:13px}.stats{gap:8px}.stat-card{padding:13px}.stat-card h2{font-size:24px}.brand h2{font-size:22px}.page-heading h1{font-size:30px}.detail-grid,.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}}
+</style>
+</head>
+
+<body>
+
+<section id="loginScreen" class="login-screen">
+<div class="login-box">
+<img class="logo" src="assets/ayaz-melo-2026.png" alt="Ayaz Melo">
+<h1>Super Admin</h1>
+<div class="subtitle">AYAZ MELO 2026 · ADMINISTRATION</div>
+<form id="loginForm">
+<input type="email" id="email" placeholder="Admin Email Address" autocomplete="username" required>
+<input type="password" id="password" placeholder="Admin Password" autocomplete="current-password" required>
+<button class="primary-btn" id="loginBtn">ADMIN LOGIN</button>
+</form>
+<div class="message" id="loginMessage"></div>
+<a href="index.html" class="back">← BACK TO WEBSITE</a>
 </div>
-</div><div class="top-actions">
-<span class="admin-label">Administrator</span>
+</section>
+
+<section id="dashboard" class="hidden">
+<header class="topbar">
+<div class="brand">
+<img src="assets/ayaz-melo-2026.png" alt="Ayaz Melo">
+<div><h2>Ayaz Melo 2026</h2><p>SUPER ADMINISTRATION PORTAL</p></div>
+</div>
+<div class="top-actions">
+<span class="admin-label">Super Administrator</span>
 <button class="top-btn" id="refreshBtn">↻ REFRESH</button>
 <button class="top-btn" id="logoutBtn">LOG OUT</button>
-</div></header><main class="container"><div class="page-heading">
-<h1>Admin Dashboard</h1>
-<p>Visitor Registration & Attendance Management · 19–21 December 2026</p>
-</div><!-- STATISTICS --><div class="stats"><div class="stat-card">
-<p>Total Registered Visitors</p>
-<h2 id="totalVisitors">—</h2>
-<small>All registered visitors</small>
-</div><div class="stat-card">
-<p>Total Cities</p>
-<h2 id="totalCities">—</h2>
-<small>Unique registered cities</small>
-</div><div class="stat-card">
-<p>Total Check-ins</p>
-<h2 id="totalCheckins">—</h2>
-<small>Recorded attendance entries</small>
-</div><div class="stat-card">
-<p>Today's Check-ins</p>
-<h2 id="todayCheckins">—</h2>
-<small>Pakistan local date</small>
-</div></div><!-- NAVIGATION --><div class="tabs">
+</div>
+</header>
+
+<main class="container">
+<div class="page-heading">
+<h1>Super Admin Dashboard</h1>
+<p>Ayaz Melo 2026 · 19–21 December 2026 · Hyderabad, Sindh</p>
+</div>
+
+<div class="stats">
+<div class="stat-card"><p>Total Visitors</p><h2 id="totalVisitors">—</h2></div>
+<div class="stat-card"><p>Total Cities</p><h2 id="totalCities">—</h2></div>
+<div class="stat-card"><p>Total Check-ins</p><h2 id="totalCheckins">—</h2></div>
+<div class="stat-card"><p>Today's Check-ins</p><h2 id="todayCheckins">—</h2></div>
+</div>
+
+<nav class="tabs" id="tabs">
 <button class="tab-btn active" data-tab="overview">OVERVIEW</button>
-<button class="tab-btn" data-tab="visitors">ALL VISITORS</button>
+<button class="tab-btn" data-tab="visitors">VISITORS</button>
 <button class="tab-btn" data-tab="attendance">ATTENDANCE</button>
-</div><!-- OVERVIEW --><section id="overviewTab" class="tab-content"><div class="panel"><div class="panel-heading">
-<div>
-<h2>Recent Registrations</h2>
-<p>Latest registered visitors</p>
-</div><button class="action-btn" id="goVisitors">
-VIEW ALL VISITORS
-</button>
-</div><div class="table-wrap">
-<table>
-<thead>
-<tr>
-<th>Registration ID</th>
-<th>Full Name</th>
-<th>Contact</th>
-<th>City</th>
-<th>Registration Date</th>
-<th>Details</th>
-</tr>
-</thead>
-<tbody id="recentVisitorsBody">
-<tr><td colspan="6" class="empty">Loading records...</td></tr>
-</tbody>
-</table>
-</div></div></section><!-- ALL VISITORS --><section id="visitorsTab" class="tab-content hidden"><div class="panel"><div class="panel-heading">
-<div>
-<h2>Registered Visitors</h2>
-<p>Search and manage visitor records</p>
-</div><button class="action-btn green" id="exportBtn">
-↓ EXPORT CSV
-</button>
-</div><div class="tools"><input
-type="search"
-id="visitorSearch"
-placeholder="Search name, phone, city or registration ID...">
+<button class="tab-btn" data-tab="volunteers">VOLUNTEERS</button>
+<button class="tab-btn" data-tab="feedback">FEEDBACK</button>
+<button class="tab-btn" data-tab="announcements">ANNOUNCEMENTS</button>
+<button class="tab-btn" data-tab="content">WEBSITE CMS</button>
+<button class="tab-btn" data-tab="gallery">GALLERY</button>
+<button class="tab-btn" data-tab="settings">REGISTRATION SETTINGS</button>
+<button class="tab-btn" data-tab="logs">ACTIVITY LOGS</button>
+</nav>
 
-<select id="cityFilter">
-<option value="">All Cities</option>
-</select><button class="action-btn gold" id="clearSearch">
-CLEAR
-</button></div><div class="table-wrap">
-<table>
-<thead>
-<tr>
-<th>Registration ID</th>
-<th>Full Name</th>
-<th>Father Name</th>
-<th>Contact</th>
-<th>City</th>
-<th>Designation</th>
-<th>Registration Date</th>
-<th>Details</th>
-</tr>
-</thead>
-<tbody id="visitorsBody">
-<tr><td colspan="8" class="empty">Loading records...</td></tr>
-</tbody>
-</table>
-</div><p class="status-message" id="visitorCount"></p></div><!-- VISITOR PROFILE --><div class="panel hidden" id="visitorProfile"><div class="panel-heading">
-<div>
-<h2>Visitor Profile</h2>
-<p>Complete registration information</p>
+<section id="overviewTab" class="tab-content">
+<div class="panel">
+<div class="panel-heading"><div><h2>Recent Registrations</h2><p>Latest visitor records</p></div>
+<button class="action-btn" data-goto="visitors">VIEW ALL</button></div>
+<div class="table-wrap"><table><thead><tr><th>Registration ID</th><th>Name</th><th>Contact</th><th>City</th><th>Date</th></tr></thead><tbody id="recentBody"><tr><td colspan="5" class="empty">Loading...</td></tr></tbody></table></div>
 </div>
-<button class="close-btn" id="closeProfile">CLOSE</button>
-</div><div id="visitorDetails"></div></div></section><!-- ATTENDANCE --><section id="attendanceTab" class="tab-content hidden"><div class="panel"><div class="panel-heading">
-<div>
-<h2>Attendance Records</h2>
-<p>Visitor check-in history</p>
+<div class="panel">
+<div class="panel-heading"><div><h2>System Overview</h2><p>Database modules and status</p></div></div>
+<div id="systemStatus" class="detail-grid"></div>
 </div>
-</div><div class="tools"><input
-type="search"
-id="attendanceSearch"
-placeholder="Search registration ID or visitor name...">
-
-<input
-type="date"
-id="attendanceDate">
-
-<button class="action-btn gold" id="clearAttendance">
-CLEAR
-</button></div><div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Registration ID</th>
-<th>Visitor Name</th>
-<th>Event Date</th>
-<th>Scanned At</th>
-<th>Check-in Status</th>
-</tr>
-</thead><tbody id="attendanceBody">
-<tr><td colspan="5" class="empty">Loading attendance...</td></tr>
-</tbody></table>
-</div><p class="status-message" id="attendanceCount"></p></div></section><div class="footer">
-AYAZ MELO 2026 · KHANABADOSH WRITERS' CAFE · HYDERABAD, SINDH
-</div></main>
-</section><script>
-/* SUPABASE CONFIGURATION */
-
-const SUPABASE_URL =
-"https://fstkhwoxbgdcdfwycggu.supabase.co";
-
-const SUPABASE_KEY =
-"sb_publishable_BNRQfiLDVM-892aVwO_hJw_OAhEgTrq";
-
-const ADMIN_UID =
-"327072bb-a41b-4387-aadc-10b2c38ecfe4";
-
-const db = window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
-);
-
-
-/* ELEMENTS */
-
-const loginScreen = document.getElementById("loginScreen");
-const dashboard = document.getElementById("dashboard");
-const loginForm = document.getElementById("loginForm");
-const loginMessage = document.getElementById("loginMessage");
-const loginBtn = document.getElementById("loginBtn");
-
-let visitors = [];
-let checkins = [];
-
-
-/* HELPERS */
-
-function escapeHTML(value) {
-return String(value ?? "").replace(/[&<>"']/g, function(char) {
-return {
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#039;"
-}[char];
-});
-}
-
-function displayValue(value) {
-if(value === null || value === undefined || value === "") {
-return "—";
-}
-
-if(Array.isArray(value)) {
-return value.length ? value.join(", ") : "—";
-}
-
-return String(value);
-}
-
-function formatDate(value) {
-if(!value) return "—";
-
-const date = new Date(value);
-
-if(Number.isNaN(date.getTime())) return "—";
-
-return date.toLocaleDateString("en-GB", {
-day:"2-digit",
-month:"short",
-year:"numeric"
-});
-}
-
-function formatDateTime(value) {
-if(!value) return "—";
-
-const date = new Date(value);
-
-if(Number.isNaN(date.getTime())) return "—";
-
-return date.toLocaleString("en-GB", {
-day:"2-digit",
-month:"short",
-year:"numeric",
-hour:"2-digit",
-minute:"2-digit"
-});
-}
-
-function pakistanToday() {
-return new Intl.DateTimeFormat("en-CA", {
-timeZone:"Asia/Karachi",
-year:"numeric",
-month:"2-digit",
-day:"2-digit"
-}).format(new Date());
-}
-
-function showLoginError(message) {
-loginMessage.style.color = "#842c3c";
-loginMessage.textContent = message;
-}
-
-function showDashboard() {
-loginScreen.classList.add("hidden");
-dashboard.classList.remove("hidden");
-}
-
-
-/* AUTHENTICATION */
-
-loginForm.addEventListener("submit", async function(e) {
-
-e.preventDefault();
-
-loginBtn.disabled = true;
-loginBtn.textContent = "VERIFYING...";
-loginMessage.textContent = "";
-
-try {
-
-const email = document.getElementById("email").value.trim();
-const password = document.getElementById("password").value;
-
-const {data,error} = await db.auth.signInWithPassword({
-email,
-password
-});
-
-if(error) throw error;
-
-if(!data.user || data.user.id !== ADMIN_UID) {
-
-await db.auth.signOut();
-
-throw new Error(
-"Access denied. This account is not an authorized administrator."
-);
-
-}
-
-showDashboard();
-await loadDashboard();
-
-} catch(error) {
-
-showLoginError(error.message || "Login failed. Please try again.");
-
-} finally {
-
-loginBtn.disabled = false;
-loginBtn.textContent = "ADMIN LOGIN";
-
-}
-
-});
-
-
-/* CHECK EXISTING SESSION */
-
-async function checkExistingSession() {
-
-try {
-
-const {data,error} = await db.auth.getSession();
-
-if(error) throw error;
-
-const user = data.session?.user;
-
-if(!user) return;
-
-if(user.id !== ADMIN_UID) {
-await db.auth.signOut();
-return;
-}
-
-showDashboard();
-await loadDashboard();
-
-} catch(error) {
-
-console.error("Session check:", error);
-
-}
-
-}
-
-
-/* LOGOUT */
-
-document.getElementById("logoutBtn").addEventListener("click", async function() {
-
-const {error} = await db.auth.signOut();
-
-if(error) {
-alert("Logout failed: " + error.message);
-return;
-}
-
-window.location.reload();
-
-});
-
-
-/* LOAD DATABASE RECORDS */
-
-async function loadDashboard() {
-
-const refreshBtn = document.getElementById("refreshBtn");
-
-refreshBtn.disabled = true;
-refreshBtn.textContent = "LOADING...";
-
-try {
-
-/* Load visitors */
-
-const visitorsResult = await db
-.from("visitors")
-.select("*")
-.order("registration_date", {ascending:false})
-.limit(5000);
-
-if(visitorsResult.error) throw visitorsResult.error;
-
-visitors = visitorsResult.data || [];
-
-
-/* Load check-ins */
-
-const checkinsResult = await db
-.from("visitor_checkins")
-.select("*")
-.order("scanned_at", {ascending:false})
-.limit(5000);
-
-if(checkinsResult.error) throw checkinsResult.error;
-
-checkins = checkinsResult.data || [];
-
-
-/* Update dashboard */
-
-updateStatistics();
-renderRecentVisitors();
-renderVisitors();
-renderAttendance();
-populateCityFilter();
-
-} catch(error) {
-
-console.error("Dashboard loading:", error);
-
-alert(
-"Could not load dashboard records.\n\n" +
-error.message +
-"\n\nPlease check your Supabase RLS SELECT permissions."
-);
-
-} finally {
-
-refreshBtn.disabled = false;
-refreshBtn.textContent = "↻ REFRESH";
-
-}
-
-}
-
-
-/* STATISTICS */
-
-function updateStatistics() {
-
-const cities = new Set(
-visitors
-.map(v => (v.city || "").trim().toLowerCase())
-.filter(Boolean)
-);
-
-const today = pakistanToday();
-
-const todaysCount = checkins.filter(c => {
-return c.event_date === today;
-}).length;
-
-document.getElementById("totalVisitors").textContent =
-visitors.length;
-
-document.getElementById("totalCities").textContent =
-cities.size;
-
-document.getElementById("totalCheckins").textContent =
-checkins.length;
-
-document.getElementById("todayCheckins").textContent =
-todaysCount;
-
-}
-
-
-/* RECENT VISITORS */
-
-function renderRecentVisitors() {
-
-const tbody = document.getElementById("recentVisitorsBody");
-
-const recent = visitors.slice(0,8);
-
-if(!recent.length) {
-tbody.innerHTML =
-'<tr><td colspan="6" class="empty">No visitor records found.</td></tr>';
-return;
-}
-
-tbody.innerHTML = recent.map(v => `
-
-<tr>
-<td>${escapeHTML(displayValue(v.registration_id))}</td>
-<td>${escapeHTML(displayValue(v.full_name))}</td>
-<td>${escapeHTML(displayValue(v.contact_number))}</td>
-<td>${escapeHTML(displayValue(v.city))}</td>
-<td>${escapeHTML(formatDate(v.registration_date))}</td>
-<td>
-<button class="view-btn" data-view="${escapeHTML(v.id)}">
-VIEW
-</button>
-</td>
-</tr>
-
-`).join("");
-
-}
-
-
-/* CITY FILTER */
-
-function populateCityFilter() {
-
-const select = document.getElementById("cityFilter");
-const previous = select.value;
-
-const cities = [...new Set(
-visitors.map(v => (v.city || "").trim()).filter(Boolean)
-)].sort((a,b) => a.localeCompare(b));
-
-select.innerHTML =
-'<option value="">All Cities</option>' +
-cities.map(city => `
-<option value="${escapeHTML(city)}">${escapeHTML(city)}</option>
-`).join("");
-
-select.value = previous;
-
-}
-
-
-/* ALL VISITORS */
-
-function renderVisitors() {
-
-const tbody = document.getElementById("visitorsBody");
-
-const query = document
-.getElementById("visitorSearch")
-.value.trim().toLowerCase();
-
-const selectedCity = document
-.getElementById("cityFilter")
-.value;
-
-const filtered = visitors.filter(v => {
-
-const searchable = [
-v.registration_id,
-v.full_name,
-v.father_name,
-v.contact_number,
-v.city,
-v.designation,
-v.email
-].join(" ").toLowerCase();
-
-const matchesSearch = searchable.includes(query);
-const matchesCity = !selectedCity || v.city === selectedCity;
-
-return matchesSearch && matchesCity;
-
-});
-
-if(!filtered.length) {
-
-tbody.innerHTML =
-'<tr><td colspan="8" class="empty">No matching visitors found.</td></tr>';
-
-} else {
-
-tbody.innerHTML = filtered.map(v => `
-
-<tr>
-<td>${escapeHTML(displayValue(v.registration_id))}</td>
-<td>${escapeHTML(displayValue(v.full_name))}</td>
-<td>${escapeHTML(displayValue(v.father_name))}</td>
-<td>${escapeHTML(displayValue(v.contact_number))}</td>
-<td>${escapeHTML(displayValue(v.city))}</td>
-<td>${escapeHTML(displayValue(v.designation))}</td>
-<td>${escapeHTML(formatDate(v.registration_date))}</td>
-<td>
-<button class="view-btn" data-view="${escapeHTML(v.id)}">
-VIEW
-</button>
-</td>
-</tr>
-
-`).join("");
-
-}
-
-document.getElementById("visitorCount").textContent =
-"Showing " + filtered.length + " of " + visitors.length + " visitors.";
-
-}
-
-
-/* VISITOR PROFILE */
-
-function openVisitorProfile(id) {
-
-const visitor = visitors.find(v => String(v.id) === String(id));
-
-if(!visitor) return;
-
-const details = [
-["Registration ID",visitor.registration_id],
-["Full Name",visitor.full_name],
-["Father Name",visitor.father_name],
-["Contact Number",visitor.contact_number],
-["Email",visitor.email],
-["City",visitor.city],
-["Designation",visitor.designation],
-["Gender",visitor.gender],
-["Attendance Type",visitor.attendance_type],
-["Family Members",visitor.family_members],
-["Registration Date",formatDateTime(visitor.registration_date)],
-["Entry Status",visitor.entry_status],
-["Entry Time",formatDateTime(visitor.entry_time)],
-["Gate Operator",visitor.gate_operator],
-["Attendance Days",visitor.attendance_days],
-["Allowed Event Dates",visitor.allowed_event_dates],
-["Attendance Center",visitor.attendance_center],
-["Family Group ID",visitor.family_group_id]
-];
-
-const html = `
-
-<h3 class="detail-title">
-${escapeHTML(displayValue(visitor.full_name))}
-</h3>
-
+</section>
+
+<section id="visitorsTab" class="tab-content hidden">
+<div class="panel">
+<div class="panel-heading"><div><h2>Visitor Management</h2><p>Search, add, edit, delete and export visitors</p></div>
+<button class="action-btn green" id="addVisitorBtn">+ ADD VISITOR</button></div>
+<div class="tools">
+<input id="visitorSearch" placeholder="Search name, phone, city or registration ID">
+<select id="cityFilter"><option value="">All Cities</option></select>
+<button class="action-btn" id="allExcel">ALL VISITORS EXCEL</button>
+<button class="action-btn" id="cityExcel">CITY-WISE EXCEL</button>
+<button class="action-btn gold" id="visitorCSV">EXPORT CSV</button>
+</div>
+<div class="table-wrap"><table><thead><tr><th>Registration ID</th><th>Name</th><th>Father Name</th><th>Contact</th><th>City</th><th>Designation</th><th>Registered</th><th>Actions</th></tr></thead><tbody id="visitorsBody"></tbody></table></div>
+<p id="visitorCount" class="status-message"></p>
+</div>
+<div class="panel hidden" id="visitorProfile">
+<div class="panel-heading"><h2>Visitor Profile</h2><button class="action-btn gold" id="closeProfile">CLOSE</button></div>
+<div id="visitorDetails"></div>
+</div>
+</section>
+
+<section id="attendanceTab" class="tab-content hidden">
+<div class="panel">
+<div class="panel-heading"><div><h2>Attendance & QR Check-ins</h2><p>Successful check-in records</p></div>
+<button class="action-btn green" id="attendanceExcel">ATTENDANCE EXCEL</button></div>
+<div class="tools"><input id="attendanceSearch" placeholder="Search registration ID or name"><input type="date" id="attendanceDate"><button class="action-btn gold" id="clearAttendance">CLEAR</button></div>
+<div class="table-wrap"><table><thead><tr><th>Registration ID</th><th>Name</th><th>Event Date</th><th>Scanned At</th><th>Status</th></tr></thead><tbody id="attendanceBody"></tbody></table></div>
+<p id="attendanceCount" class="status-message"></p>
+<div class="notice">Attendance is currently view/export only. Check-ins are created by the existing QR check-in function. This panel does not manually alter attendance records.</div>
+</div>
+</section>
+
+<section id="volunteersTab" class="tab-content hidden">
+<div class="panel">
+<div class="panel-heading"><div><h2>Volunteer Management</h2><p>Manage volunteer applications and committee assignments</p></div><button class="action-btn green" id="addVolunteer">+ ADD VOLUNTEER</button></div>
+<div class="tools"><input id="volunteerSearch" placeholder="Search volunteer name, phone or city"><select id="volunteerStatus"><option value="">All statuses</option><option>pending</option><option>approved</option><option>rejected</option></select></div>
+<div class="table-wrap"><table><thead><tr><th>Name</th><th>Phone</th><th>City</th><th>Committee</th><th>Status</th><th>Actions</th></tr></thead><tbody id="volunteersBody"></tbody></table></div>
+</div>
+</section>
+
+<section id="feedbackTab" class="tab-content hidden">
+<div class="panel">
+<div class="panel-heading"><div><h2>Feedback Management</h2><p>Read and manage submitted feedback</p></div></div>
+<div class="tools"><input id="feedbackSearch" placeholder="Search name, email or feedback"></div>
+<div class="table-wrap"><table><thead><tr><th>Name</th><th>Email</th><th>Type</th><th>Rating</th><th>Liked Most</th><th>Date</th><th>Actions</th></tr></thead><tbody id="feedbackBody"></tbody></table></div>
+</div>
+</section>
+
+<section id="announcementsTab" class="tab-content hidden">
+<div class="panel">
+<div class="panel-heading"><div><h2>Announcements</h2><p>Create, publish, unpublish and remove announcements</p></div><button class="action-btn green" id="addAnnouncement">+ NEW ANNOUNCEMENT</button></div>
+<div class="table-wrap"><table><thead><tr><th>Title</th><th>Type</th><th>Published</th><th>Created</th><th>Actions</th></tr></thead><tbody id="announcementsBody"></tbody></table></div>
+</div>
+</section>
+
+<section id="contentTab" class="tab-content hidden">
+<div class="panel">
+<div class="panel-heading"><div><h2>Website Content Management</h2><p>Manage content records by page key using JSON content</p></div><button class="action-btn green" id="addContent">+ ADD PAGE CONTENT</button></div>
+<div class="notice">CMS records are stored in site_content. Public pages must be connected to these records before changes appear on the live website.</div>
+<div class="table-wrap"><table><thead><tr><th>Page Key</th><th>Page Title</th><th>Published</th><th>Last Updated</th><th>Actions</th></tr></thead><tbody id="contentBody"></tbody></table></div>
+</div>
+</section>
+
+<section id="galleryTab" class="tab-content hidden">
+<div class="panel">
+<div class="panel-heading"><div><h2>Gallery Management</h2><p>Upload and manage event photographs</p></div></div>
+<div class="notice">Images are uploaded to the ayaz-melo-gallery Storage Bucket. Maximum file size: 5 MB. Supported formats: JPG, PNG, WEBP and GIF.</div>
+<div class="tools"><input type="file" id="galleryFile" accept="image/jpeg,image/png,image/webp,image/gif"><input id="galleryTitle" placeholder="Image title"><input id="galleryCategory" placeholder="Category"><button class="action-btn green" id="uploadGallery">UPLOAD IMAGE</button></div>
+<div class="table-wrap"><table><thead><tr><th>Preview</th><th>Title</th><th>Category</th><th>Published</th><th>Actions</th></tr></thead><tbody id="galleryBody"></tbody></table></div>
+</div>
+</section>
+
+<section id="settingsTab" class="tab-content hidden">
+<div class="panel">
+<div class="panel-heading"><div><h2>Registration Settings</h2><p>Control registration status stored in Supabase</p></div></div>
+<div class="notice">Important: this setting is stored in app_settings. Your public visitor.html form must check this setting before accepting registrations. The toggle alone does not close the public form until that integration is completed.</div>
 <div class="detail-grid">
+<div class="detail-item"><small>Current Registration Status</small><strong id="registrationStatus">Loading...</strong></div>
+<div class="detail-item"><small>Last Updated</small><strong id="registrationUpdated">—</strong></div>
+</div>
+<div class="tools" style="margin-top:16px">
+<button class="action-btn green" id="openRegistration">OPEN REGISTRATION</button>
+<button class="action-btn red" id="closeRegistration">CLOSE REGISTRATION</button>
+</div>
+</div>
+</section>
 
-${details.map(item => `
+<section id="logsTab" class="tab-content hidden">
+<div class="panel">
+<div class="panel-heading"><div><h2>Admin Activity Logs</h2><p>Administrative actions recorded in Supabase</p></div></div>
+<div class="table-wrap"><table><thead><tr><th>Admin UID</th><th>Action</th><th>Module</th><th>Record</th><th>Details</th><th>Date</th></tr></thead><tbody id="logsBody"></tbody></table></div>
+</div>
+</section>
 
-<div class="detail-item">
-<small>${escapeHTML(item[0])}</small>
-<strong>${escapeHTML(displayValue(item[1]))}</strong>
+<div class="footer">AYAZ MELO 2026 · KHANABADOSH WRITERS' CAFE · HYDERABAD, SINDH</div>
+</main>
+</section>
+
+<div id="modal" class="modal hidden">
+<div class="modal-box">
+<div class="modal-head"><h2 id="modalTitle">Edit Record</h2><button class="action-btn gold" id="modalClose">CLOSE</button></div>
+<div id="modalContent"></div>
+<div class="modal-actions"><button class="action-btn" id="modalCancel">CANCEL</button><button class="action-btn green" id="modalSave">SAVE</button></div>
+</div>
 </div>
 
-`).join("")}
+<script>
+/* ================= CONFIG ================= */
 
-</div>
+const SUPABASE_URL="https://fstkhwoxbgdcdfwycggu.supabase.co";
+const SUPABASE_KEY="sb_publishable_BNRQfiLDVM-892aVwO_hJw_OAhEgTrq";
+const ADMIN_UID="327072bb-a41b-4387-aadc-10b2c38ecfe4";
+const BUCKET="ayaz-melo-gallery";
 
-`;
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
-document.getElementById("visitorDetails").innerHTML = html;
+let visitors=[],checkins=[],volunteers=[],feedback=[],announcements=[],contents=[],gallery=[],logs=[];
+let currentUser=null,modalSaveHandler=null;
 
-const profile = document.getElementById("visitorProfile");
+/* ================= HELPERS ================= */
 
-profile.classList.remove("hidden");
+const $=id=>document.getElementById(id);
 
-profile.scrollIntoView({
-behavior:"smooth",
-block:"start"
+function esc(v){
+return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+}
+function val(v){return v===null||v===undefined||v===""?"—":Array.isArray(v)?v.join(", "):String(v)}
+function date(v){if(!v)return "—";let d=new Date(v);return isNaN(d)?"—":d.toLocaleDateString("en-GB")}
+function dateTime(v){if(!v)return "—";let d=new Date(v);return isNaN(d)?"—":d.toLocaleString("en-GB")}
+function todayPK(){return new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Karachi",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date())}
+function msg(t,ok=false){$("loginMessage").style.color=ok?"#247a50":"#842c3c";$("loginMessage").textContent=t}
+function emptyRow(cols,text="No records found"){return `<tr><td colspan="${cols}" class="empty">${esc(text)}</td></tr>`}
+function openModal(title,html,saveHandler){
+$("modalTitle").textContent=title;
+$("modalContent").innerHTML=html;
+modalSaveHandler=saveHandler;
+$("modal").classList.remove("hidden");
+}
+function closeModal(){$("modal").classList.add("hidden");modalSaveHandler=null}
+$("modalClose").onclick=closeModal;
+$("modalCancel").onclick=closeModal;
+$("modalSave").onclick=async()=>{
+if(!modalSaveHandler)return;
+$("modalSave").disabled=true;
+try{await modalSaveHandler();closeModal();await loadAll()}
+catch(e){alert("Error: "+e.message)}
+finally{$("modalSave").disabled=false}
+};
+function field(label,name,value="",type="text",required=false){
+return `<div class="field"><label>${esc(label)}</label><input id="f_${name}" type="${type}" value="${esc(value)}" ${required?"required":""}></div>`;
+}
+function textarea(label,name,value=""){
+return `<div class="field full"><label>${esc(label)}</label><textarea id="f_${name}">${esc(value)}</textarea></div>`;
+}
+function selectField(label,name,options,value=""){
+return `<div class="field"><label>${esc(label)}</label><select id="f_${name}">${options.map(o=>`<option value="${esc(o)}" ${o===value?"selected":""}>${esc(o)}</option>`).join("")}</select></div>`;
+}
+function getField(name){return $(`f_${name}`).value.trim()}
+async function logAction(action,module,recordId="",details={}){
+try{
+await db.from("admin_activity_logs").insert({
+admin_user_id:currentUser.id,action,module,record_id:String(recordId||""),details
 });
-
+}catch(e){console.warn("Activity log failed:",e.message)}
+}
+async function fetchAll(table,order="created_at"){
+let q=db.from(table).select("*").limit(5000);
+if(order)q=q.order(order,{ascending:false});
+const {data,error}=await q;
+if(error)throw error;
+return data||[];
 }
 
+/* ================= AUTH ================= */
 
-/* VISITOR PROFILE CLICK EVENTS */
-
-document.addEventListener("click", function(e) {
-
-const button = e.target.closest("[data-view]");
-
-if(button) {
-openVisitorProfile(button.dataset.view);
+$("loginForm").addEventListener("submit",async e=>{
+e.preventDefault();
+$("loginBtn").disabled=true;
+$("loginBtn").textContent="VERIFYING...";
+msg("");
+try{
+const {data,error}=await db.auth.signInWithPassword({
+email:$("email").value.trim(),
+password:$("password").value
+});
+if(error)throw error;
+if(!data.user||data.user.id!==ADMIN_UID){
+await db.auth.signOut();
+throw new Error("Access denied. Unauthorized administrator.");
 }
-
+currentUser=data.user;
+showDashboard();
+await loadAll();
+}catch(e){msg(e.message||"Login failed")}
+finally{$("loginBtn").disabled=false;$("loginBtn").textContent="ADMIN LOGIN"}
 });
 
-
-document.getElementById("closeProfile").addEventListener("click", function() {
-
-document.getElementById("visitorProfile").classList.add("hidden");
-
-});
-
-
-/* ATTENDANCE */
-
-function renderAttendance() {
-
-const tbody = document.getElementById("attendanceBody");
-
-const query = document
-.getElementById("attendanceSearch")
-.value.trim().toLowerCase();
-
-const selectedDate = document
-.getElementById("attendanceDate")
-.value;
-
-const filtered = checkins.filter(c => {
-
-const visitor = visitors.find(v => Number(v.id) === Number(c.visitor_id));
-
-const registrationId = visitor?.registration_id || "";
-const name = visitor?.full_name || "";
-
-const matchesSearch = (
-registrationId + " " + name
-).toLowerCase().includes(query);
-
-const matchesDate = !selectedDate || c.event_date === selectedDate;
-
-return matchesSearch && matchesDate;
-
-});
-
-if(!filtered.length) {
-
-tbody.innerHTML =
-'<tr><td colspan="5" class="empty">No attendance records found.</td></tr>';
-
-} else {
-
-tbody.innerHTML = filtered.map(c => {
-
-const visitor = visitors.find(v => Number(v.id) === Number(c.visitor_id));
-
-return `
-
-<tr>
-<td>${escapeHTML(displayValue(visitor?.registration_id))}</td>
-<td>${escapeHTML(displayValue(visitor?.full_name))}</td>
-<td>${escapeHTML(formatDate(c.event_date))}</td>
-<td>${escapeHTML(formatDateTime(c.scanned_at))}</td>
-<td><span class="badge">CHECKED IN</span></td>
-</tr>
-
-`;
-
-}).join("");
-
+async function checkSession(){
+try{
+const {data,error}=await db.auth.getSession();
+if(error)throw error;
+const user=data.session?.user;
+if(!user)return;
+if(user.id!==ADMIN_UID){await db.auth.signOut();return}
+currentUser=user;showDashboard();await loadAll();
+}catch(e){console.error(e)}
 }
+function showDashboard(){$("loginScreen").classList.add("hidden");$("dashboard").classList.remove("hidden")}
 
-document.getElementById("attendanceCount").textContent =
-"Showing " + filtered.length + " of " + checkins.length + " attendance records.";
+$("logoutBtn").onclick=async()=>{
+await db.auth.signOut();
+location.reload();
+};
 
-}
+/* ================= DATA LOADING ================= */
 
-
-/* TAB NAVIGATION */
-
-function showTab(tabName) {
-
-document.querySelectorAll(".tab-btn").forEach(btn => {
-
-btn.classList.toggle(
-"active",
-btn.dataset.tab === tabName
-);
-
-});
-
-document.querySelectorAll(".tab-content").forEach(section => {
-
-section.classList.add("hidden");
-
-});
-
-document.getElementById(tabName + "Tab").classList.remove("hidden");
-
-}
-
-document.querySelectorAll(".tab-btn").forEach(btn => {
-
-btn.addEventListener("click", function() {
-
-showTab(this.dataset.tab);
-
-});
-
-});
-
-document.getElementById("goVisitors").addEventListener("click", function() {
-
-showTab("visitors");
-
-});
-
-
-/* SEARCH EVENTS */
-
-document.getElementById("visitorSearch").addEventListener("input", renderVisitors);
-
-document.getElementById("cityFilter").addEventListener("change", renderVisitors);
-
-document.getElementById("clearSearch").addEventListener("click", function() {
-
-document.getElementById("visitorSearch").value = "";
-document.getElementById("cityFilter").value = "";
-
+async function loadAll(){
+$("refreshBtn").disabled=true;
+$("refreshBtn").textContent="LOADING...";
+try{
+const results=await Promise.all([
+fetchAll("visitors","registration_date"),
+fetchAll("visitor_checkins","scanned_at"),
+fetchAll("volunteer_applications","created_at"),
+fetchAll("feedback_submissions","created_at"),
+fetchAll("announcements","created_at"),
+fetchAll("site_content","updated_at"),
+fetchAll("gallery_items","created_at"),
+fetchAll("admin_activity_logs","created_at")
+]);
+[visitors,checkins,volunteers,feedback,announcements,contents,gallery,logs]=results;
+updateStats();
+renderRecent();
 renderVisitors();
-
-});
-
-document.getElementById("attendanceSearch").addEventListener("input", renderAttendance);
-
-document.getElementById("attendanceDate").addEventListener("change", renderAttendance);
-
-document.getElementById("clearAttendance").addEventListener("click", function() {
-
-document.getElementById("attendanceSearch").value = "";
-document.getElementById("attendanceDate").value = "";
-
 renderAttendance();
+renderVolunteers();
+renderFeedback();
+renderAnnouncements();
+renderContent();
+renderGallery();
+renderLogs();
+populateCities();
+await loadRegistrationSetting();
+renderSystemStatus();
+}catch(e){
+console.error(e);
+alert("Some dashboard data could not be loaded.\n\n"+e.message+"\n\nCheck table permissions and RLS policies.");
+}finally{
+$("refreshBtn").disabled=false;
+$("refreshBtn").textContent="↻ REFRESH";
+}
+}
+$("refreshBtn").onclick=loadAll;
 
+/* ================= STATS ================= */
+
+function updateStats(){
+const cities=new Set(visitors.map(v=>(v.city||"").trim().toLowerCase()).filter(Boolean));
+$("totalVisitors").textContent=visitors.length;
+$("totalCities").textContent=cities.size;
+$("totalCheckins").textContent=checkins.length;
+$("todayCheckins").textContent=checkins.filter(c=>c.event_date===todayPK()).length;
+}
+function renderSystemStatus(){
+const items=[
+["Visitors",visitors.length],
+["Attendance Records",checkins.length],
+["Volunteer Applications",volunteers.length],
+["Feedback Submissions",feedback.length],
+["Announcements",announcements.length],
+["CMS Pages",contents.length],
+["Gallery Items",gallery.length],
+["Activity Logs",logs.length]
+];
+$("systemStatus").innerHTML=items.map(x=>`<div class="detail-item"><small>${esc(x[0])}</small><strong>${x[1]}</strong></div>`).join("");
+}
+
+/* ================= NAVIGATION ================= */
+
+function showTab(name){
+document.querySelectorAll(".tab-btn").forEach(b=>b.classList.toggle("active",b.dataset.tab===name));
+document.querySelectorAll(".tab-content").forEach(s=>s.classList.add("hidden"));
+$(name+"Tab").classList.remove("hidden");
+}
+$("tabs").addEventListener("click",e=>{
+const b=e.target.closest("[data-tab]");
+if(b)showTab(b.dataset.tab);
+});
+document.addEventListener("click",e=>{
+const b=e.target.closest("[data-goto]");
+if(b)showTab(b.dataset.goto);
 });
 
+/* ================= VISITORS ================= */
 
-/* CSV EXPORT */
-
-function downloadCSV() {
-
-if(!visitors.length) {
-alert("There are no visitor records to export.");
-return;
+function populateCities(){
+const sel=$("cityFilter"),old=sel.value;
+const cities=[...new Set(visitors.map(v=>(v.city||"").trim()).filter(Boolean))].sort();
+sel.innerHTML='<option value="">All Cities</option>'+cities.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join("");
+sel.value=old;
 }
-
-const columns = [
-"id",
-"registration_id",
-"full_name",
-"father_name",
-"contact_number",
-"email",
-"city",
-"designation",
-"gender",
-"attendance_type",
-"family_members",
-"attendance_days",
-"allowed_event_dates",
-"attendance_center",
-"registration_date",
-"entry_status",
-"entry_time",
-"gate_operator"
-];
-
-function csvValue(value) {
-
-if(Array.isArray(value)) {
-value = value.join("; ");
+function renderRecent(){
+const rows=visitors.slice(0,8);
+$("recentBody").innerHTML=rows.length?rows.map(v=>`<tr><td>${esc(val(v.registration_id))}</td><td>${esc(val(v.full_name))}</td><td>${esc(val(v.contact_number))}</td><td>${esc(val(v.city))}</td><td>${esc(date(v.registration_date))}</td></tr>`).join(""):emptyRow(5);
 }
-
-if(value === null || value === undefined) {
-value = "";
+function renderVisitors(){
+const q=$("visitorSearch").value.toLowerCase().trim(),city=$("cityFilter").value;
+const list=visitors.filter(v=>{
+const s=[v.registration_id,v.full_name,v.father_name,v.contact_number,v.city,v.designation,v.email].join(" ").toLowerCase();
+return s.includes(q)&&(!city||v.city===city);
+});
+$("visitorsBody").innerHTML=list.length?list.map(v=>`
+<tr>
+<td>${esc(val(v.registration_id))}</td><td>${esc(val(v.full_name))}</td>
+<td>${esc(val(v.father_name))}</td><td>${esc(val(v.contact_number))}</td>
+<td>${esc(val(v.city))}</td><td>${esc(val(v.designation))}</td>
+<td>${esc(date(v.registration_date))}</td>
+<td><button class="view-btn" data-profile="${v.id}">VIEW</button>
+<button class="view-btn" data-edit-visitor="${v.id}">EDIT</button>
+<button class="view-btn" style="background:#b42318" data-delete-visitor="${v.id}">DELETE</button></td>
+</tr>`).join(""):emptyRow(8);
+$("visitorCount").textContent=`Showing ${list.length} of ${visitors.length} visitors.`;
 }
+$("visitorSearch").oninput=renderVisitors;
+$("cityFilter").onchange=renderVisitors;
 
-return '"' + String(value).replace(/"/g,'""') + '"';
-
+function visitorForm(v={}){
+return `<div class="form-grid">
+${field("Full Name","full_name",v.full_name||"","text",true)}
+${field("Father Name","father_name",v.father_name||"","text",true)}
+${field("Contact Number","contact_number",v.contact_number||"","tel",true)}
+${field("Email","email",v.email||"","email")}
+${field("City","city",v.city||"","text",true)}
+${field("Designation","designation",v.designation||"","text",true)}
+${field("Gender","gender",v.gender||"")}
+${field("Attendance Type","attendance_type",v.attendance_type||"")}
+${field("Family Members","family_members",v.family_members??"","number")}
+${field("Attendance Center","attendance_center",v.attendance_center||"")}
+</div>`;
 }
+$("addVisitorBtn").onclick=()=>{
+openModal("Add Visitor",visitorForm(),async()=>{
+const payload={
+full_name:getField("full_name"),
+father_name:getField("father_name"),
+contact_number:getField("contact_number"),
+email:getField("email")||null,
+city:getField("city"),
+designation:getField("designation"),
+gender:getField("gender")||null,
+attendance_type:getField("attendance_type")||null,
+family_members:getField("family_members")?Number(getField("family_members")):null,
+attendance_center:getField("attendance_center")||null
+};
+const {error}=await db.from("visitors").insert(payload);
+if(error)throw error;
+await logAction("ADD","visitors","",{"name":payload.full_name});
+});
+};
+async function editVisitor(id){
+const v=visitors.find(x=>String(x.id)===String(id));if(!v)return;
+openModal("Edit Visitor",visitorForm(v),async()=>{
+const payload={
+full_name:getField("full_name"),father_name:getField("father_name"),
+contact_number:getField("contact_number"),email:getField("email")||null,
+city:getField("city"),designation:getField("designation"),
+gender:getField("gender")||null,attendance_type:getField("attendance_type")||null,
+family_members:getField("family_members")?Number(getField("family_members")):null,
+attendance_center:getField("attendance_center")||null
+};
+const {error}=await db.from("visitors").update(payload).eq("id",id);
+if(error)throw error;
+await logAction("UPDATE","visitors",id);
+});
+}
+async function deleteVisitor(id){
+const v=visitors.find(x=>String(x.id)===String(id));if(!v)return;
+if(!confirm(`Permanently delete ${v.full_name}? This cannot be undone.`))return;
+const {error}=await db.from("visitors").delete().eq("id",id);
+if(error){alert(error.message);return}
+await logAction("DELETE","visitors",id,{"name":v.full_name});
+await loadAll();
+}
+function visitorProfile(id){
+const v=visitors.find(x=>String(x.id)===String(id));if(!v)return;
+const fields=["registration_id","full_name","father_name","contact_number","email","city","designation","gender","attendance_type","family_members","attendance_days","allowed_event_dates","attendance_center","registration_date","entry_status","entry_time","gate_operator","family_group_id"];
+$("visitorDetails").innerHTML='<div class="detail-grid">'+fields.map(k=>`<div class="detail-item"><small>${esc(k.replaceAll("_"," "))}</small><strong>${esc(val(v[k]))}</strong></div>`).join("")+'</div>';
+$("visitorProfile").classList.remove("hidden");
+$("visitorProfile").scrollIntoView({behavior:"smooth"});
+}
+$("closeProfile").onclick=()=>$("visitorProfile").classList.add("hidden");
 
-const rows = [
-columns.map(csvValue).join(","),
-...visitors.map(visitor =>
-columns.map(column => csvValue(visitor[column])).join(",")
-)
-];
-
-const csv = "\uFEFF" + rows.join("\r\n");
-
-const blob = new Blob([csv], {
-type:"text/csv;charset=utf-8;"
+document.addEventListener("click",e=>{
+const p=e.target.closest("[data-profile]");if(p)visitorProfile(p.dataset.profile);
+const ed=e.target.closest("[data-edit-visitor]");if(ed)editVisitor(ed.dataset.editVisitor);
+const del=e.target.closest("[data-delete-visitor]");if(del)deleteVisitor(del.dataset.deleteVisitor);
 });
 
-const url = URL.createObjectURL(blob);
+/* ================= ATTENDANCE ================= */
 
-const link = document.createElement("a");
+function renderAttendance(){
+const q=$("attendanceSearch").value.toLowerCase().trim(),d=$("attendanceDate").value;
+const list=checkins.filter(c=>{
+const v=visitors.find(x=>Number(x.id)===Number(c.visitor_id));
+return ((v?.registration_id||"")+" "+(v?.full_name||"")).toLowerCase().includes(q)&&(!d||c.event_date===d);
+});
+$("attendanceBody").innerHTML=list.length?list.map(c=>{
+const v=visitors.find(x=>Number(x.id)===Number(c.visitor_id));
+return `<tr><td>${esc(val(v?.registration_id))}</td><td>${esc(val(v?.full_name))}</td><td>${esc(date(c.event_date))}</td><td>${esc(dateTime(c.scanned_at))}</td><td><span class="badge">CHECKED IN</span></td></tr>`;
+}).join(""):emptyRow(5);
+$("attendanceCount").textContent=`Showing ${list.length} of ${checkins.length} attendance records.`;
+}
+$("attendanceSearch").oninput=renderAttendance;
+$("attendanceDate").onchange=renderAttendance;
+$("clearAttendance").onclick=()=>{$("attendanceSearch").value="";$("attendanceDate").value="";renderAttendance()};
 
-link.href = url;
-link.download = "Ayaz-Melo-2026-Visitors.csv";
+/* ================= VOLUNTEERS ================= */
 
-document.body.appendChild(link);
-link.click();
-link.remove();
+function renderVolunteers(){
+const q=$("volunteerSearch").value.toLowerCase().trim(),s=$("volunteerStatus").value;
+const list=volunteers.filter(v=>[v.full_name,v.phone,v.city,v.committee].join(" ").toLowerCase().includes(q)&&(!s||v.application_status===s));
+$("volunteersBody").innerHTML=list.length?list.map(v=>`<tr><td>${esc(val(v.full_name))}</td><td>${esc(val(v.phone))}</td><td>${esc(val(v.city))}</td><td>${esc(val(v.committee))}</td><td><span class="badge ${v.application_status==="rejected"?"red":v.application_status==="pending"?"gold":""}">${esc(val(v.application_status))}</span></td><td><button class="view-btn" data-edit-volunteer="${v.id}">EDIT</button><button class="view-btn" style="background:#b42318" data-delete-volunteer="${v.id}">DELETE</button></td></tr>`).join(""):emptyRow(6);
+}
+$("volunteerSearch").oninput=renderVolunteers;
+$("volunteerStatus").onchange=renderVolunteers;
 
-URL.revokeObjectURL(url);
+function volunteerForm(v={}){
+return `<div class="form-grid">
+${field("Full Name","full_name",v.full_name||"","text",true)}
+${field("Father Name","father_name",v.father_name||"")}
+${field("Email","email",v.email||"","email")}
+${field("Phone","phone",v.phone||"","tel",true)}
+${field("City","city",v.city||"")}
+${field("Gender","gender",v.gender||"")}
+${field("Committee","committee",v.committee||"")}
+${selectField("Application Status","application_status",["pending","approved","rejected"],v.application_status||"pending")}
+${textarea("Experience","experience",v.experience||"")}
+${textarea("Availability","availability",v.availability||"")}
+${textarea("Admin Notes","admin_notes",v.admin_notes||"")}
+</div>`;
+}
+$("addVolunteer").onclick=()=>openModal("Add Volunteer",volunteerForm(),async()=>{
+const p={full_name:getField("full_name"),father_name:getField("father_name")||null,email:getField("email")||null,phone:getField("phone"),city:getField("city")||null,gender:getField("gender")||null,committee:getField("committee")||null,application_status:getField("application_status"),experience:$("f_experience").value,availability:$("f_availability").value,admin_notes:$("f_admin_notes").value};
+const {error}=await db.from("volunteer_applications").insert(p);if(error)throw error;
+await logAction("ADD","volunteer_applications","",{"name":p.full_name});
+});
+async function editVolunteer(id){
+const v=volunteers.find(x=>String(x.id)===String(id));if(!v)return;
+openModal("Edit Volunteer",volunteerForm(v),async()=>{
+const p={full_name:getField("full_name"),father_name:getField("father_name")||null,email:getField("email")||null,phone:getField("phone"),city:getField("city")||null,gender:getField("gender")||null,committee:getField("committee")||null,application_status:getField("application_status"),experience:$("f_experience").value,availability:$("f_availability").value,admin_notes:$("f_admin_notes").value,updated_at:new Date().toISOString()};
+const {error}=await db.from("volunteer_applications").update(p).eq("id",id);if(error)throw error;
+await logAction("UPDATE","volunteer_applications",id);
+});
+}
+async function deleteVolunteer(id){
+if(!confirm("Delete this volunteer application?"))return;
+const {error}=await db.from("volunteer_applications").delete().eq("id",id);if(error){alert(error.message);return}
+await logAction("DELETE","volunteer_applications",id);await loadAll();
+}
+document.addEventListener("click",e=>{
+const a=e.target.closest("[data-edit-volunteer]");if(a)editVolunteer(a.dataset.editVolunteer);
+const b=e.target.closest("[data-delete-volunteer]");if(b)deleteVolunteer(b.dataset.deleteVolunteer);
+});
 
+/* ================= FEEDBACK ================= */
+
+function renderFeedback(){
+const q=$("feedbackSearch").value.toLowerCase().trim();
+const list=feedback.filter(v=>[v.full_name,v.email,v.liked_most,v.suggestions,v.additional_comments].join(" ").toLowerCase().includes(q));
+$("feedbackBody").innerHTML=list.length?list.map(v=>`<tr><td>${esc(val(v.full_name))}</td><td>${esc(val(v.email))}</td><td>${esc(val(v.participant_type))}</td><td>${esc(val(v.rating))}</td><td>${esc(val(v.liked_most))}</td><td>${esc(date(v.created_at))}</td><td><button class="view-btn" data-feedback="${v.id}">VIEW</button><button class="view-btn" style="background:#b42318" data-delete-feedback="${v.id}">DELETE</button></td></tr>`).join(""):emptyRow(7);
+}
+$("feedbackSearch").oninput=renderFeedback;
+document.addEventListener("click",e=>{
+const v=e.target.closest("[data-feedback]");
+if(v){
+const f=feedback.find(x=>String(x.id)===String(v.dataset.feedback));if(!f)return;
+openModal("Feedback Details",`<div class="detail-grid">${Object.keys(f).filter(k=>k!=="id").map(k=>`<div class="detail-item"><small>${esc(k.replaceAll("_"," "))}</small><strong>${esc(val(f[k]))}</strong></div>`).join("")}</div>`,async()=>{});
+$("modalSave").classList.add("hidden");
+}
+const d=e.target.closest("[data-delete-feedback]");
+if(d)deleteFeedback(d.dataset.deleteFeedback);
+});
+async function deleteFeedback(id){
+if(!confirm("Permanently delete this feedback?"))return;
+const {error}=await db.from("feedback_submissions").delete().eq("id",id);if(error){alert(error.message);return}
+await logAction("DELETE","feedback_submissions",id);await loadAll();
 }
 
-document.getElementById("exportBtn").addEventListener("click", downloadCSV);
+/* ================= ANNOUNCEMENTS ================= */
 
+function renderAnnouncements(){
+$("announcementsBody").innerHTML=announcements.length?announcements.map(a=>`<tr><td>${esc(val(a.title))}</td><td>${esc(val(a.announcement_type))}</td><td><span class="badge ${a.is_published?"":"red"}">${a.is_published?"PUBLISHED":"DRAFT"}</span></td><td>${esc(date(a.created_at))}</td><td><button class="view-btn" data-edit-ann="${a.id}">EDIT</button><button class="view-btn" data-toggle-ann="${a.id}">${a.is_published?"UNPUBLISH":"PUBLISH"}</button><button class="view-btn" style="background:#b42318" data-del-ann="${a.id}">DELETE</button></td></tr>`).join(""):emptyRow(5);
+}
+function announcementForm(a={}){
+return `<div class="form-grid">
+${field("Title","title",a.title||"","text",true)}
+${field("Type","announcement_type",a.announcement_type||"general")}
+${textarea("Message","message",a.message||"")}
+${field("Publish At (optional)","publish_at",a.publish_at?new Date(a.publish_at).toISOString().slice(0,16):"","datetime-local")}
+${field("Expires At (optional)","expires_at",a.expires_at?new Date(a.expires_at).toISOString().slice(0,16):"","datetime-local")}
+${selectField("Published","is_published",["false","true"],String(!!a.is_published))}
+</div>`;
+}
+$("addAnnouncement").onclick=()=>openModal("New Announcement",announcementForm(),async()=>{
+const p={title:getField("title"),announcement_type:getField("announcement_type")||"general",message:$("f_message").value,is_published:getField("is_published")==="true",publish_at:getField("publish_at")?new Date(getField("publish_at")).toISOString():null,expires_at:getField("expires_at")?new Date(getField("expires_at")).toISOString():null,created_by:currentUser.id};
+const {error}=await db.from("announcements").insert(p);if(error)throw error;
+await logAction("ADD","announcements","",{"title":p.title});
+});
+async function editAnnouncement(id){
+const a=announcements.find(x=>String(x.id)===String(id));if(!a)return;
+openModal("Edit Announcement",announcementForm(a),async()=>{
+const p={title:getField("title"),announcement_type:getField("announcement_type")||"general",message:$("f_message").value,is_published:getField("is_published")==="true",publish_at:getField("publish_at")?new Date(getField("publish_at")).toISOString():null,expires_at:getField("expires_at")?new Date(getField("expires_at")).toISOString():null,updated_at:new Date().toISOString()};
+const {error}=await db.from("announcements").update(p).eq("id",id);if(error)throw error;
+await logAction("UPDATE","announcements",id);
+});
+}
+async function toggleAnnouncement(id){
+const a=announcements.find(x=>String(x.id)===String(id));if(!a)return;
+const {error}=await db.from("announcements").update({is_published:!a.is_published,updated_at:new Date().toISOString()}).eq("id",id);if(error){alert(error.message);return}
+await logAction(a.is_published?"UNPUBLISH":"PUBLISH","announcements",id);await loadAll();
+}
+async function deleteAnnouncement(id){
+if(!confirm("Delete this announcement?"))return;
+const {error}=await db.from("announcements").delete().eq("id",id);if(error){alert(error.message);return}
+await logAction("DELETE","announcements",id);await loadAll();
+}
+document.addEventListener("click",e=>{
+const a=e.target.closest("[data-edit-ann]");if(a)editAnnouncement(a.dataset.editAnn);
+const b=e.target.closest("[data-toggle-ann]");if(b)toggleAnnouncement(b.dataset.toggleAnn);
+const c=e.target.closest("[data-del-ann]");if(c)deleteAnnouncement(c.dataset.delAnn);
+});
 
-/* REFRESH */
+/* ================= WEBSITE CMS ================= */
 
-document.getElementById("refreshBtn").addEventListener("click", loadDashboard);
+function renderContent(){
+$("contentBody").innerHTML=contents.length?contents.map(c=>`<tr><td>${esc(val(c.page_key))}</td><td>${esc(val(c.page_title))}</td><td><span class="badge ${c.is_published?"":"red"}">${c.is_published?"PUBLISHED":"HIDDEN"}</span></td><td>${esc(dateTime(c.updated_at))}</td><td><button class="view-btn" data-edit-content="${c.id}">EDIT</button><button class="view-btn" data-toggle-content="${c.id}">TOGGLE</button><button class="view-btn" style="background:#b42318" data-del-content="${c.id}">DELETE</button></td></tr>`).join(""):emptyRow(5);
+}
+function contentForm(c={}){
+return `<div class="form-grid">
+${field("Page Key (e.g. homepage)","page_key",c.page_key||"","text",true)}
+${field("Page Title","page_title",c.page_title||"")}
+${selectField("Published","is_published",["true","false"],String(c.is_published!==false))}
+${textarea("Content JSON","content",JSON.stringify(c.content||{},null,2))}
+</div>`;
+}
+$("addContent").onclick=()=>openModal("Add Website Content",contentForm(),async()=>{
+let json;try{json=JSON.parse($("f_content").value||"{}")}catch{throw new Error("Content must be valid JSON")}
+const p={page_key:getField("page_key"),page_title:getField("page_title")||null,content:json,is_published:getField("is_published")==="true",updated_by:currentUser.id};
+const {error}=await db.from("site_content").insert(p);if(error)throw error;
+await logAction("ADD","site_content","",{"page_key":p.page_key});
+});
+async function editContent(id){
+const c=contents.find(x=>String(x.id)===String(id));if(!c)return;
+openModal("Edit Website Content",contentForm(c),async()=>{
+let json;try{json=JSON.parse($("f_content").value||"{}")}catch{throw new Error("Content must be valid JSON")}
+const p={page_key:getField("page_key"),page_title:getField("page_title")||null,content:json,is_published:getField("is_published")==="true",updated_at:new Date().toISOString(),updated_by:currentUser.id};
+const {error}=await db.from("site_content").update(p).eq("id",id);if(error)throw error;
+await logAction("UPDATE","site_content",id);
+});
+}
+async function toggleContent(id){
+const c=contents.find(x=>String(x.id)===String(id));if(!c)return;
+const {error}=await db.from("site_content").update({is_published:!c.is_published,updated_at:new Date().toISOString()}).eq("id",id);if(error){alert(error.message);return}
+await logAction("TOGGLE","site_content",id);await loadAll();
+}
+async function deleteContent(id){
+if(!confirm("Delete this CMS record?"))return;
+const {error}=await db.from("site_content").delete().eq("id",id);if(error){alert(error.message);return}
+await logAction("DELETE","site_content",id);await loadAll();
+}
+document.addEventListener("click",e=>{
+const a=e.target.closest("[data-edit-content]");if(a)editContent(a.dataset.editContent);
+const b=e.target.closest("[data-toggle-content]");if(b)toggleContent(b.dataset.toggleContent);
+const c=e.target.closest("[data-del-content]");if(c)deleteContent(c.dataset.delContent);
+});
 
+/* ================= GALLERY ================= */
 
-/* START */
+function renderGallery(){
+$("galleryBody").innerHTML=gallery.length?gallery.map(g=>`<tr><td>${g.image_url?`<img src="${esc(g.image_url)}" alt="" style="width:65px;height:45px;object-fit:cover;border-radius:4px">`:"—"}</td><td>${esc(val(g.title))}</td><td>${esc(val(g.category))}</td><td><span class="badge ${g.is_published?"":"red"}">${g.is_published?"PUBLISHED":"HIDDEN"}</span></td><td><button class="view-btn" data-toggle-gallery="${g.id}">TOGGLE</button><button class="view-btn" style="background:#b42318" data-delete-gallery="${g.id}">DELETE</button></td></tr>`).join(""):emptyRow(5);
+}
+$("uploadGallery").onclick=async()=>{
+const file=$("galleryFile").files[0];
+if(!file){alert("Please select an image.");return}
+if(file.size>5*1024*1024){alert("Maximum file size is 5 MB.");return}
+if(!["image/jpeg","image/png","image/webp","image/gif"].includes(file.type)){alert("Unsupported image type.");return}
+const btn=$("uploadGallery");btn.disabled=true;btn.textContent="UPLOADING...";
+try{
+const ext=file.name.split(".").pop().toLowerCase();
+const path=`${Date.now()}-${crypto.randomUUID()}.${ext}`;
+const {error:uploadError}=await db.storage.from(BUCKET).upload(path,file,{upsert:false,contentType:file.type});
+if(uploadError)throw uploadError;
+const {data:urlData}=db.storage.from(BUCKET).getPublicUrl(path);
+const p={title:$("galleryTitle").value.trim()||file.name,description:null,image_url:urlData.publicUrl,storage_path:path,category:$("galleryCategory").value.trim()||"general",is_published:false,created_by:currentUser.id};
+const {error}=await db.from("gallery_items").insert(p);
+if(error){await db.storage.from(BUCKET).remove([path]);throw error}
+await logAction("UPLOAD","gallery_items",path,{"title":p.title});
+$("galleryFile").value="";$("galleryTitle").value="";$("galleryCategory").value="";
+await loadAll();alert("Image uploaded successfully. It is currently unpublished.");
+}catch(e){alert("Upload failed: "+e.message)}
+finally{btn.disabled=false;btn.textContent="UPLOAD IMAGE"}
+};
+async function toggleGallery(id){
+const g=gallery.find(x=>String(x.id)===String(id));if(!g)return;
+const {error}=await db.from("gallery_items").update({is_published:!g.is_published,updated_at:new Date().toISOString()}).eq("id",id);if(error){alert(error.message);return}
+await logAction("TOGGLE","gallery_items",id);await loadAll();
+}
+async function deleteGallery(id){
+const g=gallery.find(x=>String(x.id)===String(id));if(!g)return;
+if(!confirm("Delete this gallery image and its storage file?"))return;
+const {error}=await db.from("gallery_items").delete().eq("id",id);if(error){alert(error.message);return}
+if(g.storage_path){
+const {error:storageError}=await db.storage.from(BUCKET).remove([g.storage_path]);
+if(storageError)console.warn("Storage file deletion:",storageError.message);
+}
+await logAction("DELETE","gallery_items",id);await loadAll();
+}
+document.addEventListener("click",e=>{
+const a=e.target.closest("[data-toggle-gallery]");if(a)toggleGallery(a.dataset.toggleGallery);
+const b=e.target.closest("[data-delete-gallery]");if(b)deleteGallery(b.dataset.deleteGallery);
+});
 
-checkExistingSession();
+/* ================= REGISTRATION SETTINGS ================= */
 
-</script></body>
+async function loadRegistrationSetting(){
+const {data,error}=await db.from("app_settings").select("*").eq("setting_key","registration_open").maybeSingle();
+if(error)throw error;
+const enabled=data?.setting_value?.enabled===true;
+$("registrationStatus").innerHTML=enabled?'<span class="badge">OPEN</span>':'<span class="badge red">CLOSED</span>';
+$("registrationUpdated").textContent=dateTime(data?.updated_at);
+}
+async function setRegistration(enabled){
+const payload={setting_key:"registration_open",setting_value:{enabled,message:enabled?"Registrations are open.":"Registrations are currently closed."},updated_at:new Date().toISOString(),updated_by:currentUser.id};
+const {error}=await db.from("app_settings").upsert(payload,{onConflict:"setting_key"});
+if(error){alert(error.message);return}
+await logAction(enabled?"OPEN_REGISTRATION":"CLOSE_REGISTRATION","app_settings","registration_open");
+await loadRegistrationSetting();
+alert(enabled?"Registration setting saved as OPEN.":"Registration setting saved as CLOSED.");
+}
+$("openRegistration").onclick=()=>setRegistration(true);
+$("closeRegistration").onclick=()=>{if(confirm("Close registration?"))setRegistration(false)};
+
+/* ================= ACTIVITY LOGS ================= */
+
+function renderLogs(){
+$("logsBody").innerHTML=logs.length?logs.map(l=>`<tr><td>${esc(val(l.admin_user_id))}</td><td>${esc(val(l.action))}</td><td>${esc(val(l.module))}</td><td>${esc(val(l.record_id))}</td><td>${esc(JSON.stringify(l.details||{}))}</td><td>${esc(dateTime(l.created_at))}</td></tr>`).join(""):emptyRow(6);
+}
+
+/* ================= EXCEL & CSV ================= */
+
+function exportXlsx(rows,sheet,filename){
+if(typeof XLSX==="undefined"){alert("Excel library failed to load.");return}
+const ws=XLSX.utils.json_to_sheet(rows);
+const wb=XLSX.utils.book_new();
+XLSX.utils.book_append_sheet(wb,ws,sheet.slice(0,31));
+XLSX.writeFile(wb,filename);
+}
+function safeVisitor(v){
+const {qr_token,...rest}=v;
+return rest;
+}
+$("allExcel").onclick=()=>exportXlsx(visitors.map(safeVisitor),"Visitors","Ayaz-Melo-All-Visitors.xlsx");
+$("cityExcel").onclick=()=>{
+const wb=XLSX.utils.book_new();
+const groups={};
+visitors.forEach(v=>{const c=(v.city||"Unknown").trim()||"Unknown";(groups[c]??=[]).push(safeVisitor(v))});
+Object.keys(groups).sort().forEach(city=>{
+let name=city.replace(/[\\/*?:[\]]/g,"").slice(0,31)||"Unknown",base=name,n=1;
+while(wb.SheetNames.includes(name))name=(base.slice(0,27)+"-"+n++);
+XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(groups[city]),name);
+});
+XLSX.writeFile(wb,"Ayaz-Melo-City-Wise.xlsx");
+};
+$("attendanceExcel").onclick=()=>{
+const rows=checkins.map(c=>{
+const v=visitors.find(x=>Number(x.id)===Number(c.visitor_id));
+return {registration_id:v?.registration_id||"",full_name:v?.full_name||"",father_name:v?.father_name||"",contact_number:v?.contact_number||"",city:v?.city||"",event_date:c.event_date,scanned_at:c.scanned_at,status:"CHECKED IN"};
+});
+exportXlsx(rows,"Attendance","Ayaz-Melo-Attendance.xlsx");
+};
+$("visitorCSV").onclick=()=>{
+const cols=["id","registration_id","full_name","father_name","contact_number","email","city","designation","gender","attendance_type","family_members","attendance_days","allowed_event_dates","attendance_center","registration_date","entry_status","entry_time","gate_operator"];
+const rows=[cols.join(","),...visitors.map(v=>cols.map(k=>'"'+String(Array.isArray(v[k])?v[k].join("; "):v[k]??"").replace(/"/g,'""')+'"').join(","))];
+const blob=new Blob(["\uFEFF"+rows.join("\r\n")],{type:"text/csv;charset=utf-8"});
+const url=URL.createObjectURL(blob),a=document.createElement("a");
+a.href=url;a.download="Ayaz-Melo-Visitors.csv";a.click();URL.revokeObjectURL(url);
+};
+
+/* ================= START ================= */
+
+checkSession();
+</script>
+</body>
 </html>
