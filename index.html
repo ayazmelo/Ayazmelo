@@ -178,17 +178,26 @@ header {
 nav {
  max-width:1250px;
  margin:auto;
- padding:18px 5%;
+ padding:14px 5%;
  display:flex;
  justify-content:space-between;
  align-items:center;
 }
 
 .brand {
+ display:flex;
+ align-items:center;
+ gap:12px;
  color:var(--blue);
  font-size:20px;
  font-weight:800;
  letter-spacing:2px;
+}
+
+.brand img {
+ width:55px;
+ height:55px;
+ object-fit:contain;
 }
 
 .brand small {
@@ -330,7 +339,7 @@ section.content-section {
  font-size:14px;
 }
 
-/* SHAikh AYAZ */
+/* SHAIKH AYAZ */
 
 .ayaz-grid {
  display:grid;
@@ -352,36 +361,52 @@ section.content-section {
  margin-top:10px;
 }
 
-/* AMAR SINDHU */
+/* AMAR SINDHU AND ARFANA MALLAH */
 
-.amar {
+.leadership {
  background:#eee5d9;
 }
 
-.amar-grid {
+.leadership-grid {
  display:grid;
- grid-template-columns:350px 1fr;
- gap:55px;
- align-items:center;
+ grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:35px;
+ margin-top:40px;
 }
 
-.amar-image {
+.leader-card {
+ background:#fff;
+ padding:30px;
+ border-radius:8px;
+ box-shadow:0 8px 30px #21164d12;
+}
+
+.leader-image {
  width:100%;
- height:430px;
+ height:390px;
  object-fit:cover;
+ object-position:top center;
  border-radius:5px;
 }
 
-.amar h2 {
+.leader-card h2 {
  font-family:'Cormorant Garamond',serif;
- font-size:55px;
+ font-size:38px;
  color:var(--blue);
- margin:15px 0;
+ margin:20px 0 8px;
 }
 
-.amar p {
+.leader-role {
+ color:var(--maroon);
+ font-size:11px;
+ font-weight:800;
+ letter-spacing:1px;
+ margin-bottom:18px;
+}
+
+.leader-card p {
  color:#625b5a;
- font-size:14px;
+ font-size:13px;
  line-height:2;
 }
 
@@ -444,7 +469,33 @@ footer {
  background:#151020;
  color:white;
  text-align:center;
- padding:45px 20px;
+ padding:55px 20px;
+}
+
+.footer-logos {
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ gap:35px;
+ flex-wrap:wrap;
+ margin-bottom:30px;
+}
+
+.footer-logo-box {
+ background:white;
+ border-radius:8px;
+ padding:12px;
+ width:150px;
+ height:110px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+}
+
+.footer-logo-box img {
+ max-width:100%;
+ max-height:85px;
+ object-fit:contain;
 }
 
 footer h2 {
@@ -481,9 +532,12 @@ footer p {
  .menu {display:block}
 
  .khana-grid,
- .ayaz-grid,
- .amar-grid {
+ .ayaz-grid {
   grid-template-columns:1fr;
+ }
+
+ .leadership-grid {
+  grid-template-columns:1fr 1fr;
  }
 
  .portal-grid {
@@ -492,7 +546,7 @@ footer p {
 
  .profile-image img {height:350px}
 
- .amar-image {height:400px}
+ .leader-image {height:300px}
 }
 
 @media(max-width:550px) {
@@ -501,13 +555,29 @@ footer p {
 
  .portal-grid {grid-template-columns:1fr}
 
+ .leadership-grid {grid-template-columns:1fr}
+
  .intro h1 {font-size:55px}
 
  .hero {min-height:550px}
 
  .hero h2 {font-size:65px}
 
- .khana h2,.amar h2 {font-size:43px}
+ .khana h2 {font-size:43px}
+
+ .leader-card {padding:20px}
+
+ .leader-image {height:350px}
+
+ .brand img {
+  width:45px;
+  height:45px;
+ }
+
+ .footer-logo-box {
+  width:125px;
+  height:95px;
+ }
 }
 </style>
 </head>
@@ -582,8 +652,13 @@ HYDERABAD, SINDH
 <nav>
 
 <a href="#home" class="brand">
+<img src="assets/ayaz-melo-2026.png"
+alt="Ayaz Melo 2026 Logo">
+
+<div>
 AYAZ MELO
 <small>2026 · HYDERABAD</small>
+</div>
 </a>
 
 <button class="menu" id="menuBtn">☰</button>
@@ -592,6 +667,7 @@ AYAZ MELO
 <a href="#khanabadosh">KHANABADOSH</a>
 <a href="#shaikh-ayaz">SHAIKH AYAZ</a>
 <a href="#amar">AMAR SINDHU</a>
+<a href="#arfana">ARFANA MALLAH</a>
 <a href="#portals">EXPLORE</a>
 <a href="#footer">CONTACT</a>
 </div>
@@ -680,37 +756,75 @@ His legacy continues to inspire generations of readers, writers and artists.
 </div>
 </section>
 
-<!-- AMAR SINDHU -->
+<!-- LEADERSHIP: AMAR SINDHU AND ARFANA MALLAH -->
 
-<section class="content-section amar" id="amar">
+<section class="content-section leadership" id="amar">
 
-<div class="container amar-grid">
-
-<img class="amar-image"
-src="assets/amar-sindhu.jpg"
-alt="Professor Amar Sindhu">
-
-<div>
+<div class="container">
 
 <div class="section-label">THE PEOPLE BEHIND AYAZ MELO</div>
 
+<h2 class="section-title">Vision & Leadership</h2>
+
+<p class="description">
+Meet the individuals whose vision, dedication and leadership have helped shape Ayaz Melo.
+</p>
+
+<div class="leadership-grid">
+
+<!-- PROF. AMAR SINDHU -->
+
+<article class="leader-card">
+
+<img class="leader-image"
+src="team/amar-sindhu.jpg"
+alt="Prof. Amar Sindhu">
+
 <h2>Prof. Amar Sindhu</h2>
 
+<div class="leader-role">
+CONVENER · AYAZ MELO
+</div>
+
 <p>
-Convener, Ayaz Melo
+Prof. Amar Sindhu is a prominent academic, writer and progressive intellectual associated with the cultural and literary journey of Sindh.
 
-<br><br>
+She is the founder of Khanabadosh Writers' Cafe, Hyderabad, and co-pioneered Ayaz Melo in 2015 with Prof. Dr. Arfana Mallah.
 
-A leading academic and literary personality associated with the cultural and intellectual journey of Ayaz Melo.
-
-Her contribution to the festival and its literary vision forms an important part of its identity.
+As Convener, she provides vision and leadership to the festival, guides its planning and organising committees, and welcomes writers, poets, artists and guests to this cultural platform.
 </p>
+
+</article>
+
+<!-- PROF. DR. ARFANA MALLAH -->
+
+<article class="leader-card" id="arfana">
+
+<img class="leader-image"
+src="team/arfana-mallah.jpg"
+alt="Prof. Dr. Arfana Mallah">
+
+<h2>Prof. Dr. Arfana Mallah</h2>
+
+<div class="leader-role">
+CO-FOUNDER & COORDINATOR
+</div>
+
+<p>
+Prof. Dr. Arfana Mallah is a distinguished academic, writer and women's rights activist associated with the University of Sindh.
+
+As Co-Founder and Coordinator of Ayaz Melo, she plays an important role in coordinating the festival's programme, sessions and stage activities.
+
+Her dedication to literature, democratic values and cultural expression has helped sustain the vision and continuity of Ayaz Melo.
+</p>
+
+</article>
 
 </div>
 </div>
 </section>
 
-<!-- PORTALS -->
+<!-- EXPLORE PORTALS -->
 
 <section class="content-section portals" id="portals">
 
@@ -739,7 +853,7 @@ Discover the people, activities, memories and opportunities of Ayaz Melo 2026.
 <div class="portal-icon">📝</div>
 <h3>Visitor Registration</h3>
 <p>Register as a visitor. Free participation.</p>
-<a href="mehmaan.html">REGISTER →</a>
+<a href="visitor.html">REGISTER →</a>
 </div>
 
 <div class="portal-card">
@@ -798,6 +912,20 @@ Discover the people, activities, memories and opportunities of Ayaz Melo 2026.
 <!-- FOOTER -->
 
 <footer id="footer">
+
+<div class="footer-logos">
+
+<div class="footer-logo-box">
+<img src="assets/ayaz-melo-2026.png"
+alt="Ayaz Melo 2026 Logo">
+</div>
+
+<div class="footer-logo-box">
+<img src="assets/khanabadosh-logo.png"
+alt="Khanabadosh Writers Cafe Logo">
+</div>
+
+</div>
 
 <h2>Ayaz Melo 2026</h2>
 
