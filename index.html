@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#21164d">
-
-<title>Ayaz Melo 2026 | Khanabadosh Writers' Cafe</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-<style>
+<meta name="theme-color" content="#21164d"><title>Ayaz Melo 2026 | Khanabadosh Writers' Cafe</title><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet"><style>
 :root {
  --blue:#21164d;
  --maroon:#842c3c;
@@ -269,6 +262,176 @@ nav {
  font-size:11px;
  font-weight:800;
  letter-spacing:2px;
+}
+
+/* ANNOUNCEMENTS */
+
+.announcements {
+ background:var(--cream);
+ padding:65px 0 35px;
+}
+
+.announcement-heading {
+ text-align:center;
+ margin-bottom:30px;
+}
+
+.announcement-heading small {
+ color:var(--maroon);
+ font-size:11px;
+ font-weight:800;
+ letter-spacing:4px;
+}
+
+.announcement-heading h2 {
+ font-family:'Cormorant Garamond',serif;
+ color:var(--blue);
+ font-size:clamp(35px,5vw,52px);
+ margin-top:8px;
+}
+
+.announcement-grid {
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:22px;
+}
+
+.announcement-card {
+ position:relative;
+ overflow:hidden;
+ padding:32px;
+ border-radius:8px;
+ min-height:235px;
+ box-shadow:0 8px 28px #21164d12;
+}
+
+.event-announcement {
+ background:var(--blue);
+ color:white;
+ border-bottom:5px solid var(--gold);
+}
+
+.registration-announcement {
+ background:var(--maroon);
+ color:white;
+ border-bottom:5px solid var(--gold);
+}
+
+.announcement-tag {
+ display:inline-block;
+ font-size:10px;
+ font-weight:800;
+ letter-spacing:2px;
+ padding:8px 12px;
+ border:1px solid #ffffff70;
+ border-radius:3px;
+ margin-bottom:17px;
+}
+
+.announcement-card h3 {
+ font-family:'Cormorant Garamond',serif;
+ font-size:36px;
+ line-height:1.1;
+ margin-bottom:12px;
+}
+
+.announcement-card p {
+ color:#f2edf0;
+ font-size:12px;
+ line-height:1.9;
+}
+
+.announcement-date {
+ color:var(--gold);
+ font-weight:800;
+ font-size:13px;
+ margin:12px 0;
+ letter-spacing:1px;
+}
+
+.registration-button {
+ display:inline-block;
+ margin-top:18px;
+ padding:13px 22px;
+ background:var(--gold);
+ color:var(--blue);
+ border-radius:3px;
+ font-size:10px;
+ font-weight:800;
+ letter-spacing:1.5px;
+ transition:.3s;
+}
+
+.registration-button:hover {
+ background:white;
+ transform:translateY(-3px);
+}
+
+/* HOMEPAGE SLIDESHOW */
+
+.slideshow-section {
+ background:var(--cream);
+ padding:25px 0 75px;
+}
+
+.slideshow-heading {
+ text-align:center;
+ margin-bottom:22px;
+}
+
+.slideshow-heading small {
+ color:var(--maroon);
+ font-size:10px;
+ font-weight:800;
+ letter-spacing:3px;
+}
+
+.slideshow-heading h2 {
+ color:var(--blue);
+ font-family:'Cormorant Garamond',serif;
+ font-size:38px;
+ margin-top:7px;
+}
+
+.slideshow {
+ width:90%;
+ max-width:1100px;
+ height:300px;
+ margin:auto;
+ position:relative;
+ overflow:hidden;
+ border-radius:8px;
+ background:var(--blue);
+ box-shadow:0 10px 30px #21164d25;
+}
+
+.slide {
+ position:absolute;
+ inset:0;
+ width:100%;
+ height:100%;
+ object-fit:cover;
+ opacity:0;
+ transition:opacity 1.2s ease-in-out;
+}
+
+.slide.active {
+ opacity:1;
+}
+
+.slideshow-caption {
+ position:absolute;
+ bottom:0;
+ left:0;
+ width:100%;
+ padding:35px 20px 18px;
+ color:white;
+ text-align:center;
+ font-size:11px;
+ font-weight:700;
+ letter-spacing:2px;
+ background:linear-gradient(transparent,#171323c9);
+ z-index:2;
 }
 
 /* COMMON SECTIONS */
@@ -547,6 +710,10 @@ footer p {
  .profile-image img {height:350px}
 
  .leader-image {height:300px}
+
+ .slideshow {
+  height:260px;
+ }
 }
 
 @media(max-width:550px) {
@@ -578,50 +745,49 @@ footer p {
   width:125px;
   height:95px;
  }
+
+ .announcement-grid {
+  grid-template-columns:1fr;
+ }
+
+ .announcement-card {
+  padding:25px;
+  min-height:220px;
+ }
+
+ .announcement-card h3 {
+  font-size:32px;
+ }
+
+ .slideshow-section {
+  padding:15px 0 55px;
+ }
+
+ .slideshow {
+  width:90%;
+  height:210px;
+ }
+
+ .slideshow-heading h2 {
+  font-size:32px;
+ }
 }
-</style>
-</head>
-
-<body>
-
-<!-- INTRO SCREEN -->
-
-<section class="intro" id="home">
-
-<div class="intro-content">
-
-<div class="presented">
+</style></head><body><!-- INTRO SCREEN --><section class="intro" id="home"><div class="intro-content"><div class="presented">
 PRESENTED BY
 <br><br>
 KHANABADOSH WRITERS' CAFE
-</div>
-
-<div class="intro-logo">
+</div><div class="intro-logo">
 <img src="assets/ayaz-melo-2026.png"
 alt="Ayaz Melo 2026 Official Logo">
-</div>
-
-<h1>Welcome to<br><span>Ayaz Melo 2026</span></h1>
-
-<p>LITERATURE · CULTURE · ART · HERITAGE</p>
-
-<div class="intro-date">
+</div><h1>Welcome to<br><span>Ayaz Melo 2026</span></h1><p>LITERATURE · CULTURE · ART · HERITAGE</p><div class="intro-date">
 19 — 21 DECEMBER 2026
 <br>
 HYDERABAD, SINDH
-</div>
-
-<a href="#main" class="explore">EXPLORE THE MELO →</a>
+</div><a href="#main" class="explore">EXPLORE THE MELO →</a>
 
 </div>
-</section>
-
-<!-- RUNNING TICKER -->
-
-<div class="ticker">
-<div class="ticker-track">
-
-<span>WELCOME TO AYAZ MELO 2026</span>
+</section><!-- RUNNING TICKER --><div class="ticker">
+<div class="ticker-track"><span>WELCOME TO AYAZ MELO 2026</span>
 <span>✦</span>
 <span>HOSTED BY KHANABADOSH WRITERS' CAFE</span>
 <span>✦</span>
@@ -644,24 +810,14 @@ HYDERABAD, SINDH
 <span>✦</span>
 
 </div>
-</div>
-
-<!-- NAVIGATION -->
-
-<header id="main">
-<nav>
-
-<a href="#home" class="brand">
+</div><!-- NAVIGATION --><header id="main">
+<nav><a href="#home" class="brand">
 <img src="assets/ayaz-melo-2026.png"
-alt="Ayaz Melo 2026 Logo">
-
-<div>
+alt="Ayaz Melo 2026 Logo"><div>
 AYAZ MELO
 <small>2026 · HYDERABAD</small>
 </div>
-</a>
-
-<button class="menu" id="menuBtn">☰</button>
+</a><button class="menu" id="menuBtn">☰</button>
 
 <div class="navlinks" id="navLinks">
 <a href="#khanabadosh">KHANABADOSH</a>
@@ -670,266 +826,176 @@ AYAZ MELO
 <a href="#arfana">ARFANA MALLAH</a>
 <a href="#portals">EXPLORE</a>
 <a href="#footer">CONTACT</a>
-</div>
+</div></nav>
+</header><!-- MAIN HERO --><div class="hero">
+<div class="container hero-content"><small>THE 12TH EDITION · HYDERABAD SINDH</small>
 
-</nav>
-</header>
-
-<!-- MAIN HERO -->
-
-<div class="hero">
-<div class="container hero-content">
-
-<small>THE 12TH EDITION · HYDERABAD SINDH</small>
-
-<h2>Where Words<br>Become <span>Heritage.</span></h2>
-
-<p>
+<h2>Where Words<br>Become <span>Heritage.</span></h2><p>
 A celebration of literature, music, art and the living cultural spirit of Sindh, inspired by the timeless legacy of Shaikh Ayaz.
-</p>
-
-<a href="#portals" class="btn">EXPLORE AYAZ MELO →</a>
+</p><a href="#portals" class="btn">EXPLORE AYAZ MELO →</a>
 
 </div>
+</div><!-- AYAZ MELO ANNOUNCEMENTS --><section class="announcements"><div class="container"><div class="announcement-heading">
+<small>IMPORTANT ANNOUNCEMENTS</small>
+<h2>Be Part of Ayaz Melo 2026</h2>
+</div><div class="announcement-grid"><!-- EVENT ANNOUNCEMENT --><div class="announcement-card event-announcement"><div class="announcement-tag">
+SAVE THE DATES
+</div><h3>Ayaz Melo 2026</h3><div class="announcement-date">
+19 — 21 DECEMBER 2026
+</div><p>
+Three days celebrating literature, poetry, music, art and the cultural heritage of Sindh.<br>
+Khanabadosh Writers' Cafe, Qasimabad, Hyderabad.
+</p></div><!-- REGISTRATION ANNOUNCEMENT --><div class="announcement-card registration-announcement"><div class="announcement-tag">
+PUBLIC REGISTRATION OPEN
+</div><h3>Join Ayaz Melo 2026</h3><p>
+Public registration is now open. Register as a visitor and become part of this celebration of literature, culture and heritage.<br>
+Participation is free.
+</p><a href="visitor.html" class="registration-button">
+REGISTER NOW →
+</a></div></div>
 </div>
+</section><!-- AUTOMATIC PHOTO SLIDESHOW --><section class="slideshow-section"><div class="slideshow-heading">
+<small>CELEBRATING OUR CULTURAL JOURNEY</small>
+<h2>Moments of Ayaz Melo</h2>
+</div><div class="slideshow" id="ayazSlideshow"><img class="slide active"
+src="assets/slideshow/slide-1.jpg"
+alt="Ayaz Melo cultural moments">
 
-<!-- KHANABADOSH -->
+<img class="slide"
+src="assets/slideshow/slide-2.jpg"
+alt="Ayaz Melo literary gathering">
 
-<section class="khana" id="khanabadosh">
+<img class="slide"
+src="assets/slideshow/slide-3.jpg"
+alt="Ayaz Melo event">
 
-<div class="container khana-grid">
+<img class="slide"
+src="assets/slideshow/slide-4.jpg"
+alt="Ayaz Melo cultural activities">
 
-<div class="khana-logo">
+<img class="slide"
+src="assets/slideshow/slide-5.jpg"
+alt="Ayaz Melo guests and participants">
+
+<img class="slide"
+src="assets/slideshow/slide-6.jpg"
+alt="Ayaz Melo literature and art">
+
+<img class="slide"
+src="assets/slideshow/slide-7.jpg"
+alt="Ayaz Melo festival memories">
+
+<div class="slideshow-caption">
+LITERATURE · CULTURE · ART · HERITAGE
+</div></div></section><!-- KHANABADOSH --><section class="khana" id="khanabadosh"><div class="container khana-grid"><div class="khana-logo">
 <img src="assets/khanabadosh-logo.png"
 alt="Khanabadosh Writers Cafe Logo">
-</div>
-
-<div>
-
-<div class="section-label" style="color:var(--gold)">
+</div><div><div class="section-label" style="color:var(--gold)">
 THE HOST INSTITUTION
-</div>
-
-<h2>Khanabadosh<br>Writers' Cafe</h2>
-
-<p>
-Khanabadosh Writers' Cafe is a literary and cultural space in Qasimabad, Hyderabad.
-
-It brings together writers, poets, intellectuals, artists, students and young people through literature, art and cultural activities.
+</div><h2>Khanabadosh<br>Writers' Cafe</h2><p>
+Khanabadosh Writers' Cafe is a literary and cultural space in Qasimabad, Hyderabad.It brings together writers, poets, intellectuals, artists, students and young people through literature, art and cultural activities.
 
 Khanabadosh proudly hosts Ayaz Melo 2026.
-</p>
 
+</p></div>
 </div>
-</div>
-</section>
-
-<!-- SHAIKH AYAZ -->
-
-<section class="content-section" id="shaikh-ayaz">
-
-<div class="container ayaz-grid">
-
-<div class="profile-image">
+</section><!-- SHAIKH AYAZ --><section class="content-section" id="shaikh-ayaz"><div class="container ayaz-grid"><div class="profile-image">
 <img src="assets/shaikh-ayaz.jpg"
 alt="Shaikh Ayaz">
 <div class="profile-caption">
 Shaikh Ayaz · Legendary Sindhi Poet
 </div>
-</div>
-
-<div>
-
-<div class="section-label">THE POET · THE THINKER · THE LEGACY</div>
-
-<h2 class="section-title">Shaikh Ayaz</h2>
-
-<p class="description">
-Shaikh Ayaz was one of the most influential literary figures in modern Sindhi literature.
-
-His poetry and prose explored freedom, love, identity, humanity and cultural consciousness.
+</div><div><div class="section-label">THE POET · THE THINKER · THE LEGACY</div><h2 class="section-title">Shaikh Ayaz</h2><p class="description">
+Shaikh Ayaz was one of the most influential literary figures in modern Sindhi literature.His poetry and prose explored freedom, love, identity, humanity and cultural consciousness.
 
 His legacy continues to inspire generations of readers, writers and artists.
-</p>
 
+</p></div>
 </div>
-</div>
-</section>
-
-<!-- LEADERSHIP: AMAR SINDHU AND ARFANA MALLAH -->
-
-<section class="content-section leadership" id="amar">
-
-<div class="container">
-
-<div class="section-label">THE PEOPLE BEHIND AYAZ MELO</div>
-
-<h2 class="section-title">Vision & Leadership</h2>
-
-<p class="description">
+</section><!-- LEADERSHIP: AMAR SINDHU AND ARFANA MALLAH --><section class="content-section leadership" id="amar"><div class="container"><div class="section-label">THE PEOPLE BEHIND AYAZ MELO</div><h2 class="section-title">Vision & Leadership</h2><p class="description">
 Meet the individuals whose vision, dedication and leadership have helped shape Ayaz Melo.
-</p>
-
-<div class="leadership-grid">
-
-<!-- PROF. AMAR SINDHU -->
-
-<article class="leader-card">
-
-<img class="leader-image"
+</p><div class="leadership-grid"><!-- PROF. AMAR SINDHU --><article class="leader-card"><img class="leader-image"
 src="team/amar-sindhu.jpg"
 alt="Prof. Amar Sindhu">
 
-<h2>Prof. Amar Sindhu</h2>
-
-<div class="leader-role">
+<h2>Prof. Amar Sindhu</h2><div class="leader-role">
 CONVENER · AYAZ MELO
-</div>
-
-<p>
-Prof. Amar Sindhu is a prominent academic, writer and progressive intellectual associated with the cultural and literary journey of Sindh.
-
-She is the founder of Khanabadosh Writers' Cafe, Hyderabad, and co-pioneered Ayaz Melo in 2015 with Prof. Dr. Arfana Mallah.
+</div><p>
+Prof. Amar Sindhu is a prominent academic, writer and progressive intellectual associated with the cultural and literary journey of Sindh.She is the founder of Khanabadosh Writers' Cafe, Hyderabad, and co-pioneered Ayaz Melo in 2015 with Prof. Dr. Arfana Mallah.
 
 As Convener, she provides vision and leadership to the festival, guides its planning and organising committees, and welcomes writers, poets, artists and guests to this cultural platform.
-</p>
 
-</article>
-
-<!-- PROF. DR. ARFANA MALLAH -->
-
-<article class="leader-card" id="arfana">
-
-<img class="leader-image"
+</p></article><!-- PROF. DR. ARFANA MALLAH --><article class="leader-card" id="arfana"><img class="leader-image"
 src="team/arfana-mallah.jpg"
 alt="Prof. Dr. Arfana Mallah">
 
-<h2>Prof. Dr. Arfana Mallah</h2>
-
-<div class="leader-role">
+<h2>Prof. Dr. Arfana Mallah</h2><div class="leader-role">
 CO-FOUNDER & COORDINATOR
-</div>
-
-<p>
-Prof. Dr. Arfana Mallah is a distinguished academic, writer and women's rights activist associated with the University of Sindh.
-
-As Co-Founder and Coordinator of Ayaz Melo, she plays an important role in coordinating the festival's programme, sessions and stage activities.
+</div><p>
+Prof. Dr. Arfana Mallah is a distinguished academic, writer and women's rights activist associated with the University of Sindh.As Co-Founder and Coordinator of Ayaz Melo, she plays an important role in coordinating the festival's programme, sessions and stage activities.
 
 Her dedication to literature, democratic values and cultural expression has helped sustain the vision and continuity of Ayaz Melo.
-</p>
 
-</article>
-
+</p></article></div>
 </div>
-</div>
-</section>
-
-<!-- EXPLORE PORTALS -->
-
-<section class="content-section portals" id="portals">
-
-<div class="container">
-
-<div class="section-label" style="color:var(--gold)">
+</section><!-- EXPLORE PORTALS --><section class="content-section portals" id="portals"><div class="container"><div class="section-label" style="color:var(--gold)">
 DISCOVER · PARTICIPATE · EXPLORE
-</div>
-
-<h2 class="section-title">Explore the Melo</h2>
-
-<p class="description" style="color:#ddd">
+</div><h2 class="section-title">Explore the Melo</h2><p class="description" style="color:#ddd">
 Discover the people, activities, memories and opportunities of Ayaz Melo 2026.
-</p>
-
-<div class="portal-grid">
-
-<div class="portal-card">
+</p><div class="portal-grid"><div class="portal-card">
 <div class="portal-icon">👥</div>
 <h3>Organising Team</h3>
 <p>Meet the people behind Ayaz Melo.</p>
 <a href="team.html">EXPLORE TEAM →</a>
-</div>
-
-<div class="portal-card">
+</div><div class="portal-card">
 <div class="portal-icon">📝</div>
 <h3>Visitor Registration</h3>
 <p>Register as a visitor. Free participation.</p>
 <a href="visitor.html">REGISTER →</a>
-</div>
-
-<div class="portal-card">
+</div><div class="portal-card">
 <div class="portal-icon">🤝</div>
 <h3>Volunteers</h3>
 <p>Discover volunteer committees and teams.</p>
 <a href="volunteer.html">EXPLORE →</a>
-</div>
-
-<div class="portal-card">
+</div><div class="portal-card">
 <div class="portal-icon">📚</div>
 <h3>Digital Archive</h3>
 <p>Explore memories from previous editions.</p>
 <a href="archive.html">OPEN ARCHIVE →</a>
-</div>
-
-<div class="portal-card">
+</div><div class="portal-card">
 <div class="portal-icon">📸</div>
 <h3>Photo Gallery</h3>
 <p>Explore festival photographs and memories.</p>
 <a href="gallery.html">VIEW GALLERY →</a>
-</div>
-
-<div class="portal-card">
+</div><div class="portal-card">
 <div class="portal-icon">🏛️</div>
 <h3>Khanabadosh</h3>
 <p>Discover our host literary institution.</p>
 <a href="khanabadosh.html">DISCOVER →</a>
-</div>
-
-<div class="portal-card">
+</div><div class="portal-card">
 <div class="portal-icon">📖</div>
 <h3>Book & Cultural Stalls</h3>
 <p>Discover publishers, booksellers and exhibitors.</p>
 <a href="stalls.html">EXPLORE STALLS →</a>
-</div>
-
-<div class="portal-card">
+</div><div class="portal-card">
 <div class="portal-icon">✉️</div>
 <h3>Contact</h3>
 <p>Connect with the Ayaz Melo team.</p>
 <a href="contact.html">CONTACT US →</a>
-</div>
-
-<div class="portal-card">
+</div><div class="portal-card">
 <div class="portal-icon">💬</div>
 <h3>Feedback</h3>
 <p>Share your experience and suggestions.</p>
 <a href="feedback.html">SHARE FEEDBACK →</a>
+</div></div>
 </div>
-
-</div>
-</div>
-</section>
-
-<!-- FOOTER -->
-
-<footer id="footer">
-
-<div class="footer-logos">
-
-<div class="footer-logo-box">
+</section><!-- FOOTER --><footer id="footer"><div class="footer-logos"><div class="footer-logo-box">
 <img src="assets/ayaz-melo-2026.png"
 alt="Ayaz Melo 2026 Logo">
-</div>
-
-<div class="footer-logo-box">
+</div><div class="footer-logo-box">
 <img src="assets/khanabadosh-logo.png"
 alt="Khanabadosh Writers Cafe Logo">
-</div>
-
-</div>
-
-<h2>Ayaz Melo 2026</h2>
-
-<p>
+</div></div><h2>Ayaz Melo 2026</h2><p>
 Hosted by Khanabadosh Writers' Cafe
 <br>
 19–21 December 2026 · Hyderabad, Sindh
@@ -937,11 +1003,9 @@ Hosted by Khanabadosh Writers' Cafe
 Celebrating Literature, Culture & the Legacy of Shaikh Ayaz.
 <br><br>
 © 2026 Ayaz Melo. All Rights Reserved.
-</p>
+</p></footer><script>
 
-</footer>
-
-<script>
+/* MOBILE MENU */
 
 const menuBtn=document.getElementById("menuBtn");
 const navLinks=document.getElementById("navLinks");
@@ -956,7 +1020,22 @@ navLinks.querySelectorAll("a").forEach(link=>{
  });
 });
 
-</script>
+/* AUTOMATIC FADE SLIDESHOW */
 
-</body>
-</html>
+const slides=document.querySelectorAll(".slide");
+let currentSlide=0;
+
+function showNextSlide(){
+
+ slides[currentSlide].classList.remove("active");
+
+ currentSlide=(currentSlide+1)%slides.length;
+
+ slides[currentSlide].classList.add("active");
+
+}
+
+setInterval(showNextSlide,5000);
+
+</script></body>
+ </html>
