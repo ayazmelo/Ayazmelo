@@ -3,90 +3,118 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ayaz Melo 2026 | Registration</title>
+<meta name="theme-color" content="#171512">
+<title>Ayaz Melo 2026 | Free Registration</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <style>
+:root {
+  --red:#982f2c;
+  --gold:#d6aa59;
+  --dark:#171512;
+  --cream:#f8f2e8;
+  --green:#315746;
+}
 *{box-sizing:border-box}
 body{
- margin:0;
- background:#17251e;
- color:#fff;
- font-family:Arial,sans-serif;
- padding:20px;
+  margin:0;padding:18px;background:var(--cream);
+  color:var(--dark);font-family:Arial,sans-serif;
 }
 .container{
- max-width:650px;
- margin:35px auto;
- background:#24372e;
- padding:30px;
- border:1px solid #d6aa59;
- border-radius:18px;
+  max-width:720px;margin:25px auto;background:white;
+  padding:25px;border-radius:18px;
+  box-shadow:0 8px 35px #0001;
 }
-h1{text-align:center;color:#d6aa59}
-.subtitle{text-align:center;color:#ddd}
-label{display:block;margin-top:16px;font-size:14px}
+.header{
+  background:var(--dark);color:white;text-align:center;
+  padding:30px 15px;border-radius:13px;
+}
+.header h1{
+  color:var(--gold);font-family:Georgia,serif;
+  font-size:35px;
+}
+.header p{line-height:1.7}
+h2{font-family:Georgia,serif}
+label{
+  display:block;font-weight:bold;
+  font-size:14px;margin-top:16px;
+}
 input,select{
- width:100%;
- padding:13px;
- margin-top:7px;
- border:1px solid #ccc;
- border-radius:8px;
- font-size:15px;
+  width:100%;padding:13px;margin-top:7px;
+  border:1px solid #ddd;border-radius:8px;
+  font-size:15px;background:white;
 }
 button{
- width:100%;
- padding:14px;
- margin-top:20px;
- background:#982f2c;
- color:white;
- border:0;
- border-radius:8px;
- font-size:16px;
- font-weight:bold;
- cursor:pointer;
+  padding:14px;border:0;border-radius:8px;
+  background:var(--red);color:white;
+  font-weight:bold;cursor:pointer;
 }
 button:disabled{opacity:.5}
-.dates{
- display:flex;
- gap:12px;
- flex-wrap:wrap;
- margin-top:12px;
-}
-.dates label{
- display:flex;
- align-items:center;
- gap:5px;
- margin:0;
-}
-.dates input{width:auto}
+.main-button{width:100%;margin-top:25px}
 .member{
- padding:18px;
- margin-top:18px;
- border:1px solid #d6aa59;
- border-radius:12px;
+  border:1px solid #ddd;border-top:4px solid var(--gold);
+  border-radius:12px;padding:20px;margin-top:18px;
+}
+.member h3{color:var(--red);font-family:Georgia,serif}
+.member-number{
+  color:#777;font-size:12px;
+}
+.gender{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:10px;margin-top:8px;
+}
+.gender label{
+  border:1px solid #ddd;padding:13px;
+  border-radius:8px;margin:0;text-align:center;
+}
+.gender input{width:auto;margin:0 6px 0 0}
+.dates{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:10px;margin-top:10px;
+}
+.date{
+  border:1px solid #ddd;padding:13px 5px;
+  border-radius:8px;text-align:center;
+}
+.date input{width:auto;margin:0 4px 0 0}
+.add-button{
+  width:100%;margin-top:15px;
+  background:var(--green);
+}
+.remove-button{
+  width:auto;background:#777;
+  padding:9px 14px;margin-top:15px;
 }
 #message{
- margin-top:20px;
- text-align:center;
- line-height:1.7;
+  padding:15px;margin-top:18px;
+  border-radius:8px;text-align:center;
+  line-height:1.7;
 }
 .pass{
- background:white;
- color:#222;
- padding:20px;
- margin-top:20px;
- border-radius:12px;
- text-align:center;
+  border:2px solid var(--gold);
+  border-radius:12px;padding:20px;
+  text-align:center;margin-top:22px;
+  background:white;
 }
+.pass h2{color:var(--red)}
 .qr{
- display:flex;
- justify-content:center;
- margin:20px;
+  display:flex;justify-content:center;
+  margin:20px auto;
 }
-.small{font-size:12px;color:#ddd}
+.download-button{
+  width:100%;max-width:260px;
+}
+footer{
+  text-align:center;color:#777;
+  font-size:12px;margin-top:30px;
+}
+@media(max-width:500px){
+  .container{padding:14px}
+  .header h1{font-size:29px}
+  .dates{grid-template-columns:1fr}
+}
 </style>
 </head>
 
@@ -94,44 +122,59 @@ button:disabled{opacity:.5}
 
 <div class="container">
 
-<h1>AYAZ MELO 2026</h1>
-<p class="subtitle">FREE ENTRY REGISTRATION</p>
+<div class="header">
+  <p>KHANABADOSH WRITERS' CAFE PRESENTS</p>
+  <h1>AYAZ MELO 2026</h1>
+  <p>Literature · Music · Art · Culture</p>
+  <p>19–21 December 2026</p>
+  <h2>FREE ENTRY REGISTRATION</h2>
+  <p>Hyderabad, Sindh, Pakistan</p>
+</div>
 
-<p style="text-align:center">
-19–21 December 2026<br>
-Khanabadosh Writers' Cafe<br>
-Hyderabad, Sindh
-</p>
+<h2>Welcome to Ayaz Melo</h2>
+<p>Register yourself or your family for the three-day cultural celebration.</p>
 
 <form id="registrationForm">
 
-<label>Registration Type</label>
-<select id="type" required>
-<option value="individual">Individual Registration</option>
-<option value="family">Family Registration</option>
+<label>Registration Category</label>
+<select id="category">
+  <option value="individual">Individual Registration</option>
+  <option value="family">Family Registration</option>
 </select>
 
-<label>Number of Family Members</label>
-<select id="count" style="display:none">
-<option value="2">2 Members</option>
-<option value="3">3 Members</option>
-<option value="4">4 Members</option>
-<option value="5">5 Members</option>
-<option value="6">6 Members</option>
-<option value="7">7 Members</option>
-<option value="8">8 Members</option>
-</select>
+<div id="individualHeading" style="margin-top:20px">
+  <h2 style="color:#982f2c">INDIVIDUAL REGISTRATION</h2>
+</div>
 
-<label>Select Event Days</label>
-<div class="dates">
-<label><input type="checkbox" value="2026-12-19"> 19 Dec</label>
-<label><input type="checkbox" value="2026-12-20"> 20 Dec</label>
-<label><input type="checkbox" value="2026-12-21"> 21 Dec</label>
+<div id="familyHeading" style="display:none;margin-top:20px">
+  <h2 style="color:#982f2c">FAMILY REGISTRATION</h2>
+  <p>Register 3 to 8 family members.</p>
 </div>
 
 <div id="members"></div>
 
-<button type="submit" id="submitBtn">
+<button type="button" id="addMember" class="add-button"
+style="display:none">+ ADD MEMBER</button>
+
+<h3 style="margin-top:30px">Attendance Dates</h3>
+<p>Select the days you wish to attend.</p>
+
+<div class="dates">
+  <label class="date">
+    <input type="checkbox" value="2026-12-19">
+    19 December
+  </label>
+  <label class="date">
+    <input type="checkbox" value="2026-12-20">
+    20 December
+  </label>
+  <label class="date">
+    <input type="checkbox" value="2026-12-21">
+    21 December
+  </label>
+</div>
+
+<button type="submit" id="submitBtn" class="main-button">
 REGISTER NOW — FREE
 </button>
 
@@ -140,213 +183,420 @@ REGISTER NOW — FREE
 <div id="message"></div>
 <div id="passes"></div>
 
+<footer>
+  © 2026 AYAZ MELO<br>
+  Hosted by Khanabadosh Writers' Cafe
+</footer>
+
 </div>
 
 <script>
+
+// SUPABASE CONFIGURATION
 
 const SUPABASE_URL =
 "https://fstkhwoxbgdcdfwycggu.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_BNRfiLDVM-892aVwO_hJw_OAhEgTrq";
+"sb_publishable_BNRQfiLDVM-892aVwO_hJw_OAhEgTrq";
 
-const db = supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
 );
 
-const type = document.getElementById("type");
-const count = document.getElementById("count");
+// ELEMENTS
+
+const category = document.getElementById("category");
 const members = document.getElementById("members");
-const form = document.getElementById("registrationForm");
+const addMember = document.getElementById("addMember");
+const individualHeading = document.getElementById("individualHeading");
+const familyHeading = document.getElementById("familyHeading");
 const message = document.getElementById("message");
 const passes = document.getElementById("passes");
+const submitBtn = document.getElementById("submitBtn");
 
-function makeMembers(){
+let memberCount = 1;
 
- const total = type.value === "individual"
- ? 1 : Number(count.value);
+// CREATE MEMBER FORM
 
- members.innerHTML = "";
+function createMember(number){
 
- for(let i=0;i<total;i++){
+const box = document.createElement("div");
+box.className = "member";
+box.dataset.member = number;
 
- const div=document.createElement("div");
- div.className="member";
+const individual = category.value === "individual";
 
- div.innerHTML=`
- <h3>Member ${i+1}</h3>
+box.innerHTML = `
 
- <label>Full Name</label>
- <input name="name" required>
+<h3>
+${individual
+? "INDIVIDUAL REGISTRATION"
+: "FAMILY MEMBER " + number}
+</h3>
 
- <label>Father Name</label>
- <input name="father" required>
+${!individual
+? '<span class="member-number">Member '+number+'</span>'
+: ''}
 
- <label>Contact Number</label>
- <input name="phone" type="tel" required>
+<label>Full Name *</label>
+<input name="name" required maxlength="120"
+placeholder="Enter full name">
 
- <label>City</label>
- <input name="city" required>
+<label>Father Name *</label>
+<input name="father" required maxlength="120"
+placeholder="Enter father name">
 
- <label>Designation</label>
- <input name="designation" placeholder="Student / Teacher / Other" required>
+<label>Gender *</label>
+<div class="gender">
+<label>
+<input type="radio" name="gender_${number}"
+value="Male" required> Male
+</label>
+<label>
+<input type="radio" name="gender_${number}"
+value="Female" required> Female
+</label>
+</div>
 
- <label>Email Address</label>
- <input name="email" type="email" required>
- `;
+<label>Mobile Number *</label>
+<input name="phone" type="tel" required maxlength="25"
+placeholder="03XXXXXXXXX">
 
- members.appendChild(div);
- }
+<label>City *</label>
+<input name="city" required maxlength="100"
+placeholder="Enter city">
+
+<label>Designation *</label>
+<select name="designation" required>
+<option value="">Select designation</option>
+<option>Student</option>
+<option>Teacher</option>
+<option>Writer</option>
+<option>Artist</option>
+<option>Advocate</option>
+<option>Professional</option>
+<option>Other</option>
+</select>
+
+<label>Email Address *</label>
+<input name="email" type="email" required maxlength="254"
+placeholder="Enter email address">
+
+${!individual && number > 3
+? '<button type="button" class="remove-button">REMOVE MEMBER</button>'
+: ''}
+
+`;
+
+if(number > 3 && !individual){
+box.querySelector(".remove-button").onclick=()=>{
+box.remove();
+memberCount--;
+updateNumbers();
+};
 }
 
-type.addEventListener("change",()=>{
- count.style.display =
- type.value==="family" ? "block":"none";
- makeMembers();
+members.appendChild(box);
+
+}
+
+function updateNumbers(){
+
+const boxes=[...members.querySelectorAll(".member")];
+
+boxes.forEach((box,index)=>{
+const heading=box.querySelector("h3");
+heading.textContent="FAMILY MEMBER "+(index+1);
+
+const radios=box.querySelectorAll('input[type="radio"]');
+
+radios.forEach(radio=>{
+radio.name="gender_"+(index+1);
+});
 });
 
-count.addEventListener("change",makeMembers);
+memberCount=boxes.length;
 
-makeMembers();
+addMember.style.display=
+category.value==="family" && memberCount<8
+?"block":"none";
+}
+
+// CATEGORY CHANGE
+
+function renderForms(){
+
+members.innerHTML="";
+memberCount=1;
+
+const family=category.value==="family";
+
+individualHeading.style.display=family?"none":"block";
+familyHeading.style.display=family?"block":"none";
+
+if(family){
+
+for(let i=1;i<=3;i++){
+createMember(i);
+}
+
+memberCount=3;
+addMember.style.display="block";
+
+}else{
+
+createMember(1);
+addMember.style.display="none";
+
+}
+
+}
+
+category.addEventListener("change",renderForms);
+
+// ADD FAMILY MEMBER
+
+addMember.addEventListener("click",()=>{
+
+if(memberCount>=8){
+alert("Maximum 8 family members allowed.");
+return;
+}
+
+memberCount++;
+createMember(memberCount);
+updateNumbers();
+
+});
+
+renderForms();
+
+// DATES
+
+function getDates(){
+
+return [...document.querySelectorAll(
+".dates input:checked"
+)].map(x=>x.value);
+
+}
+
+// CREATE QR PASS
 
 function createPass(visitor){
 
- const box=document.createElement("div");
- box.className="pass";
+const box=document.createElement("div");
+box.className="pass";
 
- const heading=document.createElement("h2");
- heading.textContent="AYAZ MELO 2026";
+const title=document.createElement("h2");
+title.textContent="AYAZ MELO 2026";
 
- const welcome=document.createElement("h3");
- welcome.textContent="Registration Successful!";
+const welcome=document.createElement("h3");
+welcome.textContent="REGISTRATION SUCCESSFUL";
 
- const id=document.createElement("p");
- id.textContent="Registration ID: "+visitor.registration_id;
+const details=document.createElement("p");
+details.textContent=
+"Name: "+visitor.name+
+" | Gender: "+visitor.gender+
+" | Registration ID: "+visitor.registration_id;
 
- const dates=document.createElement("p");
- dates.textContent="Entry Dates: "+visitor.allowed_event_dates.join(", ");
+const dateText=document.createElement("p");
+dateText.textContent=
+"Valid Dates: "+visitor.allowed_event_dates.join(", ");
 
- const qr=document.createElement("div");
- qr.className="qr";
+const qr=document.createElement("div");
+qr.className="qr";
 
- const verifyURL=new URL("verify.html",location.href);
- verifyURL.searchParams.set("id",visitor.registration_id);
- verifyURL.searchParams.set("token",visitor.qr_token);
+const verifyURL=new URL("verify.html",location.href);
+verifyURL.searchParams.set("id",visitor.registration_id);
+verifyURL.searchParams.set("token",visitor.qr_token);
 
- box.append(heading,welcome,id,dates,qr);
- passes.appendChild(box);
+box.append(title,welcome,details,dateText,qr);
+passes.appendChild(box);
 
- new QRCode(qr,{
-  text:verifyURL.href,
-  width:200,
-  height:200,
-  correctLevel:QRCode.CorrectLevel.H
- });
+new QRCode(qr,{
+text:verifyURL.href,
+width:220,
+height:220,
+correctLevel:QRCode.CorrectLevel.H
+});
 
- const download=document.createElement("button");
- download.textContent="DOWNLOAD ENTRY PASS";
+const download=document.createElement("button");
+download.className="download-button";
+download.textContent="DOWNLOAD ENTRY PASS";
 
- download.onclick=()=>{
-  const canvas=qr.querySelector("canvas");
-  const img=qr.querySelector("img");
-  const data=canvas
-   ? canvas.toDataURL("image/png")
-   : img.src;
+download.onclick=()=>{
 
-  const link=document.createElement("a");
-  link.href=data;
-  link.download="Ayaz-Melo-"+visitor.registration_id+".png";
-  link.click();
- };
+const canvas=qr.querySelector("canvas");
 
- box.appendChild(download);
+if(!canvas){
+alert("Please wait for QR code.");
+return;
 }
 
-form.addEventListener("submit",async(e)=>{
+const output=document.createElement("canvas");
+output.width=700;
+output.height=900;
 
- e.preventDefault();
+const ctx=output.getContext("2d");
 
- const selectedDates=[
- ...document.querySelectorAll(".dates input:checked")
- ].map(x=>x.value);
+ctx.fillStyle="#fff";
+ctx.fillRect(0,0,700,900);
 
- if(selectedDates.length===0){
-  alert("Please select at least one event day.");
-  return;
- }
+ctx.textAlign="center";
+ctx.fillStyle="#982f2c";
+ctx.font="bold 40px Georgia";
+ctx.fillText("AYAZ MELO 2026",350,90);
 
- const entries=[
- ...members.querySelectorAll(".member")
- ];
+ctx.fillStyle="#171512";
+ctx.font="bold 28px Arial";
+ctx.fillText("ENTRY PASS",350,155);
 
- const familyId=type.value==="family"
- ? crypto.randomUUID()
- : null;
+ctx.font="22px Arial";
+ctx.fillText(visitor.name,350,230);
 
- const button=document.getElementById("submitBtn");
- button.disabled=true;
- button.textContent="REGISTERING...";
+ctx.font="18px Arial";
+ctx.fillText(visitor.registration_id,350,290);
 
- message.textContent="Please wait...";
+ctx.drawImage(canvas,225,340,250,250);
 
- passes.innerHTML="";
+ctx.font="17px Arial";
+ctx.fillText(visitor.allowed_event_dates.join(" | "),350,650);
 
- let successful=0;
+ctx.fillStyle="#315746";
+ctx.font="bold 22px Arial";
+ctx.fillText("FREE ENTRY",350,730);
 
- try{
+ctx.font="18px Arial";
+ctx.fillText("Khanabadosh Writers' Cafe",350,780);
 
- for(const entry of entries){
+const link=document.createElement("a");
+link.download="Ayaz-Melo-"+visitor.registration_id+".png";
+link.href=output.toDataURL("image/png");
+link.click();
 
-  const get=(name)=>
-   entry.querySelector(`[name="${name}"]`).value.trim();
+};
 
-  const {data,error}=await db.rpc(
-   "register_visitor_v2",
-   {
-    p_full_name:get("name"),
-    p_father_name:get("father"),
-    p_contact_number:get("phone"),
-    p_city:get("city"),
-    p_designation:get("designation"),
-    p_email:get("email"),
-    p_allowed_event_dates:selectedDates,
-    p_family_group_id:familyId
-   }
-  );
+box.appendChild(download);
 
-  if(error) throw error;
+};
 
-  if(!data || !data.length){
-   throw new Error("Registration response missing.");
-  }
+// SUBMIT REGISTRATION
 
-  createPass(data[0]);
-  successful++;
- }
+document.getElementById("registrationForm")
+.addEventListener("submit",async(e)=>{
 
- message.textContent=
- "Congratulations! "+successful+
- " registration(s) completed successfully. Welcome to Ayaz Melo 2026!";
+e.preventDefault();
 
- form.reset();
- count.style.display="none";
- makeMembers();
+const dates=getDates();
 
- }catch(error){
+if(!dates.length){
+alert("Please select at least one attendance date.");
+return;
+}
 
- console.error(error);
+const boxes=[...members.querySelectorAll(".member")];
 
- message.textContent=
- "Registration error: "+error.message+
- " Please contact the registration team.";
+if(category.value==="family" &&
+(boxes.length<3 || boxes.length>8)){
+alert("Family registration requires 3 to 8 members.");
+return;
+}
 
- }finally{
+const records=boxes.map(box=>{
 
- button.disabled=false;
- button.textContent="REGISTER NOW — FREE";
+const get=name=>
+box.querySelector(`[name="${name}"]`).value.trim();
 
- }
+return {
+name:get("name"),
+father:get("father"),
+gender:box.querySelector('input[type="radio"]:checked')?.value,
+phone:get("phone"),
+city:get("city"),
+designation:get("designation"),
+email:get("email")
+};
+
+});
+
+if(records.some(x=>!x.gender)){
+alert("Please select Male or Female for every member.");
+return;
+}
+
+submitBtn.disabled=true;
+submitBtn.textContent="PLEASE WAIT...";
+
+passes.innerHTML="";
+message.textContent="Processing registration...";
+
+const familyId=category.value==="family"
+?crypto.randomUUID():null;
+
+try{
+
+const completed=[];
+
+for(const person of records){
+
+const {data,error}=await db.rpc(
+"register_visitor_v2",
+{
+p_full_name:person.name,
+p_father_name:person.father,
+p_contact_number:person.phone,
+p_city:person.city,
+p_designation:person.designation,
+p_email:person.email,
+p_gender:person.gender,
+p_allowed_event_dates:dates,
+p_family_group_id:familyId
+}
+);
+
+if(error)throw error;
+
+if(!data || !data.length){
+throw new Error("Registration response missing.");
+}
+
+completed.push({
+...person,
+registration_id:data[0].registration_id,
+qr_token:data[0].qr_token,
+allowed_event_dates:data[0].allowed_event_dates
+});
+
+}
+
+completed.forEach(createPass);
+
+message.textContent=
+"Welcome to Ayaz Melo 2026! Registration successful. "+
+"Please download and save your entry pass.";
+
+document.getElementById("registrationForm").reset();
+renderForms();
+
+}catch(error){
+
+console.error(error);
+
+message.textContent=
+"Registration Error: "+error.message+
+". Please contact the registration team.";
+
+}
+
+finally{
+
+submitBtn.disabled=false;
+submitBtn.textContent="REGISTER NOW — FREE";
+
+}
 
 });
 
