@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Volunteers | Ayaz Melo 2026</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-<style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Volunteers | Ayaz Melo 2026</title><link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet"><style>
 :root {
     --blue: #21164d;
     --maroon: #842c3c;
@@ -215,13 +208,6 @@ header {
     transform: translateY(-5px);
 }
 
-.committee-number {
-    color: var(--maroon);
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 2px;
-}
-
 .committee-card h3 {
     color: var(--blue);
     font-family: 'Cormorant Garamond', serif;
@@ -297,16 +283,21 @@ details[open] summary::after {
 
 .apply-btn {
     display: inline-block;
-    background: #77717f;
-    color: white;
-    padding: 13px 35px;
+    background: var(--gold);
+    color: var(--blue);
+    padding: 14px 35px;
     border-radius: 30px;
     border: none;
     font-family: 'Montserrat', sans-serif;
     font-size: 12px;
     font-weight: 800;
-    cursor: not-allowed;
-    opacity: .8;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.apply-btn:hover {
+    background: white;
+    transform: translateY(-3px);
 }
 
 .apply-note {
@@ -315,6 +306,75 @@ details[open] summary::after {
     font-size: 10px;
     color: var(--gold);
     letter-spacing: 1px;
+}
+
+.popup-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.75);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.popup-box {
+    background: var(--cream);
+    max-width: 430px;
+    width: 100%;
+    padding: 35px 25px;
+    text-align: center;
+    border-radius: 12px;
+    border-top: 5px solid var(--gold);
+    animation: popupShow .3s ease;
+}
+
+.popup-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--maroon);
+    color: white;
+    border-radius: 50%;
+    font-size: 30px;
+    font-weight: bold;
+    margin: 0 auto 15px;
+    line-height: 48px;
+}
+
+.popup-box h2 {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--blue);
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+
+.popup-box p {
+    color: #625c66;
+    font-size: 12px;
+    line-height: 2;
+}
+
+.popup-box button {
+    margin-top: 22px;
+    background: var(--blue);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+@keyframes popupShow {
+    from {
+        opacity: 0;
+        transform: scale(.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 footer {
@@ -353,25 +413,21 @@ footer span {
     .committee-grid {
         grid-template-columns: 1fr;
     }
+
+    .apply-section h2 {
+        font-size: 35px;
+    }
 }
-</style>
-</head>
-
-<body>
-
-<header>
+</style></head><body><header>
     <div class="brand">
         <img src="assets/ayaz-melo-2026.png" alt="Ayaz Melo Logo">
         <div>
             <h2>Ayaz Melo 2026</h2>
             <span>19–21 DECEMBER · HYDERABAD</span>
         </div>
-    </div>
+    </div><a href="index.html" class="back-link">← Back to Home</a>
 
-    <a href="index.html" class="back-link">← Back to Home</a>
-</header>
-
-<section class="hero">
+</header><section class="hero">
     <div class="hero-label">AYAZ MELO 2026</div>
     <h1>Volunteer With Us</h1>
     <div class="gold-line"></div>
@@ -380,390 +436,327 @@ footer span {
         Learn, contribute, collaborate and help create an unforgettable
         experience through the spirit of volunteering.
     </p>
-</section>
-
-<!-- VOLUNTEERING INTRODUCTION -->
-
-<section class="container">
-
-    <div class="section-heading">
-        <h2>Volunteering at Ayaz Melo</h2>
-        <p>Learning, Leadership, Recognition & Responsibility</p>
-    </div>
-
-    <div class="intro-box">
-        <h3>A Platform for Young Minds</h3>
-
-        <p>
-            Volunteering at Ayaz Melo is more than participating in a
-            cultural festival; it is an opportunity for young people to
-            learn, grow and take meaningful responsibilities. The festival
-            welcomes enthusiastic university and college students,
-            particularly young people between the ages of 18 and 22,
-            who wish to contribute to a literary and cultural gathering.
-            Volunteers become part of a collaborative team and gain
-            first-hand experience by working in different committees.
-            They learn event management, teamwork, communication,
-            leadership, coordination and problem-solving through practical
-            involvement. They also develop the ability to work under
-            pressure, manage responsibilities and interact respectfully
-            with guests, artists, writers and visitors. Ayaz Melo values
-            their dedication and contributions through certificates of
-            appreciation and recognition. Above all, volunteering offers
-            young people an opportunity to build confidence, develop
-            practical skills and become active contributors to society.
-        </p>
-    </div>
-
-    <div class="benefits">
-
-        <div class="benefit">
-            <span>01</span>
-            Practical Experience
-        </div>
-
-        <div class="benefit">
-            <span>02</span>
-            Certificates & Recognition
-        </div>
-
-        <div class="benefit">
-            <span>03</span>
-            Leadership & Teamwork
-        </div>
-
-        <div class="benefit">
-            <span>04</span>
-            Communication Skills
-        </div>
-
-        <div class="benefit">
-            <span>05</span>
-            Event Management Learning
-        </div>
-
-        <div class="benefit">
-            <span>06</span>
-            Social Responsibility
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- VOLUNTEER COMMITTEES -->
-
-<section class="committees-section">
-
-<div class="container">
-
-    <div class="section-heading">
-        <h2>Our Volunteer Committees</h2>
-        <p>
-            Seven dedicated committees working together to make
-            Ayaz Melo 2026 a well-organised and memorable event.
-        </p>
-    </div>
-
-    <div class="committee-grid">
-
-        <!-- 1 REGISTRATION -->
-
-        <div class="committee-card">
-            <div class="committee-number">COMMITTEE 01</div>
-            <h3>Registration Committee</h3>
-
-            <p>
-                Responsible for welcoming guests through an organised
-                registration and documentation process.
-            </p>
-
-            <details>
-                <summary>Explore Committee</summary>
-
-                <div class="details-content">
-                    <p>
-                        The Registration Committee plays an important
-                        role in maintaining an organised record of guests
-                        and visitors attending Ayaz Melo. Its volunteers
-                        welcome visitors at registration points and assist
-                        them throughout the registration process. They
-                        collect and verify the necessary visitor information
-                        and maintain accurate registration records.
-                        The committee also supports guest documentation
-                        and helps manage registration-related enquiries.
-                        Volunteers coordinate with the reception and
-                        other relevant teams to ensure a smooth process.
-                        Their organised work helps the festival maintain
-                        a welcoming and professional registration system.
-                    </p>
-                </div>
-            </details>
-        </div>
-
-
-        <!-- 2 RECEPTION -->
-
-        <div class="committee-card">
-            <div class="committee-number">COMMITTEE 02</div>
-            <h3>Reception Committee</h3>
-
-            <p>
-                Welcoming guests with respect, warmth and hospitality
-                from the entrance to the event venue.
-            </p>
-
-            <details>
-                <summary>Explore Committee</summary>
-
-                <div class="details-content">
-                    <p>
-                        The Reception Committee represents the spirit of
-                        hospitality and respect at Ayaz Melo. Its volunteers
-                        welcome guests, writers, artists, speakers and
-                        visitors as they arrive at the festival. They guide
-                        guests from the entrance gate towards the relevant
-                        halls and designated areas. Volunteers provide
-                        necessary information and assist visitors with
-                        courtesy and patience. They ensure that every guest
-                        feels respected, comfortable and welcomed.
-                        The committee coordinates with registration and
-                        hall management volunteers to support a smooth
-                        arrival experience. Its role reflects the cultural
-                        values of hospitality, kindness and mutual respect.
-                    </p>
-                </div>
-            </details>
-        </div>
-
-
-        <!-- 3 HALL MANAGEMENT -->
-
-        <div class="committee-card">
-            <div class="committee-number">COMMITTEE 03</div>
-            <h3>Hall Management Committee</h3>
-
-            <p>
-                Maintaining discipline, seating arrangements and
-                a comfortable environment inside event halls.
-            </p>
-
-            <details>
-                <summary>Explore Committee</summary>
-
-                <div class="details-content">
-                    <p>
-                        The Hall Management Committee is responsible for
-                        maintaining decorum and proper arrangements inside
-                        the festival halls. Its volunteers guide guests and
-                        visitors towards their designated seating areas.
-                        They help maintain organised seating arrangements
-                        for women and men according to the event's
-                        arrangements. Volunteers communicate politely
-                        and respectfully with visitors while assisting
-                        them in finding their seats. They help manage
-                        movement inside the hall and prevent unnecessary
-                        disruption during sessions. The committee works
-                        closely with the reception and stage teams to
-                        maintain a peaceful environment. Its efforts ensure
-                        that audiences can comfortably enjoy every session.
-                    </p>
-                </div>
-            </details>
-        </div>
-
-
-        <!-- 4 STAGE -->
-
-        <div class="committee-card">
-            <div class="committee-number">COMMITTEE 04</div>
-            <h3>Stage Committee</h3>
-
-            <p>
-                Supporting stage arrangements, decoration and
-                the smooth conduct of festival sessions.
-            </p>
-
-            <details>
-                <summary>Explore Committee</summary>
-
-                <div class="details-content">
-                    <p>
-                        The Stage Committee looks after the arrangements
-                        and management of the festival stage. Its volunteers
-                        assist in preparing and decorating the stage
-                        according to the requirements of different sessions.
-                        They help maintain the stage environment and
-                        coordinate necessary arrangements before each
-                        programme begins. Volunteers assist speakers,
-                        performers and session participants with stage
-                        coordination. They remain attentive to programme
-                        requirements and help ensure smooth transitions
-                        between sessions. The committee works in
-                        coordination with the organising team to address
-                        stage-related needs. Its contribution helps maintain
-                        an organised, professional and engaging stage
-                        experience throughout Ayaz Melo.
-                    </p>
-                </div>
-            </details>
-        </div>
-
-
-        <!-- 5 FOOD -->
-
-        <div class="committee-card">
-            <div class="committee-number">COMMITTEE 05</div>
-            <h3>Food Committee</h3>
-
-            <p>
-                Managing food arrangements and ensuring organised
-                distribution among guests and participants.
-            </p>
-
-            <details>
-                <summary>Explore Committee</summary>
-
-                <div class="details-content">
-                    <p>
-                        The Food Committee is responsible for coordinating
-                        food arrangements during Ayaz Melo. Its volunteers
-                        assist in organising the distribution of food among
-                        invited guests, speakers, artists, volunteers and
-                        other designated participants. They help maintain
-                        an orderly distribution process and ensure that
-                        food reaches the intended recipients. Volunteers
-                        coordinate with the organising team regarding
-                        timing, arrangements and serving requirements.
-                        They also help maintain cleanliness and proper
-                        management around food distribution areas.
-                        The committee works with care, cooperation and
-                        responsibility to support the comfort and hospitality
-                        of everyone involved in the festival.
-                    </p>
-                </div>
-            </details>
-        </div>
-
-
-        <!-- 6 STALL -->
-
-        <div class="committee-card">
-            <div class="committee-number">COMMITTEE 06</div>
-            <h3>Stall Committee</h3>
-
-            <p>
-                Coordinating and supporting the various book,
-                literary and cultural stalls at the festival.
-            </p>
-
-            <details>
-                <summary>Explore Committee</summary>
-
-                <div class="details-content">
-                    <p>
-                        The Stall Committee looks after the management
-                        and coordination of stalls established during
-                        Ayaz Melo at Khanabadosh. These may include
-                        book stalls, publishing stalls, cultural displays
-                        and other participating stalls. Volunteers assist
-                        stall representatives with basic arrangements
-                        and provide guidance regarding stall locations.
-                        They help maintain organised movement around
-                        the stall areas and respond to visitors' enquiries.
-                        The committee coordinates with stall participants
-                        and the organising team to address operational
-                        requirements. Its work creates a welcoming space
-                        where visitors can explore literature, culture,
-                        publications and creative activities.
-                    </p>
-                </div>
-            </details>
-        </div>
-
-
-        <!-- 7 AUDITORIUM -->
-
-        <div class="committee-card">
-            <div class="committee-number">COMMITTEE 07</div>
-            <h3>Mumtaz Mirza Auditorium Committee</h3>
-
-            <p>
-                Managing volunteer responsibilities and supporting
-                the overall arrangements at Mumtaz Mirza Auditorium.
-            </p>
-
-            <details>
-                <summary>Explore Committee</summary>
-
-                <div class="details-content">
-                    <p>
-                        The Mumtaz Mirza Auditorium Committee is
-                        responsible for coordinating volunteer activities
-                        and supporting the overall management of the
-                        auditorium during Ayaz Melo. Its volunteers assist
-                        with guest reception, seating arrangements and
-                        visitor guidance within the auditorium. They help
-                        maintain discipline and organised movement
-                        throughout the venue. The committee coordinates
-                        with registration, reception, hall management,
-                        stage and other relevant teams according to
-                        programme requirements. Volunteers remain
-                        attentive to the needs of guests, speakers and
-                        audiences. They work collectively to address
-                        venue-related arrangements and ensure a smooth
-                        experience. Their teamwork helps maintain an
-                        organised and welcoming auditorium environment.
-                    </p>
-                </div>
-            </details>
-        </div>
-
-    </div>
+</section><section class="container"><div class="section-heading">
+    <h2>Volunteering at Ayaz Melo</h2>
+    <p>Learning, Leadership, Recognition & Responsibility</p>
 </div>
-</section>
 
-
-<!-- APPLICATION -->
-
-<section class="apply-section">
-
-    <h2>Join the Volunteer Team</h2>
+<div class="intro-box">
+    <h3>A Platform for Young Minds</h3>
 
     <p>
-        Become part of Ayaz Melo 2026 and contribute your energy,
-        ideas and dedication to a celebration of literature, language
-        and culture. Volunteer registration will open during the
-        officially announced application period.
+        Volunteering at Ayaz Melo is more than participating in a
+        cultural festival; it is an opportunity for young people to
+        learn, grow and take meaningful responsibilities. The festival
+        welcomes enthusiastic university and college students,
+        particularly young people between the ages of 18 and 22,
+        who wish to contribute to a literary and cultural gathering.
+        Volunteers become part of a collaborative team and gain
+        first-hand experience by working in different committees.
+        They learn event management, teamwork, communication,
+        leadership, coordination and problem-solving through practical
+        involvement. They also develop the ability to work under
+        pressure, manage responsibilities and interact respectfully
+        with guests, artists, writers and visitors. Ayaz Melo values
+        their dedication and contributions through certificates of
+        appreciation and recognition. Above all, volunteering offers
+        young people an opportunity to build confidence, develop
+        practical skills and become active contributors to society.
+    </p>
+</div>
+
+<div class="benefits">
+    <div class="benefit"><span>01</span>Practical Experience</div>
+    <div class="benefit"><span>02</span>Certificates & Recognition</div>
+    <div class="benefit"><span>03</span>Leadership & Teamwork</div>
+    <div class="benefit"><span>04</span>Communication Skills</div>
+    <div class="benefit"><span>05</span>Event Management Learning</div>
+    <div class="benefit"><span>06</span>Social Responsibility</div>
+</div>
+
+</section><section class="committees-section"><div class="container"><div class="section-heading">
+    <h2>Our Volunteer Committees</h2>
+    <p>
+        Seven dedicated committees working together to make
+        Ayaz Melo 2026 a well-organised and memorable event.
+    </p>
+</div>
+
+<div class="committee-grid">
+
+    <div class="committee-card">
+        <h3>Registration Committee</h3>
+        <p>
+            Responsible for welcoming guests through an organised
+            registration and documentation process.
+        </p>
+        <details>
+            <summary>Explore Committee</summary>
+            <div class="details-content">
+                <p>
+                    The Registration Committee plays an important
+                    role in maintaining an organised record of guests
+                    and visitors attending Ayaz Melo. Its volunteers
+                    welcome visitors at registration points and assist
+                    them throughout the registration process. They
+                    collect and verify the necessary visitor information
+                    and maintain accurate registration records.
+                    The committee also supports guest documentation
+                    and helps manage registration-related enquiries.
+                    Volunteers coordinate with the reception and
+                    other relevant teams to ensure a smooth process.
+                    Their organised work helps the festival maintain
+                    a welcoming and professional registration system.
+                </p>
+            </div>
+        </details>
+    </div>
+
+    <div class="committee-card">
+        <h3>Reception Committee</h3>
+        <p>
+            Welcoming guests with respect, warmth and hospitality
+            from the entrance to the event venue.
+        </p>
+        <details>
+            <summary>Explore Committee</summary>
+            <div class="details-content">
+                <p>
+                    The Reception Committee represents the spirit of
+                    hospitality and respect at Ayaz Melo. Its volunteers
+                    welcome guests, writers, artists, speakers and
+                    visitors as they arrive at the festival. They guide
+                    guests from the entrance gate towards the relevant
+                    halls and designated areas. Volunteers provide
+                    necessary information and assist visitors with
+                    courtesy and patience. They ensure that every guest
+                    feels respected, comfortable and welcomed.
+                    The committee coordinates with registration and
+                    hall management volunteers to support a smooth
+                    arrival experience. Its role reflects the cultural
+                    values of hospitality, kindness and mutual respect.
+                </p>
+            </div>
+        </details>
+    </div>
+
+    <div class="committee-card">
+        <h3>Hall Management Committee</h3>
+        <p>
+            Maintaining discipline, seating arrangements and
+            a comfortable environment inside event halls.
+        </p>
+        <details>
+            <summary>Explore Committee</summary>
+            <div class="details-content">
+                <p>
+                    The Hall Management Committee is responsible for
+                    maintaining decorum and proper arrangements inside
+                    the festival halls. Its volunteers guide guests and
+                    visitors towards their designated seating areas.
+                    They help maintain organised seating arrangements
+                    for women and men according to the event's
+                    arrangements. Volunteers communicate politely
+                    and respectfully with visitors while assisting
+                    them in finding their seats. They help manage
+                    movement inside the hall and prevent unnecessary
+                    disruption during sessions. The committee works
+                    closely with the reception and stage teams to
+                    maintain a peaceful environment. Its efforts ensure
+                    that audiences can comfortably enjoy every session.
+                </p>
+            </div>
+        </details>
+    </div>
+
+    <div class="committee-card">
+        <h3>Stage Committee</h3>
+        <p>
+            Supporting stage arrangements, decoration and
+            the smooth conduct of festival sessions.
+        </p>
+        <details>
+            <summary>Explore Committee</summary>
+            <div class="details-content">
+                <p>
+                    The Stage Committee looks after the arrangements
+                    and management of the festival stage. Its volunteers
+                    assist in preparing and decorating the stage
+                    according to the requirements of different sessions.
+                    They help maintain the stage environment and
+                    coordinate necessary arrangements before each
+                    programme begins. Volunteers assist speakers,
+                    performers and session participants with stage
+                    coordination. They remain attentive to programme
+                    requirements and help ensure smooth transitions
+                    between sessions. The committee works in
+                    coordination with the organising team to address
+                    stage-related needs. Its contribution helps maintain
+                    an organised, professional and engaging stage
+                    experience throughout Ayaz Melo.
+                </p>
+            </div>
+        </details>
+    </div>
+
+    <div class="committee-card">
+        <h3>Food Committee</h3>
+        <p>
+            Managing food arrangements and ensuring organised
+            distribution among guests and participants.
+        </p>
+        <details>
+            <summary>Explore Committee</summary>
+            <div class="details-content">
+                <p>
+                    The Food Committee is responsible for coordinating
+                    food arrangements during Ayaz Melo. Its volunteers
+                    assist in organising the distribution of food among
+                    invited guests, speakers, artists, volunteers and
+                    other designated participants. They help maintain
+                    an orderly distribution process and ensure that
+                    food reaches the intended recipients. Volunteers
+                    coordinate with the organising team regarding
+                    timing, arrangements and serving requirements.
+                    They also help maintain cleanliness and proper
+                    management around food distribution areas.
+                    The committee works with care, cooperation and
+                    responsibility to support the comfort and hospitality
+                    of everyone involved in the festival.
+                </p>
+            </div>
+        </details>
+    </div>
+
+    <div class="committee-card">
+        <h3>Stall Committee</h3>
+        <p>
+            Coordinating and supporting the various book,
+            literary and cultural stalls at the festival.
+        </p>
+        <details>
+            <summary>Explore Committee</summary>
+            <div class="details-content">
+                <p>
+                    The Stall Committee looks after the management
+                    and coordination of stalls established during
+                    Ayaz Melo at Khanabadosh. These may include
+                    book stalls, publishing stalls, cultural displays
+                    and other participating stalls. Volunteers assist
+                    stall representatives with basic arrangements
+                    and provide guidance regarding stall locations.
+                    They help maintain organised movement around
+                    the stall areas and respond to visitors' enquiries.
+                    The committee coordinates with stall participants
+                    and the organising team to address operational
+                    requirements. Its work creates a welcoming space
+                    where visitors can explore literature, culture,
+                    publications and creative activities.
+                </p>
+            </div>
+        </details>
+    </div>
+
+    <div class="committee-card">
+        <h3>Mumtaz Mirza Auditorium Committee</h3>
+        <p>
+            Managing volunteer responsibilities and supporting
+            the overall arrangements at Mumtaz Mirza Auditorium.
+        </p>
+        <details>
+            <summary>Explore Committee</summary>
+            <div class="details-content">
+                <p>
+                    The Mumtaz Mirza Auditorium Committee is
+                    responsible for coordinating volunteer activities
+                    and supporting the overall management of the
+                    auditorium during Ayaz Melo. Its volunteers assist
+                    with guest reception, seating arrangements and
+                    visitor guidance within the auditorium. They help
+                    maintain discipline and organised movement
+                    throughout the venue. The committee coordinates
+                    with registration, reception, hall management,
+                    stage and other relevant teams according to
+                    programme requirements. Volunteers remain
+                    attentive to the needs of guests, speakers and
+                    audiences. They work collectively to address
+                    venue-related arrangements and ensure a smooth
+                    experience. Their teamwork helps maintain an
+                    organised and welcoming auditorium environment.
+                </p>
+            </div>
+        </details>
+    </div>
+
+</div>
+
+</div>
+</section><section class="apply-section"><h2>Join the Volunteer Team</h2>
+
+<p>
+    Become part of Ayaz Melo 2026 and contribute your energy,
+    ideas and dedication to a celebration of literature,
+    language and culture. Volunteer registration will open
+    during the officially announced application period.
+</p>
+
+<button class="apply-btn" onclick="showRegistrationStatus()">
+    Apply Online
+</button>
+
+<span class="apply-note">
+    CLICK TO CHECK REGISTRATION STATUS
+</span>
+
+</section><div id="registrationPopup" class="popup-overlay"><div class="popup-box">
+
+    <div class="popup-icon">!</div>
+
+    <h2>Registration Currently Closed</h2>
+
+    <p>
+        Thank you for your interest in volunteering at
+        Ayaz Melo 2026.
+
+        Volunteer registration is currently closed.
+        Please stay connected for the official registration
+        announcement.
     </p>
 
-    <button class="apply-btn" disabled>
-        Apply Online — Coming Soon
+    <button onclick="closeRegistrationStatus()">
+        Understood
     </button>
 
-    <span class="apply-note">
-        VOLUNTEER REGISTRATION IS CURRENTLY CLOSED
-    </span>
+</div>
 
-</section>
-
-
-<footer>
+</div><footer>
     <p>
         <span>AYAZ MELO 2026</span> |
         19–21 December 2026 |
         Hyderabad, Sindh
-    </p>
+    </p><p style="margin-top:7px;">
+    Hosted by Khanabadosh Writers' Cafe
+</p>
 
-    <p style="margin-top:7px;">
-        Hosted by Khanabadosh Writers' Cafe
-    </p>
+<p style="margin-top:12px;">
+    Every Story Deserves to Be Heard.
+</p>
 
-    <p style="margin-top:12px;">
-        Every Story Deserves to Be Heard.
-    </p>
-</footer>
+</footer><script>
 
-</body>
-  </html>
+function showRegistrationStatus() {
+    document.getElementById("registrationPopup").style.display = "flex";
+}
+
+function closeRegistrationStatus() {
+    document.getElementById("registrationPopup").style.display = "none";
+}
+
+document.getElementById("registrationPopup").addEventListener("click", function(e) {
+    if (e.target === this) {
+        closeRegistrationStatus();
+    }
+});
+
+</script></body>
+</html>
