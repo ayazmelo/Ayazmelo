@@ -3,306 +3,247 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Volunteer Control | Ayaz Melo 2026</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<title>Ayaz Melo 2026 | Volunteer Admin Panel</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-:root {
-    --blue:#21164d;
-    --maroon:#842c3c;
-    --gold:#d9ae62;
-    --cream:#faf5eb;
-    --dark:#171323;
-    --green:#16834a;
-    --red:#bd3030;
+:root{
+  --bg:#f4f6f8;
+  --card:#ffffff;
+  --text:#18212f;
+  --muted:#687386;
+  --border:#e1e6ed;
+  --primary:#176b4d;
+  --primary-dark:#10543c;
+  --red:#c0392b;
+  --orange:#bd7414;
+  --green:#16834b;
 }
-
-* { box-sizing:border-box; margin:0; padding:0; }
-
-body {
-    background:#f3efe8;
-    color:var(--dark);
-    font-family:Montserrat,sans-serif;
-    font-size:13px;
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
 }
-
-header {
-    background:var(--blue);
-    color:white;
-    padding:17px 4%;
-    border-bottom:3px solid var(--gold);
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    flex-wrap:wrap;
-    gap:12px;
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+header{
+  background:#123e30;
+  color:white;
+  padding:18px 20px;
 }
-
-header h1 {
-    font-family:'Cormorant Garamond',serif;
-    font-size:30px;
+.header-inner{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
 }
-
-header span { color:var(--gold); }
-
-button {
-    cursor:pointer;
-    font-family:Montserrat,sans-serif;
-    font-weight:700;
+header h1{font-size:21px;margin:0 0 5px}
+header p{margin:0;color:#d4e8de;font-size:13px}
+.container{
+  max-width:1200px;
+  margin:22px auto;
+  padding:0 15px 35px;
 }
-
-.btn {
-    border:0;
-    padding:11px 17px;
-    border-radius:6px;
-    font-size:12px;
+.panel{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:13px;
+  padding:20px;
+  margin-bottom:18px;
 }
-
-.primary { background:var(--blue); color:white; }
-.gold { background:var(--gold); color:var(--blue); }
-.danger { background:var(--red); color:white; }
-.success { background:var(--green); color:white; }
-.light { background:#eee8dd; color:var(--blue); }
-
-.container {
-    max-width:1450px;
-    margin:auto;
-    padding:25px 18px;
+h2{font-size:19px;margin:0 0 15px}
+label{
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin:12px 0 6px;
 }
-
-#loginPanel {
-    max-width:420px;
-    margin:75px auto;
-    background:white;
-    padding:30px;
-    border-radius:10px;
-    box-shadow:0 5px 25px #0001;
+input,select,textarea{
+  width:100%;
+  padding:12px;
+  border:1px solid #ccd4df;
+  border-radius:8px;
+  background:white;
+  color:#18212f;
+  outline:none;
 }
-
-h2 {
-    font-family:'Cormorant Garamond',serif;
-    color:var(--blue);
-    font-size:30px;
+input:focus,select:focus,textarea:focus{
+  border-color:var(--primary);
+  box-shadow:0 0 0 2px #176b4d18;
 }
-
-input,select,textarea {
-    width:100%;
-    padding:12px;
-    border:1px solid #ddd;
-    border-radius:6px;
-    font-family:Montserrat,sans-serif;
-    font-size:13px;
-    background:white;
+button{
+  border:0;
+  border-radius:8px;
+  padding:11px 16px;
+  font-weight:700;
 }
-
-label {
-    display:block;
-    font-weight:700;
-    margin:13px 0 6px;
+.btn-primary{background:var(--primary);color:white}
+.btn-primary:hover{background:var(--primary-dark)}
+.btn-secondary{background:#e9eef2;color:#263445}
+.btn-danger{background:#b9382c;color:white}
+.btn-small{padding:7px 10px;font-size:12px}
+button:disabled{opacity:.6;cursor:not-allowed}
+#loginPanel{
+  max-width:420px;
+  margin:45px auto;
 }
-
-.login-btn {
-    width:100%;
-    margin-top:20px;
+#loginPanel .btn-primary{width:100%;margin-top:18px}
+.message{
+  margin-top:12px;
+  font-size:13px;
+  line-height:1.5;
+  overflow-wrap:anywhere;
 }
-
-#dashboard { display:none; }
-
-.stats {
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
-    gap:13px;
-    margin:20px 0;
+.error{color:#bd3028}
+.success{color:#16834b}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(135px,1fr));
+  gap:12px;
+  margin-bottom:18px;
 }
-
-.stat {
-    background:white;
-    padding:18px;
-    border-radius:8px;
-    border-bottom:3px solid var(--gold);
-    box-shadow:0 3px 15px #00000008;
+.stat{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:11px;
+  padding:15px;
 }
-
-.stat small {
-    color:#777;
-    font-size:10px;
-    font-weight:700;
-    text-transform:uppercase;
+.stat span{display:block;color:var(--muted);font-size:12px}
+.stat strong{display:block;font-size:25px;margin-top:7px}
+.filters{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr;
+  gap:12px;
+  align-items:end;
 }
-
-.stat h2 {
-    font-family:Montserrat,sans-serif;
-    font-size:27px;
-    margin-top:7px;
+.table-wrap{
+  overflow-x:auto;
+  width:100%;
 }
-
-.toolbar {
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    margin:20px 0;
-    background:white;
-    padding:15px;
-    border-radius:8px;
+table{
+  border-collapse:collapse;
+  width:100%;
+  min-width:900px;
+  font-size:13px;
 }
-
-.toolbar input { flex:2; min-width:180px; }
-.toolbar select { flex:1; min-width:140px; }
-
-.table-wrap {
-    background:white;
-    border-radius:8px;
-    overflow-x:auto;
-    box-shadow:0 3px 15px #00000008;
+th,td{
+  border-bottom:1px solid var(--border);
+  padding:12px 10px;
+  text-align:left;
+  vertical-align:middle;
 }
-
-table {
-    width:100%;
-    border-collapse:collapse;
-    min-width:900px;
+th{background:#f5f7f8;color:#465365}
+.badge{
+  display:inline-block;
+  padding:5px 8px;
+  border-radius:20px;
+  background:#edf0f3;
+  font-size:11px;
+  font-weight:700;
 }
-
-th {
-    background:var(--blue);
-    color:white;
-    padding:14px 11px;
-    text-align:left;
-    font-size:10px;
-    white-space:nowrap;
+.badge.selected{background:#d9f4e4;color:#12663b}
+.badge.pending{background:#fff0d6;color:#89550b}
+.badge.rejected{background:#ffe1df;color:#a32b24}
+.badge.waiting{background:#e4eaff;color:#304d9a}
+.badge.review{background:#e1f0ff;color:#1d5c8d}
+.toolbar{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+  margin-bottom:14px;
 }
-
-td {
-    padding:12px 11px;
-    border-bottom:1px solid #eee;
-    font-size:11px;
+.toolbar-actions{display:flex;gap:8px;flex-wrap:wrap}
+#dashboardMessage{margin:10px 0}
+.modal{
+  position:fixed;
+  inset:0;
+  background:#0009;
+  z-index:1000;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:12px;
 }
-
-tr:hover { background:#faf7f1; }
-
-.badge {
-    display:inline-block;
-    padding:6px 9px;
-    border-radius:20px;
-    font-size:9px;
-    font-weight:800;
-    text-transform:uppercase;
+.modal.show{display:flex}
+.modal-box{
+  background:white;
+  border-radius:14px;
+  width:min(720px,100%);
+  max-height:92vh;
+  overflow:auto;
+  padding:20px;
 }
-
-.pending { background:#fff1ce; color:#9b6800; }
-.selected { background:#d9f5e3; color:#13733c; }
-.rejected { background:#ffe1e1; color:#a51f1f; }
-.waiting { background:#e8e1ff; color:#543b9d; }
-.review { background:#dceeff; color:#165d9b; }
-
-.small-btn {
-    padding:7px 10px;
-    border:0;
-    border-radius:5px;
-    font-size:10px;
-    margin:2px;
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:15px;
 }
-
-#message {
-    padding:12px;
-    border-radius:6px;
-    margin:12px 0;
-    display:none;
-    font-weight:600;
+.modal-head h2{margin:0}
+.profile-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
 }
-
-.modal {
-    display:none;
-    position:fixed;
-    inset:0;
-    z-index:999;
-    background:#000b;
-    overflow:auto;
-    padding:20px;
+.profile-item{
+  padding:10px;
+  background:#f5f7f8;
+  border-radius:8px;
+  overflow-wrap:anywhere;
 }
-
-.modal-content {
-    max-width:850px;
-    margin:25px auto;
-    background:var(--cream);
-    border-radius:10px;
-    padding:25px;
+.profile-item small{
+  display:block;
+  color:var(--muted);
+  margin-bottom:5px;
 }
-
-.modal-header {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:10px;
-    margin-bottom:20px;
+.profile-item strong{font-size:13px}
+.doc-links{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:12px 0;
 }
-
-.profile-grid {
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:12px;
+.doc-links a{
+  color:var(--primary);
+  font-size:13px;
+  font-weight:bold;
 }
-
-.profile-item {
-    background:white;
-    padding:12px;
-    border-radius:6px;
-    overflow-wrap:anywhere;
+#volunteerPhoto{
+  width:95px;
+  height:95px;
+  object-fit:cover;
+  border-radius:50%;
+  border:2px solid var(--border);
+  display:none;
 }
-
-.profile-item small {
-    color:#777;
-    display:block;
-    font-weight:700;
-    margin-bottom:5px;
+.edit-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
 }
-
-.profile-item p { font-weight:600; }
-
-.profile-photo {
-    width:125px;
-    height:125px;
-    object-fit:cover;
-    border-radius:50%;
-    border:4px solid var(--gold);
-    display:block;
-    margin:15px auto;
+.edit-grid .full{grid-column:1/-1}
+hr{border:0;border-top:1px solid var(--border);margin:18px 0}
+footer{
+  text-align:center;
+  padding:20px;
+  color:var(--muted);
+  font-size:12px;
 }
-
-.document-link {
-    display:inline-block;
-    padding:10px 14px;
-    background:var(--blue);
-    color:white;
-    text-decoration:none;
-    border-radius:5px;
-    margin:5px;
-    font-size:11px;
-}
-
-.actions {
-    margin-top:20px;
-    padding-top:20px;
-    border-top:1px solid #ddd;
-}
-
-.actions button { margin:5px 3px; }
-
-.empty {
-    text-align:center;
-    padding:35px;
-    color:#777;
-}
-
-#loading { text-align:center; padding:25px; }
-
-@media(max-width:600px) {
-    header h1 { font-size:24px; }
-    .container { padding:15px 10px; }
-    .modal-content { padding:16px; }
+@media(max-width:650px){
+  .filters,.profile-grid,.edit-grid{grid-template-columns:1fr}
+  .edit-grid .full{grid-column:auto}
+  header h1{font-size:18px}
+  .panel{padding:14px}
 }
 </style>
 </head>
@@ -310,902 +251,996 @@ tr:hover { background:#faf7f1; }
 <body>
 
 <header>
+  <div class="header-inner">
     <div>
-        <h1>Ayaz Melo <span>2026</span></h1>
-        <small>VOLUNTEER MANAGEMENT SYSTEM</small>
+      <h1>AYAZ MELO 2026</h1>
+      <p>Volunteer Management — Admin Panel</p>
     </div>
-
-    <button id="logoutBtn" class="btn gold" style="display:none;">
-        Logout
-    </button>
+    <button id="logoutBtn" class="btn-secondary hidden" type="button">Logout</button>
+  </div>
 </header>
 
-<!-- LOGIN -->
+<main class="container">
 
-<div id="loginPanel">
-
+  <!-- LOGIN -->
+  <section id="loginPanel" class="panel">
     <h2>Admin Login</h2>
-    <p style="color:#777;margin-top:5px;">
-        Authorized Ayaz Melo administration only.
+    <p style="color:#687386;font-size:13px">
+      Sign in using your authorized Supabase administrator account.
     </p>
-
-    <div id="loginMessage"></div>
 
     <form id="loginForm">
+      <label for="email">Admin Email</label>
+      <input id="email" type="email" autocomplete="username" required>
 
-        <label>Email Address</label>
-        <input type="email" id="email" required autocomplete="username">
+      <label for="password">Password</label>
+      <input id="password" type="password" autocomplete="current-password" required>
 
-        <label>Password</label>
-        <input type="password" id="password" required autocomplete="current-password">
-
-        <button class="btn primary login-btn" type="submit">
-            Login to Dashboard
-        </button>
-
+      <button id="loginBtn" class="btn-primary" type="submit">
+        Login to Admin Panel
+      </button>
     </form>
 
-</div>
+    <div id="loginMessage" class="message" role="status" aria-live="polite"></div>
+  </section>
 
-<!-- DASHBOARD -->
-
-<main id="dashboard" class="container">
-
-    <h2>Volunteer Dashboard</h2>
-    <p style="color:#777;margin-top:5px;">
-        Manage Ayaz Melo 2026 volunteer applications and selection.
-    </p>
-
-    <div id="message"></div>
-
-    <div class="stats">
-
-        <div class="stat">
-            <small>Total Volunteers</small>
-            <h2 id="totalCount">0</h2>
-        </div>
-
-        <div class="stat">
-            <small>Pending</small>
-            <h2 id="pendingCount">0</h2>
-        </div>
-
-        <div class="stat">
-            <small>Selected</small>
-            <h2 id="selectedCount">0</h2>
-        </div>
-
-        <div class="stat">
-            <small>Waiting List</small>
-            <h2 id="waitingCount">0</h2>
-        </div>
-
-        <div class="stat">
-            <small>Rejected</small>
-            <h2 id="rejectedCount">0</h2>
-        </div>
-
-        <div class="stat">
-            <small>Male</small>
-            <h2 id="maleCount">0</h2>
-        </div>
-
-        <div class="stat">
-            <small>Female</small>
-            <h2 id="femaleCount">0</h2>
-        </div>
-
-        <div class="stat">
-            <small>Other / Unspecified</small>
-            <h2 id="otherCount">0</h2>
-        </div>
-
-    </div>
+  <!-- DASHBOARD -->
+  <section id="dashboard" class="hidden">
 
     <div class="toolbar">
+      <div>
+        <h2 style="margin-bottom:4px">Volunteer Dashboard</h2>
+        <div style="font-size:12px;color:#687386">
+          Ayaz Melo 2026 — Volunteer Records
+        </div>
+      </div>
 
-        <input
-            type="search"
-            id="searchInput"
-            placeholder="Search Name, CNIC, Mobile, Email or Volunteer ID..."
-        >
+      <div class="toolbar-actions">
+        <button id="refreshBtn" class="btn-secondary" type="button">Refresh</button>
+        <button id="exportBtn" class="btn-primary" type="button">Export CSV</button>
+      </div>
+    </div>
 
-        <select id="statusFilter">
+    <div id="dashboardMessage" class="message" role="status" aria-live="polite"></div>
+
+    <div class="stats">
+      <div class="stat"><span>Total Applications</span><strong id="totalCount">0</strong></div>
+      <div class="stat"><span>Pending</span><strong id="pendingCount">0</strong></div>
+      <div class="stat"><span>Selected</span><strong id="selectedCount">0</strong></div>
+      <div class="stat"><span>Under Review</span><strong id="reviewCount">0</strong></div>
+      <div class="stat"><span>Waiting List</span><strong id="waitingCount">0</strong></div>
+      <div class="stat"><span>Rejected</span><strong id="rejectedCount">0</strong></div>
+      <div class="stat"><span>Male</span><strong id="maleCount">0</strong></div>
+      <div class="stat"><span>Female</span><strong id="femaleCount">0</strong></div>
+      <div class="stat"><span>Other / Unspecified</span><strong id="otherCount">0</strong></div>
+    </div>
+
+    <section class="panel">
+      <h2>Search & Filters</h2>
+
+      <div class="filters">
+        <div>
+          <label for="searchInput">Search Applicants</label>
+          <input id="searchInput" type="search"
+          placeholder="Name, CNIC, mobile, email, Volunteer ID...">
+        </div>
+
+        <div>
+          <label for="statusFilter">Selection Status</label>
+          <select id="statusFilter">
             <option value="">All Statuses</option>
-            <option value="Pending">Pending</option>
-            <option value="Selected">Selected</option>
-            <option value="Waiting List">Waiting List</option>
-            <option value="Rejected">Rejected</option>
-            <option value="Under Review">Under Review</option>
-        </select>
+            <option>Pending</option>
+            <option>Under Review</option>
+            <option>Selected</option>
+            <option>Waiting List</option>
+            <option>Rejected</option>
+          </select>
+        </div>
 
-        <select id="genderFilter">
+        <div>
+          <label for="genderFilter">Gender</label>
+          <select id="genderFilter">
             <option value="">All Genders</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
             <option value="Other">Other</option>
-        </select>
+          </select>
+        </div>
+      </div>
+    </section>
 
-        <button class="btn primary" id="refreshBtn">
-            Refresh
-        </button>
+    <section class="panel">
+      <div class="toolbar">
+        <h2 style="margin:0">Volunteer Applications</h2>
+        <span id="recordCount" style="font-size:12px;color:#687386">0 records</span>
+      </div>
 
-        <button class="btn success" id="exportBtn">
-            Export CSV
-        </button>
-
-    </div>
-
-    <div id="loading">Loading volunteers...</div>
-
-    <div class="table-wrap">
-
+      <div class="table-wrap">
         <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Father Name</th>
-                    <th>CNIC</th>
-                    <th>Contact</th>
-                    <th>Gender</th>
-                    <th>Status</th>
-                    <th>Committee</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-
-            <tbody id="volunteerTable"></tbody>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Father Name</th>
+              <th>Gender</th>
+              <th>Mobile</th>
+              <th>CNIC</th>
+              <th>Selection Status</th>
+              <th>Committee</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="volunteerTableBody">
+            <tr><td colspan="9">No records loaded.</td></tr>
+          </tbody>
         </table>
+      </div>
+    </section>
 
-    </div>
-
-    <p id="recordCount" style="margin-top:12px;color:#777;"></p>
-
+  </section>
 </main>
 
-<!-- PROFILE MODAL -->
+<!-- PROFILE / EDIT MODAL -->
+<div id="profileModal" class="modal" role="dialog" aria-modal="true"
+     aria-labelledby="modalTitle">
+  <div class="modal-box">
 
-<div class="modal" id="profileModal">
-
-    <div class="modal-content">
-
-        <div class="modal-header">
-            <h2>Volunteer Profile</h2>
-            <button class="btn danger" id="closeModal">Close</button>
-        </div>
-
-        <div id="profileContent"></div>
-
-        <div class="actions">
-
-            <h2 style="font-size:25px;">Selection Management</h2>
-
-            <label>Selection Status</label>
-
-            <select id="editStatus">
-                <option value="Pending">Pending</option>
-                <option value="Selected">Selected</option>
-                <option value="Waiting List">Waiting List</option>
-                <option value="Rejected">Rejected</option>
-                <option value="Under Review">Under Review</option>
-            </select>
-
-            <label>Committee</label>
-
-            <select id="editCommittee">
-                <option value="">Select Committee</option>
-                <option value="Registration Committee">Registration Committee</option>
-                <option value="Reception Committee">Reception Committee</option>
-                <option value="Hall Management Committee">Hall Management Committee</option>
-                <option value="Stage Committee">Stage Committee</option>
-                <option value="Food Committee">Food Committee</option>
-                <option value="Stall Committee">Stall Committee</option>
-                <option value="Mumtaz Mirza Auditorium Committee">Mumtaz Mirza Auditorium Committee</option>
-            </select>
-
-            <label>Assigned Role</label>
-            <input type="text" id="editRole" placeholder="Example: Team Coordinator">
-
-            <label>Volunteer ID</label>
-            <input type="text" id="editVolunteerId" placeholder="Example: AM26-001">
-
-            <label>CNIC Review</label>
-            <select id="editCnicReview">
-                <option value="Pending">Pending</option>
-                <option value="Verified">Verified</option>
-                <option value="Rejected">Rejected</option>
-            </select>
-
-            <label>Account Active</label>
-            <select id="editActive">
-                <option value="true">Active</option>
-                <option value="false">Inactive</option>
-            </select>
-
-            <button class="btn success" id="saveBtn">
-                Save Selection & Changes
-            </button>
-
-        </div>
-
+    <div class="modal-head">
+      <h2 id="modalTitle">Volunteer Profile</h2>
+      <button id="closeModalBtn" class="btn-secondary" type="button">Close</button>
     </div>
 
+    <div style="text-align:center;margin-bottom:12px">
+      <img id="volunteerPhoto" alt="Volunteer photograph">
+    </div>
+
+    <div id="profileDetails" class="profile-grid"></div>
+
+    <div class="doc-links" id="documentLinks"></div>
+
+    <hr>
+
+    <h2>Manage Selection</h2>
+
+    <form id="editForm">
+      <input id="editId" type="hidden">
+
+      <div class="edit-grid">
+
+        <div>
+          <label for="editStatus">Selection Status</label>
+          <select id="editStatus" required>
+            <option>Pending</option>
+            <option>Under Review</option>
+            <option>Selected</option>
+            <option>Waiting List</option>
+            <option>Rejected</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="editCnicReview">CNIC Review</label>
+          <select id="editCnicReview">
+            <option>Pending</option>
+            <option>Verified</option>
+            <option>Rejected</option>
+          </select>
+        </div>
+
+        <div class="full">
+          <label for="editCommittee">Committee</label>
+          <input id="editCommittee" type="text"
+                 placeholder="Enter assigned committee">
+        </div>
+
+        <div>
+          <label for="editRole">Assigned Role</label>
+          <input id="editRole" type="text"
+                 placeholder="Enter volunteer role">
+        </div>
+
+        <div>
+          <label for="editVolunteerId">Volunteer ID</label>
+          <input id="editVolunteerId" type="text"
+                 placeholder="Enter Volunteer ID">
+        </div>
+
+        <div class="full">
+          <label for="editActive">Account Active</label>
+          <select id="editActive">
+            <option value="true">Active</option>
+            <option value="false">Inactive</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div id="editMessage" class="message" role="status" aria-live="polite"></div>
+
+      <div class="toolbar-actions" style="margin-top:15px">
+        <button id="saveBtn" class="btn-primary" type="submit">
+          Save Changes
+        </button>
+        <button id="cancelBtn" class="btn-secondary" type="button">
+          Cancel
+        </button>
+      </div>
+    </form>
+
+  </div>
 </div>
 
+<footer>
+  Ayaz Melo 2026 | Official Volunteer Management System
+</footer>
+
 <script>
-/* =========================================
+"use strict";
+
+/* =====================================
    SUPABASE CONFIGURATION
-========================================= */
+===================================== */
 
-const SUPABASE_URL =
-"https://fstkhwoxbgdcdfwycggu.supabase.co";
+const SUPABASE_URL = "https://fstkhwoxbgdcdfwycggu.supabase.co";
 
-const SUPABASE_KEY =
+const SUPABASE_PUBLIC_KEY =
 "sb_publishable_BNRQfiLDVM-892aVwO_hJw_OAhEgTrq";
 
-const ADMIN_UID =
-"327072bb-a41b-4387-aadc-10b2c38ecfe4";
+const ADMIN_UID = "327072bb-a41b-4387-aadc-10b2c38ecfe4";
 
-const supabase = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
+const PRIVATE_BUCKET = "ayaz-private-docs";
 
-let volunteers = [];
+let db = null;
+let allVolunteers = [];
 let currentVolunteer = null;
 
 
-/* =========================================
+/* =====================================
    ELEMENTS
-========================================= */
+===================================== */
 
 const loginPanel = document.getElementById("loginPanel");
 const dashboard = document.getElementById("dashboard");
+const loginForm = document.getElementById("loginForm");
+const loginBtn = document.getElementById("loginBtn");
 const loginMessage = document.getElementById("loginMessage");
-const messageBox = document.getElementById("message");
-const tableBody = document.getElementById("volunteerTable");
+const logoutBtn = document.getElementById("logoutBtn");
+
+const dashboardMessage = document.getElementById("dashboardMessage");
+
+const searchInput = document.getElementById("searchInput");
+const statusFilter = document.getElementById("statusFilter");
+const genderFilter = document.getElementById("genderFilter");
+
+const tableBody = document.getElementById("volunteerTableBody");
+
+const profileModal = document.getElementById("profileModal");
+const editForm = document.getElementById("editForm");
 
 
-/* =========================================
-   MESSAGE
-========================================= */
+/* =====================================
+   HELPERS
+===================================== */
 
-function showMessage(text, success = true) {
-
-    messageBox.style.display = "block";
-    messageBox.textContent = text;
-
-    messageBox.style.background =
-        success ? "#d9f5e3" : "#ffe1e1";
-
-    messageBox.style.color =
-        success ? "#13733c" : "#a51f1f";
-
-    setTimeout(() => {
-        messageBox.style.display = "none";
-    }, 5000);
-}
-
-
-/* =========================================
-   AUTHENTICATION
-========================================= */
-
-async function checkSession() {
-
-    const { data, error } = await supabase.auth.getSession();
-
-    if (error) {
-        loginPanel.style.display = "block";
-        dashboard.style.display = "none";
-        return;
-    }
-
-    if (data.session) {
-        await authorizeAdmin(data.session.user);
-    }
-}
-
-async function authorizeAdmin(user) {
-
-    if (!user || user.id !== ADMIN_UID) {
-
-        await supabase.auth.signOut();
-
-        loginPanel.style.display = "block";
-        dashboard.style.display = "none";
-
-        loginMessage.textContent =
-            "Access denied. You are not an authorized administrator.";
-
-        return;
-    }
-
-    loginPanel.style.display = "none";
-    dashboard.style.display = "block";
-
-    document.getElementById("logoutBtn").style.display = "block";
-
-    await loadVolunteers();
-}
-
-document.getElementById("loginForm")
-.addEventListener("submit", async function(e) {
-
-    e.preventDefault();
-
-    loginMessage.textContent = "Signing in...";
-
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-
-    const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password
-    });
-
-    if (error) {
-        loginMessage.textContent = error.message;
-        return;
-    }
-
-    await authorizeAdmin(data.user);
-});
-
-
-document.getElementById("logoutBtn")
-.addEventListener("click", async function() {
-
-    await supabase.auth.signOut();
-
-    volunteers = [];
-    dashboard.style.display = "none";
-    loginPanel.style.display = "block";
-
-});
-
-
-supabase.auth.onAuthStateChange((event, session) => {
-
-    if (event === "SIGNED_OUT") {
-        dashboard.style.display = "none";
-        loginPanel.style.display = "block";
-        document.getElementById("logoutBtn").style.display = "none";
-    }
-
-});
-
-
-/* =========================================
-   LOAD VOLUNTEERS
-========================================= */
-
-async function loadVolunteers() {
-
-    document.getElementById("loading").style.display = "block";
-
-    const { data, error } = await supabase
-        .from("volunteers")
-        .select("*")
-        .order("created_at", { ascending: false })
-        .range(0, 999);
-
-    document.getElementById("loading").style.display = "none";
-
-    if (error) {
-        showMessage("Unable to load volunteers: " + error.message, false);
-        return;
-    }
-
-    volunteers = data || [];
-
-    updateStatistics();
-    renderTable();
-}
-
-
-/* =========================================
-   STATISTICS
-========================================= */
-
-function updateStatistics() {
-
-    const count = status =>
-        volunteers.filter(v =>
-            String(v.selection_status || "Pending").toLowerCase()
-            === status.toLowerCase()
-        ).length;
-
-    document.getElementById("totalCount").textContent =
-        volunteers.length;
-
-    document.getElementById("pendingCount").textContent =
-        count("Pending");
-
-    document.getElementById("selectedCount").textContent =
-        count("Selected");
-
-    document.getElementById("waitingCount").textContent =
-        count("Waiting List");
-
-    document.getElementById("rejectedCount").textContent =
-        count("Rejected");
-
-    document.getElementById("maleCount").textContent =
-        volunteers.filter(v =>
-            String(v.gender || "").toLowerCase() === "male"
-        ).length;
-
-    document.getElementById("femaleCount").textContent =
-        volunteers.filter(v =>
-            String(v.gender || "").toLowerCase() === "female"
-        ).length;
-
-    document.getElementById("otherCount").textContent =
-        volunteers.filter(v =>
-            !["male","female"].includes(
-                String(v.gender || "").toLowerCase()
-            )
-        ).length;
-}
-
-
-/* =========================================
-   TABLE
-========================================= */
-
-function safeText(value) {
-    return value == null ? "" : String(value);
+function showMessage(element, message, type = "") {
+  element.textContent = message;
+  element.className = "message " + type;
 }
 
 function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
+  })[char]);
+}
 
-    return safeText(value).replace(/[&<>"']/g, char => ({
-        "&":"&amp;",
-        "<":"&lt;",
-        ">":"&gt;",
-        '"':"&quot;",
-        "'":"&#39;"
-    })[char]);
+function normalize(value) {
+  return String(value ?? "").toLowerCase().trim();
 }
 
 function statusClass(status) {
+  const s = normalize(status);
 
-    const s = String(status || "Pending").toLowerCase();
+  if (s === "selected") return "selected";
+  if (s === "pending") return "pending";
+  if (s === "rejected") return "rejected";
+  if (s === "waiting list") return "waiting";
+  if (s === "under review") return "review";
 
-    if (s === "selected") return "selected";
-    if (s === "rejected") return "rejected";
-    if (s === "waiting list") return "waiting";
-    if (s === "under review") return "review";
-
-    return "pending";
+  return "";
 }
 
-function renderTable() {
+function displayValue(value) {
+  return value === null || value === undefined || value === ""
+    ? "—"
+    : String(value);
+}
 
-    const search =
-        document.getElementById("searchInput").value.toLowerCase();
 
-    const status =
-        document.getElementById("statusFilter").value.toLowerCase();
+/* =====================================
+   INITIALIZE SUPABASE
+===================================== */
 
-    const gender =
-        document.getElementById("genderFilter").value.toLowerCase();
+function initializeSupabase() {
+  if (!window.supabase || !window.supabase.createClient) {
+    throw new Error(
+      "Supabase library could not load. Check your internet connection and refresh the page."
+    );
+  }
 
-    const filtered = volunteers.filter(v => {
+  db = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLIC_KEY,
+    {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true
+      }
+    }
+  );
+}
 
-        const searchable = [
-            v.full_name,
-            v.father_name,
-            v.cnic,
-            v.mobile_whatsapp,
-            v.email,
-            v.volunteer_id
-        ].join(" ").toLowerCase();
 
-        const matchesSearch = searchable.includes(search);
+/* =====================================
+   LOGIN
+===================================== */
 
-        const matchesStatus =
-            !status ||
-            String(v.selection_status || "Pending").toLowerCase() === status;
+loginForm.addEventListener("submit", async function(event) {
+  event.preventDefault();
 
-        const matchesGender =
-            !gender ||
-            String(v.gender || "").toLowerCase() === gender;
+  loginBtn.disabled = true;
+  loginBtn.textContent = "Logging in...";
 
-        return matchesSearch && matchesStatus && matchesGender;
+  showMessage(loginMessage, "Connecting to Supabase...");
+
+  try {
+    if (!db) initializeSupabase();
+
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    if (!email || !password) {
+      throw new Error("Please enter your email and password.");
+    }
+
+    const { data, error } = await db.auth.signInWithPassword({
+      email: email,
+      password: password
     });
 
-    tableBody.replaceChildren();
+    if (error) throw error;
 
-    if (!filtered.length) {
-
-        tableBody.innerHTML =
-            '<tr><td colspan="9" class="empty">No volunteers found.</td></tr>';
-
-        document.getElementById("recordCount").textContent =
-            "Showing 0 records";
-
-        return;
+    if (!data.user || data.user.id !== ADMIN_UID) {
+      await db.auth.signOut();
+      throw new Error("Access denied. This account is not the authorized Ayaz Melo Admin.");
     }
 
-    filtered.forEach(v => {
+    showMessage(loginMessage, "Login successful. Loading dashboard...", "success");
 
-        const tr = document.createElement("tr");
+    await startDashboard();
 
-        const values = [
-            v.id,
-            v.full_name,
-            v.father_name,
-            v.cnic,
-            v.mobile_whatsapp,
-            v.gender,
-            v.selection_status || "Pending",
-            v.committee || "Not Assigned"
-        ];
+  } catch (error) {
+    console.error("Login error:", error);
+    showMessage(loginMessage, error.message || "Login failed.", "error");
 
-        values.forEach((value, index) => {
+  } finally {
+    loginBtn.disabled = false;
+    loginBtn.textContent = "Login to Admin Panel";
+  }
+});
 
-            const td = document.createElement("td");
 
-            if (index === 6) {
-                const badge = document.createElement("span");
-                badge.className =
-                    "badge " + statusClass(value);
-                badge.textContent = value;
-                td.appendChild(badge);
-            } else {
-                td.textContent = safeText(value);
-            }
+/* =====================================
+   CHECK EXISTING SESSION
+===================================== */
 
-            tr.appendChild(td);
-        });
+async function checkSession() {
+  try {
+    initializeSupabase();
 
-        const actionCell = document.createElement("td");
+    const { data, error } = await db.auth.getSession();
 
-        const viewButton = document.createElement("button");
+    if (error) throw error;
 
-        viewButton.className = "small-btn primary";
-        viewButton.textContent = "View / Manage";
+    const user = data.session?.user;
 
-        viewButton.addEventListener("click", () => {
-            openProfile(v.id);
-        });
+    if (!user) return;
 
-        actionCell.appendChild(viewButton);
-        tr.appendChild(actionCell);
+    if (user.id !== ADMIN_UID) {
+      await db.auth.signOut();
+      showMessage(loginMessage, "Access denied: Unauthorized account.", "error");
+      return;
+    }
 
-        tableBody.appendChild(tr);
-    });
+    await startDashboard();
 
-    document.getElementById("recordCount").textContent =
-        "Showing " + filtered.length +
-        " of " + volunteers.length + " volunteers";
+  } catch (error) {
+    console.error("Session check:", error);
+    showMessage(loginMessage, error.message || "Could not check login session.", "error");
+  }
 }
 
 
-/* =========================================
-   PROFILE
-========================================= */
+/* =====================================
+   START DASHBOARD
+===================================== */
 
-async function getDocumentLink(path, label) {
+async function startDashboard() {
+  loginPanel.classList.add("hidden");
+  dashboard.classList.remove("hidden");
+  logoutBtn.classList.remove("hidden");
 
-    if (!path) return "";
-
-    const { data, error } = await supabase.storage
-        .from("ayaz-private-docs")
-        .createSignedUrl(path, 300);
-
-    if (error || !data?.signedUrl) {
-        return `<span>${escapeHTML(label)}: Not available</span>`;
-    }
-
-    return `
-        <a class="document-link"
-           href="${escapeHTML(data.signedUrl)}"
-           target="_blank"
-           rel="noopener noreferrer">
-           View ${escapeHTML(label)}
-        </a>
-    `;
+  await loadVolunteers();
 }
 
 
-async function openProfile(id) {
+/* =====================================
+   LOAD VOLUNTEERS
+===================================== */
 
-    const v = volunteers.find(x => String(x.id) === String(id));
+async function loadVolunteers() {
+  showMessage(dashboardMessage, "Loading volunteer records...");
 
-    if (!v) return;
+  tableBody.innerHTML =
+    '<tr><td colspan="9">Loading records...</td></tr>';
 
-    currentVolunteer = v;
+  try {
+    const { data, error } = await db
+      .from("volunteers")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .range(0, 999);
 
-    document.getElementById("profileModal").style.display = "block";
+    if (error) throw error;
 
-    document.getElementById("profileContent").textContent =
-        "Loading volunteer profile...";
+    allVolunteers = data || [];
 
-    let photoHTML = "";
+    updateStatistics();
+    renderVolunteers();
 
-    if (v.photo_url) {
-
-        const { data, error } = await supabase.storage
-            .from("ayaz-private-docs")
-            .createSignedUrl(v.photo_url, 300);
-
-        if (!error && data?.signedUrl) {
-            photoHTML = `
-                <img class="profile-photo"
-                     src="${escapeHTML(data.signedUrl)}"
-                     alt="Volunteer photograph">
-            `;
-        }
-    }
-
-    const documents = [
-        await getDocumentLink(v.cnic_front_url, "CNIC Front"),
-        await getDocumentLink(v.cnic_back_url, "CNIC Back"),
-        await getDocumentLink(v.student_id_url, "Student ID")
-    ].filter(Boolean).join("");
-
-    const fields = [
-        ["Database ID", v.id],
-        ["Full Name", v.full_name],
-        ["Father Name", v.father_name],
-        ["Caste", v.caste],
-        ["Date of Birth", v.date_of_birth],
-        ["Gender", v.gender],
-        ["CNIC", v.cnic],
-        ["Mobile / WhatsApp", v.mobile_whatsapp],
-        ["Email", v.email],
-        ["University / College", v.university_college],
-        ["Department / Group", v.department_group],
-        ["Semester / Batch", v.semester_batch],
-        ["Current Address", v.current_address],
-        ["Permanent Address", v.permanent_address],
-        ["Previous Ayaz Volunteer", v.previous_ayaz_volunteer],
-        ["Reference", v.reference],
-        ["Motivation", v.motivation],
-        ["Selection Status", v.selection_status],
-        ["Committee", v.committee],
-        ["Assigned Role", v.assigned_role],
-        ["Volunteer ID", v.volunteer_id],
-        ["CNIC Review", v.cnic_review],
-        ["Created At", v.created_at]
-    ];
-
-    const profileContent = document.getElementById("profileContent");
-
-    profileContent.innerHTML = `
-        ${photoHTML}
-        <div class="profile-grid">
-            ${fields.map(([label,value]) => `
-                <div class="profile-item">
-                    <small>${escapeHTML(label)}</small>
-                    <p>${escapeHTML(value || "Not provided")}</p>
-                </div>
-            `).join("")}
-        </div>
-
-        <h3 style="margin-top:22px;color:#21164d;">
-            Uploaded Documents
-        </h3>
-
-        <div style="margin-top:10px;">
-            ${documents || "No documents uploaded."}
-        </div>
-    `;
-
-    document.getElementById("editStatus").value =
-        v.selection_status || "Pending";
-
-    document.getElementById("editCommittee").value =
-        v.committee || "";
-
-    document.getElementById("editRole").value =
-        v.assigned_role || "";
-
-    document.getElementById("editVolunteerId").value =
-        v.volunteer_id || "";
-
-    document.getElementById("editCnicReview").value =
-        v.cnic_review || "Pending";
-
-    document.getElementById("editActive").value =
-        String(v.is_active !== false);
-}
-
-
-/* =========================================
-   SAVE SELECTION
-========================================= */
-
-document.getElementById("saveBtn")
-.addEventListener("click", async function() {
-
-    if (!currentVolunteer) return;
-
-    const newStatus =
-        document.getElementById("editStatus").value;
-
-    const committee =
-        document.getElementById("editCommittee").value;
-
-    const role =
-        document.getElementById("editRole").value.trim();
-
-    const volunteerId =
-        document.getElementById("editVolunteerId").value.trim();
-
-    const cnicReview =
-        document.getElementById("editCnicReview").value;
-
-    const isActive =
-        document.getElementById("editActive").value === "true";
-
-    if (newStatus === "Selected" && (!committee || !role || !volunteerId)) {
-
-        alert(
-            "For Selected volunteers, please assign Committee, Role and Volunteer ID."
-        );
-
-        return;
-    }
-
-    if (newStatus === "Selected") {
-
-        const confirmed = confirm(
-            "Confirm selection of " +
-            currentVolunteer.full_name +
-            " for Ayaz Melo 2026?"
-        );
-
-        if (!confirmed) return;
-    }
-
-    const saveButton = document.getElementById("saveBtn");
-
-    saveButton.disabled = true;
-    saveButton.textContent = "Saving...";
-
-    const { error } = await supabase
-        .from("volunteers")
-        .update({
-            selection_status: newStatus,
-            committee: committee || null,
-            assigned_role: role || null,
-            volunteer_id: volunteerId || null,
-            cnic_review: cnicReview,
-            is_active: isActive,
-            updated_at: new Date().toISOString()
-        })
-        .eq("id", currentVolunteer.id);
-
-    saveButton.disabled = false;
-    saveButton.textContent = "Save Selection & Changes";
-
-    if (error) {
-
-        alert("Update failed: " + error.message);
-        return;
-    }
-
-    alert(
-        "Volunteer information updated successfully."
+    showMessage(
+      dashboardMessage,
+      "Successfully loaded " + allVolunteers.length + " volunteer records.",
+      "success"
     );
 
-    document.getElementById("profileModal").style.display = "none";
+  } catch (error) {
+    console.error("Loading volunteers:", error);
 
-    await loadVolunteers();
+    showMessage(
+      dashboardMessage,
+      "Could not load records: " + error.message,
+      "error"
+    );
 
+    tableBody.innerHTML =
+      '<tr><td colspan="9">Unable to load records. Check admin permissions and RLS policies.</td></tr>';
+  }
+}
+
+
+/* =====================================
+   STATISTICS
+===================================== */
+
+function updateStatistics() {
+  const count = status =>
+    allVolunteers.filter(v =>
+      normalize(v.selection_status) === normalize(status)
+    ).length;
+
+  const male = allVolunteers.filter(v =>
+    normalize(v.gender) === "male"
+  ).length;
+
+  const female = allVolunteers.filter(v =>
+    normalize(v.gender) === "female"
+  ).length;
+
+  const other = allVolunteers.length - male - female;
+
+  document.getElementById("totalCount").textContent = allVolunteers.length;
+  document.getElementById("pendingCount").textContent = count("Pending");
+  document.getElementById("selectedCount").textContent = count("Selected");
+  document.getElementById("reviewCount").textContent = count("Under Review");
+  document.getElementById("waitingCount").textContent = count("Waiting List");
+  document.getElementById("rejectedCount").textContent = count("Rejected");
+
+  document.getElementById("maleCount").textContent = male;
+  document.getElementById("femaleCount").textContent = female;
+  document.getElementById("otherCount").textContent = other;
+}
+
+
+/* =====================================
+   SEARCH AND FILTER
+===================================== */
+
+function renderVolunteers() {
+  const query = normalize(searchInput.value);
+  const selectedStatus = statusFilter.value;
+  const selectedGender = genderFilter.value;
+
+  const filtered = allVolunteers.filter(v => {
+
+    const searchable = [
+      v.full_name,
+      v.father_name,
+      v.cnic,
+      v.mobile_whatsapp,
+      v.email,
+      v.volunteer_id,
+      v.university_college
+    ].map(normalize).join(" ");
+
+    const matchesSearch = !query || searchable.includes(query);
+
+    const matchesStatus =
+      !selectedStatus || v.selection_status === selectedStatus;
+
+    const matchesGender =
+      !selectedGender || normalize(v.gender) === normalize(selectedGender);
+
+    return matchesSearch && matchesStatus && matchesGender;
+  });
+
+  document.getElementById("recordCount").textContent =
+    filtered.length + " records";
+
+  if (!filtered.length) {
+    tableBody.innerHTML =
+      '<tr><td colspan="9">No matching volunteer records found.</td></tr>';
+    return;
+  }
+
+  tableBody.innerHTML = filtered.map(v => `
+    <tr>
+      <td>${escapeHTML(v.id)}</td>
+      <td>${escapeHTML(displayValue(v.full_name))}</td>
+      <td>${escapeHTML(displayValue(v.father_name))}</td>
+      <td>${escapeHTML(displayValue(v.gender))}</td>
+      <td>${escapeHTML(displayValue(v.mobile_whatsapp))}</td>
+      <td>${escapeHTML(displayValue(v.cnic))}</td>
+      <td>
+        <span class="badge ${statusClass(v.selection_status)}">
+          ${escapeHTML(displayValue(v.selection_status))}
+        </span>
+      </td>
+      <td>${escapeHTML(displayValue(v.committee))}</td>
+      <td>
+        <button class="btn-primary btn-small"
+          type="button"
+          data-open-id="${escapeHTML(v.id)}">
+          View / Manage
+        </button>
+      </td>
+    </tr>
+  `).join("");
+}
+
+
+/* =====================================
+   OPEN VOLUNTEER PROFILE
+===================================== */
+
+tableBody.addEventListener("click", async function(event) {
+  const button = event.target.closest("[data-open-id]");
+
+  if (!button) return;
+
+  const id = button.getAttribute("data-open-id");
+
+  const volunteer = allVolunteers.find(v => String(v.id) === String(id));
+
+  if (!volunteer) return;
+
+  await openProfile(volunteer);
 });
 
 
-/* =========================================
-   CLOSE MODAL
-========================================= */
+async function openProfile(v) {
+  currentVolunteer = v;
 
-document.getElementById("closeModal")
-.addEventListener("click", function() {
+  document.getElementById("modalTitle").textContent =
+    v.full_name || "Volunteer Profile";
 
-    document.getElementById("profileModal").style.display = "none";
+  const details = [
+    ["Application ID", v.id],
+    ["Full Name", v.full_name],
+    ["Father Name", v.father_name],
+    ["Caste", v.caste],
+    ["Date of Birth", v.date_of_birth],
+    ["Gender", v.gender],
+    ["Mobile / WhatsApp", v.mobile_whatsapp],
+    ["CNIC", v.cnic],
+    ["Email", v.email],
+    ["University / College", v.university_college],
+    ["Department / Group", v.department_group],
+    ["Semester / Batch", v.semester_batch],
+    ["Current Address", v.current_address],
+    ["Permanent Address", v.permanent_address],
+    ["Motivation", v.motivation],
+    ["Previous Ayaz Volunteer", v.previous_ayaz_volunteer],
+    ["Reference", v.reference],
+    ["Selection Status", v.selection_status],
+    ["Committee", v.committee],
+    ["Assigned Role", v.assigned_role],
+    ["Volunteer ID", v.volunteer_id],
+    ["CNIC Review", v.cnic_review]
+  ];
 
-});
+  document.getElementById("profileDetails").innerHTML =
+    details.map(item => `
+      <div class="profile-item">
+        <small>${escapeHTML(item[0])}</small>
+        <strong>${escapeHTML(displayValue(item[1]))}</strong>
+      </div>
+    `).join("");
 
-document.getElementById("profileModal")
-.addEventListener("click", function(e) {
+  document.getElementById("editId").value = v.id;
+  document.getElementById("editStatus").value =
+    v.selection_status || "Pending";
 
-    if (e.target === this) {
-        this.style.display = "none";
+  document.getElementById("editCnicReview").value =
+    v.cnic_review || "Pending";
+
+  document.getElementById("editCommittee").value =
+    v.committee || "";
+
+  document.getElementById("editRole").value =
+    v.assigned_role || "";
+
+  document.getElementById("editVolunteerId").value =
+    v.volunteer_id || "";
+
+  document.getElementById("editActive").value =
+    String(v.is_active !== false);
+
+  showMessage(document.getElementById("editMessage"), "");
+
+  const photo = document.getElementById("volunteerPhoto");
+  photo.style.display = "none";
+  photo.removeAttribute("src");
+
+  const links = document.getElementById("documentLinks");
+  links.innerHTML = "Loading private documents...";
+
+  profileModal.classList.add("show");
+
+  await loadPrivateDocuments(v);
+}
+
+
+/* =====================================
+   PRIVATE DOCUMENT SIGNED URLS
+===================================== */
+
+function getStoragePath(value) {
+  if (!value) return null;
+
+  let path = String(value).trim();
+
+  if (path.startsWith("http")) {
+    try {
+      const url = new URL(path);
+      const marker = "/ayaz-private-docs/";
+      const index = url.pathname.indexOf(marker);
+
+      if (index >= 0) {
+        path = url.pathname.substring(index + marker.length);
+      } else {
+        return null;
+      }
+    } catch {
+      return null;
+    }
+  }
+
+  return path.replace(/^\/+/, "");
+}
+
+
+async function getSignedDocument(value) {
+  const path = getStoragePath(value);
+
+  if (!path) return null;
+
+  const { data, error } = await db.storage
+    .from(PRIVATE_BUCKET)
+    .createSignedUrl(path, 600);
+
+  if (error) {
+    console.error("Signed URL error:", error);
+    return null;
+  }
+
+  return data?.signedUrl || null;
+}
+
+
+async function loadPrivateDocuments(v) {
+  const links = document.getElementById("documentLinks");
+  const photo = document.getElementById("volunteerPhoto");
+
+  const docs = [
+    ["CNIC Front", v.cnic_front_url],
+    ["CNIC Back", v.cnic_back_url],
+    ["Student ID", v.student_id_url]
+  ];
+
+  const photoUrl = await getSignedDocument(v.photo_url);
+
+  if (photoUrl) {
+    photo.src = photoUrl;
+    photo.style.display = "inline-block";
+  }
+
+  const html = [];
+
+  for (const [label, value] of docs) {
+    if (!value) continue;
+
+    const url = await getSignedDocument(value);
+
+    if (url) {
+      html.push(
+        `<a href="${escapeHTML(url)}" target="_blank" rel="noopener">
+          ${escapeHTML(label)}
+        </a>`
+      );
+    }
+  }
+
+  links.innerHTML = html.length
+    ? html.join("")
+    : "No accessible documents found.";
+}
+
+
+/* =====================================
+   SAVE SELECTION CHANGES
+===================================== */
+
+editForm.addEventListener("submit", async function(event) {
+  event.preventDefault();
+
+  const saveBtn = document.getElementById("saveBtn");
+  const message = document.getElementById("editMessage");
+
+  const id = document.getElementById("editId").value;
+  const selectionStatus = document.getElementById("editStatus").value;
+  const committee = document.getElementById("editCommittee").value.trim();
+  const role = document.getElementById("editRole").value.trim();
+  const volunteerId = document.getElementById("editVolunteerId").value.trim();
+  const cnicReview = document.getElementById("editCnicReview").value;
+  const isActive = document.getElementById("editActive").value === "true";
+
+  if (selectionStatus === "Selected") {
+    if (!committee || !role || !volunteerId) {
+      showMessage(
+        message,
+        "For Selected applicants, Committee, Assigned Role and Volunteer ID are required.",
+        "error"
+      );
+      return;
+    }
+  }
+
+  saveBtn.disabled = true;
+  saveBtn.textContent = "Saving...";
+
+  showMessage(message, "Updating volunteer record...");
+
+  try {
+    const { data, error } = await db
+      .from("volunteers")
+      .update({
+        selection_status: selectionStatus,
+        committee: committee || null,
+        assigned_role: role || null,
+        volunteer_id: volunteerId || null,
+        cnic_review: cnicReview,
+        is_active: isActive,
+        updated_at: new Date().toISOString()
+      })
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error) throw error;
+
+    const index = allVolunteers.findIndex(
+      v => String(v.id) === String(id)
+    );
+
+    if (index !== -1) {
+      allVolunteers[index] = {
+        ...allVolunteers[index],
+        ...data
+      };
     }
 
+    updateStatistics();
+    renderVolunteers();
+
+    showMessage(message, "Volunteer record updated successfully.", "success");
+
+    currentVolunteer = data;
+
+  } catch (error) {
+    console.error("Update error:", error);
+
+    showMessage(
+      message,
+      "Update failed: " + error.message,
+      "error"
+    );
+
+  } finally {
+    saveBtn.disabled = false;
+    saveBtn.textContent = "Save Changes";
+  }
 });
 
 
-/* =========================================
-   SEARCH AND FILTER
-========================================= */
+/* =====================================
+   MODAL CONTROLS
+===================================== */
 
-document.getElementById("searchInput")
-.addEventListener("input", renderTable);
+function closeModal() {
+  profileModal.classList.remove("show");
+  currentVolunteer = null;
+}
 
-document.getElementById("statusFilter")
-.addEventListener("change", renderTable);
+document.getElementById("closeModalBtn")
+  .addEventListener("click", closeModal);
 
-document.getElementById("genderFilter")
-.addEventListener("change", renderTable);
+document.getElementById("cancelBtn")
+  .addEventListener("click", closeModal);
+
+profileModal.addEventListener("click", function(event) {
+  if (event.target === profileModal) closeModal();
+});
+
+document.addEventListener("keydown", function(event) {
+  if (event.key === "Escape") closeModal();
+});
+
+
+/* =====================================
+   SEARCH / FILTER EVENTS
+===================================== */
+
+searchInput.addEventListener("input", renderVolunteers);
+statusFilter.addEventListener("change", renderVolunteers);
+genderFilter.addEventListener("change", renderVolunteers);
 
 document.getElementById("refreshBtn")
-.addEventListener("click", loadVolunteers);
+  .addEventListener("click", loadVolunteers);
 
 
-/* =========================================
+/* =====================================
    CSV EXPORT
-========================================= */
+===================================== */
 
-document.getElementById("exportBtn")
-.addEventListener("click", function() {
+function csvCell(value) {
+  const text = String(value ?? "");
+  return '"' + text.replace(/"/g, '""') + '"';
+}
 
-    const columns = [
-        "id",
-        "full_name",
-        "father_name",
-        "caste",
-        "date_of_birth",
-        "gender",
-        "mobile_whatsapp",
-        "cnic",
-        "email",
-        "university_college",
-        "department_group",
-        "semester_batch",
-        "current_address",
-        "permanent_address",
-        "selection_status",
-        "committee",
-        "assigned_role",
-        "volunteer_id",
-        "cnic_review",
-        "is_active"
-    ];
+document.getElementById("exportBtn").addEventListener("click", function() {
+  if (!allVolunteers.length) {
+    showMessage(dashboardMessage, "No records available to export.", "error");
+    return;
+  }
 
-    const csvEscape = value => {
-        const s = String(value ?? "");
-        return '"' + s.replace(/"/g, '""') + '"';
-    };
+  const columns = [
+    "id",
+    "submitted_at",
+    "full_name",
+    "father_name",
+    "caste",
+    "date_of_birth",
+    "gender",
+    "mobile_whatsapp",
+    "cnic",
+    "email",
+    "university_college",
+    "department_group",
+    "semester_batch",
+    "current_address",
+    "permanent_address",
+    "motivation",
+    "previous_ayaz_volunteer",
+    "reference",
+    "cnic_review",
+    "selection_status",
+    "committee",
+    "assigned_role",
+    "volunteer_id",
+    "is_active"
+  ];
 
-    const rows = [
-        columns.join(","),
-        ...volunteers.map(v =>
-            columns.map(col => csvEscape(v[col])).join(",")
-        )
-    ];
+  const rows = [
+    columns.map(csvCell).join(","),
+    ...allVolunteers.map(v =>
+      columns.map(key => csvCell(v[key])).join(",")
+    )
+  ];
 
-    const blob = new Blob(
-        ["\uFEFF" + rows.join("\r\n")],
-        { type: "text/csv;charset=utf-8;" }
-    );
+  const csv = "\uFEFF" + rows.join("\r\n");
 
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
+  const blob = new Blob([csv], {
+    type: "text/csv;charset=utf-8;"
+  });
 
-    link.href = url;
-    link.download = "Ayaz-Melo-2026-Volunteers.csv";
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
 
-    link.click();
+  a.href = url;
+  a.download = "Ayaz_Melo_2026_Volunteers.csv";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
 
-    URL.revokeObjectURL(url);
-
+  URL.revokeObjectURL(url);
 });
 
 
-/* =========================================
-   START
-========================================= */
+/* =====================================
+   LOGOUT
+===================================== */
 
-checkSession();
+logoutBtn.addEventListener("click", async function() {
+  if (!db) return;
+
+  const confirmed = confirm("Are you sure you want to logout?");
+  if (!confirmed) return;
+
+  try {
+    await db.auth.signOut();
+
+    allVolunteers = [];
+
+    dashboard.classList.add("hidden");
+    loginPanel.classList.remove("hidden");
+    logoutBtn.classList.add("hidden");
+
+    loginForm.reset();
+
+    showMessage(loginMessage, "You have been logged out.", "success");
+
+  } catch (error) {
+    alert("Logout error: " + error.message);
+  }
+});
+
+
+/* =====================================
+   START APPLICATION
+===================================== */
+
+(async function init() {
+  try {
+    initializeSupabase();
+    await checkSession();
+
+  } catch (error) {
+    console.error("Initialization error:", error);
+
+    showMessage(
+      loginMessage,
+      error.message || "Application initialization failed.",
+      "error"
+    );
+  }
+})();
 
 </script>
 
 </body>
-  </html>
+</html>
