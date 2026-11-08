@@ -3,855 +3,1581 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#21164d">
 <title>Ayaz Melo 2026 | Super Admin</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
---blue:#21164d;--maroon:#842c3c;--gold:#d9ae62;
---cream:#faf5eb;--dark:#171323;--muted:#777;
---border:#e9e4dc;--green:#247a50;--red:#b42318;
+ --navy:#21164d;
+ --maroon:#842c3c;
+ --gold:#d9ae62;
+ --cream:#faf5eb;
+ --white:#fff;
+ --text:#252238;
+ --muted:#777;
+ --border:#e9e3d9;
+ --green:#23865b;
+ --red:#bd3545;
 }
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Montserrat,sans-serif;background:#f5f2ed;color:var(--dark);min-height:100vh}
-button,input,select,textarea{font-family:inherit}
+*{box-sizing:border-box}
+body{
+ margin:0;
+ background:var(--cream);
+ color:var(--text);
+ font-family:Montserrat,Arial,sans-serif;
+}
+button,input,select,textarea{font:inherit}
 button{cursor:pointer}
 .hidden{display:none!important}
-.login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--blue)}
-.login-box{width:100%;max-width:420px;background:var(--cream);padding:38px 28px;border-radius:12px;text-align:center}
-.logo{width:100px;height:100px;object-fit:contain;margin-bottom:15px}
-.login-box h1,.brand h2,.page-heading h1,.panel-heading h2{font-family:"Cormorant Garamond",serif}
-.login-box h1{font-size:38px;color:var(--blue)}
-.subtitle{color:var(--maroon);font-size:10px;font-weight:800;letter-spacing:3px;margin:8px 0 25px}
-.login-box input{width:100%;padding:14px;margin:8px 0;border:1px solid #ddd;border-radius:5px;font-size:13px}
-.primary-btn{width:100%;padding:15px;margin-top:12px;background:var(--maroon);color:white;border:0;border-radius:5px;font-weight:800}
-.message{margin-top:15px;font-size:12px;line-height:1.7;overflow-wrap:anywhere}
-.back{display:inline-block;margin-top:22px;color:var(--blue);font-size:11px;font-weight:700;text-decoration:none}
-.topbar{background:var(--blue);color:white;padding:13px 4%;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:12px}
-.brand img{width:46px;height:46px;object-fit:contain}
-.brand h2{font-size:27px}
-.brand p{font-size:9px;letter-spacing:2px;color:var(--gold);font-weight:800}
-.top-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
-.admin-label{font-size:10px}
-.top-btn{border:1px solid #ffffff66;background:transparent;color:white;padding:10px 13px;border-radius:5px;font-size:10px;font-weight:800}
-.container{max-width:1500px;margin:auto;padding:25px 3%}
-.page-heading{margin-bottom:22px}
-.page-heading h1{font-size:36px;color:var(--blue)}
-.page-heading p{font-size:11px;color:var(--muted);margin-top:5px}
-.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:22px}
-.stat-card,.panel{background:white;border:1px solid var(--border);border-radius:9px}
-.stat-card{padding:19px;border-top:4px solid var(--gold)}
-.stat-card p{font-size:9px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.6px}
-.stat-card h2{font-size:29px;color:var(--blue);margin-top:10px}
-.tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:17px}
-.tab-btn{border:1px solid var(--border);background:white;color:var(--blue);padding:11px 14px;border-radius:5px;font-size:10px;font-weight:800}
-.tab-btn.active{background:var(--maroon);border-color:var(--maroon);color:white}
-.panel{padding:20px;margin-bottom:18px}
-.panel-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
-.panel-heading h2{font-size:25px;color:var(--blue)}
-.panel-heading p{font-size:10px;color:var(--muted);margin-top:3px}
-.tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
-.tools input,.tools select,.field input,.field select,.field textarea{min-width:130px;flex:1;padding:11px;border:1px solid var(--border);border-radius:5px;background:white;font-size:11px;outline:none}
-.action-btn{border:0;border-radius:5px;padding:10px 13px;font-size:10px;font-weight:800;color:white;background:var(--blue)}
-.action-btn.gold{background:var(--maroon)}
-.action-btn.green{background:var(--green)}
-.action-btn.red{background:var(--red)}
-.action-btn:disabled{opacity:.5;cursor:wait}
-.table-wrap{width:100%;overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:650px}
-th{background:#f7f3ec;color:var(--blue);text-align:left;font-size:9px;text-transform:uppercase;padding:12px;white-space:nowrap}
-td{border-bottom:1px solid #eee;padding:11px;font-size:10px;vertical-align:middle}
-tr:hover td{background:#fdfbf7}
-.badge{display:inline-block;padding:5px 8px;border-radius:20px;background:#e8f4ed;color:var(--green);font-size:9px;font-weight:800}
-.badge.red{background:#f8e9eb;color:var(--maroon)}
-.badge.gold{background:#f8f0dc;color:#85621d}
-.view-btn{background:var(--blue);color:white;border:0;border-radius:4px;padding:7px 10px;font-size:9px;font-weight:800;margin:2px}
-.empty{text-align:center;color:var(--muted);padding:30px!important}
-.status-message{font-size:10px;color:var(--muted);margin-top:12px;line-height:1.7}
-.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.field{display:flex;flex-direction:column;gap:6px;min-width:0}
-.field label{font-size:10px;font-weight:800;color:var(--blue)}
-.field textarea{min-height:100px;resize:vertical}
-.field.full{grid-column:1/-1}
-.detail-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-.detail-item{background:#faf8f4;border:1px solid var(--border);padding:12px;border-radius:5px;overflow-wrap:anywhere}
-.detail-item small{display:block;color:var(--muted);font-size:9px;font-weight:800;margin-bottom:6px}
-.detail-item strong{font-size:11px;color:var(--blue)}
-.modal{position:fixed;inset:0;background:#0009;display:flex;align-items:center;justify-content:center;padding:15px;z-index:10;overflow:auto}
-.modal-box{width:100%;max-width:650px;max-height:90vh;overflow:auto;background:white;border-radius:9px;padding:22px}
-.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:17px}
-.modal-head h2{font-family:"Cormorant Garamond",serif;color:var(--blue);font-size:27px}
-.modal-actions{display:flex;gap:9px;justify-content:flex-end;margin-top:18px;flex-wrap:wrap}
-.notice{padding:12px;background:#fff8e8;border:1px solid #eed8a5;border-radius:6px;font-size:10px;line-height:1.7;margin-bottom:15px}
-.footer{text-align:center;color:var(--muted);font-size:9px;padding:22px}
-@media(max-width:850px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.detail-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:520px){.container{padding:18px 3%}.panel{padding:13px}.stats{gap:8px}.stat-card{padding:13px}.stat-card h2{font-size:24px}.brand h2{font-size:22px}.page-heading h1{font-size:30px}.detail-grid,.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}}
+#loginScreen{
+ min-height:100vh;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ padding:20px;
+}
+.login-card{
+ width:100%;
+ max-width:420px;
+ background:white;
+ padding:32px;
+ border-radius:15px;
+ box-shadow:0 10px 35px #21164d18;
+}
+.brand{
+ font-family:"Cormorant Garamond",serif;
+ color:var(--navy);
+ font-size:34px;
+ text-align:center;
+}
+.subtitle{text-align:center;color:var(--muted);font-size:12px;margin:5px 0 25px}
+input,select,textarea{
+ width:100%;
+ padding:12px;
+ border:1px solid var(--border);
+ border-radius:7px;
+ background:white;
+ outline:none;
+ margin:5px 0 12px;
+}
+input:focus,select:focus,textarea:focus{border-color:var(--gold)}
+label{font-size:12px;font-weight:700}
+.btn{
+ border:0;
+ border-radius:7px;
+ padding:11px 15px;
+ background:var(--navy);
+ color:white;
+ font-weight:600;
+ font-size:12px;
+}
+.btn:hover{opacity:.88}
+.btn.gold{background:var(--gold);color:var(--navy)}
+.btn.red{background:var(--red)}
+.btn.green{background:var(--green)}
+.btn.gray{background:#777}
+.btn.small{padding:7px 10px;font-size:11px}
+#app{display:none;min-height:100vh}
+.topbar{
+ background:var(--navy);
+ color:white;
+ padding:15px 22px;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:10px;
+ flex-wrap:wrap;
+}
+.topbar h2{
+ margin:0;
+ font-family:"Cormorant Garamond",serif;
+ font-size:26px;
+}
+.layout{display:flex;min-height:calc(100vh - 60px)}
+.sidebar{
+ width:235px;
+ background:#fff;
+ border-right:1px solid var(--border);
+ padding:15px 10px;
+ flex-shrink:0;
+}
+.navbtn{
+ width:100%;
+ text-align:left;
+ border:0;
+ background:transparent;
+ padding:12px;
+ margin:3px 0;
+ border-radius:7px;
+ color:var(--navy);
+ font-weight:600;
+ font-size:12px;
+}
+.navbtn:hover,.navbtn.active{background:var(--navy);color:white}
+.main{padding:22px;width:calc(100% - 235px);min-width:0}
+.page{display:none}
+.page.active{display:block}
+.page-title{
+ font-family:"Cormorant Garamond",serif;
+ font-size:32px;
+ color:var(--navy);
+ margin:0 0 17px;
+}
+.cards{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(155px,1fr));
+ gap:12px;
+ margin-bottom:20px;
+}
+.card{
+ background:white;
+ padding:18px;
+ border-radius:10px;
+ border:1px solid var(--border);
+}
+.card small{color:var(--muted);font-size:11px}
+.card strong{display:block;font-size:26px;color:var(--navy);margin-top:7px}
+.panel{
+ background:white;
+ border:1px solid var(--border);
+ border-radius:10px;
+ padding:17px;
+ margin-bottom:18px;
+}
+.panel h3{margin:0 0 14px;color:var(--navy);font-size:16px}
+.toolbar{
+ display:flex;
+ flex-wrap:wrap;
+ gap:8px;
+ align-items:center;
+ margin-bottom:14px;
+}
+.toolbar input,.toolbar select{width:auto;min-width:150px;margin:0}
+.table-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:11px;min-width:650px}
+th,td{
+ text-align:left;
+ padding:11px 9px;
+ border-bottom:1px solid var(--border);
+ white-space:nowrap;
+}
+th{background:#f7f2e9;color:var(--navy)}
+td.actions{white-space:nowrap}
+.badge{
+ display:inline-block;
+ border-radius:20px;
+ padding:5px 8px;
+ background:#eee;
+ font-size:10px;
+}
+.badge.green{background:#e0f3e9;color:#176d43}
+.badge.red{background:#fbe4e7;color:#a51f30}
+.badge.gold{background:#fff1d5;color:#845a0c}
+.modal{
+ position:fixed;
+ inset:0;
+ background:#17112699;
+ display:none;
+ align-items:center;
+ justify-content:center;
+ padding:15px;
+ z-index:20;
+}
+.modal.show{display:flex}
+.modal-box{
+ background:white;
+ border-radius:12px;
+ width:100%;
+ max-width:600px;
+ max-height:90vh;
+ overflow:auto;
+ padding:22px;
+}
+.modal-box h3{color:var(--navy);margin-top:0}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+.form-grid .full{grid-column:1/-1}
+.notice{
+ padding:12px;
+ border-radius:7px;
+ background:#f5f0e7;
+ margin:10px 0;
+ font-size:12px;
+}
+#toast{
+ position:fixed;
+ bottom:20px;
+ right:20px;
+ background:var(--navy);
+ color:white;
+ padding:13px 18px;
+ border-radius:8px;
+ display:none;
+ z-index:50;
+ max-width:90%;
+ font-size:12px;
+}
+.status{font-size:12px;color:var(--muted)}
+@media(max-width:750px){
+ .layout{display:block}
+ .sidebar{
+  width:100%;
+  display:flex;
+  overflow-x:auto;
+  border-right:0;
+  border-bottom:1px solid var(--border);
+  padding:8px;
+ }
+ .navbtn{width:auto;min-width:max-content;padding:10px}
+ .main{width:100%;padding:14px}
+ .topbar{padding:12px}
+ .form-grid{grid-template-columns:1fr}
+ .form-grid .full{grid-column:auto}
+}
 </style>
 </head>
 
 <body>
 
-<section id="loginScreen" class="login-screen">
-<div class="login-box">
-<img class="logo" src="assets/ayaz-melo-2026.png" alt="Ayaz Melo">
-<h1>Super Admin</h1>
-<div class="subtitle">AYAZ MELO 2026 · ADMINISTRATION</div>
-<form id="loginForm">
-<input type="email" id="email" placeholder="Admin Email Address" autocomplete="username" required>
-<input type="password" id="password" placeholder="Admin Password" autocomplete="current-password" required>
-<button class="primary-btn" id="loginBtn">ADMIN LOGIN</button>
-</form>
-<div class="message" id="loginMessage"></div>
-<a href="index.html" class="back">← BACK TO WEBSITE</a>
-</div>
+<!-- LOGIN -->
+<section id="loginScreen">
+ <div class="login-card">
+  <div class="brand">AYAZ MELO 2026</div>
+  <div class="subtitle">SUPER ADMIN CONTROL PANEL</div>
+
+  <form id="loginForm">
+   <label>Email Address</label>
+   <input id="email" type="email" required placeholder="Admin email">
+
+   <label>Password</label>
+   <input id="password" type="password" required placeholder="Password">
+
+   <button class="btn" style="width:100%;margin-top:10px" type="submit">
+    Secure Admin Login
+   </button>
+  </form>
+  <p id="loginMessage" class="status"></p>
+ </div>
 </section>
 
-<section id="dashboard" class="hidden">
-<header class="topbar">
-<div class="brand">
-<img src="assets/ayaz-melo-2026.png" alt="Ayaz Melo">
-<div><h2>Ayaz Melo 2026</h2><p>SUPER ADMINISTRATION PORTAL</p></div>
-</div>
-<div class="top-actions">
-<span class="admin-label">Super Administrator</span>
-<button class="top-btn" id="refreshBtn">↻ REFRESH</button>
-<button class="top-btn" id="logoutBtn">LOG OUT</button>
-</div>
-</header>
+<!-- APPLICATION -->
+<div id="app">
+ <header class="topbar">
+  <h2>Ayaz Melo | Super Admin</h2>
+  <div>
+   <span id="adminEmail" style="font-size:11px;margin-right:10px"></span>
+   <button class="btn gold small" id="refreshBtn">Refresh</button>
+   <button class="btn red small" id="logoutBtn">Logout</button>
+  </div>
+ </header>
 
-<main class="container">
-<div class="page-heading">
-<h1>Super Admin Dashboard</h1>
-<p>Ayaz Melo 2026 · 19–21 December 2026 · Hyderabad, Sindh</p>
+ <div class="layout">
+  <aside class="sidebar">
+   <button class="navbtn active" data-page="dashboard">Dashboard</button>
+   <button class="navbtn" data-page="visitors">Visitors</button>
+   <button class="navbtn" data-page="registration">Registration Control</button>
+   <button class="navbtn" data-page="announcements">Announcements</button>
+   <button class="navbtn" data-page="volunteers">Volunteers</button>
+   <button class="navbtn" data-page="feedback">Feedback</button>
+   <button class="navbtn" data-page="gallery">Gallery</button>
+   <button class="navbtn" data-page="content">Website Content</button>
+   <button class="navbtn" data-page="attendance">Attendance</button>
+   <button class="navbtn" data-page="activity">Activity Log</button>
+  </aside>
+
+  <main class="main">
+
+   <!-- DASHBOARD -->
+   <section class="page active" id="page-dashboard">
+    <h1 class="page-title">Dashboard Overview</h1>
+    <div class="cards">
+     <div class="card"><small>Total Visitors</small><strong id="totalVisitors">0</strong></div>
+     <div class="card"><small>Total Check-ins</small><strong id="totalCheckins">0</strong></div>
+     <div class="card"><small>Unique Cities</small><strong id="totalCities">0</strong></div>
+     <div class="card"><small>Volunteers</small><strong id="totalVolunteers">0</strong></div>
+     <div class="card"><small>Feedback</small><strong id="totalFeedback">0</strong></div>
+    </div>
+    <div class="panel">
+     <h3>Recent Registrations</h3>
+     <div class="table-wrap">
+      <table>
+       <thead><tr><th>Registration ID</th><th>Name</th><th>City</th><th>Date</th></tr></thead>
+       <tbody id="recentVisitors"></tbody>
+      </table>
+     </div>
+    </div>
+   </section>
+
+   <!-- VISITORS -->
+   <section class="page" id="page-visitors">
+    <h1 class="page-title">Visitor Management</h1>
+    <div class="panel">
+     <div class="toolbar">
+      <input id="visitorSearch" placeholder="Search name, phone, city, ID">
+      <select id="cityFilter"><option value="">All Cities</option></select>
+      <button class="btn" id="addVisitorBtn">+ Add Visitor</button>
+      <button class="btn green" id="exportVisitors">Export Excel</button>
+      <button class="btn gray" id="exportVisitorsCSV">Export CSV</button>
+     </div>
+     <div class="table-wrap">
+      <table>
+       <thead>
+        <tr>
+         <th>Registration ID</th><th>Name</th><th>Father Name</th>
+         <th>Phone</th><th>City</th><th>Designation</th>
+         <th>Registered</th><th>Actions</th>
+        </tr>
+       </thead>
+       <tbody id="visitorRows"></tbody>
+      </table>
+     </div>
+     <p class="status" id="visitorCount"></p>
+    </div>
+   </section>
+
+   <!-- REGISTRATION -->
+   <section class="page" id="page-registration">
+    <h1 class="page-title">Registration Control</h1>
+    <div class="panel">
+     <h3>Public Visitor Registration</h3>
+     <p id="registrationStatus" class="notice">Loading...</p>
+     <button class="btn green" id="openRegistration">Open Registration</button>
+     <button class="btn red" id="closeRegistration">Close Registration</button>
+    </div>
+    <div class="panel">
+     <h3>Volunteer Applications</h3>
+     <p id="volunteerStatus" class="notice">Loading...</p>
+     <button class="btn green" id="openVolunteer">Open Applications</button>
+     <button class="btn red" id="closeVolunteer">Close Applications</button>
+    </div>
+    <div class="notice">
+     Note: Public visitor and volunteer forms must read these settings from Supabase for the controls to affect the live website.
+    </div>
+   </section>
+
+   <!-- ANNOUNCEMENTS -->
+   <section class="page" id="page-announcements">
+    <h1 class="page-title">Announcement Management</h1>
+    <div class="panel">
+     <button class="btn" id="addAnnouncement">+ Add Announcement</button>
+     <div class="table-wrap" style="margin-top:15px">
+      <table>
+       <thead><tr><th>Title</th><th>Type</th><th>Published</th><th>Actions</th></tr></thead>
+       <tbody id="announcementRows"></tbody>
+      </table>
+     </div>
+    </div>
+   </section>
+
+   <!-- VOLUNTEERS -->
+   <section class="page" id="page-volunteers">
+    <h1 class="page-title">Volunteer Management</h1>
+    <div class="panel">
+     <div class="toolbar">
+      <input id="volunteerSearch" placeholder="Search volunteers">
+      <button class="btn green" id="exportVolunteers">Export Excel</button>
+     </div>
+     <div class="table-wrap">
+      <table>
+       <thead><tr><th>Name</th><th>Phone</th><th>City</th><th>Committee</th><th>Status</th><th>Actions</th></tr></thead>
+       <tbody id="volunteerRows"></tbody>
+      </table>
+     </div>
+    </div>
+   </section>
+
+   <!-- FEEDBACK -->
+   <section class="page" id="page-feedback">
+    <h1 class="page-title">Feedback Management</h1>
+    <div class="panel">
+     <button class="btn green" id="exportFeedback">Export Excel</button>
+     <div class="table-wrap" style="margin-top:15px">
+      <table>
+       <thead><tr><th>Name</th><th>Email</th><th>Type</th><th>Rating</th><th>Liked Most</th><th>Actions</th></tr></thead>
+       <tbody id="feedbackRows"></tbody>
+      </table>
+     </div>
+    </div>
+   </section>
+
+   <!-- GALLERY -->
+   <section class="page" id="page-gallery">
+    <h1 class="page-title">Gallery Management</h1>
+    <div class="panel">
+     <h3>Add Gallery Image</h3>
+     <form id="galleryForm">
+      <label>Image Title</label>
+      <input id="galleryTitle" required>
+      <label>Description</label>
+      <textarea id="galleryDescription"></textarea>
+      <label>Category</label>
+      <input id="galleryCategory" value="Ayaz Melo">
+      <label>Select Image</label>
+      <input id="galleryFile" type="file" accept="image/*" required>
+      <label><input id="galleryPublished" type="checkbox" checked style="width:auto"> Publish image</label>
+      <button class="btn" type="submit">Upload Image</button>
+     </form>
+     <p class="status">Images are uploaded to the Supabase ayaz-media storage bucket.</p>
+    </div>
+    <div class="panel">
+     <div class="table-wrap">
+      <table>
+       <thead><tr><th>Title</th><th>Category</th><th>Published</th><th>Actions</th></tr></thead>
+       <tbody id="galleryRows"></tbody>
+      </table>
+     </div>
+    </div>
+   </section>
+
+   <!-- CONTENT -->
+   <section class="page" id="page-content">
+    <h1 class="page-title">Website Content Management</h1>
+    <div class="panel">
+     <button class="btn" id="addContent">+ Add Content</button>
+     <div class="table-wrap" style="margin-top:15px">
+      <table>
+       <thead><tr><th>Content Key</th><th>Title</th><th>Type</th><th>Published</th><th>Actions</th></tr></thead>
+       <tbody id="contentRows"></tbody>
+      </table>
+     </div>
+     <div class="notice">
+      Content saved here is stored in Supabase. Public pages must be connected to display these updates.
+     </div>
+    </div>
+   </section>
+
+   <!-- ATTENDANCE -->
+   <section class="page" id="page-attendance">
+    <h1 class="page-title">Attendance Management</h1>
+    <div class="panel">
+     <div class="toolbar">
+      <input type="date" id="attendanceDate">
+      <button class="btn" id="loadAttendance">Load Attendance</button>
+      <button class="btn green" id="exportAttendance">Export Excel</button>
+     </div>
+     <div class="table-wrap">
+      <table>
+       <thead><tr><th>Registration ID</th><th>Name</th><th>Event Date</th><th>Scanned At</th></tr></thead>
+       <tbody id="attendanceRows"></tbody>
+      </table>
+     </div>
+    </div>
+   </section>
+
+   <!-- ACTIVITY -->
+   <section class="page" id="page-activity">
+    <h1 class="page-title">Admin Activity Log</h1>
+    <div class="panel">
+     <button class="btn" id="loadActivity">Refresh Logs</button>
+     <div class="table-wrap" style="margin-top:15px">
+      <table>
+       <thead><tr><th>Action</th><th>Module</th><th>Record ID</th><th>Date</th></tr></thead>
+       <tbody id="activityRows"></tbody>
+      </table>
+     </div>
+    </div>
+   </section>
+
+  </main>
+ </div>
 </div>
 
-<div class="stats">
-<div class="stat-card"><p>Total Visitors</p><h2 id="totalVisitors">—</h2></div>
-<div class="stat-card"><p>Total Cities</p><h2 id="totalCities">—</h2></div>
-<div class="stat-card"><p>Total Check-ins</p><h2 id="totalCheckins">—</h2></div>
-<div class="stat-card"><p>Today's Check-ins</p><h2 id="todayCheckins">—</h2></div>
+<!-- UNIVERSAL MODAL -->
+<div class="modal" id="modal">
+ <div class="modal-box">
+  <h3 id="modalTitle">Manage Record</h3>
+  <form id="modalForm">
+   <div id="modalFields" class="form-grid"></div>
+   <div style="display:flex;gap:8px;margin-top:15px">
+    <button class="btn" type="submit">Save</button>
+    <button class="btn gray" type="button" id="cancelModal">Cancel</button>
+   </div>
+  </form>
+ </div>
 </div>
 
-<nav class="tabs" id="tabs">
-<button class="tab-btn active" data-tab="overview">OVERVIEW</button>
-<button class="tab-btn" data-tab="visitors">VISITORS</button>
-<button class="tab-btn" data-tab="attendance">ATTENDANCE</button>
-<button class="tab-btn" data-tab="volunteers">VOLUNTEERS</button>
-<button class="tab-btn" data-tab="feedback">FEEDBACK</button>
-<button class="tab-btn" data-tab="announcements">ANNOUNCEMENTS</button>
-<button class="tab-btn" data-tab="content">WEBSITE CMS</button>
-<button class="tab-btn" data-tab="gallery">GALLERY</button>
-<button class="tab-btn" data-tab="settings">REGISTRATION SETTINGS</button>
-<button class="tab-btn" data-tab="logs">ACTIVITY LOGS</button>
-</nav>
-
-<section id="overviewTab" class="tab-content">
-<div class="panel">
-<div class="panel-heading"><div><h2>Recent Registrations</h2><p>Latest visitor records</p></div>
-<button class="action-btn" data-goto="visitors">VIEW ALL</button></div>
-<div class="table-wrap"><table><thead><tr><th>Registration ID</th><th>Name</th><th>Contact</th><th>City</th><th>Date</th></tr></thead><tbody id="recentBody"><tr><td colspan="5" class="empty">Loading...</td></tr></tbody></table></div>
-</div>
-<div class="panel">
-<div class="panel-heading"><div><h2>System Overview</h2><p>Database modules and status</p></div></div>
-<div id="systemStatus" class="detail-grid"></div>
-</div>
-</section>
-
-<section id="visitorsTab" class="tab-content hidden">
-<div class="panel">
-<div class="panel-heading"><div><h2>Visitor Management</h2><p>Search, add, edit, delete and export visitors</p></div>
-<button class="action-btn green" id="addVisitorBtn">+ ADD VISITOR</button></div>
-<div class="tools">
-<input id="visitorSearch" placeholder="Search name, phone, city or registration ID">
-<select id="cityFilter"><option value="">All Cities</option></select>
-<button class="action-btn" id="allExcel">ALL VISITORS EXCEL</button>
-<button class="action-btn" id="cityExcel">CITY-WISE EXCEL</button>
-<button class="action-btn gold" id="visitorCSV">EXPORT CSV</button>
-</div>
-<div class="table-wrap"><table><thead><tr><th>Registration ID</th><th>Name</th><th>Father Name</th><th>Contact</th><th>City</th><th>Designation</th><th>Registered</th><th>Actions</th></tr></thead><tbody id="visitorsBody"></tbody></table></div>
-<p id="visitorCount" class="status-message"></p>
-</div>
-<div class="panel hidden" id="visitorProfile">
-<div class="panel-heading"><h2>Visitor Profile</h2><button class="action-btn gold" id="closeProfile">CLOSE</button></div>
-<div id="visitorDetails"></div>
-</div>
-</section>
-
-<section id="attendanceTab" class="tab-content hidden">
-<div class="panel">
-<div class="panel-heading"><div><h2>Attendance & QR Check-ins</h2><p>Successful check-in records</p></div>
-<button class="action-btn green" id="attendanceExcel">ATTENDANCE EXCEL</button></div>
-<div class="tools"><input id="attendanceSearch" placeholder="Search registration ID or name"><input type="date" id="attendanceDate"><button class="action-btn gold" id="clearAttendance">CLEAR</button></div>
-<div class="table-wrap"><table><thead><tr><th>Registration ID</th><th>Name</th><th>Event Date</th><th>Scanned At</th><th>Status</th></tr></thead><tbody id="attendanceBody"></tbody></table></div>
-<p id="attendanceCount" class="status-message"></p>
-<div class="notice">Attendance is currently view/export only. Check-ins are created by the existing QR check-in function. This panel does not manually alter attendance records.</div>
-</div>
-</section>
-
-<section id="volunteersTab" class="tab-content hidden">
-<div class="panel">
-<div class="panel-heading"><div><h2>Volunteer Management</h2><p>Manage volunteer applications and committee assignments</p></div><button class="action-btn green" id="addVolunteer">+ ADD VOLUNTEER</button></div>
-<div class="tools"><input id="volunteerSearch" placeholder="Search volunteer name, phone or city"><select id="volunteerStatus"><option value="">All statuses</option><option>pending</option><option>approved</option><option>rejected</option></select></div>
-<div class="table-wrap"><table><thead><tr><th>Name</th><th>Phone</th><th>City</th><th>Committee</th><th>Status</th><th>Actions</th></tr></thead><tbody id="volunteersBody"></tbody></table></div>
-</div>
-</section>
-
-<section id="feedbackTab" class="tab-content hidden">
-<div class="panel">
-<div class="panel-heading"><div><h2>Feedback Management</h2><p>Read and manage submitted feedback</p></div></div>
-<div class="tools"><input id="feedbackSearch" placeholder="Search name, email or feedback"></div>
-<div class="table-wrap"><table><thead><tr><th>Name</th><th>Email</th><th>Type</th><th>Rating</th><th>Liked Most</th><th>Date</th><th>Actions</th></tr></thead><tbody id="feedbackBody"></tbody></table></div>
-</div>
-</section>
-
-<section id="announcementsTab" class="tab-content hidden">
-<div class="panel">
-<div class="panel-heading"><div><h2>Announcements</h2><p>Create, publish, unpublish and remove announcements</p></div><button class="action-btn green" id="addAnnouncement">+ NEW ANNOUNCEMENT</button></div>
-<div class="table-wrap"><table><thead><tr><th>Title</th><th>Type</th><th>Published</th><th>Created</th><th>Actions</th></tr></thead><tbody id="announcementsBody"></tbody></table></div>
-</div>
-</section>
-
-<section id="contentTab" class="tab-content hidden">
-<div class="panel">
-<div class="panel-heading"><div><h2>Website Content Management</h2><p>Manage content records by page key using JSON content</p></div><button class="action-btn green" id="addContent">+ ADD PAGE CONTENT</button></div>
-<div class="notice">CMS records are stored in site_content. Public pages must be connected to these records before changes appear on the live website.</div>
-<div class="table-wrap"><table><thead><tr><th>Page Key</th><th>Page Title</th><th>Published</th><th>Last Updated</th><th>Actions</th></tr></thead><tbody id="contentBody"></tbody></table></div>
-</div>
-</section>
-
-<section id="galleryTab" class="tab-content hidden">
-<div class="panel">
-<div class="panel-heading"><div><h2>Gallery Management</h2><p>Upload and manage event photographs</p></div></div>
-<div class="notice">Images are uploaded to the ayaz-melo-gallery Storage Bucket. Maximum file size: 5 MB. Supported formats: JPG, PNG, WEBP and GIF.</div>
-<div class="tools"><input type="file" id="galleryFile" accept="image/jpeg,image/png,image/webp,image/gif"><input id="galleryTitle" placeholder="Image title"><input id="galleryCategory" placeholder="Category"><button class="action-btn green" id="uploadGallery">UPLOAD IMAGE</button></div>
-<div class="table-wrap"><table><thead><tr><th>Preview</th><th>Title</th><th>Category</th><th>Published</th><th>Actions</th></tr></thead><tbody id="galleryBody"></tbody></table></div>
-</div>
-</section>
-
-<section id="settingsTab" class="tab-content hidden">
-<div class="panel">
-<div class="panel-heading"><div><h2>Registration Settings</h2><p>Control registration status stored in Supabase</p></div></div>
-<div class="notice">Important: this setting is stored in app_settings. Your public visitor.html form must check this setting before accepting registrations. The toggle alone does not close the public form until that integration is completed.</div>
-<div class="detail-grid">
-<div class="detail-item"><small>Current Registration Status</small><strong id="registrationStatus">Loading...</strong></div>
-<div class="detail-item"><small>Last Updated</small><strong id="registrationUpdated">—</strong></div>
-</div>
-<div class="tools" style="margin-top:16px">
-<button class="action-btn green" id="openRegistration">OPEN REGISTRATION</button>
-<button class="action-btn red" id="closeRegistration">CLOSE REGISTRATION</button>
-</div>
-</div>
-</section>
-
-<section id="logsTab" class="tab-content hidden">
-<div class="panel">
-<div class="panel-heading"><div><h2>Admin Activity Logs</h2><p>Administrative actions recorded in Supabase</p></div></div>
-<div class="table-wrap"><table><thead><tr><th>Admin UID</th><th>Action</th><th>Module</th><th>Record</th><th>Details</th><th>Date</th></tr></thead><tbody id="logsBody"></tbody></table></div>
-</div>
-</section>
-
-<div class="footer">AYAZ MELO 2026 · KHANABADOSH WRITERS' CAFE · HYDERABAD, SINDH</div>
-</main>
-</section>
-
-<div id="modal" class="modal hidden">
-<div class="modal-box">
-<div class="modal-head"><h2 id="modalTitle">Edit Record</h2><button class="action-btn gold" id="modalClose">CLOSE</button></div>
-<div id="modalContent"></div>
-<div class="modal-actions"><button class="action-btn" id="modalCancel">CANCEL</button><button class="action-btn green" id="modalSave">SAVE</button></div>
-</div>
-</div>
+<div id="toast"></div>
 
 <script>
-/* ================= CONFIG ================= */
+/* =====================================================
+   SUPABASE CONFIGURATION
+===================================================== */
 
-const SUPABASE_URL="https://fstkhwoxbgdcdfwycggu.supabase.co";
-const SUPABASE_KEY="sb_publishable_BNRQfiLDVM-892aVwO_hJw_OAhEgTrq";
-const ADMIN_UID="327072bb-a41b-4387-aadc-10b2c38ecfe4";
-const BUCKET="ayaz-melo-gallery";
+const SUPABASE_URL = "https://fstkhwoxbgdcdfwycggu.supabase.co";
+const SUPABASE_KEY = "sb_publishable_BNRQfiLDVM-892aVwO_hJw_OAhEgTrq";
 
-const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const ADMIN_UID = "327072bb-a41b-4387-aadc-10b2c38ecfe4";
 
-let visitors=[],checkins=[],volunteers=[],feedback=[],announcements=[],contents=[],gallery=[],logs=[];
-let currentUser=null,modalSaveHandler=null;
+const db = window.supabase.createClient(
+ SUPABASE_URL,
+ SUPABASE_KEY
+);
 
-/* ================= HELPERS ================= */
+let currentUser = null;
+let visitors = [];
+let checkins = [];
+let volunteers = [];
+let feedback = [];
+let announcements = [];
+let gallery = [];
+let contents = [];
+let attendanceData = [];
+let modalAction = null;
+let modalRecord = null;
 
-const $=id=>document.getElementById(id);
 
-function esc(v){
-return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+/* =====================================================
+   HELPERS
+===================================================== */
+
+const $ = id => document.getElementById(id);
+
+function toast(message){
+ const el = $("toast");
+ el.textContent = message;
+ el.style.display = "block";
+ setTimeout(()=>el.style.display="none",3500);
 }
-function val(v){return v===null||v===undefined||v===""?"—":Array.isArray(v)?v.join(", "):String(v)}
-function date(v){if(!v)return "—";let d=new Date(v);return isNaN(d)?"—":d.toLocaleDateString("en-GB")}
-function dateTime(v){if(!v)return "—";let d=new Date(v);return isNaN(d)?"—":d.toLocaleString("en-GB")}
-function todayPK(){return new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Karachi",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date())}
-function msg(t,ok=false){$("loginMessage").style.color=ok?"#247a50":"#842c3c";$("loginMessage").textContent=t}
-function emptyRow(cols,text="No records found"){return `<tr><td colspan="${cols}" class="empty">${esc(text)}</td></tr>`}
-function openModal(title,html,saveHandler){
-$("modalTitle").textContent=title;
-$("modalContent").innerHTML=html;
-modalSaveHandler=saveHandler;
-$("modal").classList.remove("hidden");
+
+function escapeHTML(value){
+ return String(value ?? "").replace(/[&<>"']/g, c => ({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+ })[c]);
 }
-function closeModal(){$("modal").classList.add("hidden");modalSaveHandler=null}
-$("modalClose").onclick=closeModal;
-$("modalCancel").onclick=closeModal;
-$("modalSave").onclick=async()=>{
-if(!modalSaveHandler)return;
-$("modalSave").disabled=true;
-try{await modalSaveHandler();closeModal();await loadAll()}
-catch(e){alert("Error: "+e.message)}
-finally{$("modalSave").disabled=false}
-};
-function field(label,name,value="",type="text",required=false){
-return `<div class="field"><label>${esc(label)}</label><input id="f_${name}" type="${type}" value="${esc(value)}" ${required?"required":""}></div>`;
+
+function formatDate(value){
+ if(!value) return "-";
+ return new Date(value).toLocaleString();
 }
-function textarea(label,name,value=""){
-return `<div class="field full"><label>${esc(label)}</label><textarea id="f_${name}">${esc(value)}</textarea></div>`;
+
+function showModal(title, fields, action, record=null){
+ $("modalTitle").textContent = title;
+ $("modalFields").innerHTML = fields;
+ $("modal").classList.add("show");
+ modalAction = action;
+ modalRecord = record;
 }
+
+function closeModal(){
+ $("modal").classList.remove("show");
+ $("modalFields").innerHTML = "";
+ modalAction = null;
+ modalRecord = null;
+}
+
+function field(label,name,value="",type="text",required=true){
+ return `
+ <div>
+  <label>${escapeHTML(label)}</label>
+  <input name="${escapeHTML(name)}"
+   type="${escapeHTML(type)}"
+   value="${escapeHTML(value)}"
+   ${required?"required":""}>
+ </div>`;
+}
+
 function selectField(label,name,options,value=""){
-return `<div class="field"><label>${esc(label)}</label><select id="f_${name}">${options.map(o=>`<option value="${esc(o)}" ${o===value?"selected":""}>${esc(o)}</option>`).join("")}</select></div>`;
-}
-function getField(name){return $(`f_${name}`).value.trim()}
-async function logAction(action,module,recordId="",details={}){
-try{
-await db.from("admin_activity_logs").insert({
-admin_user_id:currentUser.id,action,module,record_id:String(recordId||""),details
-});
-}catch(e){console.warn("Activity log failed:",e.message)}
-}
-async function fetchAll(table,order="created_at"){
-let q=db.from(table).select("*").limit(5000);
-if(order)q=q.order(order,{ascending:false});
-const {data,error}=await q;
-if(error)throw error;
-return data||[];
+ return `
+ <div>
+  <label>${escapeHTML(label)}</label>
+  <select name="${escapeHTML(name)}">
+   ${options.map(x=>`<option value="${escapeHTML(x)}" ${x===value?"selected":""}>${escapeHTML(x)}</option>`).join("")}
+  </select>
+ </div>`;
 }
 
-/* ================= AUTH ================= */
+function textAreaField(label,name,value=""){
+ return `
+ <div class="full">
+  <label>${escapeHTML(label)}</label>
+  <textarea name="${escapeHTML(name)}" rows="4">${escapeHTML(value)}</textarea>
+ </div>`;
+}
+
+function checkboxField(label,name,value=false){
+ return `
+ <div class="full">
+  <label>
+   <input type="checkbox" name="${escapeHTML(name)}"
+   ${value?"checked":""} style="width:auto">
+   ${escapeHTML(label)}
+  </label>
+ </div>`;
+}
+
+function formValues(form){
+ const data = {};
+ new FormData(form).forEach((v,k)=>data[k]=v);
+ form.querySelectorAll('input[type="checkbox"]').forEach(el=>{
+  data[el.name] = el.checked;
+ });
+ return data;
+}
+
+async function logAction(action,module,recordId=null,details={}){
+ try{
+  await db.from("admin_activity_logs").insert({
+   admin_user_id:currentUser.id,
+   action,
+   module,
+   record_id:recordId ? String(recordId) : null,
+   details
+  });
+ }catch(e){
+  console.warn("Activity log:",e.message);
+ }
+}
+
+function showError(error){
+ console.error(error);
+ toast(error?.message || "Operation failed.");
+}
+
+async function requireSuccess(query){
+ const {data,error} = await query;
+ if(error) throw error;
+ return data;
+}
+
+
+/* =====================================================
+   AUTHENTICATION
+===================================================== */
 
 $("loginForm").addEventListener("submit",async e=>{
-e.preventDefault();
-$("loginBtn").disabled=true;
-$("loginBtn").textContent="VERIFYING...";
-msg("");
-try{
-const {data,error}=await db.auth.signInWithPassword({
-email:$("email").value.trim(),
-password:$("password").value
-});
-if(error)throw error;
-if(!data.user||data.user.id!==ADMIN_UID){
-await db.auth.signOut();
-throw new Error("Access denied. Unauthorized administrator.");
-}
-currentUser=data.user;
-showDashboard();
-await loadAll();
-}catch(e){msg(e.message||"Login failed")}
-finally{$("loginBtn").disabled=false;$("loginBtn").textContent="ADMIN LOGIN"}
+ e.preventDefault();
+ $("loginMessage").textContent="Signing in...";
+
+ try{
+  const {data,error}=await db.auth.signInWithPassword({
+   email:$("email").value.trim(),
+   password:$("password").value
+  });
+
+  if(error) throw error;
+
+  const user=data.user;
+
+  if(user.id!==ADMIN_UID){
+   await db.auth.signOut();
+   throw new Error("This account is not the authorized Super Admin.");
+  }
+
+  const {data:admin,error:adminError}=await db
+   .from("admin_users")
+   .select("user_id")
+   .eq("user_id",user.id)
+   .maybeSingle();
+
+  if(adminError) throw adminError;
+  if(!admin) throw new Error("Admin account not found in admin_users.");
+
+  currentUser=user;
+  await startApp();
+
+ }catch(error){
+  $("loginMessage").textContent=error.message;
+ }
 });
 
 async function checkSession(){
-try{
-const {data,error}=await db.auth.getSession();
-if(error)throw error;
-const user=data.session?.user;
-if(!user)return;
-if(user.id!==ADMIN_UID){await db.auth.signOut();return}
-currentUser=user;showDashboard();await loadAll();
-}catch(e){console.error(e)}
-}
-function showDashboard(){$("loginScreen").classList.add("hidden");$("dashboard").classList.remove("hidden")}
+ const {data,error}=await db.auth.getSession();
+ if(error) return;
+ if(data.session){
+  const user=data.session.user;
+  if(user.id===ADMIN_UID){
+   const {data:admin,error:adminError}=await db
+    .from("admin_users")
+    .select("user_id")
+    .eq("user_id",user.id)
+    .maybeSingle();
 
-$("logoutBtn").onclick=async()=>{
-await db.auth.signOut();
-location.reload();
-};
-
-/* ================= DATA LOADING ================= */
-
-async function loadAll(){
-$("refreshBtn").disabled=true;
-$("refreshBtn").textContent="LOADING...";
-try{
-const results=await Promise.all([
-fetchAll("visitors","registration_date"),
-fetchAll("visitor_checkins","scanned_at"),
-fetchAll("volunteer_applications","created_at"),
-fetchAll("feedback_submissions","created_at"),
-fetchAll("announcements","created_at"),
-fetchAll("site_content","updated_at"),
-fetchAll("gallery_items","created_at"),
-fetchAll("admin_activity_logs","created_at")
-]);
-[visitors,checkins,volunteers,feedback,announcements,contents,gallery,logs]=results;
-updateStats();
-renderRecent();
-renderVisitors();
-renderAttendance();
-renderVolunteers();
-renderFeedback();
-renderAnnouncements();
-renderContent();
-renderGallery();
-renderLogs();
-populateCities();
-await loadRegistrationSetting();
-renderSystemStatus();
-}catch(e){
-console.error(e);
-alert("Some dashboard data could not be loaded.\n\n"+e.message+"\n\nCheck table permissions and RLS policies.");
-}finally{
-$("refreshBtn").disabled=false;
-$("refreshBtn").textContent="↻ REFRESH";
-}
-}
-$("refreshBtn").onclick=loadAll;
-
-/* ================= STATS ================= */
-
-function updateStats(){
-const cities=new Set(visitors.map(v=>(v.city||"").trim().toLowerCase()).filter(Boolean));
-$("totalVisitors").textContent=visitors.length;
-$("totalCities").textContent=cities.size;
-$("totalCheckins").textContent=checkins.length;
-$("todayCheckins").textContent=checkins.filter(c=>c.event_date===todayPK()).length;
-}
-function renderSystemStatus(){
-const items=[
-["Visitors",visitors.length],
-["Attendance Records",checkins.length],
-["Volunteer Applications",volunteers.length],
-["Feedback Submissions",feedback.length],
-["Announcements",announcements.length],
-["CMS Pages",contents.length],
-["Gallery Items",gallery.length],
-["Activity Logs",logs.length]
-];
-$("systemStatus").innerHTML=items.map(x=>`<div class="detail-item"><small>${esc(x[0])}</small><strong>${x[1]}</strong></div>`).join("");
+   if(!adminError && admin){
+    currentUser=user;
+    await startApp();
+   }
+  }
+ }
 }
 
-/* ================= NAVIGATION ================= */
-
-function showTab(name){
-document.querySelectorAll(".tab-btn").forEach(b=>b.classList.toggle("active",b.dataset.tab===name));
-document.querySelectorAll(".tab-content").forEach(s=>s.classList.add("hidden"));
-$(name+"Tab").classList.remove("hidden");
+async function startApp(){
+ $("loginScreen").style.display="none";
+ $("app").style.display="block";
+ $("adminEmail").textContent=currentUser.email || "Super Admin";
+ await refreshAll();
 }
-$("tabs").addEventListener("click",e=>{
-const b=e.target.closest("[data-tab]");
-if(b)showTab(b.dataset.tab);
-});
-document.addEventListener("click",e=>{
-const b=e.target.closest("[data-goto]");
-if(b)showTab(b.dataset.goto);
+
+$("logoutBtn").addEventListener("click",async()=>{
+ await db.auth.signOut();
+ location.reload();
 });
 
-/* ================= VISITORS ================= */
 
-function populateCities(){
-const sel=$("cityFilter"),old=sel.value;
-const cities=[...new Set(visitors.map(v=>(v.city||"").trim()).filter(Boolean))].sort();
-sel.innerHTML='<option value="">All Cities</option>'+cities.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join("");
-sel.value=old;
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+document.querySelectorAll(".navbtn").forEach(btn=>{
+ btn.addEventListener("click",async()=>{
+  document.querySelectorAll(".navbtn").forEach(b=>b.classList.remove("active"));
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+
+  btn.classList.add("active");
+  $("page-"+btn.dataset.page).classList.add("active");
+
+  const page=btn.dataset.page;
+
+  if(page==="registration") await loadSettings();
+  if(page==="announcements") await loadAnnouncements();
+  if(page==="volunteers") await loadVolunteers();
+  if(page==="feedback") await loadFeedback();
+  if(page==="gallery") await loadGallery();
+  if(page==="content") await loadContent();
+  if(page==="attendance") await loadAttendance();
+  if(page==="activity") await loadActivity();
+ });
+});
+
+
+/* =====================================================
+   REFRESH / DASHBOARD
+===================================================== */
+
+async function refreshAll(){
+ try{
+  await Promise.all([
+   loadVisitors(),
+   loadCheckins(),
+   loadVolunteers(),
+   loadFeedback()
+  ]);
+
+  renderDashboard();
+ }catch(error){
+  showError(error);
+ }
 }
-function renderRecent(){
-const rows=visitors.slice(0,8);
-$("recentBody").innerHTML=rows.length?rows.map(v=>`<tr><td>${esc(val(v.registration_id))}</td><td>${esc(val(v.full_name))}</td><td>${esc(val(v.contact_number))}</td><td>${esc(val(v.city))}</td><td>${esc(date(v.registration_date))}</td></tr>`).join(""):emptyRow(5);
+
+$("refreshBtn").addEventListener("click",refreshAll);
+
+async function loadVisitors(){
+ visitors=await requireSuccess(
+  db.from("visitors").select("*").order("registration_date",{ascending:false}).limit(5000)
+ );
+ renderVisitors();
 }
+
+async function loadCheckins(){
+ checkins=await requireSuccess(
+  db.from("visitor_checkins").select("*").order("scanned_at",{ascending:false}).limit(5000)
+ );
+}
+
+function renderDashboard(){
+ $("totalVisitors").textContent=visitors.length;
+ $("totalCheckins").textContent=checkins.length;
+ $("totalCities").textContent=new Set(visitors.map(v=>v.city).filter(Boolean)).size;
+ $("totalVolunteers").textContent=volunteers.length;
+ $("totalFeedback").textContent=feedback.length;
+
+ $("recentVisitors").innerHTML=visitors.slice(0,10).map(v=>`
+  <tr>
+   <td>${escapeHTML(v.registration_id)}</td>
+   <td>${escapeHTML(v.full_name)}</td>
+   <td>${escapeHTML(v.city)}</td>
+   <td>${escapeHTML(formatDate(v.registration_date))}</td>
+  </tr>
+ `).join("");
+}
+
+
+/* =====================================================
+   VISITOR MANAGEMENT
+===================================================== */
+
 function renderVisitors(){
-const q=$("visitorSearch").value.toLowerCase().trim(),city=$("cityFilter").value;
-const list=visitors.filter(v=>{
-const s=[v.registration_id,v.full_name,v.father_name,v.contact_number,v.city,v.designation,v.email].join(" ").toLowerCase();
-return s.includes(q)&&(!city||v.city===city);
-});
-$("visitorsBody").innerHTML=list.length?list.map(v=>`
-<tr>
-<td>${esc(val(v.registration_id))}</td><td>${esc(val(v.full_name))}</td>
-<td>${esc(val(v.father_name))}</td><td>${esc(val(v.contact_number))}</td>
-<td>${esc(val(v.city))}</td><td>${esc(val(v.designation))}</td>
-<td>${esc(date(v.registration_date))}</td>
-<td><button class="view-btn" data-profile="${v.id}">VIEW</button>
-<button class="view-btn" data-edit-visitor="${v.id}">EDIT</button>
-<button class="view-btn" style="background:#b42318" data-delete-visitor="${v.id}">DELETE</button></td>
-</tr>`).join(""):emptyRow(8);
-$("visitorCount").textContent=`Showing ${list.length} of ${visitors.length} visitors.`;
-}
-$("visitorSearch").oninput=renderVisitors;
-$("cityFilter").onchange=renderVisitors;
+ const search=$("visitorSearch").value.toLowerCase();
+ const city=$("cityFilter").value;
 
-function visitorForm(v={}){
-return `<div class="form-grid">
-${field("Full Name","full_name",v.full_name||"","text",true)}
-${field("Father Name","father_name",v.father_name||"","text",true)}
-${field("Contact Number","contact_number",v.contact_number||"","tel",true)}
-${field("Email","email",v.email||"","email")}
-${field("City","city",v.city||"","text",true)}
-${field("Designation","designation",v.designation||"","text",true)}
-${field("Gender","gender",v.gender||"")}
-${field("Attendance Type","attendance_type",v.attendance_type||"")}
-${field("Family Members","family_members",v.family_members??"","number")}
-${field("Attendance Center","attendance_center",v.attendance_center||"")}
-</div>`;
-}
-$("addVisitorBtn").onclick=()=>{
-openModal("Add Visitor",visitorForm(),async()=>{
-const payload={
-full_name:getField("full_name"),
-father_name:getField("father_name"),
-contact_number:getField("contact_number"),
-email:getField("email")||null,
-city:getField("city"),
-designation:getField("designation"),
-gender:getField("gender")||null,
-attendance_type:getField("attendance_type")||null,
-family_members:getField("family_members")?Number(getField("family_members")):null,
-attendance_center:getField("attendance_center")||null
-};
-const {error}=await db.from("visitors").insert(payload);
-if(error)throw error;
-await logAction("ADD","visitors","",{"name":payload.full_name});
-});
-};
-async function editVisitor(id){
-const v=visitors.find(x=>String(x.id)===String(id));if(!v)return;
-openModal("Edit Visitor",visitorForm(v),async()=>{
-const payload={
-full_name:getField("full_name"),father_name:getField("father_name"),
-contact_number:getField("contact_number"),email:getField("email")||null,
-city:getField("city"),designation:getField("designation"),
-gender:getField("gender")||null,attendance_type:getField("attendance_type")||null,
-family_members:getField("family_members")?Number(getField("family_members")):null,
-attendance_center:getField("attendance_center")||null
-};
-const {error}=await db.from("visitors").update(payload).eq("id",id);
-if(error)throw error;
-await logAction("UPDATE","visitors",id);
-});
-}
-async function deleteVisitor(id){
-const v=visitors.find(x=>String(x.id)===String(id));if(!v)return;
-if(!confirm(`Permanently delete ${v.full_name}? This cannot be undone.`))return;
-const {error}=await db.from("visitors").delete().eq("id",id);
-if(error){alert(error.message);return}
-await logAction("DELETE","visitors",id,{"name":v.full_name});
-await loadAll();
-}
-function visitorProfile(id){
-const v=visitors.find(x=>String(x.id)===String(id));if(!v)return;
-const fields=["registration_id","full_name","father_name","contact_number","email","city","designation","gender","attendance_type","family_members","attendance_days","allowed_event_dates","attendance_center","registration_date","entry_status","entry_time","gate_operator","family_group_id"];
-$("visitorDetails").innerHTML='<div class="detail-grid">'+fields.map(k=>`<div class="detail-item"><small>${esc(k.replaceAll("_"," "))}</small><strong>${esc(val(v[k]))}</strong></div>`).join("")+'</div>';
-$("visitorProfile").classList.remove("hidden");
-$("visitorProfile").scrollIntoView({behavior:"smooth"});
-}
-$("closeProfile").onclick=()=>$("visitorProfile").classList.add("hidden");
+ const cities=[...new Set(visitors.map(v=>v.city).filter(Boolean))].sort();
+ const oldCity=$("cityFilter").value;
 
-document.addEventListener("click",e=>{
-const p=e.target.closest("[data-profile]");if(p)visitorProfile(p.dataset.profile);
-const ed=e.target.closest("[data-edit-visitor]");if(ed)editVisitor(ed.dataset.editVisitor);
-const del=e.target.closest("[data-delete-visitor]");if(del)deleteVisitor(del.dataset.deleteVisitor);
+ $("cityFilter").innerHTML='<option value="">All Cities</option>'+
+ cities.map(c=>`<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`).join("");
+
+ $("cityFilter").value=cities.includes(oldCity)?oldCity:"";
+
+ const filtered=visitors.filter(v=>{
+  const text=[
+   v.full_name,v.father_name,v.contact_number,v.city,v.registration_id
+  ].join(" ").toLowerCase();
+
+  return text.includes(search) && (!city || v.city===city);
+ });
+
+ $("visitorRows").innerHTML=filtered.map(v=>`
+  <tr>
+   <td>${escapeHTML(v.registration_id)}</td>
+   <td>${escapeHTML(v.full_name)}</td>
+   <td>${escapeHTML(v.father_name)}</td>
+   <td>${escapeHTML(v.contact_number)}</td>
+   <td>${escapeHTML(v.city)}</td>
+   <td>${escapeHTML(v.designation)}</td>
+   <td>${escapeHTML(formatDate(v.registration_date))}</td>
+   <td class="actions">
+    <button class="btn small" data-edit-visitor="${v.id}">Edit</button>
+    <button class="btn red small" data-delete-visitor="${v.id}">Delete</button>
+   </td>
+  </tr>
+ `).join("");
+
+ $("visitorCount").textContent=`Showing ${filtered.length} of ${visitors.length} visitors`;
+}
+
+$("visitorSearch").addEventListener("input",renderVisitors);
+$("cityFilter").addEventListener("change",renderVisitors);
+
+$("addVisitorBtn").addEventListener("click",()=>{
+ showModal("Add New Visitor",`
+  ${field("Full Name","full_name")}
+  ${field("Father Name","father_name")}
+  ${field("Contact Number","contact_number")}
+  ${field("City","city")}
+  ${field("Designation","designation")}
+  ${field("Email","email","","email",false)}
+ `,"addVisitor");
 });
 
-/* ================= ATTENDANCE ================= */
+$("visitorRows").addEventListener("click",async e=>{
+ const edit=e.target.dataset.editVisitor;
+ const del=e.target.dataset.deleteVisitor;
 
-function renderAttendance(){
-const q=$("attendanceSearch").value.toLowerCase().trim(),d=$("attendanceDate").value;
-const list=checkins.filter(c=>{
-const v=visitors.find(x=>Number(x.id)===Number(c.visitor_id));
-return ((v?.registration_id||"")+" "+(v?.full_name||"")).toLowerCase().includes(q)&&(!d||c.event_date===d);
-});
-$("attendanceBody").innerHTML=list.length?list.map(c=>{
-const v=visitors.find(x=>Number(x.id)===Number(c.visitor_id));
-return `<tr><td>${esc(val(v?.registration_id))}</td><td>${esc(val(v?.full_name))}</td><td>${esc(date(c.event_date))}</td><td>${esc(dateTime(c.scanned_at))}</td><td><span class="badge">CHECKED IN</span></td></tr>`;
-}).join(""):emptyRow(5);
-$("attendanceCount").textContent=`Showing ${list.length} of ${checkins.length} attendance records.`;
-}
-$("attendanceSearch").oninput=renderAttendance;
-$("attendanceDate").onchange=renderAttendance;
-$("clearAttendance").onclick=()=>{$("attendanceSearch").value="";$("attendanceDate").value="";renderAttendance()};
+ if(edit){
+  const v=visitors.find(x=>String(x.id)===edit);
+  if(!v) return;
 
-/* ================= VOLUNTEERS ================= */
+  showModal("Edit Visitor",`
+   ${field("Full Name","full_name",v.full_name)}
+   ${field("Father Name","father_name",v.father_name)}
+   ${field("Contact Number","contact_number",v.contact_number)}
+   ${field("City","city",v.city)}
+   ${field("Designation","designation",v.designation)}
+   ${field("Email","email",v.email||"","email",false)}
+  `,"editVisitor",v);
+ }
 
-function renderVolunteers(){
-const q=$("volunteerSearch").value.toLowerCase().trim(),s=$("volunteerStatus").value;
-const list=volunteers.filter(v=>[v.full_name,v.phone,v.city,v.committee].join(" ").toLowerCase().includes(q)&&(!s||v.application_status===s));
-$("volunteersBody").innerHTML=list.length?list.map(v=>`<tr><td>${esc(val(v.full_name))}</td><td>${esc(val(v.phone))}</td><td>${esc(val(v.city))}</td><td>${esc(val(v.committee))}</td><td><span class="badge ${v.application_status==="rejected"?"red":v.application_status==="pending"?"gold":""}">${esc(val(v.application_status))}</span></td><td><button class="view-btn" data-edit-volunteer="${v.id}">EDIT</button><button class="view-btn" style="background:#b42318" data-delete-volunteer="${v.id}">DELETE</button></td></tr>`).join(""):emptyRow(6);
-}
-$("volunteerSearch").oninput=renderVolunteers;
-$("volunteerStatus").onchange=renderVolunteers;
+ if(del){
+  const v=visitors.find(x=>String(x.id)===del);
+  if(!v) return;
 
-function volunteerForm(v={}){
-return `<div class="form-grid">
-${field("Full Name","full_name",v.full_name||"","text",true)}
-${field("Father Name","father_name",v.father_name||"")}
-${field("Email","email",v.email||"","email")}
-${field("Phone","phone",v.phone||"","tel",true)}
-${field("City","city",v.city||"")}
-${field("Gender","gender",v.gender||"")}
-${field("Committee","committee",v.committee||"")}
-${selectField("Application Status","application_status",["pending","approved","rejected"],v.application_status||"pending")}
-${textarea("Experience","experience",v.experience||"")}
-${textarea("Availability","availability",v.availability||"")}
-${textarea("Admin Notes","admin_notes",v.admin_notes||"")}
-</div>`;
-}
-$("addVolunteer").onclick=()=>openModal("Add Volunteer",volunteerForm(),async()=>{
-const p={full_name:getField("full_name"),father_name:getField("father_name")||null,email:getField("email")||null,phone:getField("phone"),city:getField("city")||null,gender:getField("gender")||null,committee:getField("committee")||null,application_status:getField("application_status"),experience:$("f_experience").value,availability:$("f_availability").value,admin_notes:$("f_admin_notes").value};
-const {error}=await db.from("volunteer_applications").insert(p);if(error)throw error;
-await logAction("ADD","volunteer_applications","",{"name":p.full_name});
-});
-async function editVolunteer(id){
-const v=volunteers.find(x=>String(x.id)===String(id));if(!v)return;
-openModal("Edit Volunteer",volunteerForm(v),async()=>{
-const p={full_name:getField("full_name"),father_name:getField("father_name")||null,email:getField("email")||null,phone:getField("phone"),city:getField("city")||null,gender:getField("gender")||null,committee:getField("committee")||null,application_status:getField("application_status"),experience:$("f_experience").value,availability:$("f_availability").value,admin_notes:$("f_admin_notes").value,updated_at:new Date().toISOString()};
-const {error}=await db.from("volunteer_applications").update(p).eq("id",id);if(error)throw error;
-await logAction("UPDATE","volunteer_applications",id);
-});
-}
-async function deleteVolunteer(id){
-if(!confirm("Delete this volunteer application?"))return;
-const {error}=await db.from("volunteer_applications").delete().eq("id",id);if(error){alert(error.message);return}
-await logAction("DELETE","volunteer_applications",id);await loadAll();
-}
-document.addEventListener("click",e=>{
-const a=e.target.closest("[data-edit-volunteer]");if(a)editVolunteer(a.dataset.editVolunteer);
-const b=e.target.closest("[data-delete-volunteer]");if(b)deleteVolunteer(b.dataset.deleteVolunteer);
+  if(!confirm(
+   `Permanently delete visitor ${v.full_name} (${v.registration_id})?`
+  )) return;
+
+  try{
+   await requireSuccess(
+    db.from("visitors").delete().eq("id",v.id)
+   );
+
+   await logAction("DELETE","visitors",v.id,{
+    registration_id:v.registration_id
+   });
+
+   toast("Visitor deleted successfully.");
+   await loadVisitors();
+   renderDashboard();
+
+  }catch(error){
+   showError(error);
+  }
+ }
 });
 
-/* ================= FEEDBACK ================= */
 
-function renderFeedback(){
-const q=$("feedbackSearch").value.toLowerCase().trim();
-const list=feedback.filter(v=>[v.full_name,v.email,v.liked_most,v.suggestions,v.additional_comments].join(" ").toLowerCase().includes(q));
-$("feedbackBody").innerHTML=list.length?list.map(v=>`<tr><td>${esc(val(v.full_name))}</td><td>${esc(val(v.email))}</td><td>${esc(val(v.participant_type))}</td><td>${esc(val(v.rating))}</td><td>${esc(val(v.liked_most))}</td><td>${esc(date(v.created_at))}</td><td><button class="view-btn" data-feedback="${v.id}">VIEW</button><button class="view-btn" style="background:#b42318" data-delete-feedback="${v.id}">DELETE</button></td></tr>`).join(""):emptyRow(7);
-}
-$("feedbackSearch").oninput=renderFeedback;
-document.addEventListener("click",e=>{
-const v=e.target.closest("[data-feedback]");
-if(v){
-const f=feedback.find(x=>String(x.id)===String(v.dataset.feedback));if(!f)return;
-openModal("Feedback Details",`<div class="detail-grid">${Object.keys(f).filter(k=>k!=="id").map(k=>`<div class="detail-item"><small>${esc(k.replaceAll("_"," "))}</small><strong>${esc(val(f[k]))}</strong></div>`).join("")}</div>`,async()=>{});
-$("modalSave").classList.add("hidden");
-}
-const d=e.target.closest("[data-delete-feedback]");
-if(d)deleteFeedback(d.dataset.deleteFeedback);
+/* =====================================================
+   UNIVERSAL FORM SUBMISSION
+===================================================== */
+
+$("modalForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+
+ if(!modalAction) return;
+
+ const form=e.currentTarget;
+ const data=formValues(form);
+
+ try{
+
+  if(modalAction==="addVisitor"){
+   await requireSuccess(
+    db.from("visitors").insert({
+     full_name:data.full_name,
+     father_name:data.father_name,
+     contact_number:data.contact_number,
+     city:data.city,
+     designation:data.designation,
+     email:data.email||null
+    })
+   );
+
+   await logAction("CREATE","visitors",null,{
+    full_name:data.full_name
+   });
+  }
+
+  else if(modalAction==="editVisitor"){
+   await requireSuccess(
+    db.from("visitors").update({
+     full_name:data.full_name,
+     father_name:data.father_name,
+     contact_number:data.contact_number,
+     city:data.city,
+     designation:data.designation,
+     email:data.email||null
+    }).eq("id",modalRecord.id)
+   );
+
+   await logAction("UPDATE","visitors",modalRecord.id);
+  }
+
+  else if(modalAction==="addAnnouncement"){
+   await requireSuccess(
+    db.from("announcements").insert({
+     title:data.title,
+     message:data.message,
+     announcement_type:data.announcement_type,
+     is_published:data.is_published
+    })
+   );
+
+   await logAction("CREATE","announcements");
+  }
+
+  else if(modalAction==="editAnnouncement"){
+   await requireSuccess(
+    db.from("announcements").update({
+     title:data.title,
+     message:data.message,
+     announcement_type:data.announcement_type,
+     is_published:data.is_published
+    }).eq("id",modalRecord.id)
+   );
+
+   await logAction("UPDATE","announcements",modalRecord.id);
+  }
+
+  else if(modalAction==="editVolunteer"){
+   await requireSuccess(
+    db.from("volunteer_applications").update({
+     application_status:data.application_status,
+     admin_notes:data.admin_notes
+    }).eq("id",modalRecord.id)
+   );
+
+   await logAction("UPDATE","volunteers",modalRecord.id);
+  }
+
+  else if(modalAction==="addContent"){
+   await requireSuccess(
+    db.from("site_content").insert({
+     content_key:data.content_key,
+     title:data.title,
+     content:data.content,
+     content_type:data.content_type,
+     is_published:data.is_published
+    })
+   );
+
+   await logAction("CREATE","site_content");
+  }
+
+  else if(modalAction==="editContent"){
+   await requireSuccess(
+    db.from("site_content").update({
+     content_key:data.content_key,
+     title:data.title,
+     content:data.content,
+     content_type:data.content_type,
+     is_published:data.is_published,
+     updated_at:new Date().toISOString(),
+     updated_by:currentUser.id
+    }).eq("id",modalRecord.id)
+   );
+
+   await logAction("UPDATE","site_content",modalRecord.id);
+  }
+
+  closeModal();
+  toast("Saved successfully.");
+  await refreshCurrentPage();
+
+ }catch(error){
+  showError(error);
+ }
 });
-async function deleteFeedback(id){
-if(!confirm("Permanently delete this feedback?"))return;
-const {error}=await db.from("feedback_submissions").delete().eq("id",id);if(error){alert(error.message);return}
-await logAction("DELETE","feedback_submissions",id);await loadAll();
+
+$("cancelModal").addEventListener("click",closeModal);
+
+
+/* =====================================================
+   REGISTRATION SETTINGS
+===================================================== */
+
+async function loadSettings(){
+ try{
+  const settings=await requireSuccess(
+   db.from("site_settings").select("*").eq("id",1).single()
+  );
+
+  $("registrationStatus").textContent=
+   "Visitor Registration: "+(settings.registration_open?"OPEN":"CLOSED");
+
+  $("volunteerStatus").textContent=
+   "Volunteer Applications: "+(settings.volunteer_applications_open?"OPEN":"CLOSED");
+
+ }catch(error){
+  showError(error);
+ }
 }
 
-/* ================= ANNOUNCEMENTS ================= */
+async function updateSetting(column,value){
+ try{
+  await requireSuccess(
+   db.from("site_settings").update({
+    [column]:value,
+    updated_at:new Date().toISOString(),
+    updated_by:currentUser.id
+   }).eq("id",1)
+  );
+
+  await logAction("UPDATE","site_settings",1,{
+   setting:column,value
+  });
+
+  await loadSettings();
+  toast("Setting updated.");
+
+ }catch(error){
+  showError(error);
+ }
+}
+
+$("openRegistration").addEventListener("click",()=>{
+ if(confirm("Open public visitor registration?"))
+  updateSetting("registration_open",true);
+});
+
+$("closeRegistration").addEventListener("click",()=>{
+ if(confirm("Close public visitor registration?"))
+  updateSetting("registration_open",false);
+});
+
+$("openVolunteer").addEventListener("click",()=>{
+ if(confirm("Open volunteer applications?"))
+  updateSetting("volunteer_applications_open",true);
+});
+
+$("closeVolunteer").addEventListener("click",()=>{
+ if(confirm("Close volunteer applications?"))
+  updateSetting("volunteer_applications_open",false);
+});
+
+
+/* =====================================================
+   ANNOUNCEMENTS
+===================================================== */
+
+async function loadAnnouncements(){
+ try{
+  announcements=await requireSuccess(
+   db.from("announcements").select("*").order("created_at",{ascending:false})
+  );
+  renderAnnouncements();
+ }catch(error){showError(error)}
+}
 
 function renderAnnouncements(){
-$("announcementsBody").innerHTML=announcements.length?announcements.map(a=>`<tr><td>${esc(val(a.title))}</td><td>${esc(val(a.announcement_type))}</td><td><span class="badge ${a.is_published?"":"red"}">${a.is_published?"PUBLISHED":"DRAFT"}</span></td><td>${esc(date(a.created_at))}</td><td><button class="view-btn" data-edit-ann="${a.id}">EDIT</button><button class="view-btn" data-toggle-ann="${a.id}">${a.is_published?"UNPUBLISH":"PUBLISH"}</button><button class="view-btn" style="background:#b42318" data-del-ann="${a.id}">DELETE</button></td></tr>`).join(""):emptyRow(5);
+ $("announcementRows").innerHTML=announcements.map(a=>`
+  <tr>
+   <td>${escapeHTML(a.title)}</td>
+   <td>${escapeHTML(a.announcement_type)}</td>
+   <td>${a.is_published?'<span class="badge green">Published</span>':'<span class="badge red">Hidden</span>'}</td>
+   <td>
+    <button class="btn small" data-edit-ann="${a.id}">Edit</button>
+    <button class="btn red small" data-del-ann="${a.id}">Delete</button>
+   </td>
+  </tr>
+ `).join("");
 }
-function announcementForm(a={}){
-return `<div class="form-grid">
-${field("Title","title",a.title||"","text",true)}
-${field("Type","announcement_type",a.announcement_type||"general")}
-${textarea("Message","message",a.message||"")}
-${field("Publish At (optional)","publish_at",a.publish_at?new Date(a.publish_at).toISOString().slice(0,16):"","datetime-local")}
-${field("Expires At (optional)","expires_at",a.expires_at?new Date(a.expires_at).toISOString().slice(0,16):"","datetime-local")}
-${selectField("Published","is_published",["false","true"],String(!!a.is_published))}
-</div>`;
+
+function announcementFields(a={}){
+ return `
+  ${field("Title","title",a.title||"")}
+  ${selectField("Type","announcement_type",["general","important","event","registration"],a.announcement_type||"general")}
+  ${textAreaField("Message","message",a.message||"")}
+  ${checkboxField("Publish Announcement","is_published",!!a.is_published)}
+ `;
 }
-$("addAnnouncement").onclick=()=>openModal("New Announcement",announcementForm(),async()=>{
-const p={title:getField("title"),announcement_type:getField("announcement_type")||"general",message:$("f_message").value,is_published:getField("is_published")==="true",publish_at:getField("publish_at")?new Date(getField("publish_at")).toISOString():null,expires_at:getField("expires_at")?new Date(getField("expires_at")).toISOString():null,created_by:currentUser.id};
-const {error}=await db.from("announcements").insert(p);if(error)throw error;
-await logAction("ADD","announcements","",{"title":p.title});
-});
-async function editAnnouncement(id){
-const a=announcements.find(x=>String(x.id)===String(id));if(!a)return;
-openModal("Edit Announcement",announcementForm(a),async()=>{
-const p={title:getField("title"),announcement_type:getField("announcement_type")||"general",message:$("f_message").value,is_published:getField("is_published")==="true",publish_at:getField("publish_at")?new Date(getField("publish_at")).toISOString():null,expires_at:getField("expires_at")?new Date(getField("expires_at")).toISOString():null,updated_at:new Date().toISOString()};
-const {error}=await db.from("announcements").update(p).eq("id",id);if(error)throw error;
-await logAction("UPDATE","announcements",id);
-});
-}
-async function toggleAnnouncement(id){
-const a=announcements.find(x=>String(x.id)===String(id));if(!a)return;
-const {error}=await db.from("announcements").update({is_published:!a.is_published,updated_at:new Date().toISOString()}).eq("id",id);if(error){alert(error.message);return}
-await logAction(a.is_published?"UNPUBLISH":"PUBLISH","announcements",id);await loadAll();
-}
-async function deleteAnnouncement(id){
-if(!confirm("Delete this announcement?"))return;
-const {error}=await db.from("announcements").delete().eq("id",id);if(error){alert(error.message);return}
-await logAction("DELETE","announcements",id);await loadAll();
-}
-document.addEventListener("click",e=>{
-const a=e.target.closest("[data-edit-ann]");if(a)editAnnouncement(a.dataset.editAnn);
-const b=e.target.closest("[data-toggle-ann]");if(b)toggleAnnouncement(b.dataset.toggleAnn);
-const c=e.target.closest("[data-del-ann]");if(c)deleteAnnouncement(c.dataset.delAnn);
+
+$("addAnnouncement").addEventListener("click",()=>{
+ showModal("Add Announcement",announcementFields(),"addAnnouncement");
 });
 
-/* ================= WEBSITE CMS ================= */
+$("announcementRows").addEventListener("click",async e=>{
+ const edit=e.target.dataset.editAnn;
+ const del=e.target.dataset.delAnn;
 
-function renderContent(){
-$("contentBody").innerHTML=contents.length?contents.map(c=>`<tr><td>${esc(val(c.page_key))}</td><td>${esc(val(c.page_title))}</td><td><span class="badge ${c.is_published?"":"red"}">${c.is_published?"PUBLISHED":"HIDDEN"}</span></td><td>${esc(dateTime(c.updated_at))}</td><td><button class="view-btn" data-edit-content="${c.id}">EDIT</button><button class="view-btn" data-toggle-content="${c.id}">TOGGLE</button><button class="view-btn" style="background:#b42318" data-del-content="${c.id}">DELETE</button></td></tr>`).join(""):emptyRow(5);
-}
-function contentForm(c={}){
-return `<div class="form-grid">
-${field("Page Key (e.g. homepage)","page_key",c.page_key||"","text",true)}
-${field("Page Title","page_title",c.page_title||"")}
-${selectField("Published","is_published",["true","false"],String(c.is_published!==false))}
-${textarea("Content JSON","content",JSON.stringify(c.content||{},null,2))}
-</div>`;
-}
-$("addContent").onclick=()=>openModal("Add Website Content",contentForm(),async()=>{
-let json;try{json=JSON.parse($("f_content").value||"{}")}catch{throw new Error("Content must be valid JSON")}
-const p={page_key:getField("page_key"),page_title:getField("page_title")||null,content:json,is_published:getField("is_published")==="true",updated_by:currentUser.id};
-const {error}=await db.from("site_content").insert(p);if(error)throw error;
-await logAction("ADD","site_content","",{"page_key":p.page_key});
-});
-async function editContent(id){
-const c=contents.find(x=>String(x.id)===String(id));if(!c)return;
-openModal("Edit Website Content",contentForm(c),async()=>{
-let json;try{json=JSON.parse($("f_content").value||"{}")}catch{throw new Error("Content must be valid JSON")}
-const p={page_key:getField("page_key"),page_title:getField("page_title")||null,content:json,is_published:getField("is_published")==="true",updated_at:new Date().toISOString(),updated_by:currentUser.id};
-const {error}=await db.from("site_content").update(p).eq("id",id);if(error)throw error;
-await logAction("UPDATE","site_content",id);
-});
-}
-async function toggleContent(id){
-const c=contents.find(x=>String(x.id)===String(id));if(!c)return;
-const {error}=await db.from("site_content").update({is_published:!c.is_published,updated_at:new Date().toISOString()}).eq("id",id);if(error){alert(error.message);return}
-await logAction("TOGGLE","site_content",id);await loadAll();
-}
-async function deleteContent(id){
-if(!confirm("Delete this CMS record?"))return;
-const {error}=await db.from("site_content").delete().eq("id",id);if(error){alert(error.message);return}
-await logAction("DELETE","site_content",id);await loadAll();
-}
-document.addEventListener("click",e=>{
-const a=e.target.closest("[data-edit-content]");if(a)editContent(a.dataset.editContent);
-const b=e.target.closest("[data-toggle-content]");if(b)toggleContent(b.dataset.toggleContent);
-const c=e.target.closest("[data-del-content]");if(c)deleteContent(c.dataset.delContent);
+ if(edit){
+  const a=announcements.find(x=>String(x.id)===edit);
+  if(a) showModal("Edit Announcement",announcementFields(a),"editAnnouncement",a);
+ }
+
+ if(del){
+  if(!confirm("Delete this announcement?")) return;
+  try{
+   await requireSuccess(db.from("announcements").delete().eq("id",del));
+   await logAction("DELETE","announcements",del);
+   await loadAnnouncements();
+   toast("Announcement deleted.");
+  }catch(error){showError(error)}
+ }
 });
 
-/* ================= GALLERY ================= */
+
+/* =====================================================
+   VOLUNTEERS
+===================================================== */
+
+async function loadVolunteers(){
+ try{
+  volunteers=await requireSuccess(
+   db.from("volunteer_applications").select("*").order("created_at",{ascending:false})
+  );
+  renderVolunteers();
+  $("totalVolunteers").textContent=volunteers.length;
+ }catch(error){showError(error)}
+}
+
+function renderVolunteers(){
+ const q=$("volunteerSearch").value.toLowerCase();
+
+ const list=volunteers.filter(v=>
+  [v.full_name,v.contact_number,v.city,v.committee]
+  .join(" ").toLowerCase().includes(q)
+ );
+
+ $("volunteerRows").innerHTML=list.map(v=>`
+  <tr>
+   <td>${escapeHTML(v.full_name)}</td>
+   <td>${escapeHTML(v.contact_number)}</td>
+   <td>${escapeHTML(v.city)}</td>
+   <td>${escapeHTML(v.committee)}</td>
+   <td><span class="badge gold">${escapeHTML(v.application_status)}</span></td>
+   <td>
+    <button class="btn small" data-edit-vol="${v.id}">Manage</button>
+    <button class="btn red small" data-del-vol="${v.id}">Delete</button>
+   </td>
+  </tr>
+ `).join("");
+}
+
+$("volunteerSearch").addEventListener("input",renderVolunteers);
+
+$("volunteerRows").addEventListener("click",async e=>{
+ const edit=e.target.dataset.editVol;
+ const del=e.target.dataset.delVol;
+
+ if(edit){
+  const v=volunteers.find(x=>String(x.id)===edit);
+  if(v){
+   showModal("Manage Volunteer",`
+    ${selectField("Application Status","application_status",["Pending","Approved","Rejected","Shortlisted"],v.application_status||"Pending")}
+    ${textAreaField("Admin Notes","admin_notes",v.admin_notes||"")}
+   `,"editVolunteer",v);
+  }
+ }
+
+ if(del){
+  if(!confirm("Delete this volunteer application?")) return;
+  try{
+   await requireSuccess(db.from("volunteer_applications").delete().eq("id",del));
+   await logAction("DELETE","volunteers",del);
+   await loadVolunteers();
+   toast("Volunteer application deleted.");
+  }catch(error){showError(error)}
+ }
+});
+
+
+/* =====================================================
+   FEEDBACK
+===================================================== */
+
+async function loadFeedback(){
+ try{
+  feedback=await requireSuccess(
+   db.from("feedback_submissions").select("*").order("created_at",{ascending:false})
+  );
+  renderFeedback();
+  $("totalFeedback").textContent=feedback.length;
+ }catch(error){showError(error)}
+}
+
+function renderFeedback(){
+ $("feedbackRows").innerHTML=feedback.map(f=>`
+  <tr>
+   <td>${escapeHTML(f.full_name)}</td>
+   <td>${escapeHTML(f.email)}</td>
+   <td>${escapeHTML(f.participant_type)}</td>
+   <td>${escapeHTML(f.rating)}</td>
+   <td>${escapeHTML(f.liked_most)}</td>
+   <td>
+    <button class="btn small" data-view-feedback="${f.id}">View</button>
+    <button class="btn red small" data-delete-feedback="${f.id}">Delete</button>
+   </td>
+  </tr>
+ `).join("");
+}
+
+$("feedbackRows").addEventListener("click",async e=>{
+ const view=e.target.dataset.viewFeedback;
+ const del=e.target.dataset.deleteFeedback;
+
+ if(view){
+  const f=feedback.find(x=>String(x.id)===view);
+  if(f){
+   alert(
+    "Name: "+f.full_name+
+    "\nEmail: "+(f.email||"-")+
+    "\nRating: "+f.rating+
+    "\nLiked Most: "+f.liked_most+
+    "\nSuggestions: "+(f.suggestions||"-")+
+    "\nComments: "+(f.additional_comments||"-")
+   );
+  }
+ }
+
+ if(del){
+  if(!confirm("Permanently delete this feedback?")) return;
+  try{
+   await requireSuccess(db.from("feedback_submissions").delete().eq("id",del));
+   await logAction("DELETE","feedback",del);
+   await loadFeedback();
+   toast("Feedback deleted.");
+  }catch(error){showError(error)}
+ }
+});
+
+
+/* =====================================================
+   GALLERY
+===================================================== */
+
+async function loadGallery(){
+ try{
+  gallery=await requireSuccess(
+   db.from("gallery_items").select("*").order("display_order")
+  );
+  renderGallery();
+ }catch(error){showError(error)}
+}
 
 function renderGallery(){
-$("galleryBody").innerHTML=gallery.length?gallery.map(g=>`<tr><td>${g.image_url?`<img src="${esc(g.image_url)}" alt="" style="width:65px;height:45px;object-fit:cover;border-radius:4px">`:"—"}</td><td>${esc(val(g.title))}</td><td>${esc(val(g.category))}</td><td><span class="badge ${g.is_published?"":"red"}">${g.is_published?"PUBLISHED":"HIDDEN"}</span></td><td><button class="view-btn" data-toggle-gallery="${g.id}">TOGGLE</button><button class="view-btn" style="background:#b42318" data-delete-gallery="${g.id}">DELETE</button></td></tr>`).join(""):emptyRow(5);
+ $("galleryRows").innerHTML=gallery.map(g=>`
+  <tr>
+   <td>${escapeHTML(g.title)}</td>
+   <td>${escapeHTML(g.category)}</td>
+   <td>${g.is_published?"Published":"Hidden"}</td>
+   <td>
+    <button class="btn red small" data-del-gallery="${g.id}">Delete</button>
+   </td>
+  </tr>
+ `).join("");
 }
-$("uploadGallery").onclick=async()=>{
-const file=$("galleryFile").files[0];
-if(!file){alert("Please select an image.");return}
-if(file.size>5*1024*1024){alert("Maximum file size is 5 MB.");return}
-if(!["image/jpeg","image/png","image/webp","image/gif"].includes(file.type)){alert("Unsupported image type.");return}
-const btn=$("uploadGallery");btn.disabled=true;btn.textContent="UPLOADING...";
-try{
-const ext=file.name.split(".").pop().toLowerCase();
-const path=`${Date.now()}-${crypto.randomUUID()}.${ext}`;
-const {error:uploadError}=await db.storage.from(BUCKET).upload(path,file,{upsert:false,contentType:file.type});
-if(uploadError)throw uploadError;
-const {data:urlData}=db.storage.from(BUCKET).getPublicUrl(path);
-const p={title:$("galleryTitle").value.trim()||file.name,description:null,image_url:urlData.publicUrl,storage_path:path,category:$("galleryCategory").value.trim()||"general",is_published:false,created_by:currentUser.id};
-const {error}=await db.from("gallery_items").insert(p);
-if(error){await db.storage.from(BUCKET).remove([path]);throw error}
-await logAction("UPLOAD","gallery_items",path,{"title":p.title});
-$("galleryFile").value="";$("galleryTitle").value="";$("galleryCategory").value="";
-await loadAll();alert("Image uploaded successfully. It is currently unpublished.");
-}catch(e){alert("Upload failed: "+e.message)}
-finally{btn.disabled=false;btn.textContent="UPLOAD IMAGE"}
-};
-async function toggleGallery(id){
-const g=gallery.find(x=>String(x.id)===String(id));if(!g)return;
-const {error}=await db.from("gallery_items").update({is_published:!g.is_published,updated_at:new Date().toISOString()}).eq("id",id);if(error){alert(error.message);return}
-await logAction("TOGGLE","gallery_items",id);await loadAll();
-}
-async function deleteGallery(id){
-const g=gallery.find(x=>String(x.id)===String(id));if(!g)return;
-if(!confirm("Delete this gallery image and its storage file?"))return;
-const {error}=await db.from("gallery_items").delete().eq("id",id);if(error){alert(error.message);return}
-if(g.storage_path){
-const {error:storageError}=await db.storage.from(BUCKET).remove([g.storage_path]);
-if(storageError)console.warn("Storage file deletion:",storageError.message);
-}
-await logAction("DELETE","gallery_items",id);await loadAll();
-}
-document.addEventListener("click",e=>{
-const a=e.target.closest("[data-toggle-gallery]");if(a)toggleGallery(a.dataset.toggleGallery);
-const b=e.target.closest("[data-delete-gallery]");if(b)deleteGallery(b.dataset.deleteGallery);
+
+$("galleryForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+
+ const file=$("galleryFile").files[0];
+ if(!file) return toast("Please select an image.");
+
+ try{
+  const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
+  const path=Date.now()+"-"+safeName;
+
+  const {data:uploadData,error:uploadError}=await db.storage
+   .from("ayaz-media")
+   .upload(path,file,{upsert:false});
+
+  if(uploadError) throw uploadError;
+
+  const {data:urlData}=db.storage
+   .from("ayaz-media")
+   .getPublicUrl(uploadData.path);
+
+  await requireSuccess(
+   db.from("gallery_items").insert({
+    title:$("galleryTitle").value.trim(),
+    description:$("galleryDescription").value.trim(),
+    category:$("galleryCategory").value.trim()||"Ayaz Melo",
+    image_url:urlData.publicUrl,
+    is_published:$("galleryPublished").checked
+   })
+  );
+
+  await logAction("UPLOAD","gallery",path);
+  $("galleryForm").reset();
+  await loadGallery();
+  toast("Image uploaded successfully.");
+
+ }catch(error){showError(error)}
 });
 
-/* ================= REGISTRATION SETTINGS ================= */
+$("galleryRows").addEventListener("click",async e=>{
+ const id=e.target.dataset.delGallery;
+ if(!id) return;
 
-async function loadRegistrationSetting(){
-const {data,error}=await db.from("app_settings").select("*").eq("setting_key","registration_open").maybeSingle();
-if(error)throw error;
-const enabled=data?.setting_value?.enabled===true;
-$("registrationStatus").innerHTML=enabled?'<span class="badge">OPEN</span>':'<span class="badge red">CLOSED</span>';
-$("registrationUpdated").textContent=dateTime(data?.updated_at);
-}
-async function setRegistration(enabled){
-const payload={setting_key:"registration_open",setting_value:{enabled,message:enabled?"Registrations are open.":"Registrations are currently closed."},updated_at:new Date().toISOString(),updated_by:currentUser.id};
-const {error}=await db.from("app_settings").upsert(payload,{onConflict:"setting_key"});
-if(error){alert(error.message);return}
-await logAction(enabled?"OPEN_REGISTRATION":"CLOSE_REGISTRATION","app_settings","registration_open");
-await loadRegistrationSetting();
-alert(enabled?"Registration setting saved as OPEN.":"Registration setting saved as CLOSED.");
-}
-$("openRegistration").onclick=()=>setRegistration(true);
-$("closeRegistration").onclick=()=>{if(confirm("Close registration?"))setRegistration(false)};
+ const g=gallery.find(x=>String(x.id)===id);
+ if(!g || !confirm("Delete this gallery record?")) return;
 
-/* ================= ACTIVITY LOGS ================= */
-
-function renderLogs(){
-$("logsBody").innerHTML=logs.length?logs.map(l=>`<tr><td>${esc(val(l.admin_user_id))}</td><td>${esc(val(l.action))}</td><td>${esc(val(l.module))}</td><td>${esc(val(l.record_id))}</td><td>${esc(JSON.stringify(l.details||{}))}</td><td>${esc(dateTime(l.created_at))}</td></tr>`).join(""):emptyRow(6);
-}
-
-/* ================= EXCEL & CSV ================= */
-
-function exportXlsx(rows,sheet,filename){
-if(typeof XLSX==="undefined"){alert("Excel library failed to load.");return}
-const ws=XLSX.utils.json_to_sheet(rows);
-const wb=XLSX.utils.book_new();
-XLSX.utils.book_append_sheet(wb,ws,sheet.slice(0,31));
-XLSX.writeFile(wb,filename);
-}
-function safeVisitor(v){
-const {qr_token,...rest}=v;
-return rest;
-}
-$("allExcel").onclick=()=>exportXlsx(visitors.map(safeVisitor),"Visitors","Ayaz-Melo-All-Visitors.xlsx");
-$("cityExcel").onclick=()=>{
-const wb=XLSX.utils.book_new();
-const groups={};
-visitors.forEach(v=>{const c=(v.city||"Unknown").trim()||"Unknown";(groups[c]??=[]).push(safeVisitor(v))});
-Object.keys(groups).sort().forEach(city=>{
-let name=city.replace(/[\\/*?:[\]]/g,"").slice(0,31)||"Unknown",base=name,n=1;
-while(wb.SheetNames.includes(name))name=(base.slice(0,27)+"-"+n++);
-XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(groups[city]),name);
+ try{
+  await requireSuccess(db.from("gallery_items").delete().eq("id",id));
+  await logAction("DELETE","gallery",id);
+  await loadGallery();
+  toast("Gallery record deleted.");
+ }catch(error){showError(error)}
 });
-XLSX.writeFile(wb,"Ayaz-Melo-City-Wise.xlsx");
-};
-$("attendanceExcel").onclick=()=>{
-const rows=checkins.map(c=>{
-const v=visitors.find(x=>Number(x.id)===Number(c.visitor_id));
-return {registration_id:v?.registration_id||"",full_name:v?.full_name||"",father_name:v?.father_name||"",contact_number:v?.contact_number||"",city:v?.city||"",event_date:c.event_date,scanned_at:c.scanned_at,status:"CHECKED IN"};
-});
-exportXlsx(rows,"Attendance","Ayaz-Melo-Attendance.xlsx");
-};
-$("visitorCSV").onclick=()=>{
-const cols=["id","registration_id","full_name","father_name","contact_number","email","city","designation","gender","attendance_type","family_members","attendance_days","allowed_event_dates","attendance_center","registration_date","entry_status","entry_time","gate_operator"];
-const rows=[cols.join(","),...visitors.map(v=>cols.map(k=>'"'+String(Array.isArray(v[k])?v[k].join("; "):v[k]??"").replace(/"/g,'""')+'"').join(","))];
-const blob=new Blob(["\uFEFF"+rows.join("\r\n")],{type:"text/csv;charset=utf-8"});
-const url=URL.createObjectURL(blob),a=document.createElement("a");
-a.href=url;a.download="Ayaz-Melo-Visitors.csv";a.click();URL.revokeObjectURL(url);
-};
 
-/* ================= START ================= */
+
+/* =====================================================
+   WEBSITE CONTENT
+===================================================== */
+
+async function loadContent(){
+ try{
+  contents=await requireSuccess(
+   db.from("site_content").select("*").order("content_key")
+  );
+  renderContent();
+ }catch(error){showError(error)}
+}
+
+function renderContent(){
+ $("contentRows").innerHTML=contents.map(c=>`
+  <tr>
+   <td>${escapeHTML(c.content_key)}</td>
+   <td>${escapeHTML(c.title)}</td>
+   <td>${escapeHTML(c.content_type)}</td>
+   <td>${c.is_published?"Published":"Hidden"}</td>
+   <td>
+    <button class="btn small" data-edit-content="${c.id}">Edit</button>
+    <button class="btn red small" data-delete-content="${c.id}">Delete</button>
+   </td>
+  </tr>
+ `).join("");
+}
+
+function contentFields(c={}){
+ return `
+  ${field("Content Key","content_key",c.content_key||"")}
+  ${field("Title","title",c.title||"")}
+  ${selectField("Content Type","content_type",["text","html","url","json"],c.content_type||"text")}
+  ${textAreaField("Content","content",c.content||"")}
+  ${checkboxField("Publish Content","is_published",!!c.is_published)}
+ `;
+}
+
+$("addContent").addEventListener("click",()=>{
+ showModal("Add Website Content",contentFields(),"addContent");
+});
+
+$("contentRows").addEventListener("click",async e=>{
+ const edit=e.target.dataset.editContent;
+ const del=e.target.dataset.deleteContent;
+
+ if(edit){
+  const c=contents.find(x=>String(x.id)===edit);
+  if(c) showModal("Edit Website Content",contentFields(c),"editContent",c);
+ }
+
+ if(del){
+  if(!confirm("Delete this content record?")) return;
+  try{
+   await requireSuccess(db.from("site_content").delete().eq("id",del));
+   await logAction("DELETE","site_content",del);
+   await loadContent();
+   toast("Content deleted.");
+  }catch(error){showError(error)}
+ }
+});
+
+
+/* =====================================================
+   ATTENDANCE
+===================================================== */
+
+async function loadAttendance(){
+ try{
+  let query=db.from("visitor_checkins")
+   .select("id,visitor_id,event_date,scanned_at")
+   .order("scanned_at",{ascending:false})
+   .limit(5000);
+
+  const date=$("attendanceDate").value;
+  if(date) query=query.eq("event_date",date);
+
+  attendanceData=await requireSuccess(query);
+
+  const ids=attendanceData.map(x=>x.visitor_id);
+  const matching=visitors.filter(v=>ids.includes(v.id));
+
+  $("attendanceRows").innerHTML=attendanceData.map(a=>{
+   const v=matching.find(x=>x.id===a.visitor_id);
+   return `
+    <tr>
+     <td>${escapeHTML(v?.registration_id||a.visitor_id)}</td>
+     <td>${escapeHTML(v?.full_name||"Visitor")}</td>
+     <td>${escapeHTML(a.event_date)}</td>
+     <td>${escapeHTML(formatDate(a.scanned_at))}</td>
+    </tr>
+   `;
+  }).join("");
+
+ }catch(error){showError(error)}
+}
+
+$("loadAttendance").addEventListener("click",loadAttendance);
+
+
+/* =====================================================
+   ACTIVITY LOG
+===================================================== */
+
+async function loadActivity(){
+ try{
+  const rows=await requireSuccess(
+   db.from("admin_activity_logs").select("*")
+    .order("created_at",{ascending:false}).limit(300)
+  );
+
+  $("activityRows").innerHTML=rows.map(a=>`
+   <tr>
+    <td>${escapeHTML(a.action)}</td>
+    <td>${escapeHTML(a.module)}</td>
+    <td>${escapeHTML(a.record_id)}</td>
+    <td>${escapeHTML(formatDate(a.created_at))}</td>
+   </tr>
+  `).join("");
+
+ }catch(error){showError(error)}
+}
+
+$("loadActivity").addEventListener("click",loadActivity);
+
+
+/* =====================================================
+   EXCEL / CSV EXPORT
+===================================================== */
+
+function exportExcel(data,fileName,sheetName="Data"){
+ if(!data || !data.length){
+  toast("No data available to export.");
+  return;
+ }
+
+ const ws=XLSX.utils.json_to_sheet(data);
+ const wb=XLSX.utils.book_new();
+ XLSX.utils.book_append_sheet(wb,ws,sheetName);
+ XLSX.writeFile(wb,fileName);
+}
+
+function safeVisitorExport(){
+ return visitors.map(v=>({
+  Registration_ID:v.registration_id,
+  Name:v.full_name,
+  Father_Name:v.father_name,
+  Contact:v.contact_number,
+  City:v.city,
+  Designation:v.designation,
+  Email:v.email,
+  Registration_Date:v.registration_date,
+  Entry_Status:v.entry_status
+ }));
+}
+
+$("exportVisitors").addEventListener("click",()=>{
+ exportExcel(safeVisitorExport(),"AyazMelo_Visitors.xlsx","Visitors");
+});
+
+$("exportVisitorsCSV").addEventListener("click",()=>{
+ const data=safeVisitorExport();
+ if(!data.length) return toast("No visitors to export.");
+
+ const keys=Object.keys(data[0]);
+ const csv=[
+  keys.join(","),
+  ...data.map(row=>keys.map(k=>
+   '"'+String(row[k]??"").replace(/"/g,'""')+'"'
+  ).join(","))
+ ].join("\n");
+
+ const blob=new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8"});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");
+ a.href=url;
+ a.download="AyazMelo_Visitors.csv";
+ a.click();
+ URL.revokeObjectURL(url);
+});
+
+$("exportVolunteers").addEventListener("click",()=>{
+ exportExcel(volunteers,"AyazMelo_Volunteers.xlsx","Volunteers");
+});
+
+$("exportFeedback").addEventListener("click",()=>{
+ exportExcel(feedback,"AyazMelo_Feedback.xlsx","Feedback");
+});
+
+$("exportAttendance").addEventListener("click",()=>{
+ const data=attendanceData.map(a=>{
+  const v=visitors.find(x=>x.id===a.visitor_id);
+  return {
+   Registration_ID:v?.registration_id||"",
+   Name:v?.full_name||"",
+   Event_Date:a.event_date,
+   Scanned_At:a.scanned_at
+  };
+ });
+ exportExcel(data,"AyazMelo_Attendance.xlsx","Attendance");
+});
+
+
+/* =====================================================
+   PAGE REFRESH
+===================================================== */
+
+async function refreshCurrentPage(){
+ const page=document.querySelector(".page.active")?.id.replace("page-","");
+
+ if(page==="visitors"){
+  await loadVisitors();
+  renderDashboard();
+ }
+ if(page==="announcements") await loadAnnouncements();
+ if(page==="volunteers") await loadVolunteers();
+ if(page==="feedback") await loadFeedback();
+ if(page==="gallery") await loadGallery();
+ if(page==="content") await loadContent();
+ if(page==="attendance") await loadAttendance();
+ if(page==="activity") await loadActivity();
+ if(page==="registration") await loadSettings();
+}
 
 checkSession();
+
 </script>
 </body>
 </html>
