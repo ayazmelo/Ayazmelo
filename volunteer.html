@@ -3,856 +3,233 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#21164d">
 <title>Volunteer With Us | Ayaz Melo 2026</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
  --navy:#21164d;
+ --navy2:#30245b;
  --maroon:#842c3c;
  --gold:#d9ae62;
+ --gold-light:#f1dfb9;
  --cream:#faf5eb;
  --white:#fff;
  --text:#252238;
  --muted:#777;
  --border:#e9e3d9;
+ --shadow:0 12px 35px rgba(33,22,77,.08);
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
 body{
  margin:0;
- background:white;
+ background:var(--cream);
  color:var(--text);
  font-family:Montserrat,Arial,sans-serif;
 }
 a{text-decoration:none}
 button{font:inherit;cursor:pointer}
+.container{max-width:1180px;margin:auto;padding:0 24px}
 
 /* HEADER */
 header{
- background:#fff;
- border-bottom:1px solid var(--border);
  position:sticky;
  top:0;
- z-index:10;
+ z-index:100;
+ background:rgba(255,255,255,.97);
+ border-bottom:1px solid var(--border);
 }
 .navbar{
- max-width:1180px;
+ max-width:1220px;
  margin:auto;
- padding:14px 22px;
+ padding:13px 25px;
  display:flex;
- justify-content:space-between;
  align-items:center;
- gap:15px;
+ justify-content:space-between;
+ gap:20px;
 }
 .logo{
  font-family:"Cormorant Garamond",serif;
- color:var(--navy);
- font-size:29px;
+ font-size:31px;
  font-weight:700;
+ color:var(--navy);
+ letter-spacing:.5px;
+ white-space:nowrap;
 }
 .logo span{color:var(--maroon)}
 .nav-links{
  display:flex;
  align-items:center;
- gap:22px;
+ gap:23px;
  flex-wrap:wrap;
 }
 .nav-links a{
- font-size:11px;
+ font-size:10px;
  font-weight:700;
+ letter-spacing:.8px;
  color:var(--navy);
-}
-.nav-links a:hover{color:var(--maroon)}
-.nav-apply{
- background:var(--navy);
- color:white!important;
- padding:11px 17px;
- border-radius:5px;
-}
-
-/* COMMON */
-.container{
- max-width:1150px;
- margin:auto;
- padding:0 22px;
-}
-.section{padding:75px 0}
-.section-heading{
- text-align:center;
- margin-bottom:38px;
-}
-.eyebrow{
- color:var(--maroon);
- font-size:11px;
- font-weight:700;
- letter-spacing:3px;
- text-transform:uppercase;
-}
-.section-heading h2{
- font-family:"Cormorant Garamond",serif;
- color:var(--navy);
- font-size:42px;
- margin:10px 0;
-}
-.section-heading p{
- color:var(--muted);
- font-size:13px;
- line-height:1.8;
- max-width:700px;
- margin:auto;
-}
-.btn{
- display:inline-block;
- padding:14px 23px;
- border-radius:5px;
- background:var(--navy);
- color:white;
- font-size:11px;
- font-weight:700;
- letter-spacing:1px;
- border:1px solid var(--navy);
  transition:.2s;
 }
-.btn:hover{
- background:var(--maroon);
- border-color:var(--maroon);
+.nav-links a:hover{color:var(--maroon)}
+.nav-links .nav-apply{
+ background:var(--navy);
+ color:white;
+ padding:12px 20px;
+ border:1px solid var(--gold);
 }
-.btn.gold{
+.nav-links .nav-apply:hover{
+ background:var(--maroon);
+ color:white;
+}
+
+/* BUTTONS */
+.btn{
+ display:inline-flex;
+ justify-content:center;
+ align-items:center;
+ gap:9px;
+ padding:14px 24px;
  background:var(--gold);
  color:var(--navy);
+ border:1px solid var(--gold);
+ font-size:10px;
+ font-weight:700;
+ letter-spacing:1.2px;
+ transition:.25s;
+}
+.btn:hover{
+ background:var(--white);
+ border-color:var(--white);
+ transform:translateY(-2px);
+}
+.btn.dark{
+ background:var(--navy);
+ color:white;
  border-color:var(--gold);
+}
+.btn.dark:hover{
+ background:var(--maroon);
 }
 .btn.outline{
  background:transparent;
+ color:white;
+ border-color:#ffffff80;
+}
+.btn.outline:hover{
+ background:white;
  color:var(--navy);
 }
 
 /* HERO */
 .hero{
- background:linear-gradient(120deg,#21164d 0%,#34235f 60%,#842c3c 100%);
- color:white;
- padding:95px 20px;
- text-align:center;
  position:relative;
  overflow:hidden;
+ background:var(--navy);
+ color:white;
+ padding:105px 20px 100px;
+ text-align:center;
+ border-bottom:4px solid var(--gold);
 }
-.hero:before,.hero:after{
+.hero:before{
  content:"";
  position:absolute;
- width:260px;
- height:260px;
- border:1px solid #ffffff25;
+ width:420px;
+ height:420px;
+ border:1px solid #d9ae6230;
  border-radius:50%;
+ top:-240px;
+ left:-110px;
 }
-.hero:before{top:-130px;left:-80px}
-.hero:after{bottom:-160px;right:-80px}
-.hero-content{
- max-width:850px;
- margin:auto;
+.hero:after{
+ content:"";
+ position:absolute;
+ width:500px;
+ height:500px;
+ border:1px solid #d9ae6230;
+ border-radius:50%;
+ bottom:-350px;
+ right:-150px;
+}
+.hero-inner{
  position:relative;
- z-index:1;
+ z-index:2;
+ max-width:900px;
+ margin:auto;
 }
-.hero-label{
+.hero-line{
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ gap:15px;
+ margin-bottom:24px;
  color:var(--gold);
- letter-spacing:4px;
- font-size:11px;
+ font-size:10px;
  font-weight:700;
+ letter-spacing:4px;
+}
+.hero-line:before,.hero-line:after{
+ content:"";
+ width:48px;
+ height:1px;
+ background:var(--gold);
 }
 .hero h1{
  font-family:"Cormorant Garamond",serif;
- font-size:clamp(44px,7vw,76px);
- line-height:1;
- margin:20px 0;
+ font-size:clamp(53px,8vw,91px);
+ line-height:.95;
+ font-weight:700;
+ margin:0 0 22px;
+}
+.hero h1 span{
+ color:var(--gold);
 }
 .hero p{
- max-width:680px;
- margin:0 auto 28px;
- line-height:1.9;
- font-size:14px;
- color:#eeeaf6;
-}
-.hero .btn{margin:5px}
-
-/* INTRO */
-.intro-grid{
- display:grid;
- grid-template-columns:1.1fr .9fr;
- gap:35px;
- align-items:center;
-}
-.intro-copy h2{
- font-family:"Cormorant Garamond",serif;
- color:var(--navy);
- font-size:40px;
- margin:0 0 15px;
-}
-.intro-copy p{
- color:var(--muted);
- line-height:1.9;
+ max-width:690px;
+ margin:0 auto 30px;
+ color:#e5e0ed;
  font-size:13px;
+ line-height:2;
 }
-.intro-box{
- background:var(--cream);
- border-left:4px solid var(--gold);
- padding:28px;
- border-radius:7px;
-}
-.intro-box h3{
- color:var(--navy);
- font-family:"Cormorant Garamond",serif;
- font-size:26px;
- margin:0 0 10px;
-}
-.intro-box p{
- font-size:13px;
- line-height:1.8;
- color:var(--muted);
-}
-
-/* COMMITTEES */
-.committees-section{background:#faf8f4}
-.committee-grid{
- display:grid;
- grid-template-columns:repeat(3,minmax(0,1fr));
- gap:18px;
-}
-.committee-card{
- background:white;
- border:1px solid var(--border);
- border-radius:9px;
- padding:25px;
- transition:.25s;
-}
-.committee-card:hover{
- border-color:var(--gold);
- transform:translateY(-3px);
-}
-.committee-icon{
- width:45px;
- height:45px;
- border-radius:50%;
+.hero-actions{
  display:flex;
- align-items:center;
  justify-content:center;
- background:#f7f0e2;
- color:var(--maroon);
- font-size:20px;
- margin-bottom:17px;
+ flex-wrap:wrap;
+ gap:12px;
 }
-.committee-card h3{
- font-family:"Cormorant Garamond",serif;
- color:var(--navy);
- font-size:25px;
- margin:0 0 10px;
+.hero-bottom{
+ position:relative;
+ z-index:2;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ gap:13px;
+ margin-top:48px;
+ color:#d8d0e4;
+ font-size:9px;
+ letter-spacing:2px;
 }
-.committee-card p{
- color:var(--muted);
- font-size:12px;
- line-height:1.8;
- margin:0 0 15px;
+.hero-bottom span{color:var(--gold)}
+
+/* SECTION */
+.section{padding:82px 0}
+.section-heading{
+ text-align:center;
+ max-width:760px;
+ margin:0 auto 43px;
 }
-.explore-btn{
- border:0;
- background:transparent;
- padding:0;
+.eyebrow{
  color:var(--maroon);
  font-size:10px;
  font-weight:700;
- letter-spacing:1px;
-}
-.committee-detail{
- display:none;
- margin-top:14px;
- padding-top:13px;
- border-top:1px solid var(--border);
- color:var(--text);
- font-size:12px;
- line-height:1.8;
-}
-.committee-card.expanded .committee-detail{display:block}
-.committee-card.expanded .explore-btn{color:var(--navy)}
-
-/* BENEFITS */
-.benefit-grid{
- display:grid;
- grid-template-columns:repeat(4,minmax(0,1fr));
- gap:15px;
-}
-.benefit{
- background:white;
- border:1px solid var(--border);
- padding:23px 17px;
- border-radius:8px;
- text-align:center;
-}
-.benefit-icon{
- color:var(--gold);
- font-size:27px;
- margin-bottom:10px;
-}
-.benefit h3{
- font-family:"Cormorant Garamond",serif;
- font-size:22px;
- color:var(--navy);
- margin:5px 0;
-}
-.benefit p{
- color:var(--muted);
- font-size:11px;
- line-height:1.7;
-}
-
-/* SKILLS */
-.skills-section{background:var(--cream)}
-.skills-grid{
- display:grid;
- grid-template-columns:repeat(3,minmax(0,1fr));
- gap:15px;
-}
-.skill{
- padding:20px;
- background:white;
- border-radius:7px;
- border-left:3px solid var(--gold);
-}
-.skill h3{
- font-family:"Cormorant Garamond",serif;
- font-size:22px;
- color:var(--navy);
- margin:0 0 7px;
-}
-.skill p{
- font-size:11px;
- color:var(--muted);
- line-height:1.7;
- margin:0;
-}
-
-/* PROCESS */
-.process-grid{
- display:grid;
- grid-template-columns:repeat(3,minmax(0,1fr));
- gap:18px;
-}
-.process-card{
- border:1px solid var(--border);
- padding:24px;
- border-radius:8px;
-}
-.process-card h3{
- font-family:"Cormorant Garamond",serif;
- font-size:24px;
- color:var(--navy);
-}
-.process-card p{
- font-size:12px;
- color:var(--muted);
- line-height:1.8;
-}
-
-/* APPLY - SEPARATE SECTION */
-.apply-section{
- background:var(--navy);
- padding:75px 20px;
- text-align:center;
- color:white;
-}
-.apply-inner{
- max-width:760px;
- margin:auto;
-}
-.apply-label{
- color:var(--gold);
- font-size:11px;
- font-weight:700;
  letter-spacing:3px;
+ text-transform:uppercase;
 }
-.apply-section h2{
- color:white;
- font-family:"Cormorant Garamond",serif;
- font-size:46px;
- margin:15px 0;
-}
-.apply-section p{
- color:#e7e2ef;
- font-size:13px;
- line-height:1.9;
- margin:0 auto 25px;
- max-width:650px;
-}
-.apply-section .btn{
- background:var(--gold);
+.section-heading h2{
  color:var(--navy);
- border-color:var(--gold);
-}
-.apply-section .btn:hover{
- background:white;
- border-color:white;
-}
-
-/* FOOTER */
-footer{
- background:#17112f;
- color:white;
- padding:35px 20px;
- text-align:center;
-}
-.footer-brand{
  font-family:"Cormorant Garamond",serif;
- font-size:29px;
- color:var(--gold);
-}
-footer p{
- color:#c8c3d2;
- font-size:11px;
- line-height:1.8;
-}
-.footer-links{
- display:flex;
- justify-content:center;
- gap:20px;
- flex-wrap:wrap;
- margin:18px 0;
-}
-.footer-links a{
- color:white;
- font-size:11px;
-}
-.footer-links a:hover{color:var(--gold)}
-
-@media(max-width:850px){
- .committee-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
- .benefit-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
- .intro-grid{grid-template-columns:1fr}
-}
-@media(max-width:600px){
- .navbar{flex-direction:column}
- .nav-links{justify-content:center;gap:14px}
- .hero{padding:70px 18px}
- .section{padding:55px 0}
- .section-heading h2{font-size:35px}
- .committee-grid,.skills-grid,.process-grid{
-  grid-template-columns:1fr;
- }
- .benefit-grid{grid-template-columns:1fr 1fr}
- .apply-section h2{font-size:37px}
-}
-</style>
-</head>
-
-<body>
-
-<header>
- <nav class="navbar">
-  <a class="logo" href="index.html">AYAZ <span>MELO</span> 2026</a>
-
-  <div class="nav-links">
-   <a href="index.html">Home</a>
-   <a href="#about">About</a>
-   <a href="#committees">Committees</a>
-   <a href="#benefits">Benefits</a>
-   <a href="#apply" class="nav-apply">Apply Now</a>
-  </div>
- </nav>
-</header>
-
-<!-- HERO -->
-<section class="hero">
- <div class="hero-content">
-  <div class="hero-label">BE PART OF SOMETHING MEANINGFUL</div>
-  <h1>Become a Volunteer</h1>
-  <p>
-   Join the team behind Ayaz Melo 2026 and become part of a
-   celebration of literature, culture, creativity and community.
-   Your time, energy and dedication can make a difference.
-  </p>
-  <a href="#committees" class="btn gold">EXPLORE COMMITTEES</a>
-  <a href="#apply" class="btn outline">APPLY NOW</a>
- </div>
-</section>
-
-<!-- ABOUT -->
-<section class="section" id="about">
- <div class="container">
-  <div class="intro-grid">
-
-   <div class="intro-copy">
-    <div class="eyebrow">Join Our Team</div>
-    <h2>Be Part of the Ayaz Melo Experience</h2>
-    <p>
-     Ayaz Melo is a celebration of literature, art, music,
-     culture and ideas. Volunteers play an important role
-     in bringing this experience to life.
-    </p>
-    <p>
-     Whether you are a student, creative individual or someone
-     who wants to contribute to a cultural event, volunteering
-     offers an opportunity to learn, collaborate and make a
-     meaningful contribution.
-    </p>
-   </div>
-
-   <div class="intro-box">
-    <h3>Your Contribution Matters</h3>
-    <p>
-     Every successful event depends on teamwork, responsibility
-     and dedication. Become part of a team that works together
-     to welcome guests, support activities and create a memorable
-     experience for everyone.
-    </p>
-   </div>
-
-  </div>
- </div>
-</section>
-
-<!-- COMMITTEES -->
-<section class="section committees-section" id="committees">
- <div class="container">
-
-  <div class="section-heading">
-   <div class="eyebrow">Work With Our Teams</div>
-   <h2>Explore Our Volunteer Committees</h2>
-   <p>
-    Discover the different areas where volunteers contribute
-    to the successful organization of Ayaz Melo 2026.
-   </p>
-  </div>
-
-  <div class="committee-grid">
-
-   <article class="committee-card">
-    <div class="committee-icon">✦</div>
-    <h3>Registration Committee</h3>
-    <p>
-     Helping register guests and maintain organized
-     registration records.
-    </p>
-    <button class="explore-btn" type="button">EXPLORE COMMITTEE +</button>
-    <div class="committee-detail">
-     The team assists with registering guests arriving from
-     different cities, collecting required information and
-     maintaining accurate guest records.
-    </div>
-   </article>
-
-   <article class="committee-card">
-    <div class="committee-icon">✧</div>
-    <h3>Reception Committee</h3>
-    <p>
-     Welcoming guests and helping them find their way
-     around the event.
-    </p>
-    <button class="explore-btn" type="button">EXPLORE COMMITTEE +</button>
-    <div class="committee-detail">
-     The team receives guests at the entrance, provides
-     guidance and helps visitors reach the appropriate
-     halls and event areas.
-    </div>
-   </article>
-
-   <article class="committee-card">
-    <div class="committee-icon">◇</div>
-    <h3>Hall Management Committee</h3>
-    <p>
-     Supporting seating arrangements and maintaining
-     an organized audience environment.
-    </p>
-    <button class="explore-btn" type="button">EXPLORE COMMITTEE +</button>
-    <div class="committee-detail">
-     The team manages the main hall, guides the audience
-     towards seating areas and helps maintain orderly
-     movement during sessions.
-    </div>
-   </article>
-
-   <article class="committee-card">
-    <div class="committee-icon">❖</div>
-    <h3>Food & Hospitality Committee</h3>
-    <p>
-     Helping with refreshments, food arrangements
-     and guest hospitality.
-    </p>
-    <button class="explore-btn" type="button">EXPLORE COMMITTEE +</button>
-    <div class="committee-detail">
-     The team supports food distribution, refreshments
-     and hospitality arrangements to ensure guests
-     are properly looked after.
-    </div>
-   </article>
-
-   <article class="committee-card">
-    <div class="committee-icon">✺</div>
-    <h3>Stage Management Committee</h3>
-    <p>
-     Supporting stage preparation, decoration
-     and event operations.
-    </p>
-    <button class="explore-btn" type="button">EXPLORE COMMITTEE +</button>
-    <div class="committee-detail">
-     The team assists with stage decoration, preparation,
-     coordination and smooth operations during
-     performances and sessions.
-    </div>
-   </article>
-
-   <article class="committee-card">
-    <div class="committee-icon">✧</div>
-    <h3>Stall Management Committee</h3>
-    <p>
-     Helping manage stalls and supporting stall-related
-     arrangements.
-    </p>
-    <button class="explore-btn" type="button">EXPLORE COMMITTEE +</button>
-    <div class="committee-detail">
-     The team supports stall setup, coordination,
-     visitor guidance and the overall management
-     of stall areas.
-    </div>
-   </article>
-
-   <article class="committee-card">
-    <div class="committee-icon">✦</div>
-    <h3>Volunteer Coordination Committee</h3>
-    <p>
-     Supporting volunteer communication, coordination
-     and task management.
-    </p>
-    <button class="explore-btn" type="button">EXPLORE COMMITTEE +</button>
-    <div class="committee-detail">
-     The team helps coordinate volunteers, communicate
-     responsibilities and guide team members throughout
-     the event.
-    </div>
-   </article>
-
-   <article class="committee-card">
-    <div class="committee-icon">◇</div>
-    <h3>Mumtaz Mirza Auditorium Committee</h3>
-    <p>
-     Supporting the overall arrangements and management
-     of Mumtaz Mirza Auditorium.
-    </p>
-    <button class="explore-btn" type="button">EXPLORE COMMITTEE +</button>
-    <div class="committee-detail">
-     The team assists with the overall auditorium
-     arrangements, coordination, audience facilities
-     and smooth functioning of the venue.
-    </div>
-   </article>
-
-  </div>
- </div>
-</section>
-
-<!-- BENEFITS -->
-<section class="section" id="benefits">
- <div class="container">
-
-  <div class="section-heading">
-   <div class="eyebrow">Your Volunteer Journey</div>
-   <h2>What You Gain as a Volunteer</h2>
-   <p>
-    Volunteering is an opportunity to learn, grow,
-    connect with people and gain practical experience.
-   </p>
-  </div>
-
-  <div class="benefit-grid">
-
-   <div class="benefit">
-    <div class="benefit-icon">✦</div>
-    <h3>Recognition</h3>
-    <p>Be part of a meaningful cultural and literary event.</p>
-   </div>
-
-   <div class="benefit">
-    <div class="benefit-icon">✧</div>
-    <h3>Certificates</h3>
-    <p>Eligible active volunteers may receive certificates of participation.</p>
-   </div>
-
-   <div class="benefit">
-    <div class="benefit-icon">◇</div>
-    <h3>Practical Experience</h3>
-    <p>Gain real-world experience in event organization and management.</p>
-   </div>
-
-   <div class="benefit">
-    <div class="benefit-icon">❖</div>
-    <h3>Networking</h3>
-    <p>Meet new people and build meaningful connections.</p>
-   </div>
-
-   <div class="benefit">
-    <div class="benefit-icon">✺</div>
-    <h3>Leadership</h3>
-    <p>Develop responsibility, teamwork and leadership skills.</p>
-   </div>
-
-   <div class="benefit">
-    <div class="benefit-icon">✦</div>
-    <h3>Learning</h3>
-    <p>Learn through collaboration and hands-on activities.</p>
-   </div>
-
-   <div class="benefit">
-    <div class="benefit-icon">✧</div>
-    <h3>Creativity</h3>
-    <p>Contribute ideas and discover your creative potential.</p>
-   </div>
-
-   <div class="benefit">
-    <div class="benefit-icon">◇</div>
-    <h3>Community</h3>
-    <p>Contribute positively to culture, literature and society.</p>
-   </div>
-
-  </div>
- </div>
-</section>
-
-<!-- SKILLS -->
-<section class="section skills-section">
- <div class="container">
-
-  <div class="section-heading">
-   <div class="eyebrow">Grow Through Experience</div>
-   <h2>Skills You Can Develop</h2>
-   <p>
-    Every responsibility is an opportunity to develop
-    useful personal and professional skills.
-   </p>
-  </div>
-
-  <div class="skills-grid">
-
-   <div class="skill">
-    <h3>Communication</h3>
-    <p>Improve communication through guest interaction and teamwork.</p>
-   </div>
-
-   <div class="skill">
-    <h3>Event Management</h3>
-    <p>Understand how large-scale cultural events are organized.</p>
-   </div>
-
-   <div class="skill">
-    <h3>Problem Solving</h3>
-    <p>Learn to handle responsibilities and unexpected situations.</p>
-   </div>
-
-   <div class="skill">
-    <h3>Teamwork</h3>
-    <p>Work collaboratively towards shared goals.</p>
-   </div>
-
-   <div class="skill">
-    <h3>Time Management</h3>
-    <p>Develop discipline and manage tasks effectively.</p>
-   </div>
-
-   <div class="skill">
-    <h3>Leadership</h3>
-    <p>Build confidence through responsibility and practical work.</p>
-   </div>
-
-  </div>
- </div>
-</section>
-
-<!-- VOLUNTEER PROCESS -->
-<section class="section">
- <div class="container">
-
-  <div class="section-heading">
-   <div class="eyebrow">Getting Started</div>
-   <h2>Your Volunteer Journey</h2>
-   <p>Follow the process to become part of the volunteer team.</p>
-  </div>
-
-  <div class="process-grid">
-
-   <div class="process-card">
-    <h3>Submit Application</h3>
-    <p>
-     Complete the volunteer application form with
-     accurate personal and educational information.
-    </p>
-   </div>
-
-   <div class="process-card">
-    <h3>Application Review</h3>
-    <p>
-     Applications are reviewed by the organizing team.
-     Selected applicants may receive further instructions.
-    </p>
-   </div>
-
-   <div class="process-card">
-    <h3>Join the Team</h3>
-    <p>
-     Follow the instructions and responsibilities
-     communicated by the organizing team.
-    </p>
-   </div>
-
-  </div>
- </div>
-</section>
-
-<!-- SEPARATE APPLY SECTION -->
-<section class="apply-section" id="apply">
- <div class="apply-inner">
-  <div class="apply-label">YOUR JOURNEY STARTS HERE</div>
-  <h2>Ready to Become a Volunteer?</h2>
-  <p>
-   Take the next step and submit your application
-   to become part of Ayaz Melo 2026.
-   Join the team, gain experience and contribute
-   to a memorable cultural celebration.
-  </p>
-
-  <a href="volunteer-apply.html" class="btn">
-   APPLY FOR VOLUNTEER
-  </a>
- </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
- <div class="footer-brand">AYAZ MELO 2026</div>
-
- <p>
-  A celebration of literature, culture, art and ideas.<br>
-  Hyderabad, Sindh, Pakistan
- </p>
-
- <div class="footer-links">
-  <a href="index.html">Home</a>
-  <a href="#about">About</a>
-  <a href="#committees">Committees</a>
-  <a href="#benefits">Benefits</a>
-  <a href="#apply">Apply</a>
- </div>
-
- <p>© 2026 Ayaz Melo. All Rights Reserved.</p>
-</footer>
-
-<script>
-document.querySelectorAll(".committee-card").forEach(card=>{
- const button=card.querySelector(".explore-btn");
-
- button.addEventListener("click",()=>{
-  const expanded=card.classList.toggle("expanded");
-  button.textContent=expanded
-   ? "CLOSE DETAILS −"
-   : "EXPLORE COMMITTEE +";
- });
-});
-</script>
-
-</body>
-    </html>
+ font-size:clamp(35
