@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Volunteer Application | Ayaz Melo 2026</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+ --navy:#21164d;
+ --maroon:#842c3c;
+ --gold:#d9ae62;
+ --cream:#faf5eb;
+ --white:#fff;
+ --text:#252238;
+ --muted:#777;
+ --border:#e9e3d9;
+ --green:#23865b;
+ --red:#bd3545;
+}
+*{box-sizing:border-box}
+body{
+ margin:0;
+ background:var(--cream);
+ color:var(--text);
+ font-family:Montserrat,Arial,sans-serif;
+}
+header{
+ background:white;
+ border-bottom:1px solid var(--border);
+ padding:20px;
+ text-align:center;
+}
+.brand{
+ font-family:"Cormorant Garamond",serif;
+ font-size:36px;
+ font-weight:700;
+ color:var(--navy);
+}
+.brand span{color:var(--maroon)}
+header p{
+ font-size:10px;
+ color:var(--muted);
+ letter-spacing:3px;
+ margin:4px 0;
+}
+.container{
+ max-width:850px;
+ margin:35px auto;
+ padding:0 15px;
+}
+.panel{
+ background:white;
+ padding:25px;
+ border:1px solid var(--border);
+ border-radius:10px;
+ margin-bottom:20px;
+}
+h1,h2,h3{
+ font-family:"Cormorant Garamond",serif;
+ color:var(--navy);
+}
+h1{
+ font-size:38px;
+ text-align:center;
+ margin:0 0 8px;
+}
+h2{
+ font-size:27px;
+ margin:0 0 8px;
+}
+.subtitle{
+ color:var(--muted);
+ text-align:center;
+ font-size:12px;
+ line-height:1.8;
+}
+.section-heading{
+ border-bottom:1px solid var(--border);
+ padding-bottom:12px;
+ margin:22px 0 15px;
+}
+.form-grid{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:0 15px;
+}
+.full{grid-column:1/-1}
+label{
+ display:block;
+ font-size:11px;
+ font-weight:700;
+ color:var(--navy);
+ margin-top:13px;
+}
+input,select,textarea{
+ width:100%;
+ padding:12px;
+ border:1px solid var(--border);
+ border-radius:6px;
+ margin-top:6px;
+ background:white;
+ font:inherit;
+ font-size:12px;
+}
+input:focus,select:focus,textarea:focus{
+ outline:none;
+ border-color:var(--gold);
+}
+input[type=file]{font-size:11px}
+small{
+ display:block;
+ color:var(--muted);
+ font-size:10px;
+ margin-top:5px;
+}
+.btn{
+ display:inline-block;
+ border:0;
+ background:var(--navy);
+ color:white;
+ padding:13px 22px;
+ border-radius:6px;
+ font-size:11px;
+ font-weight:700;
+ text-decoration:none;
+ cursor:pointer;
+}
+.btn.gold{background:var(--gold);color:var(--navy)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.notice{
+ padding:22px;
+ border-radius:8px;
+ text-align:center;
+ font-size:13px;
+ line-height:1.8;
+}
+.closed{
+ background:#fff0f0;
+ border:1px solid #efcaca;
+ color:#842c3c;
+}
+.open{
+ background:#edf8f0;
+ border:1px solid #cce8d4;
+ color:#21643d;
+}
+.hidden{display:none!important}
+.center{text-align:center}
+#formMessage{
+ font-size:12px;
+ line-height:1.8;
+ margin-top:15px;
+}
+.success{
+ background:#edf8f0;
+ border:1px solid #cce8d4;
+ padding:18px;
+ border-radius:8px;
+ color:#21643d;
+}
+.error{color:var(--red)}
+footer{
+ text-align:center;
+ padding:25px;
+ color:var(--muted);
+ font-size:11px;
+}
+@media(max-width:600px){
+ .form-grid{grid-template-columns:1fr}
+ .full{grid-column:auto}
+ .panel{padding:17px}
+ h1{font-size:32px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <div class="brand">AYAZ <span>MELO</span> 2026</div>
+ <p>OFFICIAL VOLUNTEER APPLICATION</p>
+</header>
+
+<main class="container">
+
+ <section class="panel">
+  <h1>Volunteer Registration</h1>
+  <p class="subtitle">
+   Join the team behind Ayaz Melo 2026.<br>
+   Complete the application form with accurate information.
+  </p>
+ </section>
+
+ <!-- REGISTRATION STATUS -->
+ <section class="panel">
+
+  <div id="loadingStatus" class="notice">
+   Checking registration status...
+  </div>
+
+  <div id="closedStatus" class="notice closed hidden">
+   <h2>Registration Currently Closed</h2>
+   <strong>
+    Ayaz Melo 2026 Volunteer Registration is Currently Closed.
+   </strong>
+   <p>
+    Thank you for your interest in becoming a volunteer.
+    Applications are not being accepted at this time.
+    Please visit again for future updates.
+   </p>
+   <a href="volunteer.html" class="btn gold">BACK TO VOLUNTEER PAGE</a>
+  </div>
+
+  <div id="openStatus" class="notice open hidden">
+   <strong>Volunteer Registration is Open!</strong>
+   <p>You can submit your application below.</p>
+  </div>
+
+  <div id="errorStatus" class="notice closed hidden">
+   <strong>Unable to check registration status.</strong>
+   <p>Please refresh the page or try again later.</p>
+   <button class="btn" id="retryButton" type="button">RETRY</button>
+  </div>
+
+ </section>
+
+ <!-- APPLICATION FORM -->
+ <section id="applicationSection" class="panel hidden">
+
+  <h2>Personal Information</h2>
+
+  <form id="volunteerForm">
+
+   <div class="form-grid">
+
+    <div class="full">
+     <label>Google Account</label>
+     <input type="email" name="google_account">
+    </div>
+
+    <div>
+     <label>Full Name *</label>
+     <input name="full_name" required>
+    </div>
+
+    <div>
+     <label>Father Name *</label>
+     <input name="father_name" required>
+    </div>
+
+    <div>
+     <label>Caste *</label>
+     <input name="caste" required>
+    </div>
+
+    <div>
+     <label>Date of Birth *</label>
+     <input type="date" name="date_of_birth" required>
+    </div>
+
+    <div>
+     <label>Gender *</label>
+     <select name="gender" required>
+      <option value="">Select Gender</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      <option value="Other">Other</option>
+     </select>
+    </div>
+
+    <div>
+     <label>Mobile / WhatsApp *</label>
+     <input type="tel" name="mobile_whatsapp" required>
+    </div>
+
+    <div>
+     <label>CNIC Number *</label>
+     <input name="cnic" required maxlength="15"
+      placeholder="00000-0000000-0">
+    </div>
+
+    <div>
+     <label>Email Address *</label>
+     <input type="email" name="email" required>
+    </div>
+
+   </div>
+
+   <div class="section-heading">
+    <h2>Educational Information</h2>
+   </div>
+
+   <div class="form-grid">
+
+    <div class="full">
+     <label>University / College *</label>
+     <input name="university_college" required>
+    </div>
+
+    <div>
+     <label>Department / Group *</label>
+     <input name="department_group" required>
+    </div>
+
+    <div>
+     <label>Semester / Batch *</label>
+     <input name="semester_batch" required>
+    </div>
+
+   </div>
+
+   <div class="section-heading">
+    <h2>Address Information</h2>
+   </div>
+
+   <div class="form-grid">
+
+    <div class="full">
+     <label>Current Address *</label>
+     <textarea name="current_address" rows="3" required></textarea>
+    </div>
+
+    <div class="full">
+     <label>Permanent Address *</label>
+     <textarea name="permanent_address" rows="3" required></textarea>
+    </div>
+
+   </div>
+
+   <div class="section-heading">
+    <h2>Required Documents</h2>
+   </div>
+
+   <div class="form-grid">
+
+    <div>
+     <label>CNIC Front Image</label>
+     <input type="file" name="cnic_front" accept="image/*">
+     <small>Upload a clear image.</small>
+    </div>
+
+    <div>
+     <label>CNIC Back Image</label>
+     <input type="file" name="cnic_back" accept="image/*">
+     <small>Upload a clear image.</small>
+    </div>
+
+    <div>
+     <label>Student ID Card</label>
+     <input type="file" name="student_id" accept="image/*,.pdf">
+    </div>
+
+    <div>
+     <label>Recent Photograph</label>
+     <input type="file" name="photo" accept="image/*">
+    </div>
+
+   </div>
+
+   <div class="section-heading">
+    <h2>Volunteer Information</h2>
+   </div>
+
+   <div class="form-grid">
+
+    <div class="full">
+     <label>Why do you want to join Ayaz Melo? *</label>
+     <textarea name="motivation" rows="5" required></textarea>
+    </div>
+
+    <div class="full">
+     <label>Have you volunteered at Ayaz Melo before? *</label>
+     <select name="previous_ayaz_volunteer" required>
+      <option value="">Select</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+     </select>
+    </div>
+
+    <div class="full">
+     <label>Reference (if any)</label>
+     <textarea name="reference" rows="3"></textarea>
+    </div>
+
+   </div>
+
+   <div class="center" style="margin-top:25px">
+    <button class="btn" id="submitButton" type="submit">
+     SUBMIT APPLICATION
+    </button>
+   </div>
+
+   <div id="formMessage" class="center"></div>
+
+  </form>
+ </section>
+
+ <div class="center">
+  <a href="volunteer.html" class="btn gold">BACK TO VOLUNTEER PAGE</a>
+ </div>
+
+</main>
+
+<footer>
+ Ayaz Melo 2026 | Hyderabad, Sindh, Pakistan
+</footer>
+
+<script>
+const SUPABASE_URL =
+ "https://fstkhwoxbgdcdfwycggu.supabase.co";
+
+const SUPABASE_KEY =
+ "sb_publishable_BNRQfiLDVM-892aVwO_hJw_OAhEgTrq";
+
+const SUBMIT_URL =
+ SUPABASE_URL + "/functions/v1/volunteer-submit";
+
+const db = window.supabase.createClient(
+ SUPABASE_URL,
+ SUPABASE_KEY
+);
+
+const $ = id => document.getElementById(id);
+
+let registrationOpen = false;
+
+async function checkRegistrationStatus(){
+
+ registrationOpen = false;
+
+ $("loadingStatus").classList.remove("hidden");
+ $("closedStatus").classList.add("hidden");
+ $("openStatus").classList.add("hidden");
+ $("errorStatus").classList.add("hidden");
+ $("applicationSection").classList.add("hidden");
+
+ try{
+
+  const {data,error} = await db
+   .from("site_settings")
+   .select("volunteer_applications_open")
+   .eq("id",1)
+   .single();
+
+  if(error) throw error;
+
+  $("loadingStatus").classList.add("hidden");
+
+  if(data.volunteer_applications_open === true){
+
+   registrationOpen = true;
+
+   $("openStatus").classList.remove("hidden");
+   $("applicationSection").classList.remove("hidden");
+
+  }else{
+
+   $("closedStatus").classList.remove("hidden");
+
+  }
+
+ }catch(error){
+
+  console.error(error);
+
+  $("loadingStatus").classList.add("hidden");
+  $("errorStatus").classList.remove("hidden");
+
+ }
+}
+
+$("retryButton").addEventListener(
+ "click",checkRegistrationStatus
+);
+
+$("volunteerForm").addEventListener("submit",async function(e){
+
+ e.preventDefault();
+
+ if(!registrationOpen){
+  alert("Volunteer registration is currently closed.");
+  await checkRegistrationStatus();
+  return;
+ }
+
+ const button = $("submitButton");
+ const message = $("formMessage");
+
+ button.disabled = true;
+ button.textContent = "SUBMITTING...";
+ message.textContent = "";
+
+ try{
+
+  // Recheck registration before submission.
+  const {data:settings,error:settingsError} = await db
+   .from("site_settings")
+   .select("volunteer_applications_open")
+   .eq("id",1)
+   .single();
+
+  if(settingsError) throw settingsError;
+
+  if(settings.volunteer_applications_open !== true){
+
+   await checkRegistrationStatus();
+
+   throw new Error(
+    "Volunteer registration is currently closed."
+   );
+
+  }
+
+  const formData = new FormData(this);
+
+  const response = await fetch(SUBMIT_URL,{
+   method:"POST",
+   body:formData
+  });
+
+  const result = await response.json();
+
+  if(!response.ok || result.error){
+
+   throw new Error(
+    result.error ||
+    result.message ||
+    "Application submission failed."
+   );
+
+  }
+
+  this.reset();
+
+  $("applicationSection").innerHTML = `
+   <div class="success center">
+    <h2>Application Submitted Successfully!</h2>
+    <p>
+     Thank you for applying to become a volunteer
+     at Ayaz Melo 2026.
+    </p>
+    <p>
+     Your application is currently under review.
+     Please keep checking for updates.
+    </p>
+    <a href="volunteer.html" class="btn gold">
+     BACK TO VOLUNTEER PAGE
+    </a>
+   </div>
+  `;
+
+ }catch(error){
+
+  console.error(error);
+
+  message.className = "center error";
+  message.textContent = error.message;
+
+  button.disabled = false;
+  button.textContent = "SUBMIT APPLICATION";
+
+ }
+
+});
+
+checkRegistrationStatus();
+</script>
+
+</body>
+</html>
