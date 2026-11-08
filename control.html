@@ -7,706 +7,458 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
- --navy:#21164d;
- --maroon:#842c3c;
- --gold:#d9ae62;
- --cream:#faf5eb;
- --white:#fff;
- --text:#252238;
- --muted:#777;
- --border:#e9e3d9;
- --green:#23865b;
- --red:#bd3545;
+ --navy:#21164d;--gold:#d9ae62;--cream:#faf5eb;
+ --text:#252238;--muted:#777;--border:#e9e3d9;
+ --green:#23865b;--red:#bd3545;
 }
 *{box-sizing:border-box}
-body{
- margin:0;
- background:var(--cream);
- color:var(--text);
- font-family:Montserrat,Arial,sans-serif;
-}
+body{margin:0;background:var(--cream);color:var(--text);font-family:Montserrat,Arial,sans-serif}
 button,input,select,textarea{font:inherit}
 button{cursor:pointer}
 .hidden{display:none!important}
-#loginScreen{
- min-height:100vh;
- display:flex;
- justify-content:center;
- align-items:center;
- padding:20px;
-}
-.login-card{
- width:100%;
- max-width:420px;
- background:white;
- padding:32px;
- border-radius:15px;
- box-shadow:0 10px 35px #21164d18;
-}
-.brand{
- font-family:"Cormorant Garamond",serif;
- color:var(--navy);
- font-size:34px;
- text-align:center;
-}
-.subtitle{text-align:center;color:var(--muted);font-size:12px;margin:5px 0 25px}
-input,select,textarea{
- width:100%;
- padding:12px;
- border:1px solid var(--border);
- border-radius:7px;
- background:white;
- outline:none;
- margin:5px 0 12px;
-}
-input:focus,select:focus,textarea:focus{border-color:var(--gold)}
+#loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-card{background:white;width:100%;max-width:420px;padding:30px;border-radius:14px;box-shadow:0 10px 35px #21164d18}
+.brand{font:700 34px "Cormorant Garamond",serif;color:var(--navy);text-align:center}
+.subtitle{text-align:center;color:var(--muted);font-size:11px;margin:5px 0 24px}
+input,select,textarea{width:100%;padding:10px;border:1px solid var(--border);border-radius:7px;margin:5px 0 12px;background:white}
 label{font-size:12px;font-weight:700}
-.btn{
- border:0;
- border-radius:7px;
- padding:11px 15px;
- background:var(--navy);
- color:white;
- font-weight:600;
- font-size:12px;
-}
-.btn:hover{opacity:.88}
+.btn{border:0;border-radius:7px;padding:10px 13px;background:var(--navy);color:white;font-size:11px;font-weight:700}
 .btn.gold{background:var(--gold);color:var(--navy)}
-.btn.red{background:var(--red)}
 .btn.green{background:var(--green)}
+.btn.red{background:var(--red)}
 .btn.gray{background:#777}
-.btn.small{padding:7px 10px;font-size:11px}
+.btn.small{padding:6px 8px;font-size:10px}
 #app{display:none;min-height:100vh}
-.topbar{
- background:var(--navy);
- color:white;
- padding:15px 22px;
- display:flex;
- justify-content:space-between;
- align-items:center;
- gap:10px;
- flex-wrap:wrap;
-}
-.topbar h2{
- margin:0;
- font-family:"Cormorant Garamond",serif;
- font-size:26px;
-}
+.topbar{background:var(--navy);color:white;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.topbar h2{font:700 26px "Cormorant Garamond",serif;margin:0}
 .layout{display:flex;min-height:calc(100vh - 60px)}
-.sidebar{
- width:235px;
- background:#fff;
- border-right:1px solid var(--border);
- padding:15px 10px;
- flex-shrink:0;
-}
-.navbtn{
- width:100%;
- text-align:left;
- border:0;
- background:transparent;
- padding:12px;
- margin:3px 0;
- border-radius:7px;
- color:var(--navy);
- font-weight:600;
- font-size:12px;
-}
-.navbtn:hover,.navbtn.active{background:var(--navy);color:white}
-.main{padding:22px;width:calc(100% - 235px);min-width:0}
+.sidebar{width:225px;flex-shrink:0;background:white;border-right:1px solid var(--border);padding:12px 9px}
+.navbtn{width:100%;border:0;background:transparent;text-align:left;padding:11px;margin:2px 0;border-radius:7px;color:var(--navy);font-size:11px;font-weight:700}
+.navbtn.active,.navbtn:hover{background:var(--navy);color:white}
+.main{width:calc(100% - 225px);min-width:0;padding:20px}
 .page{display:none}
 .page.active{display:block}
-.page-title{
- font-family:"Cormorant Garamond",serif;
- font-size:32px;
- color:var(--navy);
- margin:0 0 17px;
-}
-.cards{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(155px,1fr));
- gap:12px;
- margin-bottom:20px;
-}
-.card{
- background:white;
- padding:18px;
- border-radius:10px;
- border:1px solid var(--border);
-}
-.card small{color:var(--muted);font-size:11px}
-.card strong{display:block;font-size:26px;color:var(--navy);margin-top:7px}
-.panel{
- background:white;
- border:1px solid var(--border);
- border-radius:10px;
- padding:17px;
- margin-bottom:18px;
-}
-.panel h3{margin:0 0 14px;color:var(--navy);font-size:16px}
-.toolbar{
- display:flex;
- flex-wrap:wrap;
- gap:8px;
- align-items:center;
- margin-bottom:14px;
-}
-.toolbar input,.toolbar select{width:auto;min-width:150px;margin:0}
+.page-title{font:700 31px "Cormorant Garamond",serif;color:var(--navy);margin:0 0 16px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px;margin-bottom:18px}
+.card,.panel{background:white;border:1px solid var(--border);border-radius:9px;padding:15px}
+.card small{font-size:10px;color:var(--muted)}
+.card strong{display:block;font-size:25px;color:var(--navy);margin-top:6px}
+.panel{margin-bottom:16px}
+.panel h3{font-size:15px;color:var(--navy);margin:0 0 12px}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;align-items:center}
+.toolbar input,.toolbar select{width:auto;min-width:140px;margin:0}
 .table-wrap{overflow-x:auto}
-table{border-collapse:collapse;width:100%;font-size:11px;min-width:650px}
-th,td{
- text-align:left;
- padding:11px 9px;
- border-bottom:1px solid var(--border);
- white-space:nowrap;
-}
+table{border-collapse:collapse;width:100%;min-width:650px;font-size:10px}
+th,td{padding:9px 8px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;vertical-align:middle}
 th{background:#f7f2e9;color:var(--navy)}
-td.actions{white-space:nowrap}
-.badge{
- display:inline-block;
- border-radius:20px;
- padding:5px 8px;
- background:#eee;
- font-size:10px;
-}
+.badge{padding:4px 8px;border-radius:20px;background:#fff1d5;color:#845a0c;font-size:10px}
 .badge.green{background:#e0f3e9;color:#176d43}
 .badge.red{background:#fbe4e7;color:#a51f30}
-.badge.gold{background:#fff1d5;color:#845a0c}
-.modal{
- position:fixed;
- inset:0;
- background:#17112699;
- display:none;
- align-items:center;
- justify-content:center;
- padding:15px;
- z-index:20;
-}
+.notice{padding:10px;background:#f5f0e7;border-radius:7px;font-size:11px;margin:10px 0}
+.status{font-size:11px;color:var(--muted)}
+.modal{display:none;position:fixed;inset:0;background:#17112699;z-index:20;align-items:center;justify-content:center;padding:14px}
 .modal.show{display:flex}
-.modal-box{
- background:white;
- border-radius:12px;
- width:100%;
- max-width:600px;
- max-height:90vh;
- overflow:auto;
- padding:22px;
-}
+.modal-box{background:white;border-radius:12px;width:100%;max-width:680px;max-height:90vh;overflow:auto;padding:20px}
 .modal-box h3{color:var(--navy);margin-top:0}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
-.form-grid .full{grid-column:1/-1}
-.notice{
- padding:12px;
- border-radius:7px;
- background:#f5f0e7;
- margin:10px 0;
- font-size:12px;
-}
-#toast{
- position:fixed;
- bottom:20px;
- right:20px;
- background:var(--navy);
- color:white;
- padding:13px 18px;
- border-radius:8px;
- display:none;
- z-index:50;
- max-width:90%;
- font-size:12px;
-}
-.status{font-size:12px;color:var(--muted)}
-@media(max-width:750px){
+.full{grid-column:1/-1}
+#toast{display:none;position:fixed;right:18px;bottom:18px;background:var(--navy);color:white;padding:12px 16px;border-radius:8px;z-index:50;max-width:90%;font-size:12px}
+@media(max-width:760px){
  .layout{display:block}
- .sidebar{
-  width:100%;
-  display:flex;
-  overflow-x:auto;
-  border-right:0;
-  border-bottom:1px solid var(--border);
-  padding:8px;
- }
- .navbtn{width:auto;min-width:max-content;padding:10px}
- .main{width:100%;padding:14px}
- .topbar{padding:12px}
+ .sidebar{width:100%;display:flex;overflow-x:auto;border:0;border-bottom:1px solid var(--border);padding:7px}
+ .navbtn{width:auto;min-width:max-content;padding:9px}
+ .main{width:100%;padding:12px}
+ .topbar{padding:11px}
  .form-grid{grid-template-columns:1fr}
- .form-grid .full{grid-column:auto}
+ .full{grid-column:auto}
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
 <section id="loginScreen">
  <div class="login-card">
   <div class="brand">AYAZ MELO 2026</div>
   <div class="subtitle">SUPER ADMIN CONTROL PANEL</div>
-
   <form id="loginForm">
    <label>Email Address</label>
    <input id="email" type="email" required placeholder="Admin email">
-
    <label>Password</label>
    <input id="password" type="password" required placeholder="Password">
-
-   <button class="btn" style="width:100%;margin-top:10px" type="submit">
-    Secure Admin Login
-   </button>
+   <button class="btn" style="width:100%" type="submit">Secure Admin Login</button>
   </form>
   <p id="loginMessage" class="status"></p>
  </div>
 </section>
 
-<!-- APPLICATION -->
 <div id="app">
- <header class="topbar">
-  <h2>Ayaz Melo | Super Admin</h2>
-  <div>
-   <span id="adminEmail" style="font-size:11px;margin-right:10px"></span>
-   <button class="btn gold small" id="refreshBtn">Refresh</button>
-   <button class="btn red small" id="logoutBtn">Logout</button>
-  </div>
- </header>
-
- <div class="layout">
-  <aside class="sidebar">
-   <button class="navbtn active" data-page="dashboard">Dashboard</button>
-   <button class="navbtn" data-page="visitors">Visitors</button>
-   <button class="navbtn" data-page="registration">Registration Control</button>
-   <button class="navbtn" data-page="announcements">Announcements</button>
-   <button class="navbtn" data-page="volunteers">Volunteers</button>
-   <button class="navbtn" data-page="feedback">Feedback</button>
-   <button class="navbtn" data-page="gallery">Gallery</button>
-   <button class="navbtn" data-page="content">Website Content</button>
-   <button class="navbtn" data-page="attendance">Attendance</button>
-   <button class="navbtn" data-page="activity">Activity Log</button>
-  </aside>
-
-  <main class="main">
-
-   <!-- DASHBOARD -->
-   <section class="page active" id="page-dashboard">
-    <h1 class="page-title">Dashboard Overview</h1>
-    <div class="cards">
-     <div class="card"><small>Total Visitors</small><strong id="totalVisitors">0</strong></div>
-     <div class="card"><small>Total Check-ins</small><strong id="totalCheckins">0</strong></div>
-     <div class="card"><small>Unique Cities</small><strong id="totalCities">0</strong></div>
-     <div class="card"><small>Volunteers</small><strong id="totalVolunteers">0</strong></div>
-     <div class="card"><small>Feedback</small><strong id="totalFeedback">0</strong></div>
-    </div>
-    <div class="panel">
-     <h3>Recent Registrations</h3>
-     <div class="table-wrap">
-      <table>
-       <thead><tr><th>Registration ID</th><th>Name</th><th>City</th><th>Date</th></tr></thead>
-       <tbody id="recentVisitors"></tbody>
-      </table>
-     </div>
-    </div>
-   </section>
-
-   <!-- VISITORS -->
-   <section class="page" id="page-visitors">
-    <h1 class="page-title">Visitor Management</h1>
-    <div class="panel">
-     <div class="toolbar">
-      <input id="visitorSearch" placeholder="Search name, phone, city, ID">
-      <select id="cityFilter"><option value="">All Cities</option></select>
-      <button class="btn" id="addVisitorBtn">+ Add Visitor</button>
-      <button class="btn green" id="exportVisitors">Export Excel</button>
-      <button class="btn gray" id="exportVisitorsCSV">Export CSV</button>
-     </div>
-     <div class="table-wrap">
-      <table>
-       <thead>
-        <tr>
-         <th>Registration ID</th><th>Name</th><th>Father Name</th>
-         <th>Phone</th><th>City</th><th>Designation</th>
-         <th>Registered</th><th>Actions</th>
-        </tr>
-       </thead>
-       <tbody id="visitorRows"></tbody>
-      </table>
-     </div>
-     <p class="status" id="visitorCount"></p>
-    </div>
-   </section>
-
-   <!-- REGISTRATION -->
-   <section class="page" id="page-registration">
-    <h1 class="page-title">Registration Control</h1>
-    <div class="panel">
-     <h3>Public Visitor Registration</h3>
-     <p id="registrationStatus" class="notice">Loading...</p>
-     <button class="btn green" id="openRegistration">Open Registration</button>
-     <button class="btn red" id="closeRegistration">Close Registration</button>
-    </div>
-    <div class="panel">
-     <h3>Volunteer Applications</h3>
-     <p id="volunteerStatus" class="notice">Loading...</p>
-     <button class="btn green" id="openVolunteer">Open Applications</button>
-     <button class="btn red" id="closeVolunteer">Close Applications</button>
-    </div>
-    <div class="notice">
-     Note: Public visitor and volunteer forms must read these settings from Supabase for the controls to affect the live website.
-    </div>
-   </section>
-
-   <!-- ANNOUNCEMENTS -->
-   <section class="page" id="page-announcements">
-    <h1 class="page-title">Announcement Management</h1>
-    <div class="panel">
-     <button class="btn" id="addAnnouncement">+ Add Announcement</button>
-     <div class="table-wrap" style="margin-top:15px">
-      <table>
-       <thead><tr><th>Title</th><th>Type</th><th>Published</th><th>Actions</th></tr></thead>
-       <tbody id="announcementRows"></tbody>
-      </table>
-     </div>
-    </div>
-   </section>
-
-   <!-- VOLUNTEERS -->
-   <section class="page" id="page-volunteers">
-    <h1 class="page-title">Volunteer Management</h1>
-    <div class="panel">
-     <div class="toolbar">
-      <input id="volunteerSearch" placeholder="Search volunteers">
-      <button class="btn green" id="exportVolunteers">Export Excel</button>
-     </div>
-     <div class="table-wrap">
-      <table>
-       <thead><tr><th>Name</th><th>Phone</th><th>City</th><th>Committee</th><th>Status</th><th>Actions</th></tr></thead>
-       <tbody id="volunteerRows"></tbody>
-      </table>
-     </div>
-    </div>
-   </section>
-
-   <!-- FEEDBACK -->
-   <section class="page" id="page-feedback">
-    <h1 class="page-title">Feedback Management</h1>
-    <div class="panel">
-     <button class="btn green" id="exportFeedback">Export Excel</button>
-     <div class="table-wrap" style="margin-top:15px">
-      <table>
-       <thead><tr><th>Name</th><th>Email</th><th>Type</th><th>Rating</th><th>Liked Most</th><th>Actions</th></tr></thead>
-       <tbody id="feedbackRows"></tbody>
-      </table>
-     </div>
-    </div>
-   </section>
-
-   <!-- GALLERY -->
-   <section class="page" id="page-gallery">
-    <h1 class="page-title">Gallery Management</h1>
-    <div class="panel">
-     <h3>Add Gallery Image</h3>
-     <form id="galleryForm">
-      <label>Image Title</label>
-      <input id="galleryTitle" required>
-      <label>Description</label>
-      <textarea id="galleryDescription"></textarea>
-      <label>Category</label>
-      <input id="galleryCategory" value="Ayaz Melo">
-      <label>Select Image</label>
-      <input id="galleryFile" type="file" accept="image/*" required>
-      <label><input id="galleryPublished" type="checkbox" checked style="width:auto"> Publish image</label>
-      <button class="btn" type="submit">Upload Image</button>
-     </form>
-     <p class="status">Images are uploaded to the Supabase ayaz-media storage bucket.</p>
-    </div>
-    <div class="panel">
-     <div class="table-wrap">
-      <table>
-       <thead><tr><th>Title</th><th>Category</th><th>Published</th><th>Actions</th></tr></thead>
-       <tbody id="galleryRows"></tbody>
-      </table>
-     </div>
-    </div>
-   </section>
-
-   <!-- CONTENT -->
-   <section class="page" id="page-content">
-    <h1 class="page-title">Website Content Management</h1>
-    <div class="panel">
-     <button class="btn" id="addContent">+ Add Content</button>
-     <div class="table-wrap" style="margin-top:15px">
-      <table>
-       <thead><tr><th>Content Key</th><th>Title</th><th>Type</th><th>Published</th><th>Actions</th></tr></thead>
-       <tbody id="contentRows"></tbody>
-      </table>
-     </div>
-     <div class="notice">
-      Content saved here is stored in Supabase. Public pages must be connected to display these updates.
-     </div>
-    </div>
-   </section>
-
-   <!-- ATTENDANCE -->
-   <section class="page" id="page-attendance">
-    <h1 class="page-title">Attendance Management</h1>
-    <div class="panel">
-     <div class="toolbar">
-      <input type="date" id="attendanceDate">
-      <button class="btn" id="loadAttendance">Load Attendance</button>
-      <button class="btn green" id="exportAttendance">Export Excel</button>
-     </div>
-     <div class="table-wrap">
-      <table>
-       <thead><tr><th>Registration ID</th><th>Name</th><th>Event Date</th><th>Scanned At</th></tr></thead>
-       <tbody id="attendanceRows"></tbody>
-      </table>
-     </div>
-    </div>
-   </section>
-
-   <!-- ACTIVITY -->
-   <section class="page" id="page-activity">
-    <h1 class="page-title">Admin Activity Log</h1>
-    <div class="panel">
-     <button class="btn" id="loadActivity">Refresh Logs</button>
-     <div class="table-wrap" style="margin-top:15px">
-      <table>
-       <thead><tr><th>Action</th><th>Module</th><th>Record ID</th><th>Date</th></tr></thead>
-       <tbody id="activityRows"></tbody>
-      </table>
-     </div>
-    </div>
-   </section>
-
-  </main>
+<header class="topbar">
+ <h2>Ayaz Melo | Super Admin</h2>
+ <div>
+  <span id="adminEmail" style="font-size:11px;margin-right:8px"></span>
+  <button class="btn gold small" id="refreshBtn">Refresh</button>
+  <button class="btn red small" id="logoutBtn">Logout</button>
  </div>
+</header>
+
+<div class="layout">
+<aside class="sidebar">
+ <button class="navbtn active" data-page="dashboard">Dashboard</button>
+ <button class="navbtn" data-page="visitors">Visitors</button>
+ <button class="navbtn" data-page="volunteers">Volunteers</button>
+ <button class="navbtn" data-page="registration">Registration Control</button>
+ <button class="navbtn" data-page="announcements">Announcements</button>
+ <button class="navbtn" data-page="feedback">Feedback</button>
+ <button class="navbtn" data-page="gallery">Gallery</button>
+ <button class="navbtn" data-page="content">Website Content</button>
+ <button class="navbtn" data-page="attendance">Attendance</button>
+ <button class="navbtn" data-page="activity">Activity Log</button>
+</aside>
+
+<main class="main">
+
+<section class="page active" id="page-dashboard">
+ <h1 class="page-title">Dashboard Overview</h1>
+ <div class="cards">
+  <div class="card"><small>Total Registrations</small><strong id="totalVisitors">0</strong></div>
+  <div class="card"><small>Male Registrations</small><strong id="maleVisitors">0</strong></div>
+  <div class="card"><small>Female Registrations</small><strong id="femaleVisitors">0</strong></div>
+  <div class="card"><small>Individual Registrations</small><strong id="individualVisitors">0</strong></div>
+  <div class="card"><small>Family Registrations</small><strong id="familyVisitors">0</strong></div>
+  <div class="card"><small>Family Members</small><strong id="familyMembers">0</strong></div>
+  <div class="card"><small>Total Registered Attendees</small><strong id="totalAttendees">0</strong></div>
+  <div class="card"><small>Total Check-ins</small><strong id="totalCheckins">0</strong></div>
+  <div class="card"><small>Volunteer Applications</small><strong id="totalVolunteers">0</strong></div>
+  <div class="card"><small>Pending Volunteers</small><strong id="pendingVolunteers">0</strong></div>
+  <div class="card"><small>Selected Volunteers</small><strong id="selectedVolunteers">0</strong></div>
+  <div class="card"><small>Feedback</small><strong id="totalFeedback">0</strong></div>
+  <div class="card"><small>Unique Cities</small><strong id="totalCities">0</strong></div>
+ </div>
+
+ <div class="panel">
+  <h3>Registration Operator Report</h3>
+  <div class="table-wrap">
+   <table>
+    <thead><tr><th>Operator</th><th>Registrations</th><th>Male</th><th>Female</th><th>Individual</th><th>Family</th><th>Attendees</th></tr></thead>
+    <tbody id="operatorRows"></tbody>
+   </table>
+  </div>
+ </div>
+
+ <div class="panel">
+  <h3>Recent Visitor Registrations</h3>
+  <div class="table-wrap">
+   <table>
+    <thead><tr><th>Registration ID</th><th>Name</th><th>Gender</th><th>Type</th><th>Family Members</th><th>Operator</th><th>Date</th></tr></thead>
+    <tbody id="recentVisitors"></tbody>
+   </table>
+  </div>
+ </div>
+
+ <div class="panel">
+  <h3>Recent Volunteer Applications</h3>
+  <div class="table-wrap">
+   <table>
+    <thead><tr><th>Name</th><th>CNIC</th><th>Phone</th><th>Status</th><th>Submitted</th></tr></thead>
+    <tbody id="recentVolunteers"></tbody>
+   </table>
+  </div>
+ </div>
+</section>
+
+<section class="page" id="page-visitors">
+ <h1 class="page-title">Visitor Management</h1>
+ <div class="panel">
+  <div class="toolbar">
+   <input id="visitorSearch" placeholder="Search name, phone, city, ID">
+   <select id="cityFilter"><option value="">All Cities</option></select>
+   <button class="btn green" id="exportVisitors">Export Excel</button>
+  </div>
+  <div class="table-wrap">
+   <table>
+    <thead><tr><th>Registration ID</th><th>Name</th><th>Father Name</th><th>Phone</th><th>City</th><th>Gender</th><th>Type</th><th>Family Members</th><th>Operator</th><th>Date</th><th>Actions</th></tr></thead>
+    <tbody id="visitorRows"></tbody>
+   </table>
+  </div>
+  <p class="status" id="visitorCount"></p>
+ </div>
+</section>
+
+<section class="page" id="page-volunteers">
+ <h1 class="page-title">Volunteer Management</h1>
+ <div class="panel">
+  <div class="toolbar">
+   <input id="volunteerSearch" placeholder="Search name, CNIC, phone, college">
+   <select id="volunteerStatusFilter">
+    <option value="">All Statuses</option>
+    <option>Pending</option><option>Selected</option><option>Rejected</option>
+   </select>
+   <select id="committeeFilter"><option value="">All Committees</option></select>
+   <button class="btn green" id="exportVolunteers">Export Excel</button>
+   <button class="btn gray" id="refreshVolunteers">Refresh</button>
+  </div>
+  <div class="notice">All existing applicants remain preserved. No applicant is automatically rejected. Update selection and assignment individually.</div>
+  <div class="table-wrap">
+   <table>
+    <thead><tr><th>Volunteer ID</th><th>Name</th><th>CNIC</th><th>Gender</th><th>Phone</th><th>College / Department</th><th>CNIC Review</th><th>Selection</th><th>Committee</th><th>Role</th><th>Documents</th><th>Action</th></tr></thead>
+    <tbody id="volunteerRows"></tbody>
+   </table>
+  </div>
+  <p class="status" id="volunteerCount"></p>
+ </div>
+</section>
+
+<section class="page" id="page-registration">
+ <h1 class="page-title">Registration Control</h1>
+ <div class="panel">
+  <h3>Public Visitor Registration</h3>
+  <p id="registrationStatus" class="notice">Loading...</p>
+  <button class="btn green" id="openRegistration">Open Registration</button>
+  <button class="btn red" id="closeRegistration">Close Registration</button>
+ </div>
+ <div class="panel">
+  <h3>Volunteer Applications</h3>
+  <p id="volunteerStatus" class="notice">Loading...</p>
+  <button class="btn green" id="openVolunteer">Open Applications</button>
+  <button class="btn red" id="closeVolunteer">Close Applications</button>
+ </div>
+</section>
+
+<section class="page" id="page-announcements">
+ <h1 class="page-title">Announcements</h1>
+ <div class="panel">
+  <button class="btn" id="addAnnouncement">+ Add Announcement</button>
+  <div class="table-wrap" style="margin-top:12px">
+   <table><thead><tr><th>Title</th><th>Type</th><th>Published</th><th>Actions</th></tr></thead><tbody id="announcementRows"></tbody></table>
+  </div>
+ </div>
+</section>
+
+<section class="page" id="page-feedback">
+ <h1 class="page-title">Feedback Management</h1>
+ <div class="panel">
+  <button class="btn green" id="exportFeedback">Export Excel</button>
+  <div class="table-wrap" style="margin-top:12px">
+   <table><thead><tr><th>Name</th><th>Email</th><th>Type</th><th>Rating</th><th>Liked Most</th><th>Actions</th></tr></thead><tbody id="feedbackRows"></tbody></table>
+  </div>
+ </div>
+</section>
+
+<section class="page" id="page-gallery">
+ <h1 class="page-title">Gallery Management</h1>
+ <div class="panel">
+  <form id="galleryForm">
+   <label>Image Title</label><input id="galleryTitle" required>
+   <label>Description</label><textarea id="galleryDescription"></textarea>
+   <label>Category</label><input id="galleryCategory" value="Ayaz Melo">
+   <label>Select Image</label><input id="galleryFile" type="file" accept="image/*" required>
+   <label><input id="galleryPublished" type="checkbox" checked style="width:auto"> Publish image</label>
+   <button class="btn" type="submit">Upload Image</button>
+  </form>
+ </div>
+ <div class="panel">
+  <div class="table-wrap">
+   <table><thead><tr><th>Title</th><th>Category</th><th>Published</th><th>Action</th></tr></thead><tbody id="galleryRows"></tbody></table>
+  </div>
+ </div>
+</section>
+
+<section class="page" id="page-content">
+ <h1 class="page-title">Website Content</h1>
+ <div class="panel">
+  <button class="btn" id="addContent">+ Add Content</button>
+  <div class="table-wrap" style="margin-top:12px">
+   <table><thead><tr><th>Content Key</th><th>Title</th><th>Type</th><th>Published</th><th>Actions</th></tr></thead><tbody id="contentRows"></tbody></table>
+  </div>
+ </div>
+</section>
+
+<section class="page" id="page-attendance">
+ <h1 class="page-title">Attendance Management</h1>
+ <div class="panel">
+  <div class="toolbar">
+   <input type="date" id="attendanceDate">
+   <button class="btn" id="loadAttendance">Load Attendance</button>
+   <button class="btn green" id="exportAttendance">Export Excel</button>
+  </div>
+  <div class="table-wrap">
+   <table><thead><tr><th>Registration ID</th><th>Name</th><th>Event Date</th><th>Scanned At</th></tr></thead><tbody id="attendanceRows"></tbody></table>
+  </div>
+ </div>
+</section>
+
+<section class="page" id="page-activity">
+ <h1 class="page-title">Admin Activity Log</h1>
+ <div class="panel">
+  <button class="btn" id="loadActivity">Refresh Logs</button>
+  <div class="table-wrap" style="margin-top:12px">
+   <table><thead><tr><th>Action</th><th>Module</th><th>Record ID</th><th>Date</th></tr></thead><tbody id="activityRows"></tbody></table>
+  </div>
+ </div>
+</section>
+
+</main>
+</div>
 </div>
 
-<!-- UNIVERSAL MODAL -->
 <div class="modal" id="modal">
  <div class="modal-box">
   <h3 id="modalTitle">Manage Record</h3>
   <form id="modalForm">
    <div id="modalFields" class="form-grid"></div>
-   <div style="display:flex;gap:8px;margin-top:15px">
+   <div style="display:flex;gap:8px;margin-top:14px">
     <button class="btn" type="submit">Save</button>
     <button class="btn gray" type="button" id="cancelModal">Cancel</button>
    </div>
   </form>
  </div>
 </div>
-
 <div id="toast"></div>
 
 <script>
-/* =====================================================
-   SUPABASE CONFIGURATION
-===================================================== */
+const SUPABASE_URL="https://fstkhwoxbgdcdfwycggu.supabase.co";
+const SUPABASE_KEY="sb_publishable_BNRQfiLDVM-892aVwO_hJw_OAhEgTrq";
+const ADMIN_UID="327072bb-a41b-4387-aadc-10b2c38ecfe4";
 
-const SUPABASE_URL = "https://fstkhwoxbgdcdfwycggu.supabase.co";
-const SUPABASE_KEY = "sb_publishable_BNRQfiLDVM-892aVwO_hJw_OAhEgTrq";
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const $=id=>document.getElementById(id);
 
-const ADMIN_UID = "327072bb-a41b-4387-aadc-10b2c38ecfe4";
+const COMMITTEES=[
+ "Registration Committee",
+ "Reception Committee",
+ "Hall Management Committee",
+ "Food & Hospitality Committee",
+ "Stage Management Committee",
+ "Stall Management Committee",
+ "Volunteer Coordination Committee",
+ "Mumtaz Mirza Auditorium Committee"
+];
 
-const db = window.supabase.createClient(
- SUPABASE_URL,
- SUPABASE_KEY
-);
+let currentUser=null;
+let visitors=[],checkins=[],volunteers=[],feedback=[],announcements=[],gallery=[],contents=[],attendanceData=[];
+let modalAction=null,modalRecord=null;
 
-let currentUser = null;
-let visitors = [];
-let checkins = [];
-let volunteers = [];
-let feedback = [];
-let announcements = [];
-let gallery = [];
-let contents = [];
-let attendanceData = [];
-let modalAction = null;
-let modalRecord = null;
+const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+const fmt=v=>v?new Date(v).toLocaleString():"-";
 
-
-/* =====================================================
-   HELPERS
-===================================================== */
-
-const $ = id => document.getElementById(id);
-
-function toast(message){
- const el = $("toast");
- el.textContent = message;
- el.style.display = "block";
- setTimeout(()=>el.style.display="none",3500);
+function toast(m){
+ const e=$("toast");
+ e.textContent=m;
+ e.style.display="block";
+ setTimeout(()=>e.style.display="none",3500);
 }
 
-function escapeHTML(value){
- return String(value ?? "").replace(/[&<>"']/g, c => ({
-  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
- })[c]);
+function err(e){
+ console.error(e);
+ toast(e?.message||"Operation failed");
 }
 
-function formatDate(value){
- if(!value) return "-";
- return new Date(value).toLocaleString();
-}
-
-function showModal(title, fields, action, record=null){
- $("modalTitle").textContent = title;
- $("modalFields").innerHTML = fields;
- $("modal").classList.add("show");
- modalAction = action;
- modalRecord = record;
-}
-
-function closeModal(){
- $("modal").classList.remove("show");
- $("modalFields").innerHTML = "";
- modalAction = null;
- modalRecord = null;
-}
-
-function field(label,name,value="",type="text",required=true){
- return `
- <div>
-  <label>${escapeHTML(label)}</label>
-  <input name="${escapeHTML(name)}"
-   type="${escapeHTML(type)}"
-   value="${escapeHTML(value)}"
-   ${required?"required":""}>
- </div>`;
-}
-
-function selectField(label,name,options,value=""){
- return `
- <div>
-  <label>${escapeHTML(label)}</label>
-  <select name="${escapeHTML(name)}">
-   ${options.map(x=>`<option value="${escapeHTML(x)}" ${x===value?"selected":""}>${escapeHTML(x)}</option>`).join("")}
-  </select>
- </div>`;
-}
-
-function textAreaField(label,name,value=""){
- return `
- <div class="full">
-  <label>${escapeHTML(label)}</label>
-  <textarea name="${escapeHTML(name)}" rows="4">${escapeHTML(value)}</textarea>
- </div>`;
-}
-
-function checkboxField(label,name,value=false){
- return `
- <div class="full">
-  <label>
-   <input type="checkbox" name="${escapeHTML(name)}"
-   ${value?"checked":""} style="width:auto">
-   ${escapeHTML(label)}
-  </label>
- </div>`;
-}
-
-function formValues(form){
- const data = {};
- new FormData(form).forEach((v,k)=>data[k]=v);
- form.querySelectorAll('input[type="checkbox"]').forEach(el=>{
-  data[el.name] = el.checked;
- });
+async function run(q){
+ const {data,error}=await q;
+ if(error)throw error;
  return data;
 }
 
-async function logAction(action,module,recordId=null,details={}){
+async function logAction(action,module,id=null,details={}){
  try{
   await db.from("admin_activity_logs").insert({
    admin_user_id:currentUser.id,
    action,
    module,
-   record_id:recordId ? String(recordId) : null,
+   record_id:id?String(id):null,
    details
   });
- }catch(e){
-  console.warn("Activity log:",e.message);
- }
+ }catch(e){console.warn("Activity log:",e.message)}
 }
 
-function showError(error){
- console.error(error);
- toast(error?.message || "Operation failed.");
+function field(label,name,value="",type="text",required=true){
+ return `<div><label>${esc(label)}</label><input name="${esc(name)}" type="${type}" value="${esc(value)}" ${required?"required":""}></div>`;
 }
 
-async function requireSuccess(query){
- const {data,error} = await query;
- if(error) throw error;
- return data;
+function area(label,name,value=""){
+ return `<div class="full"><label>${esc(label)}</label><textarea name="${esc(name)}" rows="4">${esc(value)}</textarea></div>`;
 }
 
+function sel(label,name,opts,value=""){
+ return `<div><label>${esc(label)}</label><select name="${esc(name)}">${opts.map(x=>`<option value="${esc(x)}" ${x===value?"selected":""}>${esc(x||"— Select —")}</option>`).join("")}</select></div>`;
+}
 
-/* =====================================================
-   AUTHENTICATION
-===================================================== */
+function check(label,name,value){
+ return `<div class="full"><label><input type="checkbox" name="${name}" ${value?"checked":""} style="width:auto"> ${esc(label)}</label></div>`;
+}
 
+function modal(title,fields,action,record=null){
+ $("modalTitle").textContent=title;
+ $("modalFields").innerHTML=fields;
+ $("modal").classList.add("show");
+ modalAction=action;
+ modalRecord=record;
+}
+
+function closeModal(){
+ $("modal").classList.remove("show");
+ $("modalFields").innerHTML="";
+ modalAction=null;
+ modalRecord=null;
+}
+
+function values(form){
+ const d={};
+ new FormData(form).forEach((v,k)=>d[k]=v);
+ form.querySelectorAll('[type=checkbox]').forEach(x=>d[x.name]=x.checked);
+ return d;
+}
+
+/* AUTHENTICATION */
 $("loginForm").addEventListener("submit",async e=>{
  e.preventDefault();
  $("loginMessage").textContent="Signing in...";
-
  try{
   const {data,error}=await db.auth.signInWithPassword({
    email:$("email").value.trim(),
    password:$("password").value
   });
+  if(error)throw error;
 
-  if(error) throw error;
-
-  const user=data.user;
-
-  if(user.id!==ADMIN_UID){
+  if(data.user.id!==ADMIN_UID){
    await db.auth.signOut();
-   throw new Error("This account is not the authorized Super Admin.");
+   throw Error("Unauthorized Super Admin account");
   }
 
-  const {data:admin,error:adminError}=await db
-   .from("admin_users")
-   .select("user_id")
-   .eq("user_id",user.id)
-   .maybeSingle();
+  const a=await run(
+   db.from("admin_users").select("user_id").eq("user_id",data.user.id).maybeSingle()
+  );
+  if(!a)throw Error("Admin account not found");
 
-  if(adminError) throw adminError;
-  if(!admin) throw new Error("Admin account not found in admin_users.");
-
-  currentUser=user;
+  currentUser=data.user;
   await startApp();
-
- }catch(error){
-  $("loginMessage").textContent=error.message;
+ }catch(e){
+  $("loginMessage").textContent=e.message;
  }
 });
 
 async function checkSession(){
  const {data,error}=await db.auth.getSession();
- if(error) return;
- if(data.session){
-  const user=data.session.user;
-  if(user.id===ADMIN_UID){
-   const {data:admin,error:adminError}=await db
-    .from("admin_users")
-    .select("user_id")
-    .eq("user_id",user.id)
-    .maybeSingle();
-
-   if(!adminError && admin){
-    currentUser=user;
-    await startApp();
-   }
-  }
- }
+ if(error||!data.session)return;
+ const u=data.session.user;
+ if(u.id!==ADMIN_UID)return;
+ try{
+  const a=await run(
+   db.from("admin_users").select("user_id").eq("user_id",u.id).maybeSingle()
+  );
+  if(a){currentUser=u;await startApp()}
+ }catch(e){console.error(e)}
 }
 
 async function startApp(){
  $("loginScreen").style.display="none";
  $("app").style.display="block";
- $("adminEmail").textContent=currentUser.email || "Super Admin";
+ $("adminEmail").textContent=currentUser.email||"Super Admin";
  await refreshAll();
 }
 
@@ -715,36 +467,33 @@ $("logoutBtn").addEventListener("click",async()=>{
  location.reload();
 });
 
+/* LOAD DATA */
+async function loadVisitors(){
+ visitors=await run(
+  db.from("visitors").select("*").order("registration_date",{ascending:false}).limit(10000)
+ );
+ renderVisitors();
+}
 
-/* =====================================================
-   NAVIGATION
-===================================================== */
+async function loadCheckins(){
+ checkins=await run(
+  db.from("visitor_checkins").select("*").order("scanned_at",{ascending:false}).limit(10000)
+ );
+}
 
-document.querySelectorAll(".navbtn").forEach(btn=>{
- btn.addEventListener("click",async()=>{
-  document.querySelectorAll(".navbtn").forEach(b=>b.classList.remove("active"));
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+async function loadVolunteers(){
+ volunteers=await run(
+  db.from("volunteers").select("*").order("created_at",{ascending:false}).limit(10000)
+ );
+ renderVolunteers();
+}
 
-  btn.classList.add("active");
-  $("page-"+btn.dataset.page).classList.add("active");
-
-  const page=btn.dataset.page;
-
-  if(page==="registration") await loadSettings();
-  if(page==="announcements") await loadAnnouncements();
-  if(page==="volunteers") await loadVolunteers();
-  if(page==="feedback") await loadFeedback();
-  if(page==="gallery") await loadGallery();
-  if(page==="content") await loadContent();
-  if(page==="attendance") await loadAttendance();
-  if(page==="activity") await loadActivity();
- });
-});
-
-
-/* =====================================================
-   REFRESH / DASHBOARD
-===================================================== */
+async function loadFeedback(){
+ feedback=await run(
+  db.from("feedback_submissions").select("*").order("created_at",{ascending:false}).limit(5000)
+ );
+ renderFeedback();
+}
 
 async function refreshAll(){
  try{
@@ -754,357 +503,311 @@ async function refreshAll(){
    loadVolunteers(),
    loadFeedback()
   ]);
-
   renderDashboard();
- }catch(error){
-  showError(error);
- }
+ }catch(e){err(e)}
 }
 
 $("refreshBtn").addEventListener("click",refreshAll);
 
-async function loadVisitors(){
- visitors=await requireSuccess(
-  db.from("visitors").select("*").order("registration_date",{ascending:false}).limit(5000)
- );
- renderVisitors();
-}
-
-async function loadCheckins(){
- checkins=await requireSuccess(
-  db.from("visitor_checkins").select("*").order("scanned_at",{ascending:false}).limit(5000)
- );
-}
-
+/* DASHBOARD */
 function renderDashboard(){
- $("totalVisitors").textContent=visitors.length;
- $("totalCheckins").textContent=checkins.length;
- $("totalCities").textContent=new Set(visitors.map(v=>v.city).filter(Boolean)).size;
- $("totalVolunteers").textContent=volunteers.length;
- $("totalFeedback").textContent=feedback.length;
+ const male=visitors.filter(v=>String(v.gender||"").toLowerCase()==="male").length;
+ const female=visitors.filter(v=>String(v.gender||"").toLowerCase()==="female").length;
 
- $("recentVisitors").innerHTML=visitors.slice(0,10).map(v=>`
-  <tr>
-   <td>${escapeHTML(v.registration_id)}</td>
-   <td>${escapeHTML(v.full_name)}</td>
-   <td>${escapeHTML(v.city)}</td>
-   <td>${escapeHTML(formatDate(v.registration_date))}</td>
-  </tr>
- `).join("");
-}
+ const fam=visitors.filter(v=>String(v.attendance_type||"").toLowerCase()==="family");
+ const ind=visitors.filter(v=>String(v.attendance_type||"").toLowerCase()!=="family");
 
+ const familyTotal=fam.reduce((s,v)=>s+(Number(v.family_members)||0),0);
+ const attendees=ind.length+familyTotal;
 
-/* =====================================================
-   VISITOR MANAGEMENT
-===================================================== */
+ const put=(id,n)=>$(id).textContent=n;
 
-function renderVisitors(){
- const search=$("visitorSearch").value.toLowerCase();
- const city=$("cityFilter").value;
+ put("totalVisitors",visitors.length);
+ put("maleVisitors",male);
+ put("femaleVisitors",female);
+ put("individualVisitors",ind.length);
+ put("familyVisitors",fam.length);
+ put("familyMembers",familyTotal);
+ put("totalAttendees",attendees);
+ put("totalCheckins",checkins.length);
+ put("totalVolunteers",volunteers.length);
 
- const cities=[...new Set(visitors.map(v=>v.city).filter(Boolean))].sort();
- const oldCity=$("cityFilter").value;
+ put("pendingVolunteers",volunteers.filter(v=>
+  (v.selection_status||"Pending").toLowerCase()==="pending"
+ ).length);
 
- $("cityFilter").innerHTML='<option value="">All Cities</option>'+
- cities.map(c=>`<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`).join("");
+ put("selectedVolunteers",volunteers.filter(v=>
+  (v.selection_status||"").toLowerCase()==="selected"
+ ).length);
 
- $("cityFilter").value=cities.includes(oldCity)?oldCity:"";
+ put("totalFeedback",feedback.length);
+ put("totalCities",new Set(visitors.map(v=>v.city).filter(Boolean)).size);
 
- const filtered=visitors.filter(v=>{
-  const text=[
-   v.full_name,v.father_name,v.contact_number,v.city,v.registration_id
-  ].join(" ").toLowerCase();
+ const ops={};
 
-  return text.includes(search) && (!city || v.city===city);
+ visitors.forEach(v=>{
+  const k=v.gate_operator||"Not Recorded";
+  if(!ops[k])ops[k]={total:0,male:0,female:0,individual:0,family:0,attendees:0};
+
+  const o=ops[k];
+  o.total++;
+
+  if(String(v.gender||"").toLowerCase()==="male")o.male++;
+  if(String(v.gender||"").toLowerCase()==="female")o.female++;
+
+  if(String(v.attendance_type||"").toLowerCase()==="family"){
+   o.family++;
+   o.attendees+=Number(v.family_members)||0;
+  }else{
+   o.individual++;
+   o.attendees++;
+  }
  });
 
- $("visitorRows").innerHTML=filtered.map(v=>`
+ $("operatorRows").innerHTML=Object.entries(ops)
+  .sort((a,b)=>b[1].total-a[1].total)
+  .map(([k,o])=>`
+   <tr>
+    <td>${esc(k)}</td><td>${o.total}</td><td>${o.male}</td>
+    <td>${o.female}</td><td>${o.individual}</td>
+    <td>${o.family}</td><td>${o.attendees}</td>
+   </tr>
+  `).join("");
+
+ $("recentVisitors").innerHTML=visitors.slice(0,12).map(v=>`
   <tr>
-   <td>${escapeHTML(v.registration_id)}</td>
-   <td>${escapeHTML(v.full_name)}</td>
-   <td>${escapeHTML(v.father_name)}</td>
-   <td>${escapeHTML(v.contact_number)}</td>
-   <td>${escapeHTML(v.city)}</td>
-   <td>${escapeHTML(v.designation)}</td>
-   <td>${escapeHTML(formatDate(v.registration_date))}</td>
-   <td class="actions">
-    <button class="btn small" data-edit-visitor="${v.id}">Edit</button>
-    <button class="btn red small" data-delete-visitor="${v.id}">Delete</button>
-   </td>
+   <td>${esc(v.registration_id)}</td>
+   <td>${esc(v.full_name)}</td>
+   <td>${esc(v.gender)}</td>
+   <td>${esc(v.attendance_type)}</td>
+   <td>${esc(v.family_members)}</td>
+   <td>${esc(v.gate_operator)}</td>
+   <td>${esc(fmt(v.registration_date))}</td>
   </tr>
  `).join("");
 
- $("visitorCount").textContent=`Showing ${filtered.length} of ${visitors.length} visitors`;
+ $("recentVolunteers").innerHTML=volunteers.slice(0,10).map(v=>`
+  <tr>
+   <td>${esc(v.full_name)}</td>
+   <td>${esc(v.cnic)}</td>
+   <td>${esc(v.mobile_whatsapp)}</td>
+   <td>${esc(v.selection_status||"Pending")}</td>
+   <td>${esc(fmt(v.created_at||v.submitted_at))}</td>
+  </tr>
+ `).join("");
+}
+
+/* VISITOR MANAGEMENT */
+function renderVisitors(){
+ const q=$("visitorSearch").value.toLowerCase();
+ const old=$("cityFilter").value;
+ const cities=[...new Set(visitors.map(v=>v.city).filter(Boolean))].sort();
+
+ $("cityFilter").innerHTML='<option value="">All Cities</option>'+
+  cities.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join("");
+
+ $("cityFilter").value=cities.includes(old)?old:"";
+ const city=$("cityFilter").value;
+
+ const list=visitors.filter(v=>
+  [v.full_name,v.father_name,v.contact_number,v.city,v.registration_id]
+   .join(" ").toLowerCase().includes(q)&&(!city||v.city===city)
+ );
+
+ $("visitorRows").innerHTML=list.map(v=>`
+  <tr>
+   <td>${esc(v.registration_id)}</td>
+   <td>${esc(v.full_name)}</td>
+   <td>${esc(v.father_name)}</td>
+   <td>${esc(v.contact_number)}</td>
+   <td>${esc(v.city)}</td>
+   <td>${esc(v.gender)}</td>
+   <td>${esc(v.attendance_type)}</td>
+   <td>${esc(v.family_members)}</td>
+   <td>${esc(v.gate_operator)}</td>
+   <td>${esc(fmt(v.registration_date))}</td>
+   <td><button class="btn red small" data-del-visitor="${v.id}">Delete</button></td>
+  </tr>
+ `).join("");
+
+ $("visitorCount").textContent=`Showing ${list.length} of ${visitors.length} registrations`;
 }
 
 $("visitorSearch").addEventListener("input",renderVisitors);
 $("cityFilter").addEventListener("change",renderVisitors);
 
-$("addVisitorBtn").addEventListener("click",()=>{
- showModal("Add New Visitor",`
-  ${field("Full Name","full_name")}
-  ${field("Father Name","father_name")}
-  ${field("Contact Number","contact_number")}
-  ${field("City","city")}
-  ${field("Designation","designation")}
-  ${field("Email","email","","email",false)}
- `,"addVisitor");
-});
-
 $("visitorRows").addEventListener("click",async e=>{
- const edit=e.target.dataset.editVisitor;
- const del=e.target.dataset.deleteVisitor;
+ const id=e.target.dataset.delVisitor;
+ if(!id)return;
 
- if(edit){
-  const v=visitors.find(x=>String(x.id)===edit);
-  if(!v) return;
-
-  showModal("Edit Visitor",`
-   ${field("Full Name","full_name",v.full_name)}
-   ${field("Father Name","father_name",v.father_name)}
-   ${field("Contact Number","contact_number",v.contact_number)}
-   ${field("City","city",v.city)}
-   ${field("Designation","designation",v.designation)}
-   ${field("Email","email",v.email||"","email",false)}
-  `,"editVisitor",v);
- }
-
- if(del){
-  const v=visitors.find(x=>String(x.id)===del);
-  if(!v) return;
-
-  if(!confirm(
-   `Permanently delete visitor ${v.full_name} (${v.registration_id})?`
-  )) return;
-
-  try{
-   await requireSuccess(
-    db.from("visitors").delete().eq("id",v.id)
-   );
-
-   await logAction("DELETE","visitors",v.id,{
-    registration_id:v.registration_id
-   });
-
-   toast("Visitor deleted successfully.");
-   await loadVisitors();
-   renderDashboard();
-
-  }catch(error){
-   showError(error);
-  }
- }
-});
-
-
-/* =====================================================
-   UNIVERSAL FORM SUBMISSION
-===================================================== */
-
-$("modalForm").addEventListener("submit",async e=>{
- e.preventDefault();
-
- if(!modalAction) return;
-
- const form=e.currentTarget;
- const data=formValues(form);
+ const v=visitors.find(x=>String(x.id)===id);
+ if(!v||!confirm(`Delete visitor ${v.full_name}?`))return;
 
  try{
-
-  if(modalAction==="addVisitor"){
-   await requireSuccess(
-    db.from("visitors").insert({
-     full_name:data.full_name,
-     father_name:data.father_name,
-     contact_number:data.contact_number,
-     city:data.city,
-     designation:data.designation,
-     email:data.email||null
-    })
-   );
-
-   await logAction("CREATE","visitors",null,{
-    full_name:data.full_name
-   });
-  }
-
-  else if(modalAction==="editVisitor"){
-   await requireSuccess(
-    db.from("visitors").update({
-     full_name:data.full_name,
-     father_name:data.father_name,
-     contact_number:data.contact_number,
-     city:data.city,
-     designation:data.designation,
-     email:data.email||null
-    }).eq("id",modalRecord.id)
-   );
-
-   await logAction("UPDATE","visitors",modalRecord.id);
-  }
-
-  else if(modalAction==="addAnnouncement"){
-   await requireSuccess(
-    db.from("announcements").insert({
-     title:data.title,
-     message:data.message,
-     announcement_type:data.announcement_type,
-     is_published:data.is_published
-    })
-   );
-
-   await logAction("CREATE","announcements");
-  }
-
-  else if(modalAction==="editAnnouncement"){
-   await requireSuccess(
-    db.from("announcements").update({
-     title:data.title,
-     message:data.message,
-     announcement_type:data.announcement_type,
-     is_published:data.is_published
-    }).eq("id",modalRecord.id)
-   );
-
-   await logAction("UPDATE","announcements",modalRecord.id);
-  }
-
-  else if(modalAction==="editVolunteer"){
-   await requireSuccess(
-    db.from("volunteer_applications").update({
-     application_status:data.application_status,
-     admin_notes:data.admin_notes
-    }).eq("id",modalRecord.id)
-   );
-
-   await logAction("UPDATE","volunteers",modalRecord.id);
-  }
-
-  else if(modalAction==="addContent"){
-   await requireSuccess(
-    db.from("site_content").insert({
-     content_key:data.content_key,
-     title:data.title,
-     content:data.content,
-     content_type:data.content_type,
-     is_published:data.is_published
-    })
-   );
-
-   await logAction("CREATE","site_content");
-  }
-
-  else if(modalAction==="editContent"){
-   await requireSuccess(
-    db.from("site_content").update({
-     content_key:data.content_key,
-     title:data.title,
-     content:data.content,
-     content_type:data.content_type,
-     is_published:data.is_published,
-     updated_at:new Date().toISOString(),
-     updated_by:currentUser.id
-    }).eq("id",modalRecord.id)
-   );
-
-   await logAction("UPDATE","site_content",modalRecord.id);
-  }
-
-  closeModal();
-  toast("Saved successfully.");
-  await refreshCurrentPage();
-
- }catch(error){
-  showError(error);
- }
+  await run(db.from("visitors").delete().eq("id",id));
+  await logAction("DELETE","visitors",id);
+  await loadVisitors();
+  renderDashboard();
+  toast("Visitor deleted");
+ }catch(x){err(x)}
 });
 
-$("cancelModal").addEventListener("click",closeModal);
+/* VOLUNTEER MANAGEMENT */
+function renderVolunteers(){
+ const q=$("volunteerSearch").value.toLowerCase();
+ const st=$("volunteerStatusFilter").value;
+ const cm=$("committeeFilter").value;
 
+ const committees=[...new Set(volunteers.map(v=>v.committee).filter(Boolean))];
 
-/* =====================================================
-   REGISTRATION SETTINGS
-===================================================== */
+ $("committeeFilter").innerHTML='<option value="">All Committees</option>'+
+  [...new Set([...COMMITTEES,...committees])].map(x=>
+   `<option value="${esc(x)}">${esc(x)}</option>`
+  ).join("");
 
-async function loadSettings(){
- try{
-  const settings=await requireSuccess(
-   db.from("site_settings").select("*").eq("id",1).single()
-  );
+ $("committeeFilter").value=cm;
+ $("volunteerStatusFilter").value=st;
 
-  $("registrationStatus").textContent=
-   "Visitor Registration: "+(settings.registration_open?"OPEN":"CLOSED");
+ const list=volunteers.filter(v=>
+  [v.full_name,v.cnic,v.mobile_whatsapp,v.university_college,v.department_group]
+   .join(" ").toLowerCase().includes(q)&&
+  (!st||(v.selection_status||"Pending")===st)&&
+  (!cm||v.committee===cm)
+ );
 
-  $("volunteerStatus").textContent=
-   "Volunteer Applications: "+(settings.volunteer_applications_open?"OPEN":"CLOSED");
+ $("volunteerRows").innerHTML=list.map(v=>`
+  <tr>
+   <td>${esc(v.volunteer_id)}</td>
+   <td>${esc(v.full_name)}</td>
+   <td>${esc(v.cnic)}</td>
+   <td>${esc(v.gender)}</td>
+   <td>${esc(v.mobile_whatsapp)}</td>
+   <td>${esc(v.university_college)} / ${esc(v.department_group)}</td>
+   <td>${esc(v.cnic_review||"Pending")}</td>
+   <td><span class="badge">${esc(v.selection_status||"Pending")}</span></td>
+   <td>${esc(v.committee)}</td>
+   <td>${esc(v.assigned_role)}</td>
+   <td><button class="btn small" data-doc="${v.id}">View docs</button></td>
+   <td><button class="btn small" data-edit-vol="${v.id}">Manage</button></td>
+  </tr>
+ `).join("");
 
- }catch(error){
-  showError(error);
- }
+ $("volunteerCount").textContent=`Showing ${list.length} of ${volunteers.length} applications`;
 }
 
-async function updateSetting(column,value){
- try{
-  await requireSuccess(
-   db.from("site_settings").update({
-    [column]:value,
-    updated_at:new Date().toISOString(),
-    updated_by:currentUser.id
-   }).eq("id",1)
+$("volunteerSearch").addEventListener("input",renderVolunteers);
+$("volunteerStatusFilter").addEventListener("change",renderVolunteers);
+$("committeeFilter").addEventListener("change",renderVolunteers);
+$("refreshVolunteers").addEventListener("click",()=>loadVolunteers().catch(err));
+
+$("volunteerRows").addEventListener("click",async e=>{
+ const id=e.target.dataset.editVol;
+ const doc=e.target.dataset.doc;
+
+ if(id){
+  const v=volunteers.find(x=>String(x.id)===id);
+  if(!v)return;
+
+  modal("Manage Volunteer",
+   field("Volunteer ID","volunteer_id",v.volunteer_id||"","text",false)+
+   sel("Selection Status","selection_status",["Pending","Selected","Rejected"],v.selection_status||"Pending")+
+   sel("CNIC Review","cnic_review",["Pending","Verified","Rejected"],v.cnic_review||"Pending")+
+   sel("Committee","committee",["",...COMMITTEES],v.committee||"")+
+   field("Assigned Role","assigned_role",v.assigned_role||"","text",false)+
+   check("Active Volunteer","is_active",v.is_active!==false),
+   "editVolunteer",v
   );
-
-  await logAction("UPDATE","site_settings",1,{
-   setting:column,value
-  });
-
-  await loadSettings();
-  toast("Setting updated.");
-
- }catch(error){
-  showError(error);
  }
+
+ if(doc){
+  const v=volunteers.find(x=>String(x.id)===doc);
+  if(!v)return;
+
+  const paths=[
+   ["CNIC Front",v.cnic_front_url],
+   ["CNIC Back",v.cnic_back_url],
+   ["Student ID",v.student_id_url],
+   ["Photo",v.photo_url]
+  ];
+
+  let links=[];
+
+  for(const [label,path] of paths){
+   if(!path)continue;
+
+   try{
+    const {data,error}=await db.storage
+     .from("ayaz-private-docs")
+     .createSignedUrl(path,300);
+
+    if(error)throw error;
+
+    links.push(`<p><a target="_blank" rel="noopener" href="${esc(data.signedUrl)}">${label}</a></p>`);
+   }catch(x){
+    links.push(`<p>${label}: ${esc(x.message)}</p>`);
+   }
+  }
+
+  modal("Volunteer Documents",
+   `<div class="full">${links.join("")||"No document paths available."}<p class="status">Private links expire after five minutes.</p></div>`,
+   "viewDocs",v
+  );
+ }
+});
+
+/* REGISTRATION SETTINGS */
+async function loadSettings(){
+ const s=await run(
+  db.from("site_settings").select("*").eq("id",1).single()
+ );
+
+ $("registrationStatus").textContent=
+  "Visitor Registration: "+(s.registration_open?"OPEN":"CLOSED");
+
+ $("volunteerStatus").textContent=
+  "Volunteer Applications: "+(s.volunteer_applications_open?"OPEN":"CLOSED");
+}
+
+async function setting(col,val){
+ try{
+  await run(db.from("site_settings").update({
+   [col]:val,
+   updated_at:new Date().toISOString(),
+   updated_by:currentUser.id
+  }).eq("id",1));
+
+  await logAction("UPDATE","site_settings",1,{setting:col,value:val});
+  await loadSettings();
+  toast("Setting updated");
+ }catch(e){err(e)}
 }
 
 $("openRegistration").addEventListener("click",()=>{
- if(confirm("Open public visitor registration?"))
-  updateSetting("registration_open",true);
+ if(confirm("Open visitor registration?"))setting("registration_open",true);
 });
-
 $("closeRegistration").addEventListener("click",()=>{
- if(confirm("Close public visitor registration?"))
-  updateSetting("registration_open",false);
+ if(confirm("Close visitor registration?"))setting("registration_open",false);
 });
-
 $("openVolunteer").addEventListener("click",()=>{
- if(confirm("Open volunteer applications?"))
-  updateSetting("volunteer_applications_open",true);
+ if(confirm("Open volunteer applications?"))setting("volunteer_applications_open",true);
 });
-
 $("closeVolunteer").addEventListener("click",()=>{
- if(confirm("Close volunteer applications?"))
-  updateSetting("volunteer_applications_open",false);
+ if(confirm("Close volunteer applications?"))setting("volunteer_applications_open",false);
 });
 
-
-/* =====================================================
-   ANNOUNCEMENTS
-===================================================== */
+/* ANNOUNCEMENTS */
+let announcementsData=[];
 
 async function loadAnnouncements(){
- try{
-  announcements=await requireSuccess(
-   db.from("announcements").select("*").order("created_at",{ascending:false})
-  );
-  renderAnnouncements();
- }catch(error){showError(error)}
-}
+ announcementsData=await run(
+  db.from("announcements").select("*").order("created_at",{ascending:false})
+ );
 
-function renderAnnouncements(){
- $("announcementRows").innerHTML=announcements.map(a=>`
+ $("announcementRows").innerHTML=announcementsData.map(a=>`
   <tr>
-   <td>${escapeHTML(a.title)}</td>
-   <td>${escapeHTML(a.announcement_type)}</td>
-   <td>${a.is_published?'<span class="badge green">Published</span>':'<span class="badge red">Hidden</span>'}</td>
+   <td>${esc(a.title)}</td>
+   <td>${esc(a.announcement_type)}</td>
+   <td>${a.is_published?"Yes":"No"}</td>
    <td>
     <button class="btn small" data-edit-ann="${a.id}">Edit</button>
     <button class="btn red small" data-del-ann="${a.id}">Delete</button>
@@ -1114,186 +817,136 @@ function renderAnnouncements(){
 }
 
 function announcementFields(a={}){
- return `
-  ${field("Title","title",a.title||"")}
-  ${selectField("Type","announcement_type",["general","important","event","registration"],a.announcement_type||"general")}
-  ${textAreaField("Message","message",a.message||"")}
-  ${checkboxField("Publish Announcement","is_published",!!a.is_published)}
- `;
+ return field("Title","title",a.title||"")+
+  sel("Type","announcement_type",["general","important","event","registration"],a.announcement_type||"general")+
+  area("Message","message",a.message||"")+
+  check("Publish","is_published",!!a.is_published);
 }
 
 $("addAnnouncement").addEventListener("click",()=>{
- showModal("Add Announcement",announcementFields(),"addAnnouncement");
+ modal("Add Announcement",announcementFields(),"addAnnouncement");
 });
 
 $("announcementRows").addEventListener("click",async e=>{
- const edit=e.target.dataset.editAnn;
+ const id=e.target.dataset.editAnn;
  const del=e.target.dataset.delAnn;
 
- if(edit){
-  const a=announcements.find(x=>String(x.id)===edit);
-  if(a) showModal("Edit Announcement",announcementFields(a),"editAnnouncement",a);
+ if(id){
+  const a=announcementsData.find(x=>String(x.id)===id);
+  if(a)modal("Edit Announcement",announcementFields(a),"editAnnouncement",a);
  }
 
- if(del){
-  if(!confirm("Delete this announcement?")) return;
+ if(del&&confirm("Delete announcement?")){
   try{
-   await requireSuccess(db.from("announcements").delete().eq("id",del));
-   await logAction("DELETE","announcements",del);
+   await run(db.from("announcements").delete().eq("id",del));
    await loadAnnouncements();
-   toast("Announcement deleted.");
-  }catch(error){showError(error)}
+   toast("Announcement deleted");
+  }catch(x){err(x)}
  }
 });
 
-
-/* =====================================================
-   VOLUNTEERS
-===================================================== */
-
-async function loadVolunteers(){
- try{
-  volunteers=await requireSuccess(
-   db.from("volunteer_applications").select("*").order("created_at",{ascending:false})
-  );
-  renderVolunteers();
-  $("totalVolunteers").textContent=volunteers.length;
- }catch(error){showError(error)}
-}
-
-function renderVolunteers(){
- const q=$("volunteerSearch").value.toLowerCase();
-
- const list=volunteers.filter(v=>
-  [v.full_name,v.contact_number,v.city,v.committee]
-  .join(" ").toLowerCase().includes(q)
+/* WEBSITE CONTENT */
+async function loadContent(){
+ contents=await run(
+  db.from("site_content").select("*").order("content_key")
  );
 
- $("volunteerRows").innerHTML=list.map(v=>`
+ $("contentRows").innerHTML=contents.map(c=>`
   <tr>
-   <td>${escapeHTML(v.full_name)}</td>
-   <td>${escapeHTML(v.contact_number)}</td>
-   <td>${escapeHTML(v.city)}</td>
-   <td>${escapeHTML(v.committee)}</td>
-   <td><span class="badge gold">${escapeHTML(v.application_status)}</span></td>
+   <td>${esc(c.content_key)}</td>
+   <td>${esc(c.title)}</td>
+   <td>${esc(c.content_type)}</td>
+   <td>${c.is_published?"Yes":"No"}</td>
    <td>
-    <button class="btn small" data-edit-vol="${v.id}">Manage</button>
-    <button class="btn red small" data-del-vol="${v.id}">Delete</button>
+    <button class="btn small" data-edit-content="${c.id}">Edit</button>
+    <button class="btn red small" data-del-content="${c.id}">Delete</button>
    </td>
   </tr>
  `).join("");
 }
 
-$("volunteerSearch").addEventListener("input",renderVolunteers);
+function contentFields(c={}){
+ return field("Content Key","content_key",c.content_key||"")+
+  field("Title","title",c.title||"")+
+  sel("Content Type","content_type",["text","html","url","json"],c.content_type||"text")+
+  area("Content","content",c.content||"")+
+  check("Publish","is_published",!!c.is_published);
+}
 
-$("volunteerRows").addEventListener("click",async e=>{
- const edit=e.target.dataset.editVol;
- const del=e.target.dataset.delVol;
+$("addContent").addEventListener("click",()=>{
+ modal("Add Content",contentFields(),"addContent");
+});
 
- if(edit){
-  const v=volunteers.find(x=>String(x.id)===edit);
-  if(v){
-   showModal("Manage Volunteer",`
-    ${selectField("Application Status","application_status",["Pending","Approved","Rejected","Shortlisted"],v.application_status||"Pending")}
-    ${textAreaField("Admin Notes","admin_notes",v.admin_notes||"")}
-   `,"editVolunteer",v);
-  }
+$("contentRows").addEventListener("click",async e=>{
+ const id=e.target.dataset.editContent;
+ const del=e.target.dataset.delContent;
+
+ if(id){
+  const c=contents.find(x=>String(x.id)===id);
+  if(c)modal("Edit Content",contentFields(c),"editContent",c);
  }
 
- if(del){
-  if(!confirm("Delete this volunteer application?")) return;
+ if(del&&confirm("Delete content?")){
   try{
-   await requireSuccess(db.from("volunteer_applications").delete().eq("id",del));
-   await logAction("DELETE","volunteers",del);
-   await loadVolunteers();
-   toast("Volunteer application deleted.");
-  }catch(error){showError(error)}
+   await run(db.from("site_content").delete().eq("id",del));
+   await loadContent();
+   toast("Content deleted");
+  }catch(x){err(x)}
  }
 });
 
-
-/* =====================================================
-   FEEDBACK
-===================================================== */
-
-async function loadFeedback(){
- try{
-  feedback=await requireSuccess(
-   db.from("feedback_submissions").select("*").order("created_at",{ascending:false})
-  );
-  renderFeedback();
-  $("totalFeedback").textContent=feedback.length;
- }catch(error){showError(error)}
-}
-
+/* FEEDBACK */
 function renderFeedback(){
  $("feedbackRows").innerHTML=feedback.map(f=>`
   <tr>
-   <td>${escapeHTML(f.full_name)}</td>
-   <td>${escapeHTML(f.email)}</td>
-   <td>${escapeHTML(f.participant_type)}</td>
-   <td>${escapeHTML(f.rating)}</td>
-   <td>${escapeHTML(f.liked_most)}</td>
+   <td>${esc(f.full_name)}</td>
+   <td>${esc(f.email)}</td>
+   <td>${esc(f.participant_type)}</td>
+   <td>${esc(f.rating)}</td>
+   <td>${esc(f.liked_most)}</td>
    <td>
     <button class="btn small" data-view-feedback="${f.id}">View</button>
-    <button class="btn red small" data-delete-feedback="${f.id}">Delete</button>
+    <button class="btn red small" data-del-feedback="${f.id}">Delete</button>
    </td>
   </tr>
  `).join("");
 }
 
 $("feedbackRows").addEventListener("click",async e=>{
- const view=e.target.dataset.viewFeedback;
- const del=e.target.dataset.deleteFeedback;
+ const id=e.target.dataset.viewFeedback;
+ const del=e.target.dataset.delFeedback;
 
- if(view){
-  const f=feedback.find(x=>String(x.id)===view);
+ if(id){
+  const f=feedback.find(x=>String(x.id)===id);
   if(f){
    alert(
-    "Name: "+f.full_name+
-    "\nEmail: "+(f.email||"-")+
-    "\nRating: "+f.rating+
-    "\nLiked Most: "+f.liked_most+
-    "\nSuggestions: "+(f.suggestions||"-")+
-    "\nComments: "+(f.additional_comments||"-")
+    `Name: ${f.full_name}\nEmail: ${f.email||"-"}\nRating: ${f.rating}\nLiked most: ${f.liked_most}\nSuggestions: ${f.suggestions||"-"}\nComments: ${f.additional_comments||"-"}`
    );
   }
  }
 
- if(del){
-  if(!confirm("Permanently delete this feedback?")) return;
+ if(del&&confirm("Delete feedback?")){
   try{
-   await requireSuccess(db.from("feedback_submissions").delete().eq("id",del));
-   await logAction("DELETE","feedback",del);
+   await run(db.from("feedback_submissions").delete().eq("id",del));
    await loadFeedback();
-   toast("Feedback deleted.");
-  }catch(error){showError(error)}
+   renderDashboard();
+   toast("Feedback deleted");
+  }catch(x){err(x)}
  }
 });
 
-
-/* =====================================================
-   GALLERY
-===================================================== */
-
+/* GALLERY */
 async function loadGallery(){
- try{
-  gallery=await requireSuccess(
-   db.from("gallery_items").select("*").order("display_order")
-  );
-  renderGallery();
- }catch(error){showError(error)}
-}
+ gallery=await run(
+  db.from("gallery_items").select("*").order("display_order")
+ );
 
-function renderGallery(){
  $("galleryRows").innerHTML=gallery.map(g=>`
   <tr>
-   <td>${escapeHTML(g.title)}</td>
-   <td>${escapeHTML(g.category)}</td>
-   <td>${g.is_published?"Published":"Hidden"}</td>
-   <td>
-    <button class="btn red small" data-del-gallery="${g.id}">Delete</button>
-   </td>
+   <td>${esc(g.title)}</td>
+   <td>${esc(g.category)}</td>
+   <td>${g.is_published?"Yes":"No"}</td>
+   <td><button class="btn red small" data-del-gallery="${g.id}">Delete</button></td>
   </tr>
  `).join("");
 }
@@ -1302,282 +955,7 @@ $("galleryForm").addEventListener("submit",async e=>{
  e.preventDefault();
 
  const file=$("galleryFile").files[0];
- if(!file) return toast("Please select an image.");
+ if(!file)return toast("Please select an image");
 
  try{
-  const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
-  const path=Date.now()+"-"+safeName;
-
-  const {data:uploadData,error:uploadError}=await db.storage
-   .from("ayaz-media")
-   .upload(path,file,{upsert:false});
-
-  if(uploadError) throw uploadError;
-
-  const {data:urlData}=db.storage
-   .from("ayaz-media")
-   .getPublicUrl(uploadData.path);
-
-  await requireSuccess(
-   db.from("gallery_items").insert({
-    title:$("galleryTitle").value.trim(),
-    description:$("galleryDescription").value.trim(),
-    category:$("galleryCategory").value.trim()||"Ayaz Melo",
-    image_url:urlData.publicUrl,
-    is_published:$("galleryPublished").checked
-   })
-  );
-
-  await logAction("UPLOAD","gallery",path);
-  $("galleryForm").reset();
-  await loadGallery();
-  toast("Image uploaded successfully.");
-
- }catch(error){showError(error)}
-});
-
-$("galleryRows").addEventListener("click",async e=>{
- const id=e.target.dataset.delGallery;
- if(!id) return;
-
- const g=gallery.find(x=>String(x.id)===id);
- if(!g || !confirm("Delete this gallery record?")) return;
-
- try{
-  await requireSuccess(db.from("gallery_items").delete().eq("id",id));
-  await logAction("DELETE","gallery",id);
-  await loadGallery();
-  toast("Gallery record deleted.");
- }catch(error){showError(error)}
-});
-
-
-/* =====================================================
-   WEBSITE CONTENT
-===================================================== */
-
-async function loadContent(){
- try{
-  contents=await requireSuccess(
-   db.from("site_content").select("*").order("content_key")
-  );
-  renderContent();
- }catch(error){showError(error)}
-}
-
-function renderContent(){
- $("contentRows").innerHTML=contents.map(c=>`
-  <tr>
-   <td>${escapeHTML(c.content_key)}</td>
-   <td>${escapeHTML(c.title)}</td>
-   <td>${escapeHTML(c.content_type)}</td>
-   <td>${c.is_published?"Published":"Hidden"}</td>
-   <td>
-    <button class="btn small" data-edit-content="${c.id}">Edit</button>
-    <button class="btn red small" data-delete-content="${c.id}">Delete</button>
-   </td>
-  </tr>
- `).join("");
-}
-
-function contentFields(c={}){
- return `
-  ${field("Content Key","content_key",c.content_key||"")}
-  ${field("Title","title",c.title||"")}
-  ${selectField("Content Type","content_type",["text","html","url","json"],c.content_type||"text")}
-  ${textAreaField("Content","content",c.content||"")}
-  ${checkboxField("Publish Content","is_published",!!c.is_published)}
- `;
-}
-
-$("addContent").addEventListener("click",()=>{
- showModal("Add Website Content",contentFields(),"addContent");
-});
-
-$("contentRows").addEventListener("click",async e=>{
- const edit=e.target.dataset.editContent;
- const del=e.target.dataset.deleteContent;
-
- if(edit){
-  const c=contents.find(x=>String(x.id)===edit);
-  if(c) showModal("Edit Website Content",contentFields(c),"editContent",c);
- }
-
- if(del){
-  if(!confirm("Delete this content record?")) return;
-  try{
-   await requireSuccess(db.from("site_content").delete().eq("id",del));
-   await logAction("DELETE","site_content",del);
-   await loadContent();
-   toast("Content deleted.");
-  }catch(error){showError(error)}
- }
-});
-
-
-/* =====================================================
-   ATTENDANCE
-===================================================== */
-
-async function loadAttendance(){
- try{
-  let query=db.from("visitor_checkins")
-   .select("id,visitor_id,event_date,scanned_at")
-   .order("scanned_at",{ascending:false})
-   .limit(5000);
-
-  const date=$("attendanceDate").value;
-  if(date) query=query.eq("event_date",date);
-
-  attendanceData=await requireSuccess(query);
-
-  const ids=attendanceData.map(x=>x.visitor_id);
-  const matching=visitors.filter(v=>ids.includes(v.id));
-
-  $("attendanceRows").innerHTML=attendanceData.map(a=>{
-   const v=matching.find(x=>x.id===a.visitor_id);
-   return `
-    <tr>
-     <td>${escapeHTML(v?.registration_id||a.visitor_id)}</td>
-     <td>${escapeHTML(v?.full_name||"Visitor")}</td>
-     <td>${escapeHTML(a.event_date)}</td>
-     <td>${escapeHTML(formatDate(a.scanned_at))}</td>
-    </tr>
-   `;
-  }).join("");
-
- }catch(error){showError(error)}
-}
-
-$("loadAttendance").addEventListener("click",loadAttendance);
-
-
-/* =====================================================
-   ACTIVITY LOG
-===================================================== */
-
-async function loadActivity(){
- try{
-  const rows=await requireSuccess(
-   db.from("admin_activity_logs").select("*")
-    .order("created_at",{ascending:false}).limit(300)
-  );
-
-  $("activityRows").innerHTML=rows.map(a=>`
-   <tr>
-    <td>${escapeHTML(a.action)}</td>
-    <td>${escapeHTML(a.module)}</td>
-    <td>${escapeHTML(a.record_id)}</td>
-    <td>${escapeHTML(formatDate(a.created_at))}</td>
-   </tr>
-  `).join("");
-
- }catch(error){showError(error)}
-}
-
-$("loadActivity").addEventListener("click",loadActivity);
-
-
-/* =====================================================
-   EXCEL / CSV EXPORT
-===================================================== */
-
-function exportExcel(data,fileName,sheetName="Data"){
- if(!data || !data.length){
-  toast("No data available to export.");
-  return;
- }
-
- const ws=XLSX.utils.json_to_sheet(data);
- const wb=XLSX.utils.book_new();
- XLSX.utils.book_append_sheet(wb,ws,sheetName);
- XLSX.writeFile(wb,fileName);
-}
-
-function safeVisitorExport(){
- return visitors.map(v=>({
-  Registration_ID:v.registration_id,
-  Name:v.full_name,
-  Father_Name:v.father_name,
-  Contact:v.contact_number,
-  City:v.city,
-  Designation:v.designation,
-  Email:v.email,
-  Registration_Date:v.registration_date,
-  Entry_Status:v.entry_status
- }));
-}
-
-$("exportVisitors").addEventListener("click",()=>{
- exportExcel(safeVisitorExport(),"AyazMelo_Visitors.xlsx","Visitors");
-});
-
-$("exportVisitorsCSV").addEventListener("click",()=>{
- const data=safeVisitorExport();
- if(!data.length) return toast("No visitors to export.");
-
- const keys=Object.keys(data[0]);
- const csv=[
-  keys.join(","),
-  ...data.map(row=>keys.map(k=>
-   '"'+String(row[k]??"").replace(/"/g,'""')+'"'
-  ).join(","))
- ].join("\n");
-
- const blob=new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8"});
- const url=URL.createObjectURL(blob);
- const a=document.createElement("a");
- a.href=url;
- a.download="AyazMelo_Visitors.csv";
- a.click();
- URL.revokeObjectURL(url);
-});
-
-$("exportVolunteers").addEventListener("click",()=>{
- exportExcel(volunteers,"AyazMelo_Volunteers.xlsx","Volunteers");
-});
-
-$("exportFeedback").addEventListener("click",()=>{
- exportExcel(feedback,"AyazMelo_Feedback.xlsx","Feedback");
-});
-
-$("exportAttendance").addEventListener("click",()=>{
- const data=attendanceData.map(a=>{
-  const v=visitors.find(x=>x.id===a.visitor_id);
-  return {
-   Registration_ID:v?.registration_id||"",
-   Name:v?.full_name||"",
-   Event_Date:a.event_date,
-   Scanned_At:a.scanned_at
-  };
- });
- exportExcel(data,"AyazMelo_Attendance.xlsx","Attendance");
-});
-
-
-/* =====================================================
-   PAGE REFRESH
-===================================================== */
-
-async function refreshCurrentPage(){
- const page=document.querySelector(".page.active")?.id.replace("page-","");
-
- if(page==="visitors"){
-  await loadVisitors();
-  renderDashboard();
- }
- if(page==="announcements") await loadAnnouncements();
- if(page==="volunteers") await loadVolunteers();
- if(page==="feedback") await loadFeedback();
- if(page==="gallery") await loadGallery();
- if(page==="content") await loadContent();
- if(page==="attendance") await loadAttendance();
- if(page==="activity") await loadActivity();
- if(page==="registration") await loadSettings();
-}
-
-checkSession();
-
-</script>
-</body>
-</html>
+  const path=Date.now()+"-"+file.name.replace(/[^a-zA-Z0-9._-]/g
