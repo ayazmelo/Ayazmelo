@@ -20,53 +20,68 @@ body{margin:0;background:var(--cream);color:var(--text);font-family:Montserrat,A
 button,input,select,textarea{font:inherit}
 button{cursor:pointer}
 .hidden{display:none!important}
+
 #loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
 .login-card{background:white;width:100%;max-width:420px;padding:30px;border-radius:14px;box-shadow:0 10px 35px #21164d18}
 .brand{font:700 34px "Cormorant Garamond",serif;color:var(--navy);text-align:center}
 .subtitle{text-align:center;color:var(--muted);font-size:11px;margin:5px 0 24px}
+
 input,select,textarea{width:100%;padding:10px;border:1px solid var(--border);border-radius:7px;margin:5px 0 12px;background:white}
 label{font-size:12px;font-weight:700}
+
 .btn{border:0;border-radius:7px;padding:10px 13px;background:var(--navy);color:white;font-size:11px;font-weight:700}
 .btn.gold{background:var(--gold);color:var(--navy)}
 .btn.green{background:var(--green)}
 .btn.red{background:var(--red)}
 .btn.gray{background:#777}
 .btn.small{padding:6px 8px;font-size:10px}
+.btn:disabled{opacity:.6;cursor:wait}
+
 #app{display:none;min-height:100vh}
 .topbar{background:var(--navy);color:white;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 .topbar h2{font:700 26px "Cormorant Garamond",serif;margin:0}
 .layout{display:flex;min-height:calc(100vh - 60px)}
+
 .sidebar{width:225px;flex-shrink:0;background:white;border-right:1px solid var(--border);padding:12px 9px}
 .navbtn{width:100%;border:0;background:transparent;text-align:left;padding:11px;margin:2px 0;border-radius:7px;color:var(--navy);font-size:11px;font-weight:700}
 .navbtn.active,.navbtn:hover{background:var(--navy);color:white}
+
 .main{width:calc(100% - 225px);min-width:0;padding:20px}
 .page{display:none}
 .page.active{display:block}
 .page-title{font:700 31px "Cormorant Garamond",serif;color:var(--navy);margin:0 0 16px}
+
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px;margin-bottom:18px}
 .card,.panel{background:white;border:1px solid var(--border);border-radius:9px;padding:15px}
 .card small{font-size:10px;color:var(--muted)}
 .card strong{display:block;font-size:25px;color:var(--navy);margin-top:6px}
 .panel{margin-bottom:16px}
 .panel h3{font-size:15px;color:var(--navy);margin:0 0 12px}
+
 .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;align-items:center}
 .toolbar input,.toolbar select{width:auto;min-width:140px;margin:0}
+
 .table-wrap{overflow-x:auto}
 table{border-collapse:collapse;width:100%;min-width:650px;font-size:10px}
 th,td{padding:9px 8px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;vertical-align:middle}
 th{background:#f7f2e9;color:var(--navy)}
+
 .badge{padding:4px 8px;border-radius:20px;background:#fff1d5;color:#845a0c;font-size:10px}
 .badge.green{background:#e0f3e9;color:#176d43}
 .badge.red{background:#fbe4e7;color:#a51f30}
+
 .notice{padding:10px;background:#f5f0e7;border-radius:7px;font-size:11px;margin:10px 0}
 .status{font-size:11px;color:var(--muted)}
+
 .modal{display:none;position:fixed;inset:0;background:#17112699;z-index:20;align-items:center;justify-content:center;padding:14px}
 .modal.show{display:flex}
 .modal-box{background:white;border-radius:12px;width:100%;max-width:680px;max-height:90vh;overflow:auto;padding:20px}
 .modal-box h3{color:var(--navy);margin-top:0}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
 .full{grid-column:1/-1}
+
 #toast{display:none;position:fixed;right:18px;bottom:18px;background:var(--navy);color:white;padding:12px 16px;border-radius:8px;z-index:50;max-width:90%;font-size:12px}
+
 @media(max-width:760px){
  .layout{display:block}
  .sidebar{width:100%;display:flex;overflow-x:auto;border:0;border-bottom:1px solid var(--border);padding:7px}
@@ -85,18 +100,25 @@ th{background:#f7f2e9;color:var(--navy)}
  <div class="login-card">
   <div class="brand">AYAZ MELO 2026</div>
   <div class="subtitle">SUPER ADMIN CONTROL PANEL</div>
+
   <form id="loginForm">
    <label>Email Address</label>
-   <input id="email" type="email" required placeholder="Admin email">
+   <input id="email" type="email" required autocomplete="username" placeholder="Admin email">
+
    <label>Password</label>
-   <input id="password" type="password" required placeholder="Password">
-   <button class="btn" style="width:100%" type="submit">Secure Admin Login</button>
+   <input id="password" type="password" required autocomplete="current-password" placeholder="Password">
+
+   <button class="btn" id="loginBtn" style="width:100%" type="submit">
+    Secure Admin Login
+   </button>
   </form>
-  <p id="loginMessage" class="status"></p>
+
+  <p id="loginMessage" class="status" role="status"></p>
  </div>
 </section>
 
 <div id="app">
+
 <header class="topbar">
  <h2>Ayaz Melo | Super Admin</h2>
  <div>
@@ -107,6 +129,7 @@ th{background:#f7f2e9;color:var(--navy)}
 </header>
 
 <div class="layout">
+
 <aside class="sidebar">
  <button class="navbtn active" data-page="dashboard">Dashboard</button>
  <button class="navbtn" data-page="visitors">Visitors</button>
@@ -123,7 +146,9 @@ th{background:#f7f2e9;color:var(--navy)}
 <main class="main">
 
 <section class="page active" id="page-dashboard">
+
  <h1 class="page-title">Dashboard Overview</h1>
+
  <div class="cards">
   <div class="card"><small>Total Registrations</small><strong id="totalVisitors">0</strong></div>
   <div class="card"><small>Male Registrations</small><strong id="maleVisitors">0</strong></div>
@@ -144,7 +169,9 @@ th{background:#f7f2e9;color:var(--navy)}
   <h3>Registration Operator Report</h3>
   <div class="table-wrap">
    <table>
-    <thead><tr><th>Operator</th><th>Registrations</th><th>Male</th><th>Female</th><th>Individual</th><th>Family</th><th>Attendees</th></tr></thead>
+    <thead>
+     <tr><th>Operator</th><th>Registrations</th><th>Male</th><th>Female</th><th>Individual</th><th>Family</th><th>Attendees</th></tr>
+    </thead>
     <tbody id="operatorRows"></tbody>
    </table>
   </div>
@@ -154,7 +181,9 @@ th{background:#f7f2e9;color:var(--navy)}
   <h3>Recent Visitor Registrations</h3>
   <div class="table-wrap">
    <table>
-    <thead><tr><th>Registration ID</th><th>Name</th><th>Gender</th><th>Type</th><th>Family Members</th><th>Operator</th><th>Date</th></tr></thead>
+    <thead>
+     <tr><th>Registration ID</th><th>Name</th><th>Gender</th><th>Type</th><th>Family Members</th><th>Operator</th><th>Date</th></tr>
+    </thead>
     <tbody id="recentVisitors"></tbody>
    </table>
   </div>
@@ -164,11 +193,14 @@ th{background:#f7f2e9;color:var(--navy)}
   <h3>Recent Volunteer Applications</h3>
   <div class="table-wrap">
    <table>
-    <thead><tr><th>Name</th><th>CNIC</th><th>Phone</th><th>Status</th><th>Submitted</th></tr></thead>
+    <thead>
+     <tr><th>Name</th><th>CNIC</th><th>Phone</th><th>Status</th><th>Submitted</th></tr>
+    </thead>
     <tbody id="recentVolunteers"></tbody>
    </table>
   </div>
  </div>
+
 </section>
 
 <section class="page" id="page-visitors">
@@ -181,7 +213,9 @@ th{background:#f7f2e9;color:var(--navy)}
   </div>
   <div class="table-wrap">
    <table>
-    <thead><tr><th>Registration ID</th><th>Name</th><th>Father Name</th><th>Phone</th><th>City</th><th>Gender</th><th>Type</th><th>Family Members</th><th>Operator</th><th>Date</th><th>Actions</th></tr></thead>
+    <thead>
+     <tr><th>Registration ID</th><th>Name</th><th>Father Name</th><th>Phone</th><th>City</th><th>Gender</th><th>Type</th><th>Family Members</th><th>Operator</th><th>Date</th><th>Actions</th></tr>
+    </thead>
     <tbody id="visitorRows"></tbody>
    </table>
   </div>
@@ -202,10 +236,14 @@ th{background:#f7f2e9;color:var(--navy)}
    <button class="btn green" id="exportVolunteers">Export Excel</button>
    <button class="btn gray" id="refreshVolunteers">Refresh</button>
   </div>
+
   <div class="notice">All existing applicants remain preserved. No applicant is automatically rejected. Update selection and assignment individually.</div>
+
   <div class="table-wrap">
    <table>
-    <thead><tr><th>Volunteer ID</th><th>Name</th><th>CNIC</th><th>Gender</th><th>Phone</th><th>College / Department</th><th>CNIC Review</th><th>Selection</th><th>Committee</th><th>Role</th><th>Documents</th><th>Action</th></tr></thead>
+    <thead>
+     <tr><th>Volunteer ID</th><th>Name</th><th>CNIC</th><th>Gender</th><th>Phone</th><th>College / Department</th><th>CNIC Review</th><th>Selection</th><th>Committee</th><th>Role</th><th>Documents</th><th>Action</th></tr>
+    </thead>
     <tbody id="volunteerRows"></tbody>
    </table>
   </div>
@@ -234,7 +272,10 @@ th{background:#f7f2e9;color:var(--navy)}
  <div class="panel">
   <button class="btn" id="addAnnouncement">+ Add Announcement</button>
   <div class="table-wrap" style="margin-top:12px">
-   <table><thead><tr><th>Title</th><th>Type</th><th>Published</th><th>Actions</th></tr></thead><tbody id="announcementRows"></tbody></table>
+   <table>
+    <thead><tr><th>Title</th><th>Type</th><th>Published</th><th>Actions</th></tr></thead>
+    <tbody id="announcementRows"></tbody>
+   </table>
   </div>
  </div>
 </section>
@@ -244,7 +285,10 @@ th{background:#f7f2e9;color:var(--navy)}
  <div class="panel">
   <button class="btn green" id="exportFeedback">Export Excel</button>
   <div class="table-wrap" style="margin-top:12px">
-   <table><thead><tr><th>Name</th><th>Email</th><th>Type</th><th>Rating</th><th>Liked Most</th><th>Actions</th></tr></thead><tbody id="feedbackRows"></tbody></table>
+   <table>
+    <thead><tr><th>Name</th><th>Email</th><th>Type</th><th>Rating</th><th>Liked Most</th><th>Actions</th></tr></thead>
+    <tbody id="feedbackRows"></tbody>
+   </table>
   </div>
  </div>
 </section>
@@ -263,7 +307,10 @@ th{background:#f7f2e9;color:var(--navy)}
  </div>
  <div class="panel">
   <div class="table-wrap">
-   <table><thead><tr><th>Title</th><th>Category</th><th>Published</th><th>Action</th></tr></thead><tbody id="galleryRows"></tbody></table>
+   <table>
+    <thead><tr><th>Title</th><th>Category</th><th>Published</th><th>Action</th></tr></thead>
+    <tbody id="galleryRows"></tbody>
+   </table>
   </div>
  </div>
 </section>
@@ -273,7 +320,10 @@ th{background:#f7f2e9;color:var(--navy)}
  <div class="panel">
   <button class="btn" id="addContent">+ Add Content</button>
   <div class="table-wrap" style="margin-top:12px">
-   <table><thead><tr><th>Content Key</th><th>Title</th><th>Type</th><th>Published</th><th>Actions</th></tr></thead><tbody id="contentRows"></tbody></table>
+   <table>
+    <thead><tr><th>Content Key</th><th>Title</th><th>Type</th><th>Published</th><th>Actions</th></tr></thead>
+    <tbody id="contentRows"></tbody>
+   </table>
   </div>
  </div>
 </section>
@@ -287,7 +337,10 @@ th{background:#f7f2e9;color:var(--navy)}
    <button class="btn green" id="exportAttendance">Export Excel</button>
   </div>
   <div class="table-wrap">
-   <table><thead><tr><th>Registration ID</th><th>Name</th><th>Event Date</th><th>Scanned At</th></tr></thead><tbody id="attendanceRows"></tbody></table>
+   <table>
+    <thead><tr><th>Registration ID</th><th>Name</th><th>Event Date</th><th>Scanned At</th></tr></thead>
+    <tbody id="attendanceRows"></tbody>
+   </table>
   </div>
  </div>
 </section>
@@ -297,7 +350,10 @@ th{background:#f7f2e9;color:var(--navy)}
  <div class="panel">
   <button class="btn" id="loadActivity">Refresh Logs</button>
   <div class="table-wrap" style="margin-top:12px">
-   <table><thead><tr><th>Action</th><th>Module</th><th>Record ID</th><th>Date</th></tr></thead><tbody id="activityRows"></tbody></table>
+   <table>
+    <thead><tr><th>Action</th><th>Module</th><th>Record ID</th><th>Date</th></tr></thead>
+    <tbody id="activityRows"></tbody>
+   </table>
   </div>
  </div>
 </section>
@@ -318,15 +374,16 @@ th{background:#f7f2e9;color:var(--navy)}
   </form>
  </div>
 </div>
+
 <div id="toast"></div>
 
 <script>
+"use strict";
+
+/* SUPABASE CONFIGURATION */
 const SUPABASE_URL="https://fstkhwoxbgdcdfwycggu.supabase.co";
 const SUPABASE_KEY="sb_publishable_BNRQfiLDVM-892aVwO_hJw_OAhEgTrq";
 const ADMIN_UID="327072bb-a41b-4387-aadc-10b2c38ecfe4";
-
-const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-const $=id=>document.getElementById(id);
 
 const COMMITTEES=[
  "Registration Committee",
@@ -339,27 +396,31 @@ const COMMITTEES=[
  "Mumtaz Mirza Auditorium Committee"
 ];
 
+const $=id=>document.getElementById(id);
+const db=window.supabase?.createClient(SUPABASE_URL,SUPABASE_KEY);
+
 let currentUser=null;
-let visitors=[],checkins=[],volunteers=[],feedback=[],announcements=[],gallery=[],contents=[],attendanceData=[];
+let visitors=[],checkins=[],volunteers=[],feedback=[],announcementsData=[],gallery=[],contents=[],attendanceData=[];
 let modalAction=null,modalRecord=null;
 
 const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
 const fmt=v=>v?new Date(v).toLocaleString():"-";
 
-function toast(m){
- const e=$("toast");
- e.textContent=m;
- e.style.display="block";
- setTimeout(()=>e.style.display="none",3500);
+function toast(message){
+ const el=$("toast");
+ el.textContent=message;
+ el.style.display="block";
+ clearTimeout(toast.timer);
+ toast.timer=setTimeout(()=>el.style.display="none",3500);
 }
 
-function err(e){
- console.error(e);
- toast(e?.message||"Operation failed");
+function err(error){
+ console.error(error);
+ toast(error?.message||"Operation failed");
 }
 
-async function run(q){
- const {data,error}=await q;
+async function run(query){
+ const {data,error}=await query;
  if(error)throw error;
  return data;
 }
@@ -373,26 +434,28 @@ async function logAction(action,module,id=null,details={}){
    record_id:id?String(id):null,
    details
   });
- }catch(e){console.warn("Activity log:",e.message)}
+ }catch(error){
+  console.warn("Activity log:",error.message);
+ }
 }
 
 function field(label,name,value="",type="text",required=true){
- return `<div><label>${esc(label)}</label><input name="${esc(name)}" type="${type}" value="${esc(value)}" ${required?"required":""}></div>`;
+ return `<div><label>${esc(label)}</label><input name="${esc(name)}" type="${esc(type)}" value="${esc(value)}" ${required?"required":""}></div>`;
 }
 
 function area(label,name,value=""){
  return `<div class="full"><label>${esc(label)}</label><textarea name="${esc(name)}" rows="4">${esc(value)}</textarea></div>`;
 }
 
-function sel(label,name,opts,value=""){
- return `<div><label>${esc(label)}</label><select name="${esc(name)}">${opts.map(x=>`<option value="${esc(x)}" ${x===value?"selected":""}>${esc(x||"— Select —")}</option>`).join("")}</select></div>`;
+function sel(label,name,options,value=""){
+ return `<div><label>${esc(label)}</label><select name="${esc(name)}">${options.map(x=>`<option value="${esc(x)}" ${x===value?"selected":""}>${esc(x||"— Select —")}</option>`).join("")}</select></div>`;
 }
 
 function check(label,name,value){
- return `<div class="full"><label><input type="checkbox" name="${name}" ${value?"checked":""} style="width:auto"> ${esc(label)}</label></div>`;
+ return `<div class="full"><label><input type="checkbox" name="${esc(name)}" ${value?"checked":""} style="width:auto"> ${esc(label)}</label></div>`;
 }
 
-function modal(title,fields,action,record=null){
+function showModal(title,fields,action,record=null){
  $("modalTitle").textContent=title;
  $("modalFields").innerHTML=fields;
  $("modal").classList.add("show");
@@ -408,51 +471,96 @@ function closeModal(){
 }
 
 function values(form){
- const d={};
- new FormData(form).forEach((v,k)=>d[k]=v);
- form.querySelectorAll('[type=checkbox]').forEach(x=>d[x.name]=x.checked);
- return d;
+ const data={};
+ new FormData(form).forEach((value,key)=>data[key]=value);
+ form.querySelectorAll('[type="checkbox"]').forEach(el=>data[el.name]=el.checked);
+ return data;
 }
 
-/* AUTHENTICATION */
-$("loginForm").addEventListener("submit",async e=>{
- e.preventDefault();
- $("loginMessage").textContent="Signing in...";
+/* AUTHENTICATION — FIXED LOGIN HANDLER */
+$("loginForm").addEventListener("submit",async event=>{
+ event.preventDefault();
+
+ if(!db){
+  $("loginMessage").textContent="Supabase library did not load. Check your internet connection and refresh.";
+  return;
+ }
+
+ const email=$("email").value.trim();
+ const password=$("password").value;
+
+ if(!email||!password){
+  $("loginMessage").textContent="Please enter email and password.";
+  return;
+ }
+
+ const button=$("loginBtn");
+ button.disabled=true;
+ button.textContent="Signing in...";
+ $("loginMessage").textContent="Connecting securely...";
+
  try{
-  const {data,error}=await db.auth.signInWithPassword({
-   email:$("email").value.trim(),
-   password:$("password").value
-  });
+  const {data,error}=await db.auth.signInWithPassword({email,password});
   if(error)throw error;
 
   if(data.user.id!==ADMIN_UID){
    await db.auth.signOut();
-   throw Error("Unauthorized Super Admin account");
+   throw new Error("This account is not the authorized Super Admin.");
   }
 
-  const a=await run(
-   db.from("admin_users").select("user_id").eq("user_id",data.user.id).maybeSingle()
+  const admin=await run(
+   db.from("admin_users")
+    .select("user_id")
+    .eq("user_id",data.user.id)
+    .maybeSingle()
   );
-  if(!a)throw Error("Admin account not found");
+
+  if(!admin){
+   await db.auth.signOut();
+   throw new Error("Admin account not found in admin_users.");
+  }
 
   currentUser=data.user;
+  $("loginMessage").textContent="Login successful.";
   await startApp();
- }catch(e){
-  $("loginMessage").textContent=e.message;
+
+ }catch(error){
+  console.error("Login error:",error);
+  $("loginMessage").textContent=error.message||"Login failed.";
+ }finally{
+  button.disabled=false;
+  button.textContent="Secure Admin Login";
  }
 });
 
 async function checkSession(){
- const {data,error}=await db.auth.getSession();
- if(error||!data.session)return;
- const u=data.session.user;
- if(u.id!==ADMIN_UID)return;
+ if(!db){
+  $("loginMessage").textContent="Supabase library could not load. Refresh the page.";
+  return;
+ }
+
  try{
-  const a=await run(
-   db.from("admin_users").select("user_id").eq("user_id",u.id).maybeSingle()
+  const {data,error}=await db.auth.getSession();
+  if(error)throw error;
+  if(!data.session)return;
+
+  const user=data.session.user;
+  if(user.id!==ADMIN_UID)return;
+
+  const admin=await run(
+   db.from("admin_users")
+    .select("user_id")
+    .eq("user_id",user.id)
+    .maybeSingle()
   );
-  if(a){currentUser=u;await startApp()}
- }catch(e){console.error(e)}
+
+  if(admin){
+   currentUser=user;
+   await startApp();
+  }
+ }catch(error){
+  console.error("Session check:",error);
+ }
 }
 
 async function startApp(){
@@ -463,35 +571,27 @@ async function startApp(){
 }
 
 $("logoutBtn").addEventListener("click",async()=>{
- await db.auth.signOut();
+ try{await db.auth.signOut()}catch(error){console.error(error)}
  location.reload();
 });
 
-/* LOAD DATA */
+/* DATA LOADERS */
 async function loadVisitors(){
- visitors=await run(
-  db.from("visitors").select("*").order("registration_date",{ascending:false}).limit(10000)
- );
+ visitors=await run(db.from("visitors").select("*").order("registration_date",{ascending:false}).limit(10000));
  renderVisitors();
 }
 
 async function loadCheckins(){
- checkins=await run(
-  db.from("visitor_checkins").select("*").order("scanned_at",{ascending:false}).limit(10000)
- );
+ checkins=await run(db.from("visitor_checkins").select("*").order("scanned_at",{ascending:false}).limit(10000));
 }
 
 async function loadVolunteers(){
- volunteers=await run(
-  db.from("volunteers").select("*").order("created_at",{ascending:false}).limit(10000)
- );
+ volunteers=await run(db.from("volunteers").select("*").order("created_at",{ascending:false}).limit(10000));
  renderVolunteers();
 }
 
 async function loadFeedback(){
- feedback=await run(
-  db.from("feedback_submissions").select("*").order("created_at",{ascending:false}).limit(5000)
- );
+ feedback=await run(db.from("feedback_submissions").select("*").order("created_at",{ascending:false}).limit(5000));
  renderFeedback();
 }
 
@@ -504,71 +604,93 @@ async function refreshAll(){
    loadFeedback()
   ]);
   renderDashboard();
- }catch(e){err(e)}
+ }catch(error){
+  err(error);
+ }
 }
 
 $("refreshBtn").addEventListener("click",refreshAll);
+
+/* NAVIGATION */
+document.querySelectorAll(".navbtn").forEach(button=>{
+ button.addEventListener("click",async()=>{
+  document.querySelectorAll(".navbtn").forEach(x=>x.classList.remove("active"));
+  document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+
+  button.classList.add("active");
+  $("page-"+button.dataset.page).classList.add("active");
+
+  try{
+   const page=button.dataset.page;
+   if(page==="registration")await loadSettings();
+   if(page==="announcements")await loadAnnouncements();
+   if(page==="gallery")await loadGallery();
+   if(page==="content")await loadContent();
+   if(page==="attendance")await loadAttendance();
+   if(page==="activity")await loadActivity();
+  }catch(error){
+   err(error);
+  }
+ });
+});
 
 /* DASHBOARD */
 function renderDashboard(){
  const male=visitors.filter(v=>String(v.gender||"").toLowerCase()==="male").length;
  const female=visitors.filter(v=>String(v.gender||"").toLowerCase()==="female").length;
 
- const fam=visitors.filter(v=>String(v.attendance_type||"").toLowerCase()==="family");
- const ind=visitors.filter(v=>String(v.attendance_type||"").toLowerCase()!=="family");
+ const family=visitors.filter(v=>String(v.attendance_type||"").toLowerCase()==="family");
+ const individual=visitors.filter(v=>String(v.attendance_type||"").toLowerCase()!=="family");
 
- const familyTotal=fam.reduce((s,v)=>s+(Number(v.family_members)||0),0);
- const attendees=ind.length+familyTotal;
-
- const put=(id,n)=>$(id).textContent=n;
+ const familyTotal=family.reduce((sum,v)=>sum+(Number(v.family_members)||0),0);
+ const attendees=individual.length+familyTotal;
+ const put=(id,value)=>$(id).textContent=value;
 
  put("totalVisitors",visitors.length);
  put("maleVisitors",male);
  put("femaleVisitors",female);
- put("individualVisitors",ind.length);
- put("familyVisitors",fam.length);
+ put("individualVisitors",individual.length);
+ put("familyVisitors",family.length);
  put("familyMembers",familyTotal);
  put("totalAttendees",attendees);
  put("totalCheckins",checkins.length);
  put("totalVolunteers",volunteers.length);
 
- put("pendingVolunteers",volunteers.filter(v=>
-  (v.selection_status||"Pending").toLowerCase()==="pending"
- ).length);
-
- put("selectedVolunteers",volunteers.filter(v=>
-  (v.selection_status||"").toLowerCase()==="selected"
- ).length);
+ put("pendingVolunteers",volunteers.filter(v=>(v.selection_status||"Pending").toLowerCase()==="pending").length);
+ put("selectedVolunteers",volunteers.filter(v=>(v.selection_status||"").toLowerCase()==="selected").length);
 
  put("totalFeedback",feedback.length);
  put("totalCities",new Set(visitors.map(v=>v.city).filter(Boolean)).size);
 
- const ops={};
+ const operators={};
 
  visitors.forEach(v=>{
-  const k=v.gate_operator||"Not Recorded";
-  if(!ops[k])ops[k]={total:0,male:0,female:0,individual:0,family:0,attendees:0};
+  const key=v.gate_operator||"Not Recorded";
 
-  const o=ops[k];
-  o.total++;
+  if(!operators[key]){
+   operators[key]={total:0,male:0,female:0,individual:0,family:0,attendees:0};
+  }
 
-  if(String(v.gender||"").toLowerCase()==="male")o.male++;
-  if(String(v.gender||"").toLowerCase()==="female")o.female++;
+  const operator=operators[key];
+  operator.total++;
+
+  if(String(v.gender||"").toLowerCase()==="male")operator.male++;
+  if(String(v.gender||"").toLowerCase()==="female")operator.female++;
 
   if(String(v.attendance_type||"").toLowerCase()==="family"){
-   o.family++;
-   o.attendees+=Number(v.family_members)||0;
+   operator.family++;
+   operator.attendees+=Number(v.family_members)||0;
   }else{
-   o.individual++;
-   o.attendees++;
+   operator.individual++;
+   operator.attendees++;
   }
  });
 
- $("operatorRows").innerHTML=Object.entries(ops)
+ $("operatorRows").innerHTML=Object.entries(operators)
   .sort((a,b)=>b[1].total-a[1].total)
-  .map(([k,o])=>`
+  .map(([name,o])=>`
    <tr>
-    <td>${esc(k)}</td><td>${o.total}</td><td>${o.male}</td>
+    <td>${esc(name)}</td><td>${o.total}</td><td>${o.male}</td>
     <td>${o.female}</td><td>${o.individual}</td>
     <td>${o.family}</td><td>${o.attendees}</td>
    </tr>
@@ -576,20 +698,16 @@ function renderDashboard(){
 
  $("recentVisitors").innerHTML=visitors.slice(0,12).map(v=>`
   <tr>
-   <td>${esc(v.registration_id)}</td>
-   <td>${esc(v.full_name)}</td>
-   <td>${esc(v.gender)}</td>
-   <td>${esc(v.attendance_type)}</td>
-   <td>${esc(v.family_members)}</td>
-   <td>${esc(v.gate_operator)}</td>
+   <td>${esc(v.registration_id)}</td><td>${esc(v.full_name)}</td>
+   <td>${esc(v.gender)}</td><td>${esc(v.attendance_type)}</td>
+   <td>${esc(v.family_members)}</td><td>${esc(v.gate_operator)}</td>
    <td>${esc(fmt(v.registration_date))}</td>
   </tr>
  `).join("");
 
  $("recentVolunteers").innerHTML=volunteers.slice(0,10).map(v=>`
   <tr>
-   <td>${esc(v.full_name)}</td>
-   <td>${esc(v.cnic)}</td>
+   <td>${esc(v.full_name)}</td><td>${esc(v.cnic)}</td>
    <td>${esc(v.mobile_whatsapp)}</td>
    <td>${esc(v.selection_status||"Pending")}</td>
    <td>${esc(fmt(v.created_at||v.submitted_at))}</td>
@@ -599,33 +717,28 @@ function renderDashboard(){
 
 /* VISITOR MANAGEMENT */
 function renderVisitors(){
- const q=$("visitorSearch").value.toLowerCase();
- const old=$("cityFilter").value;
+ const query=$("visitorSearch").value.toLowerCase();
+ const oldCity=$("cityFilter").value;
  const cities=[...new Set(visitors.map(v=>v.city).filter(Boolean))].sort();
 
  $("cityFilter").innerHTML='<option value="">All Cities</option>'+
-  cities.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join("");
+  cities.map(city=>`<option value="${esc(city)}">${esc(city)}</option>`).join("");
 
- $("cityFilter").value=cities.includes(old)?old:"";
+ $("cityFilter").value=cities.includes(oldCity)?oldCity:"";
  const city=$("cityFilter").value;
 
  const list=visitors.filter(v=>
   [v.full_name,v.father_name,v.contact_number,v.city,v.registration_id]
-   .join(" ").toLowerCase().includes(q)&&(!city||v.city===city)
+   .join(" ").toLowerCase().includes(query)&&(!city||v.city===city)
  );
 
  $("visitorRows").innerHTML=list.map(v=>`
   <tr>
-   <td>${esc(v.registration_id)}</td>
-   <td>${esc(v.full_name)}</td>
-   <td>${esc(v.father_name)}</td>
-   <td>${esc(v.contact_number)}</td>
-   <td>${esc(v.city)}</td>
-   <td>${esc(v.gender)}</td>
-   <td>${esc(v.attendance_type)}</td>
-   <td>${esc(v.family_members)}</td>
-   <td>${esc(v.gate_operator)}</td>
-   <td>${esc(fmt(v.registration_date))}</td>
+   <td>${esc(v.registration_id)}</td><td>${esc(v.full_name)}</td>
+   <td>${esc(v.father_name)}</td><td>${esc(v.contact_number)}</td>
+   <td>${esc(v.city)}</td><td>${esc(v.gender)}</td>
+   <td>${esc(v.attendance_type)}</td><td>${esc(v.family_members)}</td>
+   <td>${esc(v.gate_operator)}</td><td>${esc(fmt(v.registration_date))}</td>
    <td><button class="btn red small" data-del-visitor="${v.id}">Delete</button></td>
   </tr>
  `).join("");
@@ -636,12 +749,12 @@ function renderVisitors(){
 $("visitorSearch").addEventListener("input",renderVisitors);
 $("cityFilter").addEventListener("change",renderVisitors);
 
-$("visitorRows").addEventListener("click",async e=>{
- const id=e.target.dataset.delVisitor;
+$("visitorRows").addEventListener("click",async event=>{
+ const id=event.target.dataset.delVisitor;
  if(!id)return;
 
- const v=visitors.find(x=>String(x.id)===id);
- if(!v||!confirm(`Delete visitor ${v.full_name}?`))return;
+ const visitor=visitors.find(v=>String(v.id)===id);
+ if(!visitor||!confirm(`Delete visitor ${visitor.full_name}? This cannot be undone.`))return;
 
  try{
   await run(db.from("visitors").delete().eq("id",id));
@@ -649,44 +762,41 @@ $("visitorRows").addEventListener("click",async e=>{
   await loadVisitors();
   renderDashboard();
   toast("Visitor deleted");
- }catch(x){err(x)}
+ }catch(error){
+  err(error);
+ }
 });
 
 /* VOLUNTEER MANAGEMENT */
 function renderVolunteers(){
- const q=$("volunteerSearch").value.toLowerCase();
- const st=$("volunteerStatusFilter").value;
- const cm=$("committeeFilter").value;
+ const query=$("volunteerSearch").value.toLowerCase();
+ const status=$("volunteerStatusFilter").value;
+ const committee=$("committeeFilter").value;
 
- const committees=[...new Set(volunteers.map(v=>v.committee).filter(Boolean))];
+ const existing=[...new Set(volunteers.map(v=>v.committee).filter(Boolean))];
 
  $("committeeFilter").innerHTML='<option value="">All Committees</option>'+
-  [...new Set([...COMMITTEES,...committees])].map(x=>
-   `<option value="${esc(x)}">${esc(x)}</option>`
-  ).join("");
+  [...new Set([...COMMITTEES,...existing])].map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
 
- $("committeeFilter").value=cm;
- $("volunteerStatusFilter").value=st;
+ $("committeeFilter").value=committee;
+ $("volunteerStatusFilter").value=status;
 
  const list=volunteers.filter(v=>
   [v.full_name,v.cnic,v.mobile_whatsapp,v.university_college,v.department_group]
-   .join(" ").toLowerCase().includes(q)&&
-  (!st||(v.selection_status||"Pending")===st)&&
-  (!cm||v.committee===cm)
+   .join(" ").toLowerCase().includes(query)&&
+  (!status||(v.selection_status||"Pending")===status)&&
+  (!committee||v.committee===committee)
  );
 
  $("volunteerRows").innerHTML=list.map(v=>`
   <tr>
-   <td>${esc(v.volunteer_id)}</td>
-   <td>${esc(v.full_name)}</td>
-   <td>${esc(v.cnic)}</td>
-   <td>${esc(v.gender)}</td>
+   <td>${esc(v.volunteer_id)}</td><td>${esc(v.full_name)}</td>
+   <td>${esc(v.cnic)}</td><td>${esc(v.gender)}</td>
    <td>${esc(v.mobile_whatsapp)}</td>
    <td>${esc(v.university_college)} / ${esc(v.department_group)}</td>
    <td>${esc(v.cnic_review||"Pending")}</td>
    <td><span class="badge">${esc(v.selection_status||"Pending")}</span></td>
-   <td>${esc(v.committee)}</td>
-   <td>${esc(v.assigned_role)}</td>
+   <td>${esc(v.committee)}</td><td>${esc(v.assigned_role)}</td>
    <td><button class="btn small" data-doc="${v.id}">View docs</button></td>
    <td><button class="btn small" data-edit-vol="${v.id}">Manage</button></td>
   </tr>
@@ -700,15 +810,15 @@ $("volunteerStatusFilter").addEventListener("change",renderVolunteers);
 $("committeeFilter").addEventListener("change",renderVolunteers);
 $("refreshVolunteers").addEventListener("click",()=>loadVolunteers().catch(err));
 
-$("volunteerRows").addEventListener("click",async e=>{
- const id=e.target.dataset.editVol;
- const doc=e.target.dataset.doc;
+$("volunteerRows").addEventListener("click",async event=>{
+ const id=event.target.dataset.editVol;
+ const doc=event.target.dataset.doc;
 
  if(id){
   const v=volunteers.find(x=>String(x.id)===id);
   if(!v)return;
 
-  modal("Manage Volunteer",
+  showModal("Manage Volunteer",
    field("Volunteer ID","volunteer_id",v.volunteer_id||"","text",false)+
    sel("Selection Status","selection_status",["Pending","Selected","Rejected"],v.selection_status||"Pending")+
    sel("CNIC Review","cnic_review",["Pending","Verified","Rejected"],v.cnic_review||"Pending")+
@@ -730,7 +840,7 @@ $("volunteerRows").addEventListener("click",async e=>{
    ["Photo",v.photo_url]
   ];
 
-  let links=[];
+  const links=[];
 
   for(const [label,path] of paths){
    if(!path)continue;
@@ -741,14 +851,13 @@ $("volunteerRows").addEventListener("click",async e=>{
      .createSignedUrl(path,300);
 
     if(error)throw error;
-
-    links.push(`<p><a target="_blank" rel="noopener" href="${esc(data.signedUrl)}">${label}</a></p>`);
-   }catch(x){
-    links.push(`<p>${label}: ${esc(x.message)}</p>`);
+    links.push(`<p><a target="_blank" rel="noopener" href="${esc(data.signedUrl)}">${esc(label)}</a></p>`);
+   }catch(error){
+    links.push(`<p>${esc(label)}: ${esc(error.message)}</p>`);
    }
   }
 
-  modal("Volunteer Documents",
+  showModal("Volunteer Documents",
    `<div class="full">${links.join("")||"No document paths available."}<p class="status">Private links expire after five minutes.</p></div>`,
    "viewDocs",v
   );
@@ -757,47 +866,36 @@ $("volunteerRows").addEventListener("click",async e=>{
 
 /* REGISTRATION SETTINGS */
 async function loadSettings(){
- const s=await run(
+ const settings=await run(
   db.from("site_settings").select("*").eq("id",1).single()
  );
 
- $("registrationStatus").textContent=
-  "Visitor Registration: "+(s.registration_open?"OPEN":"CLOSED");
-
- $("volunteerStatus").textContent=
-  "Volunteer Applications: "+(s.volunteer_applications_open?"OPEN":"CLOSED");
+ $("registrationStatus").textContent="Visitor Registration: "+(settings.registration_open?"OPEN":"CLOSED");
+ $("volunteerStatus").textContent="Volunteer Applications: "+(settings.volunteer_applications_open?"OPEN":"CLOSED");
 }
 
-async function setting(col,val){
+async function updateSetting(column,value){
  try{
   await run(db.from("site_settings").update({
-   [col]:val,
+   [column]:value,
    updated_at:new Date().toISOString(),
    updated_by:currentUser.id
   }).eq("id",1));
 
-  await logAction("UPDATE","site_settings",1,{setting:col,value:val});
+  await logAction("UPDATE","site_settings",1,{setting:column,value});
   await loadSettings();
   toast("Setting updated");
- }catch(e){err(e)}
+ }catch(error){
+  err(error);
+ }
 }
 
-$("openRegistration").addEventListener("click",()=>{
- if(confirm("Open visitor registration?"))setting("registration_open",true);
-});
-$("closeRegistration").addEventListener("click",()=>{
- if(confirm("Close visitor registration?"))setting("registration_open",false);
-});
-$("openVolunteer").addEventListener("click",()=>{
- if(confirm("Open volunteer applications?"))setting("volunteer_applications_open",true);
-});
-$("closeVolunteer").addEventListener("click",()=>{
- if(confirm("Close volunteer applications?"))setting("volunteer_applications_open",false);
-});
+$("openRegistration").addEventListener("click",()=>{if(confirm("Open visitor registration?"))updateSetting("registration_open",true)});
+$("closeRegistration").addEventListener("click",()=>{if(confirm("Close visitor registration?"))updateSetting("registration_open",false)});
+$("openVolunteer").addEventListener("click",()=>{if(confirm("Open volunteer applications?"))updateSetting("volunteer_applications_open",true)});
+$("closeVolunteer").addEventListener("click",()=>{if(confirm("Close volunteer applications?"))updateSetting("volunteer_applications_open",false)});
 
 /* ANNOUNCEMENTS */
-let announcementsData=[];
-
 async function loadAnnouncements(){
  announcementsData=await run(
   db.from("announcements").select("*").order("created_at",{ascending:false})
@@ -805,8 +903,7 @@ async function loadAnnouncements(){
 
  $("announcementRows").innerHTML=announcementsData.map(a=>`
   <tr>
-   <td>${esc(a.title)}</td>
-   <td>${esc(a.announcement_type)}</td>
+   <td>${esc(a.title)}</td><td>${esc(a.announcement_type)}</td>
    <td>${a.is_published?"Yes":"No"}</td>
    <td>
     <button class="btn small" data-edit-ann="${a.id}">Edit</button>
@@ -823,40 +920,37 @@ function announcementFields(a={}){
   check("Publish","is_published",!!a.is_published);
 }
 
-$("addAnnouncement").addEventListener("click",()=>{
- modal("Add Announcement",announcementFields(),"addAnnouncement");
-});
+$("addAnnouncement").addEventListener("click",()=>showModal("Add Announcement",announcementFields(),"addAnnouncement"));
 
-$("announcementRows").addEventListener("click",async e=>{
- const id=e.target.dataset.editAnn;
- const del=e.target.dataset.delAnn;
+$("announcementRows").addEventListener("click",async event=>{
+ const id=event.target.dataset.editAnn;
+ const del=event.target.dataset.delAnn;
 
  if(id){
   const a=announcementsData.find(x=>String(x.id)===id);
-  if(a)modal("Edit Announcement",announcementFields(a),"editAnnouncement",a);
+  if(a)showModal("Edit Announcement",announcementFields(a),"editAnnouncement",a);
  }
 
  if(del&&confirm("Delete announcement?")){
   try{
    await run(db.from("announcements").delete().eq("id",del));
+   await logAction("DELETE","announcements",del);
    await loadAnnouncements();
    toast("Announcement deleted");
-  }catch(x){err(x)}
+  }catch(error){
+   err(error);
+  }
  }
 });
 
 /* WEBSITE CONTENT */
 async function loadContent(){
- contents=await run(
-  db.from("site_content").select("*").order("content_key")
- );
+ contents=await run(db.from("site_content").select("*").order("content_key"));
 
  $("contentRows").innerHTML=contents.map(c=>`
   <tr>
-   <td>${esc(c.content_key)}</td>
-   <td>${esc(c.title)}</td>
-   <td>${esc(c.content_type)}</td>
-   <td>${c.is_published?"Yes":"No"}</td>
+   <td>${esc(c.content_key)}</td><td>${esc(c.title)}</td>
+   <td>${esc(c.content_type)}</td><td>${c.is_published?"Yes":"No"}</td>
    <td>
     <button class="btn small" data-edit-content="${c.id}">Edit</button>
     <button class="btn red small" data-del-content="${c.id}">Delete</button>
@@ -873,25 +967,26 @@ function contentFields(c={}){
   check("Publish","is_published",!!c.is_published);
 }
 
-$("addContent").addEventListener("click",()=>{
- modal("Add Content",contentFields(),"addContent");
-});
+$("addContent").addEventListener("click",()=>showModal("Add Content",contentFields(),"addContent"));
 
-$("contentRows").addEventListener("click",async e=>{
- const id=e.target.dataset.editContent;
- const del=e.target.dataset.delContent;
+$("contentRows").addEventListener("click",async event=>{
+ const id=event.target.dataset.editContent;
+ const del=event.target.dataset.delContent;
 
  if(id){
   const c=contents.find(x=>String(x.id)===id);
-  if(c)modal("Edit Content",contentFields(c),"editContent",c);
+  if(c)showModal("Edit Content",contentFields(c),"editContent",c);
  }
 
  if(del&&confirm("Delete content?")){
   try{
    await run(db.from("site_content").delete().eq("id",del));
+   await logAction("DELETE","site_content",del);
    await loadContent();
    toast("Content deleted");
-  }catch(x){err(x)}
+  }catch(error){
+   err(error);
+  }
  }
 });
 
@@ -899,10 +994,8 @@ $("contentRows").addEventListener("click",async e=>{
 function renderFeedback(){
  $("feedbackRows").innerHTML=feedback.map(f=>`
   <tr>
-   <td>${esc(f.full_name)}</td>
-   <td>${esc(f.email)}</td>
-   <td>${esc(f.participant_type)}</td>
-   <td>${esc(f.rating)}</td>
+   <td>${esc(f.full_name)}</td><td>${esc(f.email)}</td>
+   <td>${esc(f.participant_type)}</td><td>${esc(f.rating)}</td>
    <td>${esc(f.liked_most)}</td>
    <td>
     <button class="btn small" data-view-feedback="${f.id}">View</button>
@@ -912,50 +1005,297 @@ function renderFeedback(){
  `).join("");
 }
 
-$("feedbackRows").addEventListener("click",async e=>{
- const id=e.target.dataset.viewFeedback;
- const del=e.target.dataset.delFeedback;
+$("feedbackRows").addEventListener("click",async event=>{
+ const id=event.target.dataset.viewFeedback;
+ const del=event.target.dataset.delFeedback;
 
  if(id){
   const f=feedback.find(x=>String(x.id)===id);
-  if(f){
-   alert(
-    `Name: ${f.full_name}\nEmail: ${f.email||"-"}\nRating: ${f.rating}\nLiked most: ${f.liked_most}\nSuggestions: ${f.suggestions||"-"}\nComments: ${f.additional_comments||"-"}`
-   );
-  }
+  if(f)alert(`Name: ${f.full_name}\nEmail: ${f.email||"-"}\nRating: ${f.rating}\nLiked most: ${f.liked_most}\nSuggestions: ${f.suggestions||"-"}\nComments: ${f.additional_comments||"-"}`);
  }
 
  if(del&&confirm("Delete feedback?")){
   try{
    await run(db.from("feedback_submissions").delete().eq("id",del));
+   await logAction("DELETE","feedback",del);
    await loadFeedback();
    renderDashboard();
    toast("Feedback deleted");
-  }catch(x){err(x)}
+  }catch(error){
+   err(error);
+  }
  }
 });
 
 /* GALLERY */
 async function loadGallery(){
- gallery=await run(
-  db.from("gallery_items").select("*").order("display_order")
- );
+ gallery=await run(db.from("gallery_items").select("*").order("display_order"));
 
  $("galleryRows").innerHTML=gallery.map(g=>`
   <tr>
-   <td>${esc(g.title)}</td>
-   <td>${esc(g.category)}</td>
+   <td>${esc(g.title)}</td><td>${esc(g.category)}</td>
    <td>${g.is_published?"Yes":"No"}</td>
    <td><button class="btn red small" data-del-gallery="${g.id}">Delete</button></td>
   </tr>
  `).join("");
 }
 
-$("galleryForm").addEventListener("submit",async e=>{
- e.preventDefault();
+$("galleryForm").addEventListener("submit",async event=>{
+ event.preventDefault();
 
  const file=$("galleryFile").files[0];
  if(!file)return toast("Please select an image");
 
  try{
-  const path=Date.now()+"-"+file.name.replace(/[^a-zA-Z0-9._-]/g
+  const path=Date.now()+"-"+file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
+
+  const {data:upload,error:uploadError}=await db.storage
+   .from("ayaz-media")
+   .upload(path,file,{upsert:false});
+
+  if(uploadError)throw uploadError;
+
+  const {data:url}=db.storage.from("ayaz-media").getPublicUrl(upload.path);
+
+  await run(db.from("gallery_items").insert({
+   title:$("galleryTitle").value.trim(),
+   description:$("galleryDescription").value.trim(),
+   category:$("galleryCategory").value.trim()||"Ayaz Melo",
+   image_url:url.publicUrl,
+   is_published:$("galleryPublished").checked
+  }));
+
+  await logAction("UPLOAD","gallery",path);
+  $("galleryForm").reset();
+  await loadGallery();
+  toast("Image uploaded");
+
+ }catch(error){
+  err(error);
+ }
+});
+
+$("galleryRows").addEventListener("click",async event=>{
+ const id=event.target.dataset.delGallery;
+ if(!id)return;
+ if(!confirm("Delete this gallery record?"))return;
+
+ try{
+  await run(db.from("gallery_items").delete().eq("id",id));
+  await logAction("DELETE","gallery",id);
+  await loadGallery();
+  toast("Gallery record deleted");
+ }catch(error){
+  err(error);
+ }
+});
+
+/* ATTENDANCE */
+async function loadAttendance(){
+ let query=db.from("visitor_checkins")
+  .select("id,visitor_id,event_date,scanned_at")
+  .order("scanned_at",{ascending:false})
+  .limit(10000);
+
+ const date=$("attendanceDate").value;
+ if(date)query=query.eq("event_date",date);
+
+ attendanceData=await run(query);
+
+ const ids=attendanceData.map(x=>x.visitor_id);
+ const matching=visitors.filter(v=>ids.includes(v.id));
+
+ $("attendanceRows").innerHTML=attendanceData.map(a=>{
+  const v=matching.find(x=>x.id===a.visitor_id);
+  return `<tr>
+   <td>${esc(v?.registration_id||a.visitor_id)}</td>
+   <td>${esc(v?.full_name||"Visitor")}</td>
+   <td>${esc(a.event_date)}</td>
+   <td>${esc(fmt(a.scanned_at))}</td>
+  </tr>`;
+ }).join("");
+}
+
+$("loadAttendance").addEventListener("click",()=>loadAttendance().catch(err));
+
+/* ACTIVITY LOG */
+async function loadActivity(){
+ const rows=await run(
+  db.from("admin_activity_logs").select("*")
+   .order("created_at",{ascending:false}).limit(300)
+ );
+
+ $("activityRows").innerHTML=rows.map(a=>`
+  <tr>
+   <td>${esc(a.action)}</td><td>${esc(a.module)}</td>
+   <td>${esc(a.record_id)}</td><td>${esc(fmt(a.created_at))}</td>
+  </tr>
+ `).join("");
+}
+
+$("loadActivity").addEventListener("click",()=>loadActivity().catch(err));
+
+/* UNIVERSAL MODAL SAVE */
+$("modalForm").addEventListener("submit",async event=>{
+ event.preventDefault();
+ if(!modalAction)return;
+
+ const data=values(event.currentTarget);
+
+ try{
+  if(modalAction==="viewDocs")return;
+
+  if(modalAction==="editVolunteer"){
+   await run(db.from("volunteers").update({
+    volunteer_id:data.volunteer_id||null,
+    selection_status:data.selection_status,
+    cnic_review:data.cnic_review,
+    committee:data.committee||null,
+    assigned_role:data.assigned_role||null,
+    is_active:data.is_active,
+    updated_at:new Date().toISOString()
+   }).eq("id",modalRecord.id));
+
+   await logAction("UPDATE","volunteers",modalRecord.id,{
+    selection_status:data.selection_status,
+    committee:data.committee
+   });
+  }
+
+  else if(modalAction==="addAnnouncement"){
+   await run(db.from("announcements").insert({
+    title:data.title,
+    message:data.message,
+    announcement_type:data.announcement_type,
+    is_published:data.is_published
+   }));
+   await logAction("CREATE","announcements");
+  }
+
+  else if(modalAction==="editAnnouncement"){
+   await run(db.from("announcements").update({
+    title:data.title,
+    message:data.message,
+    announcement_type:data.announcement_type,
+    is_published:data.is_published
+   }).eq("id",modalRecord.id));
+   await logAction("UPDATE","announcements",modalRecord.id);
+  }
+
+  else if(modalAction==="addContent"){
+   await run(db.from("site_content").insert({
+    content_key:data.content_key,
+    title:data.title,
+    content:data.content,
+    content_type:data.content_type,
+    is_published:data.is_published
+   }));
+   await logAction("CREATE","site_content");
+  }
+
+  else if(modalAction==="editContent"){
+   await run(db.from("site_content").update({
+    content_key:data.content_key,
+    title:data.title,
+    content:data.content,
+    content_type:data.content_type,
+    is_published:data.is_published,
+    updated_at:new Date().toISOString(),
+    updated_by:currentUser.id
+   }).eq("id",modalRecord.id));
+   await logAction("UPDATE","site_content",modalRecord.id);
+  }
+
+  closeModal();
+  toast("Saved successfully");
+
+  const page=document.querySelector(".page.active")?.id.replace("page-","");
+  if(page==="volunteers"){await loadVolunteers();renderDashboard()}
+  if(page==="announcements")await loadAnnouncements();
+  if(page==="content")await loadContent();
+
+ }catch(error){
+  err(error);
+ }
+});
+
+$("cancelModal").addEventListener("click",closeModal);
+$("modal").addEventListener("click",event=>{
+ if(event.target===$("modal"))closeModal();
+});
+
+/* EXCEL EXPORT */
+function exportExcel(data,fileName,sheetName="Data"){
+ if(!window.XLSX){toast("Excel library did not load");return}
+ if(!data||!data.length){toast("No data available to export");return}
+
+ const worksheet=XLSX.utils.json_to_sheet(data);
+ const workbook=XLSX.utils.book_new();
+
+ XLSX.utils.book_append_sheet(workbook,worksheet,sheetName);
+ XLSX.writeFile(workbook,fileName);
+}
+
+$("exportVisitors").addEventListener("click",()=>{
+ const data=visitors.map(v=>({
+  Registration_ID:v.registration_id,
+  Name:v.full_name,
+  Father_Name:v.father_name,
+  Contact:v.contact_number,
+  City:v.city,
+  Gender:v.gender,
+  Type:v.attendance_type,
+  Family_Members:v.family_members,
+  Operator:v.gate_operator,
+  Registration_Date:v.registration_date,
+  Email:v.email
+ }));
+ exportExcel(data,"AyazMelo_Visitors.xlsx","Visitors");
+});
+
+$("exportVolunteers").addEventListener("click",()=>{
+ const data=volunteers.map(v=>({
+  Volunteer_ID:v.volunteer_id,
+  Name:v.full_name,
+  Father_Name:v.father_name,
+  CNIC:v.cnic,
+  Gender:v.gender,
+  Phone:v.mobile_whatsapp,
+  Email:v.email,
+  College:v.university_college,
+  Department:v.department_group,
+  Status:v.selection_status||"Pending",
+  CNIC_Review:v.cnic_review,
+  Committee:v.committee,
+  Role:v.assigned_role,
+  Submitted:v.created_at||v.submitted_at
+ }));
+ exportExcel(data,"AyazMelo_Volunteers.xlsx","Volunteers");
+});
+
+$("exportFeedback").addEventListener("click",()=>{
+ exportExcel(feedback,"AyazMelo_Feedback.xlsx","Feedback");
+});
+
+$("exportAttendance").addEventListener("click",()=>{
+ const data=attendanceData.map(a=>{
+  const v=visitors.find(x=>x.id===a.visitor_id);
+  return {
+   Registration_ID:v?.registration_id||"",
+   Name:v?.full_name||"",
+   Event_Date:a.event_date,
+   Scanned_At:a.scanned_at
+  };
+ });
+ exportExcel(data,"AyazMelo_Attendance.xlsx","Attendance");
+});
+
+/* INITIALIZE */
+if(!db){
+ $("loginMessage").textContent="Supabase library did not load. Check internet connection and refresh.";
+}else{
+ checkSession();
+}
+</script>
+</body>
+      </html>
