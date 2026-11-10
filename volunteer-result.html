@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ayaz Melo 2026 | Volunteer Selection</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+ --navy:#21164d;
+ --maroon:#842c3c;
+ --gold:#d9ae62;
+ --cream:#faf5eb;
+ --green:#23865b;
+ --border:#e9e3d9;
+ --muted:#777;
+}
+*{box-sizing:border-box}
+body{
+ margin:0;
+ background:var(--cream);
+ color:#252238;
+ font-family:Montserrat,Arial,sans-serif;
+}
+header{
+ background:var(--navy);
+ color:white;
+ text-align:center;
+ padding:25px 15px;
+}
+header h1{
+ font-family:"Cormorant Garamond",serif;
+ font-size:38px;
+ margin:0;
+}
+header p{
+ font-size:11px;
+ letter-spacing:2px;
+}
+.container{
+ width:92%;
+ max-width:650px;
+ margin:35px auto;
+}
+.panel,.result-card{
+ background:white;
+ border:1px solid var(--border);
+ border-radius:12px;
+ padding:25px;
+}
+h2{
+ color:var(--navy);
+ font-family:"Cormorant Garamond",serif;
+ font-size:29px;
+}
+label{
+ font-size:12px;
+ font-weight:700;
+}
+input{
+ width:100%;
+ padding:14px;
+ border:1px solid var(--border);
+ border-radius:7px;
+ margin:8px 0 14px;
+ font:inherit;
+}
+button{
+ border:0;
+ background:var(--navy);
+ color:white;
+ border-radius:7px;
+ padding:13px 20px;
+ font-weight:700;
+ cursor:pointer;
+}
+button:disabled{opacity:.6}
+.message{
+ margin-top:15px;
+ font-size:13px;
+ line-height:1.7;
+}
+.error{color:#bd3545}
+.success{color:var(--green)}
+.hidden{display:none!important}
+
+.result-card{
+ margin-top:25px;
+ padding:0;
+ overflow:hidden;
+ border:2px solid var(--gold);
+}
+.card-head{
+ background:var(--navy);
+ color:white;
+ text-align:center;
+ padding:22px 15px;
+}
+.card-head h2{
+ color:var(--gold);
+ font-size:34px;
+ margin:0;
+}
+.card-head p{
+ font-size:11px;
+ letter-spacing:2px;
+}
+.card-body{
+ padding:25px;
+ text-align:center;
+}
+.photo{
+ width:125px;
+ height:145px;
+ object-fit:cover;
+ border:3px solid var(--gold);
+ border-radius:8px;
+ background:#f1eee8;
+}
+.selected-badge{
+ display:inline-block;
+ margin:15px 0;
+ padding:8px 20px;
+ border-radius:30px;
+ color:#176d43;
+ background:#e0f3e9;
+ font-weight:700;
+ font-size:12px;
+}
+.details{
+ text-align:left;
+ border-top:1px solid var(--border);
+ margin-top:12px;
+}
+.detail{
+ display:flex;
+ justify-content:space-between;
+ gap:15px;
+ padding:12px 0;
+ border-bottom:1px solid var(--border);
+ font-size:12px;
+}
+.detail span:first-child{color:var(--muted)}
+.detail strong{
+ text-align:right;
+ overflow-wrap:anywhere;
+}
+.committee-box{
+ margin-top:18px;
+ padding:16px;
+ background:#f7f2e9;
+ border:1px solid var(--gold);
+ border-radius:8px;
+ text-align:center;
+}
+.committee-box small{
+ color:var(--muted);
+ font-weight:700;
+}
+.committee-box strong{
+ display:block;
+ color:var(--navy);
+ font-size:17px;
+ margin-top:8px;
+}
+.card-footer{
+ background:#f7f2e9;
+ text-align:center;
+ padding:15px;
+ font-size:11px;
+ line-height:1.7;
+}
+.print-btn{
+ display:block;
+ margin:15px auto;
+ background:var(--maroon);
+}
+footer{
+ text-align:center;
+ padding:20px;
+ color:var(--muted);
+ font-size:11px;
+}
+@media print{
+ body{background:white}
+ header,.search-panel,.print-btn,footer{display:none!important}
+ .container{width:100%;margin:0}
+ .result-card{margin:0;box-shadow:none}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <h1>AYAZ MELO 2026</h1>
+ <p>VOLUNTEER SELECTION RESULT</p>
+</header>
+
+<main class="container">
+
+ <section class="panel search-panel">
+  <h2>Check Your Selection Status</h2>
+  <p style="font-size:12px;color:#777;line-height:1.7">
+   Enter your CNIC number to check your volunteer selection result.
+  </p>
+
+  <form id="searchForm">
+   <label>CNIC Number</label>
+   <input
+    id="cnic"
+    type="text"
+    inputmode="numeric"
+    maxlength="15"
+    placeholder="XXXXX-XXXXXXX-X"
+    required
+   >
+   <button id="searchBtn" type="submit">Check Result</button>
+  </form>
+
+  <div id="message" class="message" aria-live="polite"></div>
+ </section>
+
+ <section id="resultCard" class="result-card hidden">
+
+  <div class="card-head">
+   <h2>AYAZ MELO 2026</h2>
+   <p>OFFICIAL VOLUNTEER SELECTION CARD</p>
+  </div>
+
+  <div class="card-body">
+
+   <img id="photo" class="photo hidden" alt="Volunteer photograph">
+
+   <h2 id="name"></h2>
+
+   <div class="selected-badge">
+    ✓ SELECTED VOLUNTEER
+   </div>
+
+   <div class="details">
+
+    <div class="detail">
+     <span>Father Name</span>
+     <strong id="fatherName"></strong>
+    </div>
+
+    <div class="detail">
+     <span>CNIC</span>
+     <strong id="cnicResult"></strong>
+    </div>
+
+    <div class="detail">
+     <span>Volunteer ID</span>
+     <strong id="volunteerId"></strong>
+    </div>
+
+    <div class="detail">
+     <span>Selection Status</span>
+     <strong style="color:#23865b">Selected</strong>
+    </div>
+
+   </div>
+
+   <div id="committeeBox" class="committee-box hidden">
+    <small>ASSIGNED COMMITTEE</small>
+    <strong id="committee"></strong>
+   </div>
+
+   <div id="roleBox" class="committee-box hidden">
+    <small>ASSIGNED ROLE</small>
+    <strong id="assignedRole"></strong>
+   </div>
+
+  </div>
+
+  <div class="card-footer">
+   Congratulations! You have been selected as a volunteer for Ayaz Melo 2026.
+   <br>
+   18–20 December 2026
+  </div>
+
+ </section>
+
+ <button id="printBtn" class="print-btn hidden" type="button">
+  Print / Save Selection Card
+ </button>
+
+</main>
+
+<footer>
+ Ayaz Melo 2026 | Khanabadosh
+</footer>
+
+<script>
+const SUPABASE_URL =
+"https://fstkhwoxbgdcdfwycggu.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_BNRQfiLDVM-892aVwO_hJw_OAhEgTrq";
+
+const db = window.supabase.createClient(
+ SUPABASE_URL,
+ SUPABASE_KEY
+);
+
+const $ = id => document.getElementById(id);
+
+function normalizeCNIC(value){
+ return String(value || "").replace(/\D/g,"");
+}
+
+function showMessage(message,type=""){
+ $("message").className="message "+type;
+ $("message").textContent=message;
+}
+
+function hideResult(){
+ $("resultCard").classList.add("hidden");
+ $("printBtn").classList.add("hidden");
+ $("committeeBox").classList.add("hidden");
+ $("roleBox").classList.add("hidden");
+}
+
+async function getPhotoUrl(path){
+ if(!path) return "";
+
+ if(/^https?:\/\//i.test(path)){
+  return path;
+ }
+
+ const {data,error}=await db.storage
+  .from("ayaz-private-docs")
+  .createSignedUrl(path,600);
+
+ if(error){
+  console.error(error);
+  return "";
+ }
+
+ return data?.signedUrl || "";
+}
+
+$("searchForm").addEventListener("submit",async event=>{
+ event.preventDefault();
+
+ hideResult();
+
+ const cnic=normalizeCNIC($("cnic").value);
+
+ if(cnic.length!==13){
+  showMessage("Please enter a valid 13-digit CNIC number.","error");
+  return;
+ }
+
+ $("searchBtn").disabled=true;
+ $("searchBtn").textContent="Checking...";
+
+ showMessage("Checking your selection result...");
+
+ try{
+
+  const {data,error}=await db
+   .from("volunteers")
+   .select(`
+    full_name,
+    father_name,
+    cnic,
+    photo_url,
+    volunteer_id,
+    selection_status,
+    committee,
+    assigned_role
+   `)
+   .eq("cnic",cnic)
+   .maybeSingle();
+
+  if(error) throw error;
+
+  if(!data){
+   showMessage("No registration record found. Please check your CNIC.","error");
+   return;
+  }
+
+  if(
+   String(data.selection_status || "").toLowerCase() !== "selected"
+  ){
+   showMessage(
+    "Your selection has not been confirmed yet. Please check again later.",
+    "error"
+   );
+   return;
+  }
+
+  $("name").textContent=data.full_name || "Volunteer";
+  $("fatherName").textContent=data.father_name || "-";
+  $("cnicResult").textContent=data.cnic || cnic;
+  $("volunteerId").textContent=data.volunteer_id || "Not assigned yet";
+
+  // Show committee only after admin assigns it.
+  if(data.committee && data.committee.trim()){
+   $("committee").textContent=data.committee;
+   $("committeeBox").classList.remove("hidden");
+  }
+
+  // Show role only after admin assigns it.
+  if(data.assigned_role && data.assigned_role.trim()){
+   $("assignedRole").textContent=data.assigned_role;
+   $("roleBox").classList.remove("hidden");
+  }
+
+  const photoUrl=await getPhotoUrl(data.photo_url);
+
+  if(photoUrl){
+   $("photo").src=photoUrl;
+   $("photo").classList.remove("hidden");
+  }else{
+   $("photo").classList.add("hidden");
+  }
+
+  $("resultCard").classList.remove("hidden");
+  $("printBtn").classList.remove("hidden");
+
+  showMessage(
+   "Congratulations! Your selection is confirmed.",
+   "success"
+  );
+
+ }catch(error){
+  console.error(error);
+  showMessage(
+   "Unable to check your result. Please try again later.",
+   "error"
+  );
+ }finally{
+  $("searchBtn").disabled=false;
+  $("searchBtn").textContent="Check Result";
+ }
+});
+
+$("printBtn").addEventListener("click",()=>{
+ window.print();
+});
+</script>
+
+</body>
+  </html>
