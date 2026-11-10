@@ -3,10 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ayaz Melo 2026 | Volunteer Selection</title>
+<title>Ayaz Melo 2026 | Selection Portal</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -14,74 +15,91 @@
  --maroon:#842c3c;
  --gold:#d9ae62;
  --cream:#faf5eb;
- --green:#23865b;
- --border:#e9e3d9;
+ --white:#fff;
+ --text:#252238;
  --muted:#777;
+ --border:#e9e3d9;
+ --green:#23865b;
 }
 *{box-sizing:border-box}
 body{
  margin:0;
  background:var(--cream);
- color:#252238;
+ color:var(--text);
  font-family:Montserrat,Arial,sans-serif;
 }
 header{
  background:var(--navy);
  color:white;
+ padding:24px 15px;
  text-align:center;
- padding:25px 15px;
+ border-bottom:4px solid var(--gold);
 }
-header h1{
+.logo{
  font-family:"Cormorant Garamond",serif;
- font-size:38px;
+ font-size:43px;
+ font-weight:700;
+ color:var(--gold);
  margin:0;
 }
-header p{
- font-size:11px;
- letter-spacing:2px;
+.header-sub{
+ letter-spacing:3px;
+ font-size:10px;
+ margin-top:5px;
 }
 .container{
  width:92%;
  max-width:650px;
  margin:35px auto;
 }
-.panel,.result-card{
+.search-panel{
  background:white;
  border:1px solid var(--border);
- border-radius:12px;
- padding:25px;
+ border-radius:14px;
+ padding:26px;
 }
-h2{
- color:var(--navy);
+.heading{
  font-family:"Cormorant Garamond",serif;
- font-size:29px;
+ font-size:32px;
+ color:var(--navy);
+ margin:0 0 8px;
+}
+.description{
+ color:var(--muted);
+ font-size:12px;
+ line-height:1.8;
 }
 label{
- font-size:12px;
+ display:block;
+ font-size:11px;
  font-weight:700;
+ margin:15px 0 6px;
 }
 input{
  width:100%;
  padding:14px;
  border:1px solid var(--border);
- border-radius:7px;
- margin:8px 0 14px;
+ border-radius:8px;
  font:inherit;
+ font-size:14px;
+ outline:none;
 }
+input:focus{border-color:var(--gold)}
 button{
  border:0;
+ border-radius:8px;
+ padding:14px 18px;
  background:var(--navy);
  color:white;
- border-radius:7px;
- padding:13px 20px;
  font-weight:700;
  cursor:pointer;
 }
-button:disabled{opacity:.6}
+#searchBtn{width:100%;margin-top:15px}
+button:disabled{opacity:.6;cursor:wait}
 .message{
- margin-top:15px;
- font-size:13px;
+ font-size:12px;
  line-height:1.7;
+ margin-top:15px;
 }
 .error{color:#bd3545}
 .success{color:var(--green)}
@@ -89,106 +107,148 @@ button:disabled{opacity:.6}
 
 .result-card{
  margin-top:25px;
- padding:0;
- overflow:hidden;
+ background:white;
  border:2px solid var(--gold);
+ border-radius:16px;
+ overflow:hidden;
 }
-.card-head{
+.card-top{
  background:var(--navy);
- color:white;
+ padding:25px 15px;
  text-align:center;
- padding:22px 15px;
+ color:white;
+ position:relative;
 }
-.card-head h2{
+.card-top:after{
+ content:"";
+ display:block;
+ width:70px;
+ height:2px;
+ background:var(--gold);
+ margin:13px auto 0;
+}
+.card-top h2{
+ font-family:"Cormorant Garamond",serif;
  color:var(--gold);
- font-size:34px;
+ font-size:38px;
  margin:0;
 }
-.card-head p{
- font-size:11px;
- letter-spacing:2px;
+.card-top p{
+ font-size:10px;
+ letter-spacing:3px;
+ margin:5px 0 0;
 }
 .card-body{
- padding:25px;
+ padding:28px 24px;
  text-align:center;
 }
+.photo-frame{
+ width:138px;
+ height:155px;
+ margin:0 auto 18px;
+ padding:5px;
+ border:2px solid var(--gold);
+ border-radius:12px;
+ background:var(--cream);
+}
 .photo{
- width:125px;
- height:145px;
+ width:100%;
+ height:100%;
  object-fit:cover;
- border:3px solid var(--gold);
- border-radius:8px;
- background:#f1eee8;
+ border-radius:7px;
+}
+.volunteer-name{
+ font-family:"Cormorant Garamond",serif;
+ font-size:34px;
+ color:var(--navy);
+ margin:0;
+ overflow-wrap:anywhere;
 }
 .selected-badge{
  display:inline-block;
- margin:15px 0;
- padding:8px 20px;
- border-radius:30px;
- color:#176d43;
+ margin:12px 0 22px;
+ padding:9px 20px;
  background:#e0f3e9;
- font-weight:700;
- font-size:12px;
+ color:#176d43;
+ border-radius:30px;
+ font-size:11px;
+ font-weight:800;
+ letter-spacing:1px;
 }
 .details{
  text-align:left;
  border-top:1px solid var(--border);
- margin-top:12px;
 }
 .detail{
  display:flex;
  justify-content:space-between;
  gap:15px;
- padding:12px 0;
+ padding:13px 2px;
  border-bottom:1px solid var(--border);
  font-size:12px;
 }
-.detail span:first-child{color:var(--muted)}
+.detail span{color:var(--muted)}
 .detail strong{
+ color:var(--navy);
  text-align:right;
  overflow-wrap:anywhere;
 }
-.committee-box{
- margin-top:18px;
- padding:16px;
+.assignment{
  background:#f7f2e9;
- border:1px solid var(--gold);
- border-radius:8px;
+ border:1px solid #e7d6b5;
+ border-radius:10px;
+ padding:17px;
+ margin-top:18px;
  text-align:center;
 }
-.committee-box small{
+.assignment small{
+ display:block;
  color:var(--muted);
  font-weight:700;
+ font-size:9px;
+ letter-spacing:2px;
 }
-.committee-box strong{
+.assignment strong{
  display:block;
  color:var(--navy);
  font-size:17px;
- margin-top:8px;
+ margin-top:9px;
+ overflow-wrap:anywhere;
 }
 .card-footer{
- background:#f7f2e9;
+ background:var(--navy);
+ color:white;
  text-align:center;
- padding:15px;
- font-size:11px;
- line-height:1.7;
+ padding:18px;
+ font-size:10px;
+ line-height:1.8;
 }
-.print-btn{
- display:block;
- margin:15px auto;
- background:var(--maroon);
+.card-footer strong{color:var(--gold)}
+.actions{
+ display:flex;
+ gap:10px;
+ margin-top:16px;
 }
+.actions button{flex:1}
+.print{background:var(--maroon)}
 footer{
  text-align:center;
- padding:20px;
+ padding:25px 10px;
  color:var(--muted);
- font-size:11px;
+ font-size:10px;
+}
+@media(max-width:450px){
+ .detail{font-size:11px}
+ .volunteer-name{font-size:29px}
+ .logo{font-size:35px}
+ .actions{flex-direction:column}
 }
 @media print{
  body{background:white}
- header,.search-panel,.print-btn,footer{display:none!important}
+ header,.search-panel,.actions,footer{display:none!important}
  .container{width:100%;margin:0}
- .result-card{margin:0;box-shadow:none}
+ .result-card{margin:0;border-radius:0}
+ .card-body{padding:20px}
 }
 </style>
 </head>
@@ -196,103 +256,125 @@ footer{
 <body>
 
 <header>
- <h1>AYAZ MELO 2026</h1>
- <p>VOLUNTEER SELECTION RESULT</p>
+ <h1 class="logo">AYAZ MELO 2026</h1>
+ <div class="header-sub">VOLUNTEER SELECTION PORTAL</div>
 </header>
 
 <main class="container">
 
- <section class="panel search-panel">
-  <h2>Check Your Selection Status</h2>
-  <p style="font-size:12px;color:#777;line-height:1.7">
-   Enter your CNIC number to check your volunteer selection result.
-  </p>
+<section class="search-panel">
+ <h2 class="heading">Selection Verification</h2>
+ <p class="description">
+  Enter your CNIC and the last four digits of your registered mobile number to verify your selection.
+ </p>
 
-  <form id="searchForm">
-   <label>CNIC Number</label>
-   <input
-    id="cnic"
-    type="text"
-    inputmode="numeric"
-    maxlength="15"
-    placeholder="XXXXX-XXXXXXX-X"
-    required
-   >
-   <button id="searchBtn" type="submit">Check Result</button>
-  </form>
+ <form id="searchForm">
 
-  <div id="message" class="message" aria-live="polite"></div>
- </section>
+  <label>CNIC Number</label>
+  <input
+   id="cnic"
+   maxlength="15"
+   inputmode="numeric"
+   placeholder="XXXXX-XXXXXXX-X"
+   required
+  >
 
- <section id="resultCard" class="result-card hidden">
+  <label>Last 4 Digits of Registered Mobile</label>
+  <input
+   id="phoneLast4"
+   maxlength="4"
+   inputmode="numeric"
+   placeholder="XXXX"
+   required
+  >
 
-  <div class="card-head">
-   <h2>AYAZ MELO 2026</h2>
-   <p>OFFICIAL VOLUNTEER SELECTION CARD</p>
+  <button id="searchBtn" type="submit">
+   VERIFY SELECTION
+  </button>
+
+ </form>
+
+ <div id="message" class="message" aria-live="polite"></div>
+</section>
+
+<section id="resultCard" class="result-card hidden">
+
+ <div class="card-top">
+  <h2>AYAZ MELO</h2>
+  <p>OFFICIAL VOLUNTEER SELECTION CARD</p>
+ </div>
+
+ <div class="card-body">
+
+  <div id="photoFrame" class="photo-frame hidden">
+   <img id="photo" class="photo" alt="Volunteer photograph">
   </div>
 
-  <div class="card-body">
+  <h2 id="name" class="volunteer-name"></h2>
 
-   <img id="photo" class="photo hidden" alt="Volunteer photograph">
+  <div class="selected-badge">
+   ✓ OFFICIALLY SELECTED
+  </div>
 
-   <h2 id="name"></h2>
+  <div class="details">
 
-   <div class="selected-badge">
-    ✓ SELECTED VOLUNTEER
+   <div class="detail">
+    <span>Father Name</span>
+    <strong id="fatherName"></strong>
    </div>
 
-   <div class="details">
-
-    <div class="detail">
-     <span>Father Name</span>
-     <strong id="fatherName"></strong>
-    </div>
-
-    <div class="detail">
-     <span>CNIC</span>
-     <strong id="cnicResult"></strong>
-    </div>
-
-    <div class="detail">
-     <span>Volunteer ID</span>
-     <strong id="volunteerId"></strong>
-    </div>
-
-    <div class="detail">
-     <span>Selection Status</span>
-     <strong style="color:#23865b">Selected</strong>
-    </div>
-
+   <div class="detail">
+    <span>CNIC</span>
+    <strong id="cnicResult"></strong>
    </div>
 
-   <div id="committeeBox" class="committee-box hidden">
-    <small>ASSIGNED COMMITTEE</small>
-    <strong id="committee"></strong>
+   <div class="detail">
+    <span>Volunteer ID</span>
+    <strong id="volunteerId"></strong>
    </div>
 
-   <div id="roleBox" class="committee-box hidden">
-    <small>ASSIGNED ROLE</small>
-    <strong id="assignedRole"></strong>
+   <div class="detail">
+    <span>Selection Status</span>
+    <strong style="color:#23865b">Selected</strong>
    </div>
 
   </div>
 
-  <div class="card-footer">
-   Congratulations! You have been selected as a volunteer for Ayaz Melo 2026.
-   <br>
-   18–20 December 2026
+  <div id="committeeBox" class="assignment hidden">
+   <small>ASSIGNED COMMITTEE</small>
+   <strong id="committee"></strong>
   </div>
 
- </section>
+  <div id="roleBox" class="assignment hidden">
+   <small>ASSIGNED RESPONSIBILITY</small>
+   <strong id="role"></strong>
+  </div>
 
- <button id="printBtn" class="print-btn hidden" type="button">
-  Print / Save Selection Card
+ </div>
+
+ <div class="card-footer">
+  <strong>CONGRATULATIONS!</strong>
+  <br>
+  You are officially selected as a volunteer for Ayaz Melo 2026.
+  <br>
+  18–20 December 2026 | Khanabadosh
+ </div>
+
+</section>
+
+<div class="actions hidden" id="actions">
+ <button class="print" id="printBtn" type="button">
+  PRINT / SAVE PDF
  </button>
+ <button id="newSearch" type="button">
+  NEW SEARCH
+ </button>
+</div>
 
 </main>
 
 <footer>
- Ayaz Melo 2026 | Khanabadosh
+ AYAZ MELO 2026 · EVERY STORY, EVERY VOICE, EVERY GENERATION
 </footer>
 
 <script>
@@ -309,142 +391,120 @@ const db = window.supabase.createClient(
 
 const $ = id => document.getElementById(id);
 
-function normalizeCNIC(value){
+function digits(value){
  return String(value || "").replace(/\D/g,"");
 }
 
-function showMessage(message,type=""){
+function showMessage(text,type=""){
  $("message").className="message "+type;
- $("message").textContent=message;
+ $("message").textContent=text;
 }
 
-function hideResult(){
+function hideCard(){
  $("resultCard").classList.add("hidden");
- $("printBtn").classList.add("hidden");
+ $("actions").classList.add("hidden");
  $("committeeBox").classList.add("hidden");
  $("roleBox").classList.add("hidden");
+ $("photoFrame").classList.add("hidden");
 }
 
-async function getPhotoUrl(path){
- if(!path) return "";
+$("searchForm").addEventListener("submit",async e=>{
+ e.preventDefault();
 
- if(/^https?:\/\//i.test(path)){
-  return path;
- }
+ hideCard();
 
- const {data,error}=await db.storage
-  .from("ayaz-private-docs")
-  .createSignedUrl(path,600);
+ const cnic=digits($("cnic").value);
+ const phoneLast4=digits($("phoneLast4").value);
 
- if(error){
-  console.error(error);
-  return "";
- }
-
- return data?.signedUrl || "";
-}
-
-$("searchForm").addEventListener("submit",async event=>{
- event.preventDefault();
-
- hideResult();
-
- const cnic=normalizeCNIC($("cnic").value);
-
- if(cnic.length!==13){
-  showMessage("Please enter a valid 13-digit CNIC number.","error");
+ if(cnic.length!==13 || phoneLast4.length!==4){
+  showMessage("Please enter a valid CNIC and mobile number.","error");
   return;
  }
 
  $("searchBtn").disabled=true;
- $("searchBtn").textContent="Checking...";
+ $("searchBtn").textContent="VERIFYING...";
 
- showMessage("Checking your selection result...");
+ showMessage("Verifying your details. Please wait...");
 
  try{
 
-  const {data,error}=await db
-   .from("volunteers")
-   .select(`
-    full_name,
-    father_name,
-    cnic,
-    photo_url,
-    volunteer_id,
-    selection_status,
-    committee,
-    assigned_role
-   `)
-   .eq("cnic",cnic)
-   .maybeSingle();
+  const response=await fetch(
+   SUPABASE_URL+"/functions/v1/volunteer-result",
+   {
+    method:"POST",
+    headers:{
+     "Content-Type":"application/json",
+     "apikey":SUPABASE_KEY,
+     "Authorization":"Bearer "+SUPABASE_KEY
+    },
+    body:JSON.stringify({
+     cnic:cnic,
+     phoneLast4:phoneLast4
+    })
+   }
+  );
 
-  if(error) throw error;
+  const result=await response.json();
 
-  if(!data){
-   showMessage("No registration record found. Please check your CNIC.","error");
-   return;
+  if(!response.ok){
+   throw new Error(result.error || "Verification failed.");
   }
 
-  if(
-   String(data.selection_status || "").toLowerCase() !== "selected"
-  ){
+  if(result.status!=="selected"){
    showMessage(
-    "Your selection has not been confirmed yet. Please check again later.",
+    result.message || "Your selection is not confirmed yet.",
     "error"
    );
    return;
   }
 
-  $("name").textContent=data.full_name || "Volunteer";
-  $("fatherName").textContent=data.father_name || "-";
-  $("cnicResult").textContent=data.cnic || cnic;
-  $("volunteerId").textContent=data.volunteer_id || "Not assigned yet";
+  const v=result.volunteer;
 
-  // Show committee only after admin assigns it.
-  if(data.committee && data.committee.trim()){
-   $("committee").textContent=data.committee;
+  $("name").textContent=v.full_name || "Volunteer";
+  $("fatherName").textContent=v.father_name || "-";
+  $("cnicResult").textContent=v.cnic || cnic;
+  $("volunteerId").textContent=v.volunteer_id || "Not assigned";
+
+  if(v.committee){
+   $("committee").textContent=v.committee;
    $("committeeBox").classList.remove("hidden");
   }
 
-  // Show role only after admin assigns it.
-  if(data.assigned_role && data.assigned_role.trim()){
-   $("assignedRole").textContent=data.assigned_role;
+  if(v.assigned_role){
+   $("role").textContent=v.assigned_role;
    $("roleBox").classList.remove("hidden");
   }
 
-  const photoUrl=await getPhotoUrl(data.photo_url);
-
-  if(photoUrl){
-   $("photo").src=photoUrl;
-   $("photo").classList.remove("hidden");
-  }else{
-   $("photo").classList.add("hidden");
+  if(v.photo_url){
+   $("photo").src=v.photo_url;
+   $("photoFrame").classList.remove("hidden");
   }
 
   $("resultCard").classList.remove("hidden");
-  $("printBtn").classList.remove("hidden");
+  $("actions").classList.remove("hidden");
 
-  showMessage(
-   "Congratulations! Your selection is confirmed.",
-   "success"
-  );
+  showMessage("Congratulations! Your selection is confirmed.","success");
 
  }catch(error){
   console.error(error);
-  showMessage(
-   "Unable to check your result. Please try again later.",
-   "error"
-  );
+  showMessage(error.message || "Unable to verify your result.","error");
  }finally{
   $("searchBtn").disabled=false;
-  $("searchBtn").textContent="Check Result";
+  $("searchBtn").textContent="VERIFY SELECTION";
  }
 });
 
 $("printBtn").addEventListener("click",()=>{
  window.print();
 });
+
+$("newSearch").addEventListener("click",()=>{
+ hideCard();
+ $("searchForm").reset();
+ $("message").textContent="";
+ window.scrollTo({top:0,behavior:"smooth"});
+});
 </script>
 
 </body>
-  </html>
+ </html>
