@@ -18,6 +18,7 @@
  --border:#e9e2d5;
 }
 *{box-sizing:border-box}
+
 body{
  margin:0;
  min-height:100vh;
@@ -29,13 +30,16 @@ body{
  color:var(--text);
  font-family:Arial,Helvetica,sans-serif;
 }
+
 .container{width:100%;max-width:520px}
+
 .box{
  background:var(--cream);
  border-radius:18px;
  overflow:hidden;
  box-shadow:0 18px 55px #0005;
 }
+
 .header{
  background:var(--navy);
  color:white;
@@ -43,6 +47,7 @@ body{
  padding:27px 20px 23px;
  border-bottom:4px solid var(--gold);
 }
+
 .logo{
  width:90px;
  height:90px;
@@ -53,6 +58,7 @@ body{
  border-radius:50%;
  padding:7px;
 }
+
 .brand{
  font-family:Georgia,serif;
  font-size:30px;
@@ -60,30 +66,36 @@ body{
  color:var(--gold);
  letter-spacing:1px;
 }
+
 .header p{
  margin:8px 0 0;
  font-size:11px;
  letter-spacing:2px;
 }
+
 .content{padding:25px 22px}
+
 h2{
  margin:0 0 8px;
  color:var(--navy);
  font-family:Georgia,serif;
  font-size:25px;
 }
+
 .intro{
  color:var(--muted);
  font-size:13px;
  line-height:1.6;
  margin-bottom:22px;
 }
+
 label{
  display:block;
  font-size:12px;
  font-weight:bold;
  margin:14px 0 6px;
 }
+
 input{
  width:100%;
  padding:14px;
@@ -93,7 +105,9 @@ input{
  outline:none;
  background:white;
 }
+
 input:focus{border-color:var(--gold)}
+
 button{
  width:100%;
  border:0;
@@ -107,7 +121,14 @@ button{
  letter-spacing:1px;
  cursor:pointer;
 }
+
 button:disabled{opacity:.6;cursor:wait}
+
+.gold-button{
+ background:var(--gold);
+ color:var(--navy);
+}
+
 .message{
  display:none;
  padding:12px;
@@ -116,42 +137,91 @@ button:disabled{opacity:.6;cursor:wait}
  font-size:12px;
  line-height:1.5;
 }
+
 .error{display:block;background:#fbe5e8;color:#9c2335}
 .success{display:block;background:#e3f4e9;color:#176a43}
+
+.hidden{display:none!important}
+
+/* VERIFIED SCREEN */
+
+.verified-screen{
+ display:none;
+ text-align:center;
+ padding:25px 10px;
+}
+
+.verified-icon{
+ width:65px;
+ height:65px;
+ border-radius:50%;
+ background:#e0f3e8;
+ color:var(--green);
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ font-size:32px;
+ margin:0 auto 15px;
+}
+
+.verified-screen h3{
+ color:var(--navy);
+ font-family:Georgia,serif;
+ font-size:22px;
+ margin:0 0 8px;
+}
+
+.verified-screen p{
+ color:var(--muted);
+ font-size:12px;
+ line-height:1.6;
+}
+
+/* DIGITAL RESULT CARD */
+
 .result{
  display:none;
- margin-top:22px;
+ margin-top:15px;
  border:1px solid var(--gold);
  border-radius:13px;
  overflow:hidden;
  background:white;
 }
+
 .result-top{
  background:var(--navy);
  color:white;
  padding:20px 15px;
  text-align:center;
 }
+
 .result-top .logo{
  width:65px;
  height:65px;
  margin-bottom:8px;
 }
+
 .result-top h3{
  margin:5px 0;
  font-family:Georgia,serif;
  color:var(--gold);
  font-size:22px;
 }
+
 .result-top p{
  margin:5px 0 0;
  font-size:10px;
  letter-spacing:1.5px;
 }
-.result-body{padding:20px;text-align:center}
+
+.result-body{
+ padding:22px 20px;
+ text-align:center;
+}
+
 .photo{
- width:105px;
- height:105px;
+ width:115px;
+ height:115px;
  border-radius:50%;
  object-fit:cover;
  border:3px solid var(--gold);
@@ -159,13 +229,33 @@ button:disabled{opacity:.6;cursor:wait}
  display:none;
  margin:0 auto 12px;
 }
+
+.photo-placeholder{
+ width:115px;
+ height:115px;
+ border-radius:50%;
+ border:3px solid var(--gold);
+ background:#f4eedf;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ margin:0 auto 12px;
+ color:var(--navy);
+ font-size:12px;
+}
+
 .volunteer-name{
  color:var(--navy);
  font-size:20px;
  font-weight:bold;
  margin:5px 0;
 }
-.father{font-size:12px;color:var(--muted)}
+
+.father{
+ font-size:12px;
+ color:var(--muted);
+}
+
 .volunteer-id{
  display:inline-block;
  background:#f4eedf;
@@ -175,6 +265,7 @@ button:disabled{opacity:.6;cursor:wait}
  font-size:11px;
  margin:12px 0;
 }
+
 .status{
  display:block;
  padding:12px;
@@ -184,15 +275,18 @@ button:disabled{opacity:.6;cursor:wait}
  letter-spacing:1px;
  margin:12px 0;
 }
+
 .selected{background:#e0f3e8;color:#176c42}
 .rejected{background:#fbe5e8;color:#a12537}
 .pending{background:#fff2d7;color:#8a6418}
+
 .result-message{
  font-size:12px;
  line-height:1.7;
  color:#555;
  margin:12px 0;
 }
+
 .assignment{
  display:none;
  background:#f8f4eb;
@@ -204,7 +298,26 @@ button:disabled{opacity:.6;cursor:wait}
  font-size:12px;
  line-height:1.8;
 }
+
 .assignment strong{color:var(--navy)}
+
+.card-footer{
+ background:#f0eadd;
+ text-align:center;
+ padding:15px;
+ color:var(--muted);
+ font-size:10px;
+ line-height:1.7;
+}
+
+.card-footer img{
+ width:40px;
+ height:40px;
+ object-fit:contain;
+ display:block;
+ margin:0 auto 6px;
+}
+
 .footer{
  text-align:center;
  background:#f0eadd;
@@ -213,6 +326,7 @@ button:disabled{opacity:.6;cursor:wait}
  font-size:10px;
  line-height:1.7;
 }
+
 .footer img{
  width:42px;
  height:42px;
@@ -220,6 +334,7 @@ button:disabled{opacity:.6;cursor:wait}
  display:block;
  margin:0 auto 7px;
 }
+
 @media(max-width:400px){
  .content{padding:22px 16px}
  .brand{font-size:26px}
@@ -228,6 +343,7 @@ button:disabled{opacity:.6;cursor:wait}
 </head>
 
 <body>
+
 <div class="container">
 <div class="box">
 
@@ -238,6 +354,11 @@ button:disabled{opacity:.6;cursor:wait}
 </header>
 
 <main class="content">
+
+<!-- VERIFICATION FORM -->
+
+<section id="verificationSection">
+
 <h2>Selection Verification</h2>
 
 <div class="intro">
@@ -245,55 +366,132 @@ Enter your CNIC number and the last four digits of your registered mobile number
 </div>
 
 <form id="verifyForm">
- <label for="cnic">CNIC Number</label>
- <input id="cnic" type="text" inputmode="numeric"
- maxlength="15" placeholder="Enter your 13-digit CNIC" required>
 
- <label for="mobileLast4">Last 4 Digits of Registered Mobile</label>
- <input id="mobileLast4" type="text" inputmode="numeric"
- maxlength="4" placeholder="Enter last 4 digits" required>
+<label for="cnic">CNIC Number</label>
+<input
+ id="cnic"
+ type="text"
+ inputmode="numeric"
+ maxlength="15"
+ placeholder="Enter your 13-digit CNIC"
+ required
+>
 
- <button id="verifyButton" type="submit">VERIFY SELECTION</button>
+<label for="mobileLast4">Last 4 Digits of Registered Mobile</label>
+<input
+ id="mobileLast4"
+ type="text"
+ inputmode="numeric"
+ maxlength="4"
+ placeholder="Enter last 4 digits"
+ required
+>
+
+<button id="verifyButton" type="submit">
+VERIFY SELECTION
+</button>
+
 </form>
 
 <div id="message" class="message" role="alert"></div>
 
-<section id="result" class="result">
- <div class="result-top">
-  <img class="logo" src="assets/ayaz-melo-2026.png" alt="Ayaz Melo Logo">
-  <h3>AYAZ MELO 2026</h3>
-  <p>OFFICIAL VOLUNTEER RESULT CARD</p>
- </div>
-
- <div class="result-body">
-  <img id="photo" class="photo" alt="Volunteer Photo">
-
-  <div id="fullName" class="volunteer-name"></div>
-  <div id="fatherName" class="father"></div>
-  <div id="volunteerId" class="volunteer-id"></div>
-
-  <div id="status" class="status"></div>
-  <div id="resultMessage" class="result-message"></div>
-
-  <div id="assignment" class="assignment">
-   <div><strong>Committee:</strong> <span id="committee"></span></div>
-   <div><strong>Assigned Role:</strong> <span id="assignedRole"></span></div>
-  </div>
- </div>
 </section>
+
+<!-- VERIFIED SUCCESS SCREEN -->
+
+<section id="verifiedScreen" class="verified-screen">
+
+<div class="verified-icon">✓</div>
+
+<h3>Verification Successful</h3>
+
+<p>
+Your registration details have been verified successfully.
+Your volunteer selection result is ready.
+</p>
+
+<button id="openCardButton" class="gold-button">
+VIEW DIGITAL RESULT CARD
+</button>
+
+</section>
+
+<!-- RESULT CARD -->
+
+<section id="result" class="result">
+
+<div class="result-top">
+
+<img class="logo" src="assets/ayaz-melo-2026.png" alt="Ayaz Melo Logo">
+
+<h3>AYAZ MELO 2026</h3>
+
+<p>OFFICIAL VOLUNTEER RESULT CARD</p>
+
+</div>
+
+<div class="result-body">
+
+<img id="photo" class="photo" alt="Volunteer Profile Photo">
+
+<div id="photoPlaceholder" class="photo-placeholder hidden">
+PHOTO
+</div>
+
+<div id="fullName" class="volunteer-name"></div>
+
+<div id="fatherName" class="father"></div>
+
+<div id="volunteerId" class="volunteer-id"></div>
+
+<div id="status" class="status"></div>
+
+<div id="resultMessage" class="result-message"></div>
+
+<div id="assignment" class="assignment">
+
+<div>
+<strong>Committee:</strong>
+<span id="committee"></span>
+</div>
+
+<div>
+<strong>Assigned Role:</strong>
+<span id="assignedRole"></span>
+</div>
+
+</div>
+
+</div>
+
+<div class="card-footer">
+<img src="assets/ayaz-melo-2026.png" alt="Ayaz Melo Logo">
+<strong>AYAZ MELO 2026</strong><br>
+Every Volunteer. Every Contribution. One Celebration.
+</div>
+
+</section>
+
+<button id="anotherButton" class="hidden">
+CHECK ANOTHER RESULT
+</button>
+
 </main>
 
 <footer class="footer">
- <img src="assets/ayaz-melo-2026.png" alt="Ayaz Melo Logo">
- <strong>AYAZ MELO 2026</strong><br>
- Every Volunteer. Every Contribution. One Celebration.<br>
- Official Volunteer Selection Portal
+
+<img src="assets/ayaz-melo-2026.png" alt="Ayaz Melo Logo">
+
+<strong>AYAZ MELO 2026</strong><br>
+Official Volunteer Selection Portal
+
 </footer>
 
 </div>
 </div>
 
 <script>
+
 const SUPABASE_URL =
 "https://fstkhwoxbgdcdfwycggu.supabase.co";
 
@@ -304,6 +502,8 @@ const FUNCTION_URL =
 SUPABASE_URL + "/functions/v1/volunteer-result";
 
 const $ = id => document.getElementById(id);
+
+let volunteerData = null;
 
 function digits(value){
  return String(value || "")
@@ -318,28 +518,47 @@ function showMessage(text,type="error"){
  el.className="message "+type;
 }
 
-function hideResult(){
+function resetPortal(){
+
+ volunteerData=null;
+
+ $("verificationSection").style.display="block";
+ $("verifiedScreen").style.display="none";
  $("result").style.display="none";
- $("assignment").style.display="none";
+
+ $("anotherButton").classList.add("hidden");
+
+ $("verifyForm").reset();
+
+ $("message").className="message";
+
  $("photo").style.display="none";
  $("photo").removeAttribute("src");
+
+ $("photoPlaceholder").classList.add("hidden");
 }
 
-function showResult(data){
+function renderResult(data){
+
  $("fullName").textContent=data.fullName || "";
+
  $("fatherName").textContent=data.fatherName
-  ? "S/O "+data.fatherName : "";
+  ? "S/O "+data.fatherName
+  : "";
 
  $("volunteerId").textContent=
   "Volunteer ID: "+(data.volunteerId || "Not available");
 
  const status=String(data.status || "Pending").toLowerCase();
+
  const statusBox=$("status");
 
  statusBox.className="status";
+
  $("assignment").style.display="none";
 
  if(status==="selected"){
+
   statusBox.textContent="SELECTED";
   statusBox.classList.add("selected");
 
@@ -347,10 +566,13 @@ function showResult(data){
   "Congratulations! You are selected as a Volunteer for Ayaz Melo 2026. We are delighted to welcome you to our team. Your enthusiasm and dedication will help make this celebration memorable. Welcome aboard!";
 
   $("committee").textContent=data.committee || "To be announced";
+
   $("assignedRole").textContent=data.assignedRole || "To be announced";
+
   $("assignment").style.display="block";
 
  }else if(status==="rejected"){
+
   statusBox.textContent="NOT SELECTED";
   statusBox.classList.add("rejected");
 
@@ -358,30 +580,746 @@ function showResult(data){
   "Thank you for your interest in Ayaz Melo 2026. Unfortunately, you have not been selected as a volunteer this time. We truly appreciate your time, interest, and willingness to be part of this celebration. We encourage you to stay connected with Ayaz Melo and participate in our future activities. Thank you for being part of our journey.";
 
  }else{
+
   statusBox.textContent="UNDER REVIEW";
   statusBox.classList.add("pending");
 
   $("resultMessage").textContent=
   "Your application is currently under review. The selection process is ongoing. Please stay connected with Ayaz Melo 2026 for further updates. Thank you for your patience.";
+
  }
 
- if(data.photoUrl){
-  const photo=$("photo");
+ loadVolunteerPhoto(data.photoUrl);
 
-  photo.onload=()=>photo.style.display="block";
-  photo.onerror=()=>photo.style.display="none";
-
-  photo.src=data.photoUrl;
- }
-
- $("result").style.display="block";
 }
 
-$("verifyForm").addEventListener("submit",async event=>{
- event.preventDefault();
- hideResult();
+function loadVolunteerPhoto(url){
+
+ const photo=$("photo");
+ const placeholder=$("photoPlaceholder");
+
+ photo.style.display="none";
+ placeholder.classList.add("hidden");
+
+ if(!url){
+  placeholder.classList.remove("hidden");
+  return;
+ }
+
+ let fileId=null;
+
+ try{
+  const parsed=new URL(url);
+  fileId=parsed.searchParams.get("id");
+ }catch(e){}
+
+ const candidates=[];
+
+ if(fileId){
+
+  candidates.push(
+   "https://drive.google.com/thumbnail?id="+encodeURIComponent(fileId)+"&sz=w600"
+  );
+
+  candidates.push(
+   "https://lh3.googleusercontent.com/d/"+encodeURIComponent(fileId)
+  );
+
+  candidates.push(
+   "https://drive.google.com/uc?export=view&id="+encodeURIComponent(fileId)
+  );
+
+ }else{
+
+  candidates.push(url);
+
+ }
+
+ let index=0;
+
+ function tryNext(){
+
+  if(index>=candidates.length){
+
+   photo.style.display="none";
+   placeholder.classList.remove("hidden");
+   return;
+  }
+
+  const nextUrl=candidates[index++];
+
+  photo.onload=()=>{
+   photo.style.display="block";
+   placeholder.classList.add("hidden");
+  };
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ayaz Melo 2026 | Volunteer Selection Portal</title>
+
+<style>
+:root{
+ --navy:#171638;
+ --navy2:#24214f;
+ --gold:#d9b66f;
+ --cream:#f8f4eb;
+ --text:#252238;
+ --muted:#777487;
+ --green:#21865b;
+ --red:#b93448;
+ --border:#e9e2d5;
+}
+*{box-sizing:border-box}
+
+body{
+ margin:0;
+ min-height:100vh;
+ padding:25px 14px;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ background:linear-gradient(145deg,#11112e,#29234f);
+ color:var(--text);
+ font-family:Arial,Helvetica,sans-serif;
+}
+
+.container{width:100%;max-width:520px}
+
+.box{
+ background:var(--cream);
+ border-radius:18px;
+ overflow:hidden;
+ box-shadow:0 18px 55px #0005;
+}
+
+.header{
+ background:var(--navy);
+ color:white;
+ text-align:center;
+ padding:27px 20px 23px;
+ border-bottom:4px solid var(--gold);
+}
+
+.logo{
+ width:90px;
+ height:90px;
+ object-fit:contain;
+ display:block;
+ margin:0 auto 12px;
+ background:white;
+ border-radius:50%;
+ padding:7px;
+}
+
+.brand{
+ font-family:Georgia,serif;
+ font-size:30px;
+ font-weight:bold;
+ color:var(--gold);
+ letter-spacing:1px;
+}
+
+.header p{
+ margin:8px 0 0;
+ font-size:11px;
+ letter-spacing:2px;
+}
+
+.content{padding:25px 22px}
+
+h2{
+ margin:0 0 8px;
+ color:var(--navy);
+ font-family:Georgia,serif;
+ font-size:25px;
+}
+
+.intro{
+ color:var(--muted);
+ font-size:13px;
+ line-height:1.6;
+ margin-bottom:22px;
+}
+
+label{
+ display:block;
+ font-size:12px;
+ font-weight:bold;
+ margin:14px 0 6px;
+}
+
+input{
+ width:100%;
+ padding:14px;
+ border:1px solid var(--border);
+ border-radius:8px;
+ font-size:16px;
+ outline:none;
+ background:white;
+}
+
+input:focus{border-color:var(--gold)}
+
+button{
+ width:100%;
+ border:0;
+ border-radius:8px;
+ padding:15px;
+ margin-top:17px;
+ background:var(--navy);
+ color:white;
+ font-size:13px;
+ font-weight:bold;
+ letter-spacing:1px;
+ cursor:pointer;
+}
+
+button:disabled{opacity:.6;cursor:wait}
+
+.gold-button{
+ background:var(--gold);
+ color:var(--navy);
+}
+
+.message{
+ display:none;
+ padding:12px;
+ border-radius:8px;
+ margin-top:15px;
+ font-size:12px;
+ line-height:1.5;
+}
+
+.error{display:block;background:#fbe5e8;color:#9c2335}
+.success{display:block;background:#e3f4e9;color:#176a43}
+
+.hidden{display:none!important}
+
+/* VERIFIED SCREEN */
+
+.verified-screen{
+ display:none;
+ text-align:center;
+ padding:25px 10px;
+}
+
+.verified-icon{
+ width:65px;
+ height:65px;
+ border-radius:50%;
+ background:#e0f3e8;
+ color:var(--green);
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ font-size:32px;
+ margin:0 auto 15px;
+}
+
+.verified-screen h3{
+ color:var(--navy);
+ font-family:Georgia,serif;
+ font-size:22px;
+ margin:0 0 8px;
+}
+
+.verified-screen p{
+ color:var(--muted);
+ font-size:12px;
+ line-height:1.6;
+}
+
+/* DIGITAL RESULT CARD */
+
+.result{
+ display:none;
+ margin-top:15px;
+ border:1px solid var(--gold);
+ border-radius:13px;
+ overflow:hidden;
+ background:white;
+}
+
+.result-top{
+ background:var(--navy);
+ color:white;
+ padding:20px 15px;
+ text-align:center;
+}
+
+.result-top .logo{
+ width:65px;
+ height:65px;
+ margin-bottom:8px;
+}
+
+.result-top h3{
+ margin:5px 0;
+ font-family:Georgia,serif;
+ color:var(--gold);
+ font-size:22px;
+}
+
+.result-top p{
+ margin:5px 0 0;
+ font-size:10px;
+ letter-spacing:1.5px;
+}
+
+.result-body{
+ padding:22px 20px;
+ text-align:center;
+}
+
+.photo{
+ width:115px;
+ height:115px;
+ border-radius:50%;
+ object-fit:cover;
+ border:3px solid var(--gold);
+ background:#eee;
+ display:none;
+ margin:0 auto 12px;
+}
+
+.photo-placeholder{
+ width:115px;
+ height:115px;
+ border-radius:50%;
+ border:3px solid var(--gold);
+ background:#f4eedf;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ margin:0 auto 12px;
+ color:var(--navy);
+ font-size:12px;
+}
+
+.volunteer-name{
+ color:var(--navy);
+ font-size:20px;
+ font-weight:bold;
+ margin:5px 0;
+}
+
+.father{
+ font-size:12px;
+ color:var(--muted);
+}
+
+.volunteer-id{
+ display:inline-block;
+ background:#f4eedf;
+ color:var(--navy);
+ border-radius:20px;
+ padding:7px 13px;
+ font-size:11px;
+ margin:12px 0;
+}
+
+.status{
+ display:block;
+ padding:12px;
+ border-radius:8px;
+ font-weight:bold;
+ font-size:17px;
+ letter-spacing:1px;
+ margin:12px 0;
+}
+
+.selected{background:#e0f3e8;color:#176c42}
+.rejected{background:#fbe5e8;color:#a12537}
+.pending{background:#fff2d7;color:#8a6418}
+
+.result-message{
+ font-size:12px;
+ line-height:1.7;
+ color:#555;
+ margin:12px 0;
+}
+
+.assignment{
+ display:none;
+ background:#f8f4eb;
+ border:1px solid var(--border);
+ border-radius:8px;
+ padding:12px;
+ margin-top:12px;
+ text-align:left;
+ font-size:12px;
+ line-height:1.8;
+}
+
+.assignment strong{color:var(--navy)}
+
+.card-footer{
+ background:#f0eadd;
+ text-align:center;
+ padding:15px;
+ color:var(--muted);
+ font-size:10px;
+ line-height:1.7;
+}
+
+.card-footer img{
+ width:40px;
+ height:40px;
+ object-fit:contain;
+ display:block;
+ margin:0 auto 6px;
+}
+
+.footer{
+ text-align:center;
+ background:#f0eadd;
+ padding:17px;
+ color:var(--muted);
+ font-size:10px;
+ line-height:1.7;
+}
+
+.footer img{
+ width:42px;
+ height:42px;
+ object-fit:contain;
+ display:block;
+ margin:0 auto 7px;
+}
+
+@media(max-width:400px){
+ .content{padding:22px 16px}
+ .brand{font-size:26px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<div class="box">
+
+<header class="header">
+ <img class="logo" src="assets/ayaz-melo-2026.png" alt="Ayaz Melo Logo">
+ <div class="brand">AYAZ MELO 2026</div>
+ <p>OFFICIAL VOLUNTEER SELECTION PORTAL</p>
+</header>
+
+<main class="content">
+
+<!-- VERIFICATION FORM -->
+
+<section id="verificationSection">
+
+<h2>Selection Verification</h2>
+
+<div class="intro">
+Enter your CNIC number and the last four digits of your registered mobile number to check your volunteer selection result.
+</div>
+
+<form id="verifyForm">
+
+<label for="cnic">CNIC Number</label>
+<input
+ id="cnic"
+ type="text"
+ inputmode="numeric"
+ maxlength="15"
+ placeholder="Enter your 13-digit CNIC"
+ required
+>
+
+<label for="mobileLast4">Last 4 Digits of Registered Mobile</label>
+<input
+ id="mobileLast4"
+ type="text"
+ inputmode="numeric"
+ maxlength="4"
+ placeholder="Enter last 4 digits"
+ required
+>
+
+<button id="verifyButton" type="submit">
+VERIFY SELECTION
+</button>
+
+</form>
+
+<div id="message" class="message" role="alert"></div>
+
+</section>
+
+<!-- VERIFIED SUCCESS SCREEN -->
+
+<section id="verifiedScreen" class="verified-screen">
+
+<div class="verified-icon">✓</div>
+
+<h3>Verification Successful</h3>
+
+<p>
+Your registration details have been verified successfully.
+Your volunteer selection result is ready.
+</p>
+
+<button id="openCardButton" class="gold-button">
+VIEW DIGITAL RESULT CARD
+</button>
+
+</section>
+
+<!-- RESULT CARD -->
+
+<section id="result" class="result">
+
+<div class="result-top">
+
+<img class="logo" src="assets/ayaz-melo-2026.png" alt="Ayaz Melo Logo">
+
+<h3>AYAZ MELO 2026</h3>
+
+<p>OFFICIAL VOLUNTEER RESULT CARD</p>
+
+</div>
+
+<div class="result-body">
+
+<img id="photo" class="photo" alt="Volunteer Profile Photo">
+
+<div id="photoPlaceholder" class="photo-placeholder hidden">
+PHOTO
+</div>
+
+<div id="fullName" class="volunteer-name"></div>
+
+<div id="fatherName" class="father"></div>
+
+<div id="volunteerId" class="volunteer-id"></div>
+
+<div id="status" class="status"></div>
+
+<div id="resultMessage" class="result-message"></div>
+
+<div id="assignment" class="assignment">
+
+<div>
+<strong>Committee:</strong>
+<span id="committee"></span>
+</div>
+
+<div>
+<strong>Assigned Role:</strong>
+<span id="assignedRole"></span>
+</div>
+
+</div>
+
+</div>
+
+<div class="card-footer">
+<img src="assets/ayaz-melo-2026.png" alt="Ayaz Melo Logo">
+<strong>AYAZ MELO 2026</strong><br>
+Every Volunteer. Every Contribution. One Celebration.
+</div>
+
+</section>
+
+<button id="anotherButton" class="hidden">
+CHECK ANOTHER RESULT
+</button>
+
+</main>
+
+<footer class="footer">
+
+<img src="assets/ayaz-melo-2026.png" alt="Ayaz Melo Logo">
+
+<strong>AYAZ MELO 2026</strong><br>
+Official Volunteer Selection Portal
+
+</footer>
+
+</div>
+</div>
+
+<script>
+
+const SUPABASE_URL =
+"https://fstkhwoxbgdcdfwycggu.supabase.co";
+
+const SUPABASE_ANON_KEY =
+"sb_publishable_BNRQfiLDVM-892aVwO_hJw_OAhEgTrq";
+
+const FUNCTION_URL =
+SUPABASE_URL + "/functions/v1/volunteer-result";
+
+const $ = id => document.getElementById(id);
+
+let volunteerData = null;
+
+function digits(value){
+ return String(value || "")
+ .replace(/[۰-۹]/g,d=>String("۰۱۲۳۴۵۶۷۸۹".indexOf(d)))
+ .replace(/[٠-٩]/g,d=>String("٠١٢٣٤٥٦٧٨٩".indexOf(d)))
+ .replace(/\D/g,"");
+}
+
+function showMessage(text,type="error"){
+ const el=$("message");
+ el.textContent=text;
+ el.className="message "+type;
+}
+
+function resetPortal(){
+
+ volunteerData=null;
+
+ $("verificationSection").style.display="block";
+ $("verifiedScreen").style.display="none";
+ $("result").style.display="none";
+
+ $("anotherButton").classList.add("hidden");
+
+ $("verifyForm").reset();
 
  $("message").className="message";
+
+ $("photo").style.display="none";
+ $("photo").removeAttribute("src");
+
+ $("photoPlaceholder").classList.add("hidden");
+}
+
+function renderResult(data){
+
+ $("fullName").textContent=data.fullName || "";
+
+ $("fatherName").textContent=data.fatherName
+  ? "S/O "+data.fatherName
+  : "";
+
+ $("volunteerId").textContent=
+  "Volunteer ID: "+(data.volunteerId || "Not available");
+
+ const status=String(data.status || "Pending").toLowerCase();
+
+ const statusBox=$("status");
+
+ statusBox.className="status";
+
+ $("assignment").style.display="none";
+
+ if(status==="selected"){
+
+  statusBox.textContent="SELECTED";
+  statusBox.classList.add("selected");
+
+  $("resultMessage").textContent=
+  "Congratulations! You are selected as a Volunteer for Ayaz Melo 2026. We are delighted to welcome you to our team. Your enthusiasm and dedication will help make this celebration memorable. Welcome aboard!";
+
+  $("committee").textContent=data.committee || "To be announced";
+
+  $("assignedRole").textContent=data.assignedRole || "To be announced";
+
+  $("assignment").style.display="block";
+
+ }else if(status==="rejected"){
+
+  statusBox.textContent="NOT SELECTED";
+  statusBox.classList.add("rejected");
+
+  $("resultMessage").textContent=
+  "Thank you for your interest in Ayaz Melo 2026. Unfortunately, you have not been selected as a volunteer this time. We truly appreciate your time, interest, and willingness to be part of this celebration. We encourage you to stay connected with Ayaz Melo and participate in our future activities. Thank you for being part of our journey.";
+
+ }else{
+
+  statusBox.textContent="UNDER REVIEW";
+  statusBox.classList.add("pending");
+
+  $("resultMessage").textContent=
+  "Your application is currently under review. The selection process is ongoing. Please stay connected with Ayaz Melo 2026 for further updates. Thank you for your patience.";
+
+ }
+
+ loadVolunteerPhoto(data.photoUrl);
+
+}
+
+function loadVolunteerPhoto(url){
+
+ const photo=$("photo");
+ const placeholder=$("photoPlaceholder");
+
+ photo.style.display="none";
+ placeholder.classList.add("hidden");
+
+ if(!url){
+  placeholder.classList.remove("hidden");
+  return;
+ }
+
+ let fileId=null;
+
+ try{
+  const parsed=new URL(url);
+  fileId=parsed.searchParams.get("id");
+ }catch(e){}
+
+ const candidates=[];
+
+ if(fileId){
+
+  candidates.push(
+   "https://drive.google.com/thumbnail?id="+encodeURIComponent(fileId)+"&sz=w600"
+  );
+
+  candidates.push(
+   "https://lh3.googleusercontent.com/d/"+encodeURIComponent(fileId)
+  );
+
+  candidates.push(
+   "https://drive.google.com/uc?export=view&id="+encodeURIComponent(fileId)
+  );
+
+ }else{
+
+  candidates.push(url);
+
+ }
+
+ let index=0;
+
+ function tryNext(){
+
+  if(index>=candidates.length){
+
+   photo.style.display="none";
+   placeholder.classList.remove("hidden");
+   return;
+  }
+
+  const nextUrl=candidates[index++];
+
+  photo.onload=()=>{
+   photo.style.display="block";
+   placeholder.classList.add("hidden");
+  };
+
+  photo.onerror=tryNext;
+
+  photo.src=nextUrl;
+ }
+
+ tryNext();
+}
+
+// VERIFY FORM
+
+$("verifyForm").addEventListener("submit",async event=>{
+
+ event.preventDefault();
 
  const cnic=digits($("cnic").value);
  const mobileLast4=digits($("mobileLast4").value);
@@ -397,10 +1335,12 @@ $("verifyForm").addEventListener("submit",async event=>{
  }
 
  const button=$("verifyButton");
+
  button.disabled=true;
  button.textContent="VERIFYING...";
 
  try{
+
   const response=await fetch(FUNCTION_URL,{
    method:"POST",
    headers:{
@@ -408,7 +1348,10 @@ $("verifyForm").addEventListener("submit",async event=>{
     "apikey":SUPABASE_ANON_KEY,
     "Authorization":"Bearer "+SUPABASE_ANON_KEY
    },
-   body:JSON.stringify({cnic,mobileLast4})
+   body:JSON.stringify({
+    cnic,
+    mobileLast4
+   })
   });
 
   const data=await response.json();
@@ -417,16 +1360,60 @@ $("verifyForm").addEventListener("submit",async event=>{
    throw new Error(data.error || "Verification failed.");
   }
 
-  showMessage("Your volunteer record has been verified.","success");
-  showResult(data);
+  volunteerData=data;
+
+  // Hide CNIC and mobile form
+  $("verificationSection").style.display="none";
+
+  // Prepare digital card
+  renderResult(data);
+
+  // Show verified screen
+  $("verifiedScreen").style.display="block";
 
  }catch(error){
-  showMessage(error.message || "Unable to connect. Please try again.");
+
+  showMessage(
+   error.message || "Unable to connect. Please try again."
+  );
+
  }finally{
+
   button.disabled=false;
   button.textContent="VERIFY SELECTION";
+
  }
+
 });
+
+// OPEN DIGITAL CARD
+
+$("openCardButton").addEventListener("click",()=>{
+
+ if(!volunteerData)return;
+
+ $("verifiedScreen").style.display="none";
+
+ $("result").style.display="block";
+
+ $("anotherButton").classList.remove("hidden");
+
+});
+
+// CHECK ANOTHER RESULT
+
+$("anotherButton").addEventListener("click",()=>{
+
+ resetPortal();
+
+ window.scrollTo({
+  top:0,
+  behavior:"smooth"
+ });
+
+});
+
 </script>
+
 </body>
 </html>
