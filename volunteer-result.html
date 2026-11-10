@@ -224,6 +224,7 @@ button:disabled {
   <div class="subtitle">VOLUNTEER SELECTION RESULT</div>
 
   <section class="panel" id="verificationPanel">
+
     <h2>Selection Verification</h2>
 
     <p style="font-size:13px;color:#777;line-height:1.6">
@@ -234,22 +235,28 @@ button:disabled {
     <form id="verifyForm">
 
       <label for="cnic">CNIC Number</label>
+
       <input
         id="cnic"
         type="text"
         inputmode="numeric"
         maxlength="15"
         placeholder="XXXXX-XXXXXXX-X"
+        autocomplete="off"
         required
       >
 
-      <label for="mobileLast4">Last 4 Digits of Registered Mobile</label>
+      <label for="mobileLast4">
+        Last 4 Digits of Registered Mobile
+      </label>
+
       <input
         id="mobileLast4"
         type="text"
         inputmode="numeric"
         maxlength="4"
         placeholder="1234"
+        autocomplete="off"
         required
       >
 
@@ -260,6 +267,7 @@ button:disabled {
     </form>
 
     <div class="message" id="message" role="alert"></div>
+
   </section>
 
   <section id="resultCard" class="result-card hidden">
@@ -271,9 +279,17 @@ button:disabled {
     </div>
 
     <div class="profile">
-      <img id="profilePhoto" src="" alt="Volunteer Profile Photo">
+
+      <img
+        id="profilePhoto"
+        src=""
+        alt="Volunteer Profile Photo"
+      >
+
       <h2 id="volunteerName"></h2>
+
       <div class="volunteer-id" id="volunteerId"></div>
+
     </div>
 
     <div class="details">
@@ -315,21 +331,45 @@ button:disabled {
 </div>
 
 <script>
+
+/* SUPABASE CONFIGURATION */
+
 const FUNCTION_URL =
   "https://fstkhwoxbgdcdfwycggu.supabase.co/functions/v1/volunteer-result";
 
 const SUPABASE_PUBLISHABLE_KEY =
   "sb_publishable_BNRQfiLDVM-892aVwO_hJw_OAhEgTrq";
 
+
+/* HELPERS */
+
 const $ = id => document.getElementById(id);
 
+
+/* ENGLISH + URDU + ARABIC DIGITS */
+
 function digits(value) {
-  return String(value || "").replace(/\D/g, "");
+
+  return String(value || "")
+
+    .replace(/[۰-۹]/g, d =>
+      "۰۱۲۳۴۵۶۷۸۹".indexOf(d)
+    )
+
+    .replace(/[٠-٩]/g, d =>
+      "٠١٢٣٤٥٦٧٨٩".indexOf(d)
+    )
+
+    .replace(/\D/g, "");
 }
+
 
 function showMessage(message) {
   $("message").textContent = message;
 }
+
+
+/* SHOW RESULT */
 
 function showResult(volunteer) {
 
@@ -337,9 +377,17 @@ function showResult(volunteer) {
     volunteer.selection_status || "Pending"
   ).toLowerCase();
 
-  $("resultCard").className = "result-card " + status;
+  const safeStatus = [
+    "selected",
+    "rejected",
+    "pending"
+  ].includes(status) ? status : "pending";
 
-  $("statusBadge").className = "status " + status;
+  $("resultCard").className =
+    "result-card " + safeStatus;
+
+  $("statusBadge").className =
+    "status " + safeStatus;
 
   $("volunteerName").textContent =
     volunteer.full_name || "Volunteer";
@@ -355,28 +403,43 @@ function showResult(volunteer) {
       ? "Volunteer ID: " + volunteer.volunteer_id
       : "";
 
+
+  /* PROFILE PHOTO */
+
   const photo = volunteer.photo_url;
 
   if (photo) {
+
     $("profilePhoto").src = photo;
-    $("profilePhoto").style.display = "inline-block";
+
+    $("profilePhoto").style.display =
+      "inline-block";
+
   } else {
+
     $("profilePhoto").removeAttribute("src");
-    $("profilePhoto").style.display = "none";
+
+    $("profilePhoto").style.display =
+      "none";
   }
 
   $("profilePhoto").onerror = function() {
     this.style.display = "none";
   };
 
+
+  /* COMMITTEE AND ROLE */
+
+  const isSelected = safeStatus === "selected";
+
   $("committeeBox").classList.toggle(
     "hidden",
-    status !== "selected" || !volunteer.committee
+    !isSelected || !volunteer.committee
   );
 
   $("roleBox").classList.toggle(
     "hidden",
-    status !== "selected" || !volunteer.assigned_role
+    !isSelected || !volunteer.assigned_role
   );
 
   $("committee").textContent =
@@ -385,110 +448,171 @@ function showResult(volunteer) {
   $("assignedRole").textContent =
     volunteer.assigned_role || "-";
 
-  if (status === "selected") {
-    $("statusBadge").textContent = "CONGRATULATIONS! YOU ARE SELECTED";
+
+  /* STATUS MESSAGES */
+
+  if (safeStatus === "selected") {
+
+    $("statusBadge").textContent =
+      "CONGRATULATIONS! YOU ARE SELECTED";
 
     $("statusNote").textContent =
-      "You have been selected as a volunteer for Ayaz Melo 2026. " +
-      "Please follow the official instructions from the organizing committee.";
+      "You have been selected as a volunteer for Ayaz Melo 2026. Please follow the official instructions from the organizing committee.";
+
   }
 
-  else if (status === "rejected") {
-    $("statusBadge").textContent = "APPLICATION NOT SELECTED";
+  else if (safeStatus === "rejected") {
+
+    $("statusBadge").textContent =
+      "APPLICATION NOT SELECTED";
 
     $("statusNote").textContent =
-      "Thank you for your interest and participation. " +
-      "Unfortunately, your application has not been selected for this event.";
+      "Thank you for your interest and participation. Unfortunately, your application has not been selected for this event.";
+
   }
 
   else {
-    $("statusBadge").textContent = "APPLICATION UNDER REVIEW";
+
+    $("statusBadge").textContent =
+      "APPLICATION UNDER REVIEW";
 
     $("statusNote").textContent =
-      "Your application is currently pending. " +
-      "Please check again later for the final selection result.";
+      "Your application is currently pending. Please check again later for the final selection result.";
+
   }
+
 
   $("verificationPanel").classList.add("hidden");
+
   $("resultCard").classList.remove("hidden");
+
 }
 
-$("verifyForm").addEventListener("submit", async function(event) {
 
-  event.preventDefault();
+/* VERIFY FORM */
 
-  const cnic = digits($("cnic").value);
-  const mobileLast4 = digits($("mobileLast4").value);
+$("verifyForm").addEventListener(
+  "submit",
+  async function(event) {
 
-  if (cnic.length !== 13) {
-    showMessage("Please enter a valid 13-digit CNIC.");
-    return;
-  }
+    event.preventDefault();
 
-  if (mobileLast4.length !== 4) {
-    showMessage("Please enter the last 4 mobile digits.");
-    return;
-  }
+    const cnic = digits($("cnic").value);
 
-  const button = $("verifyButton");
+    const mobileLast4 =
+      digits($("mobileLast4").value);
 
-  button.disabled = true;
-  button.textContent = "VERIFYING...";
-  showMessage("");
 
-  try {
+    /* CNIC VALIDATION */
 
-    const response = await fetch(FUNCTION_URL, {
-      method: "POST",
+    if (!/^\d{13}$/.test(cnic)) {
 
-      headers: {
-        "Content-Type": "application/json",
-        "apikey": SUPABASE_PUBLISHABLE_KEY
-      },
-
-      body: JSON.stringify({
-        cnic,
-        mobileLast4
-      })
-    });
-
-    const data = await response.json();
-
-    if (!response.ok || !data.success) {
-      throw new Error(
-        data.error || "Unable to verify your application."
+      showMessage(
+        "CNIC must contain exactly 13 digits."
       );
+
+      return;
     }
 
-    showResult(data.volunteer);
 
-  } catch (error) {
+    /* MOBILE VALIDATION */
 
-    showMessage(error.message || "Connection error. Please try again.");
+    if (!/^\d{4}$/.test(mobileLast4)) {
 
-  } finally {
+      showMessage(
+        "Mobile number must contain exactly 4 digits."
+      );
 
-    button.disabled = false;
-    button.textContent = "VERIFY SELECTION";
+      return;
+    }
+
+
+    const button = $("verifyButton");
+
+    button.disabled = true;
+
+    button.textContent = "VERIFYING...";
+
+    showMessage("");
+
+
+    try {
+
+      const response = await fetch(
+        FUNCTION_URL,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": SUPABASE_PUBLISHABLE_KEY
+          },
+
+          body: JSON.stringify({
+            cnic: cnic,
+            mobileLast4: mobileLast4
+          })
+        }
+      );
+
+
+      const data = await response.json();
+
+
+      if (!response.ok || !data.success) {
+
+        throw new Error(
+          data.error ||
+          "Unable to verify your application."
+        );
+
+      }
+
+
+      showResult(data.volunteer);
+
+
+    } catch (error) {
+
+      showMessage(
+        error.message ||
+        "Connection error. Please try again."
+      );
+
+    } finally {
+
+      button.disabled = false;
+
+      button.textContent = "VERIFY SELECTION";
+
+    }
 
   }
+);
 
-});
 
-$("checkAgain").addEventListener("click", function() {
+/* CHECK ANOTHER RESULT */
 
-  $("resultCard").classList.add("hidden");
-  $("verificationPanel").classList.remove("hidden");
+$("checkAgain").addEventListener(
+  "click",
+  function() {
 
-  $("verifyForm").reset();
-  showMessage("");
+    $("resultCard").classList.add("hidden");
 
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
+    $("verificationPanel").classList.remove("hidden");
 
-});
+    $("verifyForm").reset();
+
+    showMessage("");
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+  }
+);
+
 </script>
 
 </body>
