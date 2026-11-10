@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ayaz Melo 2026 | Selection Portal</title>
+<title>Ayaz Melo 2026 | Volunteer Selection Portal</title>
 
 <style>
 :root{
@@ -232,7 +232,7 @@ button:disabled{opacity:.6;cursor:wait}
 <div class="box">
 
 <header class="header">
- <img class="logo" src="assets/ayaz-melo-logo.png" alt="Ayaz Melo Logo">
+ <img class="logo" src="assets/ayaz-melo-2026.png" alt="Ayaz Melo Logo">
  <div class="brand">AYAZ MELO 2026</div>
  <p>OFFICIAL VOLUNTEER SELECTION PORTAL</p>
 </header>
@@ -245,54 +245,49 @@ Enter your CNIC number and the last four digits of your registered mobile number
 </div>
 
 <form id="verifyForm">
+ <label for="cnic">CNIC Number</label>
+ <input id="cnic" type="text" inputmode="numeric"
+ maxlength="15" placeholder="Enter your 13-digit CNIC" required>
 
-<label for="cnic">CNIC Number</label>
-<input id="cnic" type="text" inputmode="numeric"
-maxlength="15" placeholder="Enter your 13-digit CNIC" required>
+ <label for="mobileLast4">Last 4 Digits of Registered Mobile</label>
+ <input id="mobileLast4" type="text" inputmode="numeric"
+ maxlength="4" placeholder="Enter last 4 digits" required>
 
-<label for="mobileLast4">Last 4 Digits of Registered Mobile</label>
-<input id="mobileLast4" type="text" inputmode="numeric"
-maxlength="4" placeholder="Enter last 4 digits" required>
-
-<button id="verifyButton" type="submit">VERIFY SELECTION</button>
-
+ <button id="verifyButton" type="submit">VERIFY SELECTION</button>
 </form>
 
 <div id="message" class="message" role="alert"></div>
 
 <section id="result" class="result">
+ <div class="result-top">
+  <img class="logo" src="assets/ayaz-melo-2026.png" alt="Ayaz Melo Logo">
+  <h3>AYAZ MELO 2026</h3>
+  <p>OFFICIAL VOLUNTEER RESULT CARD</p>
+ </div>
 
-<div class="result-top">
- <img class="logo" src="assets/ayaz-melo-logo.png" alt="Ayaz Melo Logo">
- <h3>AYAZ MELO 2026</h3>
- <p>OFFICIAL VOLUNTEER RESULT CARD</p>
-</div>
+ <div class="result-body">
+  <img id="photo" class="photo" alt="Volunteer Photo">
 
-<div class="result-body">
+  <div id="fullName" class="volunteer-name"></div>
+  <div id="fatherName" class="father"></div>
+  <div id="volunteerId" class="volunteer-id"></div>
 
-<img id="photo" class="photo" alt="Volunteer Photo">
+  <div id="status" class="status"></div>
+  <div id="resultMessage" class="result-message"></div>
 
-<div id="fullName" class="volunteer-name"></div>
-<div id="fatherName" class="father"></div>
-<div id="volunteerId" class="volunteer-id"></div>
-
-<div id="status" class="status"></div>
-<div id="resultMessage" class="result-message"></div>
-
-<div id="assignment" class="assignment">
- <div><strong>Committee:</strong> <span id="committee"></span></div>
- <div><strong>Assigned Role:</strong> <span id="assignedRole"></span></div>
-</div>
-
-</div>
+  <div id="assignment" class="assignment">
+   <div><strong>Committee:</strong> <span id="committee"></span></div>
+   <div><strong>Assigned Role:</strong> <span id="assignedRole"></span></div>
+  </div>
+ </div>
 </section>
 </main>
 
 <footer class="footer">
-<img src="assets/ayaz-melo-logo.png" alt="Ayaz Melo Logo">
-<strong>AYAZ MELO 2026</strong><br>
-Every Volunteer. Every Contribution. One Celebration.<br>
-Official Volunteer Selection Portal
+ <img src="assets/ayaz-melo-2026.png" alt="Ayaz Melo Logo">
+ <strong>AYAZ MELO 2026</strong><br>
+ Every Volunteer. Every Contribution. One Celebration.<br>
+ Official Volunteer Selection Portal
 </footer>
 
 </div>
@@ -331,13 +326,12 @@ function hideResult(){
 }
 
 function showResult(data){
-
  $("fullName").textContent=data.fullName || "";
  $("fatherName").textContent=data.fatherName
- ? "S/O "+data.fatherName : "";
+  ? "S/O "+data.fatherName : "";
 
  $("volunteerId").textContent=
- "Volunteer ID: "+(data.volunteerId || "Not available");
+  "Volunteer ID: "+(data.volunteerId || "Not available");
 
  const status=String(data.status || "Pending").toLowerCase();
  const statusBox=$("status");
@@ -346,7 +340,6 @@ function showResult(data){
  $("assignment").style.display="none";
 
  if(status==="selected"){
-
   statusBox.textContent="SELECTED";
   statusBox.classList.add("selected");
 
@@ -358,7 +351,6 @@ function showResult(data){
   $("assignment").style.display="block";
 
  }else if(status==="rejected"){
-
   statusBox.textContent="NOT SELECTED";
   statusBox.classList.add("rejected");
 
@@ -366,7 +358,6 @@ function showResult(data){
   "Thank you for your interest in Ayaz Melo 2026. Unfortunately, you have not been selected as a volunteer this time. We truly appreciate your time, interest, and willingness to be part of this celebration. We encourage you to stay connected with Ayaz Melo and participate in our future activities. Thank you for being part of our journey.";
 
  }else{
-
   statusBox.textContent="UNDER REVIEW";
   statusBox.classList.add("pending");
 
@@ -375,14 +366,10 @@ function showResult(data){
  }
 
  if(data.photoUrl){
-
   const photo=$("photo");
 
   photo.onload=()=>photo.style.display="block";
-
-  photo.onerror=()=>{
-   photo.style.display="none";
-  };
+  photo.onerror=()=>photo.style.display="none";
 
   photo.src=data.photoUrl;
  }
@@ -391,9 +378,10 @@ function showResult(data){
 }
 
 $("verifyForm").addEventListener("submit",async event=>{
-
  event.preventDefault();
  hideResult();
+
+ $("message").className="message";
 
  const cnic=digits($("cnic").value);
  const mobileLast4=digits($("mobileLast4").value);
@@ -413,7 +401,6 @@ $("verifyForm").addEventListener("submit",async event=>{
  button.textContent="VERIFYING...";
 
  try{
-
   const response=await fetch(FUNCTION_URL,{
    method:"POST",
    headers:{
@@ -434,15 +421,11 @@ $("verifyForm").addEventListener("submit",async event=>{
   showResult(data);
 
  }catch(error){
-
   showMessage(error.message || "Unable to connect. Please try again.");
-
  }finally{
-
   button.disabled=false;
   button.textContent="VERIFY SELECTION";
  }
-
 });
 </script>
 </body>
