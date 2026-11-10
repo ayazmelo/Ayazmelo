@@ -138,12 +138,12 @@ header{
  border-color:var(--gold);box-shadow:0 0 0 3px #d9ae6218;
 }
 .form-group input::placeholder{color:#79718f}
-.verify-btn,.view-btn,.reset-btn{
+.verify-btn,.reset-btn{
  border:0;border-radius:10px;padding:15px 22px;
  font-size:11px;font-weight:900;letter-spacing:1px;
  transition:.2s;
 }
-.verify-btn,.view-btn{
+.verify-btn{
  background:linear-gradient(110deg,#b98740,#f0d18c);
  color:#21164d;
 }
@@ -153,19 +153,6 @@ header{
  margin-top:15px;font-size:11px;line-height:1.7;
  text-align:center;color:#ff9ca7;
 }
-.success-panel{text-align:center;padding:25px 15px}
-.success-icon{
- width:65px;height:65px;margin:0 auto 17px;
- display:grid;place-items:center;border-radius:50%;
- color:var(--green);border:1px solid #39c58a70;
- background:#39c58a16;font-size:30px;
-}
-.success-panel h2{
- font-family:"Cormorant Garamond",serif;
- font-size:34px;color:var(--gold2);margin:0 0 8px;
-}
-.success-panel p{color:var(--muted);font-size:11px;line-height:1.8}
-.view-btn{margin-top:18px}
 .digital-card{
  margin-top:28px;overflow:hidden;border-radius:22px;
  border:1px solid #d9ae6270;
@@ -356,20 +343,6 @@ footer img{
   </form>
  </section>
 
- <section class="panel hidden" id="successSection">
-  <div class="success-panel">
-   <div class="success-icon">✓</div>
-   <h2>Verification Successful</h2>
-   <p>
-    Your registration details have been verified successfully.<br>
-    Your digital volunteer result card is ready.
-   </p>
-   <button class="view-btn" id="viewCardButton">
-    VIEW DIGITAL RESULT CARD →
-   </button>
-  </div>
- </section>
-
  <section id="resultSection" class="hidden">
   <div class="digital-card" id="digitalCard">
 
@@ -399,7 +372,7 @@ footer img{
 
     <div class="profile-area">
      <div class="profile-name" id="fullName">Volunteer Name</div>
-     <div class="profile-father" id="fatherName">S/O: —</div>
+     <div class="profile-father" id="fatherName">Father's Name: —</div>
 
      <div class="info-grid">
       <div class="info-item">
@@ -464,7 +437,31 @@ function onlyDigits(value){
  return String(value || "").replace(/\D/g,"");
 }
 
-/* Load the Google Drive photo using the file ID returned by Supabase. */
+/* Extract Google Drive file ID from common Google Drive URL formats. */
+function getDriveFileId(fileId, photoUrl){
+ if(fileId) return String(fileId).trim();
+
+ if(!photoUrl) return "";
+
+ try{
+  const url = new URL(photoUrl);
+
+  const queryId = url.searchParams.get("id");
+  if(queryId) return queryId;
+
+  const pathMatch = url.pathname.match(/\/(?:file\/)?d\/([^/?]+)/);
+  if(pathMatch) return pathMatch[1];
+
+  const thumbnailMatch = url.pathname.match(/\/d\/([^/?]+)/);
+  if(thumbnailMatch) return thumbnailMatch[1];
+
+ }catch(error){}
+
+ const match = String(photoUrl).match(/(?:id=|\/d\/)([a-zA-Z0-9_-]{15,})/);
+ return match ? match[1] : "";
+}
+
+/* Try multiple image addresses, starting with the tested Drive thumbnail URL. */
 function showPhoto(fileId, photoUrl){
  const img = $("volunteerPhoto");
  const placeholder = $("photoPlaceholder");
@@ -481,29 +478,18 @@ function showPhoto(fileId, photoUrl){
  img.classList.add("hidden");
  placeholder.classList.remove("hidden");
 
- let id = fileId || "";
-
- if(!id && photoUrl){
-  try{
-   const parsed = new URL(photoUrl);
-   id = parsed.searchParams.get("id") || "";
-  }catch(e){}
-
-  if(!id){
-   const match = photoUrl.match(/\/d\/([^/?]+)/);
-   if(match) id = match[1];
-  }
- }
-
+ const id = getDriveFileId(fileId, photoUrl);
  const urls = [];
 
  if(id){
   urls.push(
    `https://drive.google.com/thumbnail?id=${encodeURIComponent(id)}&sz=w1000`,
-   `https://drive.google.com/uc?export=view&id=${encodeURIComponent(id)}`,
-   `https://lh3.googleusercontent.com/d/${encodeURIComponent(id)}`
+   `https://lh3.googleusercontent.com/d/${encodeURIComponent(id)}`,
+   `https://drive.google.com/uc?export=view&id=${encodeURIComponent(id)}`
   );
- }else if(photoUrl){
+ }
+
+ if(photoUrl && !urls.includes(photoUrl)){
   urls.push(photoUrl);
  }
 
@@ -519,12 +505,27 @@ function showPhoto(fileId, photoUrl){
   img.src = urls[index++];
  }
 
+ img.removeAttribute("src");
  tryNext();
 }
 
 function renderResult(data){
  $("fullName").textContent = data.fullName || "Volunteer";
- $("fatherName").textContent = "S/O: " + (data.fatherName || "—");
+
+ const father = data.fatherName || "—";
+ const gender = String(
+  data.gender || data.sex || data.volunteerGender || ""
+ ).trim().toLowerCase();
+
+ let parentLabel = "Father's Name:";
+
+ if(["female","f","woman","girl"].includes(gender)){
+  parentLabel = "D/O:";
+ }else if(["male","m","man","boy"].includes(gender)){
+  parentLabel = "S/O:";
+ }
+
+ $("fatherName").textContent = parentLabel + " " + father;
  $("volunteerId").textContent = data.volunteerId || "—";
 
  showPhoto(data.photoFileId, data.photoUrl);
@@ -603,8 +604,7 @@ $("verifyForm").addEventListener("submit", async function(e){
   renderResult(data);
 
   $("verificationSection").classList.add("hidden");
-  $("successSection").classList.remove("hidden");
-  $("resultSection").classList.add("hidden");
+  $("resultSection").classList.remove("hidden");
 
   window.scrollTo({top:0,behavior:"smooth"});
 
@@ -616,25 +616,15 @@ $("verifyForm").addEventListener("submit", async function(e){
  }
 });
 
-$("viewCardButton").addEventListener("click",function(){
- $("successSection").classList.add("hidden");
- $("resultSection").classList.remove("hidden");
-
- window.scrollTo({
-  top:$("resultSection").offsetTop - 20,
-  behavior:"smooth"
- });
-});
-
 $("checkAnotherButton").addEventListener("click",function(){
  $("verifyForm").reset();
  $("formMessage").textContent = "";
 
  $("resultSection").classList.add("hidden");
- $("successSection").classList.add("hidden");
  $("verificationSection").classList.remove("hidden");
 
  $("volunteerPhoto").classList.add("hidden");
+ $("volunteerPhoto").removeAttribute("src");
  $("photoPlaceholder").classList.remove("hidden");
 
  window.scrollTo({top:0,behavior:"smooth"});
