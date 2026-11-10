@@ -2,763 +2,927 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ayaz Melo 2026 | Volunteer Selection Portal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ayaz Melo 2026 | Volunteer Result</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
- --navy:#171638;
- --navy2:#24214f;
- --gold:#d9b66f;
- --cream:#f8f4eb;
- --text:#252238;
- --muted:#777487;
- --green:#21865b;
- --red:#b93448;
- --border:#e9e2d5;
+ --navy:#100d29;
+ --navy2:#21164d;
+ --navy3:#30215f;
+ --maroon:#842c3c;
+ --gold:#d9ae62;
+ --gold2:#f5d99b;
+ --cream:#faf5eb;
+ --muted:#b8b1ca;
+ --green:#39c58a;
+ --red:#ff6476;
+ --border:rgba(217,174,98,.28);
 }
+
 *{box-sizing:border-box}
 
 body{
  margin:0;
  min-height:100vh;
- padding:25px 14px;
- display:flex;
- justify-content:center;
- align-items:center;
- background:linear-gradient(145deg,#11112e,#29234f);
- color:var(--text);
- font-family:Arial,Helvetica,sans-serif;
+ font-family:Montserrat,Arial,sans-serif;
+ color:#fff;
+ background:
+ radial-gradient(ellipse at 15% 15%,#49336f 0%,transparent 35%),
+ radial-gradient(ellipse at 90% 80%,#542432 0%,transparent 32%),
+ linear-gradient(135deg,#100d29,#21164d 55%,#140e29);
+ overflow-x:hidden;
 }
 
-.container{width:100%;max-width:520px}
-
-.box{
- background:var(--cream);
- border-radius:18px;
- overflow:hidden;
- box-shadow:0 18px 55px #0005;
+body:before{
+ content:"";
+ position:fixed;
+ inset:0;
+ pointer-events:none;
+ opacity:.12;
+ background-image:radial-gradient(#fff 0.6px,transparent .6px);
+ background-size:22px 22px;
 }
 
-.header{
- background:var(--navy);
- color:white;
- text-align:center;
- padding:27px 20px 23px;
- border-bottom:4px solid var(--gold);
-}
+button,input{font:inherit}
 
-.logo{
- width:90px;
- height:90px;
- object-fit:contain;
- display:block;
- margin:0 auto 12px;
- background:white;
- border-radius:50%;
- padding:7px;
-}
-
-.brand{
- font-family:Georgia,serif;
- font-size:30px;
- font-weight:bold;
- color:var(--gold);
- letter-spacing:1px;
-}
-
-.header p{
- margin:8px 0 0;
- font-size:11px;
- letter-spacing:2px;
-}
-
-.content{padding:25px 22px}
-
-h2{
- margin:0 0 8px;
- color:var(--navy);
- font-family:Georgia,serif;
- font-size:25px;
-}
-
-.intro{
- color:var(--muted);
- font-size:13px;
- line-height:1.6;
- margin-bottom:22px;
-}
-
-label{
- display:block;
- font-size:12px;
- font-weight:bold;
- margin:14px 0 6px;
-}
-
-input{
- width:100%;
- padding:14px;
- border:1px solid var(--border);
- border-radius:8px;
- font-size:16px;
- outline:none;
- background:white;
-}
-
-input:focus{border-color:var(--gold)}
-
-button{
- width:100%;
- border:0;
- border-radius:8px;
- padding:15px;
- margin-top:17px;
- background:var(--navy);
- color:white;
- font-size:13px;
- font-weight:bold;
- letter-spacing:1px;
- cursor:pointer;
-}
-
-button:disabled{opacity:.6;cursor:wait}
-
-.gold-button{
- background:var(--gold);
- color:var(--navy);
-}
-
-.message{
- display:none;
- padding:12px;
- border-radius:8px;
- margin-top:15px;
- font-size:12px;
- line-height:1.5;
-}
-
-.error{display:block;background:#fbe5e8;color:#9c2335}
-.success{display:block;background:#e3f4e9;color:#176a43}
+button{cursor:pointer}
 
 .hidden{display:none!important}
 
-/* VERIFIED SCREEN */
-
-.verified-screen{
- display:none;
- text-align:center;
- padding:25px 10px;
+.container{
+ width:min(100% - 30px,950px);
+ margin:auto;
+ position:relative;
+ z-index:1;
 }
 
-.verified-icon{
+header{
+ padding:22px 0;
+ border-bottom:1px solid var(--border);
+}
+
+.header-inner{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:15px;
+}
+
+.brand{
+ display:flex;
+ align-items:center;
+ gap:13px;
+}
+
+.brand img{
+ width:62px;
+ height:62px;
+ object-fit:contain;
+}
+
+.brand-title{
+ font-family:"Cormorant Garamond",serif;
+ font-size:25px;
+ font-weight:700;
+ color:var(--gold2);
+}
+
+.brand-sub{
+ font-size:9px;
+ letter-spacing:3px;
+ color:#d8d0e5;
+ margin-top:3px;
+}
+
+.edition{
+ border:1px solid var(--border);
+ color:var(--gold2);
+ border-radius:30px;
+ padding:9px 15px;
+ font-size:10px;
+ letter-spacing:1.5px;
+ font-weight:800;
+}
+
+.hero{
+ text-align:center;
+ padding:55px 10px 32px;
+}
+
+.hero-tag{
+ color:var(--gold);
+ font-size:10px;
+ font-weight:800;
+ letter-spacing:4px;
+}
+
+.hero h1{
+ font-family:"Cormorant Garamond",serif;
+ font-size:clamp(36px,7vw,57px);
+ line-height:1.05;
+ margin:15px 0 12px;
+ color:var(--cream);
+}
+
+.hero h1 span{color:var(--gold2)}
+
+.hero p{
+ color:var(--muted);
+ font-size:12px;
+ line-height:1.8;
+ max-width:570px;
+ margin:0 auto;
+}
+
+.gold-line{
+ width:75px;
+ height:2px;
+ margin:22px auto;
+ background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+
+.panel{
+ background:linear-gradient(145deg,rgba(54,40,91,.86),rgba(23,17,54,.94));
+ border:1px solid var(--border);
+ border-radius:20px;
+ padding:30px;
+ box-shadow:0 25px 70px #0005;
+ backdrop-filter:blur(14px);
+}
+
+.panel-heading{
+ display:flex;
+ align-items:center;
+ gap:12px;
+ margin-bottom:23px;
+}
+
+.panel-icon{
+ width:42px;
+ height:42px;
+ border-radius:12px;
+ display:grid;
+ place-items:center;
+ background:#d9ae6220;
+ border:1px solid var(--border);
+ color:var(--gold2);
+ font-size:20px;
+}
+
+.panel-heading h2{
+ font-size:17px;
+ margin:0;
+}
+
+.panel-heading p{
+ color:var(--muted);
+ font-size:10px;
+ margin:5px 0 0;
+}
+
+.form-grid{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:17px;
+}
+
+.form-group label{
+ display:block;
+ font-size:10px;
+ color:var(--gold2);
+ font-weight:800;
+ letter-spacing:1px;
+ margin-bottom:9px;
+}
+
+.form-group input{
+ width:100%;
+ padding:15px;
+ background:#100d29;
+ border:1px solid #ffffff20;
+ border-radius:10px;
+ color:white;
+ outline:none;
+ font-size:14px;
+ transition:.2s;
+}
+
+.form-group input:focus{
+ border-color:var(--gold);
+ box-shadow:0 0 0 3px #d9ae6218;
+}
+
+.form-group input::placeholder{color:#79718f}
+
+.verify-btn,.view-btn,.reset-btn{
+ border:0;
+ border-radius:10px;
+ padding:15px 22px;
+ font-size:11px;
+ font-weight:900;
+ letter-spacing:1px;
+ transition:.2s;
+}
+
+.verify-btn{
+ width:100%;
+ margin-top:22px;
+ background:linear-gradient(110deg,#b98740,#f0d18c);
+ color:#21164d;
+ box-shadow:0 8px 25px #d9ae6230;
+}
+
+.verify-btn:hover,.view-btn:hover{transform:translateY(-2px)}
+
+.verify-btn:disabled{opacity:.6;cursor:wait}
+
+.message{
+ margin-top:15px;
+ font-size:11px;
+ line-height:1.7;
+ text-align:center;
+ color:#ff9ca7;
+}
+
+.success-panel{
+ text-align:center;
+ padding:25px 15px;
+}
+
+.success-icon{
  width:65px;
  height:65px;
+ margin:0 auto 17px;
+ display:grid;
+ place-items:center;
  border-radius:50%;
- background:#e0f3e8;
  color:var(--green);
- display:flex;
- justify-content:center;
- align-items:center;
- font-size:32px;
- margin:0 auto 15px;
+ border:1px solid #39c58a70;
+ background:#39c58a16;
+ font-size:30px;
 }
 
-.verified-screen h3{
- color:var(--navy);
- font-family:Georgia,serif;
- font-size:22px;
+.success-panel h2{
+ font-family:"Cormorant Garamond",serif;
+ font-size:34px;
+ color:var(--gold2);
  margin:0 0 8px;
 }
 
-.verified-screen p{
+.success-panel p{
  color:var(--muted);
- font-size:12px;
- line-height:1.6;
-}
-
-/* DIGITAL RESULT CARD */
-
-.result{
- display:none;
- margin-top:15px;
- border:1px solid var(--gold);
- border-radius:13px;
- overflow:hidden;
- background:white;
-}
-
-.result-top{
- background:var(--navy);
- color:white;
- padding:20px 15px;
- text-align:center;
-}
-
-.result-top .logo{
- width:65px;
- height:65px;
- margin-bottom:8px;
-}
-
-.result-top h3{
- margin:5px 0;
- font-family:Georgia,serif;
- color:var(--gold);
- font-size:22px;
-}
-
-.result-top p{
- margin:5px 0 0;
- font-size:10px;
- letter-spacing:1.5px;
-}
-
-.result-body{
- padding:22px 20px;
- text-align:center;
-}
-
-.photo{
- width:115px;
- height:115px;
- border-radius:50%;
- object-fit:cover;
- border:3px solid var(--gold);
- background:#eee;
- display:none;
- margin:0 auto 12px;
-}
-
-.photo-placeholder{
- width:115px;
- height:115px;
- border-radius:50%;
- border:3px solid var(--gold);
- background:#f4eedf;
- display:flex;
- align-items:center;
- justify-content:center;
- margin:0 auto 12px;
- color:var(--navy);
- font-size:12px;
-}
-
-.volunteer-name{
- color:var(--navy);
- font-size:20px;
- font-weight:bold;
- margin:5px 0;
-}
-
-.father{
- font-size:12px;
- color:var(--muted);
-}
-
-.volunteer-id{
- display:inline-block;
- background:#f4eedf;
- color:var(--navy);
- border-radius:20px;
- padding:7px 13px;
  font-size:11px;
- margin:12px 0;
-}
-
-.status{
- display:block;
- padding:12px;
- border-radius:8px;
- font-weight:bold;
- font-size:17px;
- letter-spacing:1px;
- margin:12px 0;
-}
-
-.selected{background:#e0f3e8;color:#176c42}
-.rejected{background:#fbe5e8;color:#a12537}
-.pending{background:#fff2d7;color:#8a6418}
-
-.result-message{
- font-size:12px;
- line-height:1.7;
- color:#555;
- margin:12px 0;
-}
-
-.assignment{
- display:none;
- background:#f8f4eb;
- border:1px solid var(--border);
- border-radius:8px;
- padding:12px;
- margin-top:12px;
- text-align:left;
- font-size:12px;
  line-height:1.8;
 }
 
-.assignment strong{color:var(--navy)}
-
-.card-footer{
- background:#f0eadd;
- text-align:center;
- padding:15px;
- color:var(--muted);
- font-size:10px;
- line-height:1.7;
+.view-btn{
+ margin-top:18px;
+ background:linear-gradient(110deg,#b98740,#f0d18c);
+ color:#21164d;
 }
 
-.card-footer img{
- width:40px;
- height:40px;
+.digital-card{
+ margin-top:28px;
+ overflow:hidden;
+ border-radius:22px;
+ border:1px solid #d9ae6270;
+ background:
+ radial-gradient(circle at 90% 5%,#594174 0,transparent 35%),
+ linear-gradient(145deg,#21164d,#110d2c 72%);
+ box-shadow:0 30px 75px #0008;
+ position:relative;
+}
+
+.digital-card:before{
+ content:"";
+ position:absolute;
+ inset:9px;
+ border:1px solid #d9ae6235;
+ border-radius:15px;
+ pointer-events:none;
+}
+
+.card-top{
+ padding:24px 28px 19px;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:15px;
+ border-bottom:1px solid var(--border);
+}
+
+.card-brand{
+ display:flex;
+ align-items:center;
+ gap:12px;
+}
+
+.card-brand img{
+ width:54px;
+ height:54px;
  object-fit:contain;
- display:block;
- margin:0 auto 6px;
 }
 
-.footer{
+.card-brand h3{
+ font-family:"Cormorant Garamond",serif;
+ font-size:24px;
+ color:var(--gold2);
+ margin:0;
+}
+
+.card-brand small{
+ display:block;
+ font-size:8px;
+ letter-spacing:2px;
+ color:var(--muted);
+ margin-top:4px;
+}
+
+.card-year{
+ color:var(--gold2);
+ font-size:10px;
+ font-weight:900;
+ letter-spacing:2px;
+}
+
+.card-title{
  text-align:center;
- background:#f0eadd;
+ padding:22px 15px 8px;
+}
+
+.card-title small{
+ color:var(--gold);
+ letter-spacing:3px;
+ font-size:9px;
+ font-weight:800;
+}
+
+.card-title h2{
+ font-family:"Cormorant Garamond",serif;
+ font-size:35px;
+ margin:7px 0;
+ color:#fff;
+}
+
+.card-content{
+ padding:15px 30px 30px;
+ display:grid;
+ grid-template-columns:175px 1fr;
+ gap:28px;
+ align-items:start;
+}
+
+.photo-frame{
+ width:165px;
+ height:190px;
+ padding:5px;
+ border:1px solid var(--gold);
+ border-radius:14px;
+ background:#d9ae6215;
+}
+
+.photo-frame img{
+ width:100%;
+ height:100%;
+ object-fit:cover;
+ border-radius:10px;
+ display:block;
+}
+
+.photo-placeholder{
+ width:100%;
+ height:100%;
+ display:grid;
+ place-items:center;
+ text-align:center;
+ color:var(--gold2);
+ font-size:11px;
+ font-weight:800;
+ letter-spacing:2px;
+ background:linear-gradient(145deg,#30215f,#100d29);
+ border-radius:10px;
+}
+
+.profile-name{
+ font-family:"Cormorant Garamond",serif;
+ font-size:31px;
+ line-height:1.1;
+ color:var(--gold2);
+ margin:4px 0 7px;
+ overflow-wrap:anywhere;
+}
+
+.profile-father{
+ font-size:11px;
+ color:var(--muted);
+ margin-bottom:20px;
+}
+
+.info-grid{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:12px;
+}
+
+.info-item{
+ padding:12px;
+ border-radius:9px;
+ border:1px solid #ffffff16;
+ background:#ffffff08;
+ min-width:0;
+}
+
+.info-item small{
+ display:block;
+ color:var(--gold);
+ font-size:8px;
+ letter-spacing:1px;
+ font-weight:800;
+ margin-bottom:7px;
+}
+
+.info-item strong{
+ display:block;
+ font-size:11px;
+ color:#fff;
+ overflow-wrap:anywhere;
+}
+
+.status-wrap{
+ margin-top:18px;
  padding:17px;
+ border:1px solid var(--border);
+ background:#ffffff08;
+ border-radius:12px;
+ text-align:center;
+}
+
+.status-label{
+ font-size:8px;
+ letter-spacing:3px;
+ color:var(--muted);
+ font-weight:800;
+}
+
+.status{
+ display:inline-block;
+ margin-top:10px;
+ border-radius:30px;
+ padding:10px 22px;
+ font-size:12px;
+ font-weight:900;
+ letter-spacing:2px;
+}
+
+.status.selected{
+ color:#8ff0c3;
+ background:#39c58a18;
+ border:1px solid #39c58a70;
+}
+
+.status.rejected{
+ color:#ff9eaa;
+ background:#ff647618;
+ border:1px solid #ff647670;
+}
+
+.status.pending{
+ color:var(--gold2);
+ background:#d9ae6218;
+ border:1px solid #d9ae6270;
+}
+
+.result-message{
  color:var(--muted);
  font-size:10px;
- line-height:1.7;
+ line-height:1.8;
+ margin-top:10px;
 }
 
-.footer img{
- width:42px;
- height:42px;
+.assignment-grid{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:12px;
+ margin-top:13px;
+}
+
+.card-bottom{
+ padding:17px 28px;
+ border-top:1px solid var(--border);
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:10px;
+ color:var(--muted);
+ font-size:8px;
+ letter-spacing:1px;
+}
+
+.card-bottom img{
+ width:36px;
+ height:36px;
+ object-fit:contain;
+}
+
+.card-actions{
+ display:flex;
+ flex-wrap:wrap;
+ gap:10px;
+ justify-content:center;
+ margin:20px 0 0;
+}
+
+.reset-btn{
+ color:var(--gold2);
+ background:#ffffff0c;
+ border:1px solid var(--border);
+}
+
+footer{
+ text-align:center;
+ padding:35px 10px 25px;
+ color:#9990ae;
+ font-size:9px;
+ line-height:2;
+}
+
+footer img{
+ width:45px;
+ height:45px;
  object-fit:contain;
  display:block;
- margin:0 auto 7px;
+ margin:0 auto 10px;
 }
 
-@media(max-width:400px){
- .content{padding:22px 16px}
- .brand{font-size:26px}
+@media(max-width:650px){
+ .header-inner{align-items:flex-start}
+ .brand img{width:48px;height:48px}
+ .brand-title{font-size:21px}
+ .edition{font-size:8px;padding:8px}
+ .hero{padding:40px 5px 25px}
+ .panel{padding:21px 16px}
+ .form-grid{grid-template-columns:1fr}
+ .card-top{padding:20px 18px}
+ .card-brand img{width:43px;height:43px}
+ .card-brand h3{font-size:20px}
+ .card-year{font-size:8px}
+ .card-content{
+  grid-template-columns:1fr;
+  justify-items:center;
+  padding:15px 20px 24px;
+  gap:17px;
+ }
+ .photo-frame{width:145px;height:165px}
+ .profile-area{text-align:center;width:100%}
+ .profile-name{font-size:28px}
+ .info-grid{text-align:left}
+ .card-title h2{font-size:29px}
+ .assignment-grid{grid-template-columns:1fr}
+ .card-bottom{padding:15px 18px}
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-<div class="box">
-
-<header class="header">
- <img class="logo" src="assets/ayaz-melo-2026.png" alt="Ayaz Melo Logo">
- <div class="brand">AYAZ MELO 2026</div>
- <p>OFFICIAL VOLUNTEER SELECTION PORTAL</p>
+<header>
+ <div class="container header-inner">
+  <div class="brand">
+   <img src="assets/ayaz-melo-2026.png" alt="Ayaz Melo Logo">
+   <div>
+    <div class="brand-title">Ayaz Melo 2026</div>
+    <div class="brand-sub">Khanabadosh • Sindh</div>
+   </div>
+  </div>
+  <div class="edition">18 — 20 DECEMBER 2026</div>
+ </div>
 </header>
 
-<main class="content">
+<main class="container">
 
-<!-- VERIFICATION FORM -->
+ <section class="hero">
+  <div class="hero-tag">VOLUNTEER PORTAL • 2026</div>
+  <h1>Check Your Volunteer<br><span>Selection Result</span></h1>
+  <div class="gold-line"></div>
+  <p>
+   Welcome to the Ayaz Melo 2026 Volunteer Result Portal.
+   Verify your registration details to view your official selection result.
+  </p>
+ </section>
 
-<section id="verificationSection">
+ <section class="panel" id="verificationSection">
+  <div class="panel-heading">
+   <div class="panel-icon">✦</div>
+   <div>
+    <h2>Selection Verification</h2>
+    <p>Secure identity verification</p>
+   </div>
+  </div>
 
-<h2>Selection Verification</h2>
+  <form id="verifyForm">
+   <div class="form-grid">
+    <div class="form-group">
+     <label for="cnic">CNIC NUMBER</label>
+     <input
+      id="cnic"
+      type="text"
+      inputmode="numeric"
+      maxlength="15"
+      placeholder="Enter 13-digit CNIC"
+      required
+     >
+    </div>
 
-<div class="intro">
-Enter your CNIC number and the last four digits of your registered mobile number to check your volunteer selection result.
-</div>
+    <div class="form-group">
+     <label for="mobileLast4">LAST 4 DIGITS OF REGISTERED MOBILE</label>
+     <input
+      id="mobileLast4"
+      type="text"
+      inputmode="numeric"
+      maxlength="4"
+      placeholder="Enter last 4 digits"
+      required
+     >
+    </div>
+   </div>
 
-<form id="verifyForm">
+   <button class="verify-btn" id="verifyButton" type="submit">
+    VERIFY SELECTION RESULT →
+   </button>
+   <div class="message" id="formMessage" role="alert"></div>
+  </form>
+ </section>
 
-<label for="cnic">CNIC Number</label>
-<input
- id="cnic"
- type="text"
- inputmode="numeric"
- maxlength="15"
- placeholder="Enter your 13-digit CNIC"
- required
->
+ <section class="panel hidden" id="successSection">
+  <div class="success-panel">
+   <div class="success-icon">✓</div>
+   <h2>Verification Successful</h2>
+   <p>
+    Your registration details have been verified successfully.<br>
+    Your digital volunteer result card is ready.
+   </p>
+   <button class="view-btn" id="viewCardButton">
+    VIEW DIGITAL RESULT CARD →
+   </button>
+  </div>
+ </section>
 
-<label for="mobileLast4">Last 4 Digits of Registered Mobile</label>
-<input
- id="mobileLast4"
- type="text"
- inputmode="numeric"
- maxlength="4"
- placeholder="Enter last 4 digits"
- required
->
+ <section id="resultSection" class="hidden">
+  <div class="digital-card" id="digitalCard">
 
-<button id="verifyButton" type="submit">
-VERIFY SELECTION
-</button>
+   <div class="card-top">
+    <div class="card-brand">
+     <img src="assets/ayaz-melo-2026.png" alt="Ayaz Melo">
+     <div>
+      <h3>Ayaz Melo 2026</h3>
+      <small>OFFICIAL VOLUNTEER RESULT</small>
+     </div>
+    </div>
+    <div class="card-year">2026</div>
+   </div>
 
-</form>
+   <div class="card-title">
+    <small>DIGITAL VOLUNTEER CARD</small>
+    <h2>Selection Result</h2>
+   </div>
 
-<div id="message" class="message" role="alert"></div>
+   <div class="card-content">
+    <div class="photo-frame">
+     <img id="volunteerPhoto" class="hidden" alt="Volunteer Profile Photo">
+     <div id="photoPlaceholder" class="photo-placeholder">AYAZ<br>MELO<br>2026</div>
+    </div>
 
-</section>
+    <div class="profile-area">
+     <div class="profile-name" id="fullName">Volunteer Name</div>
+     <div class="profile-father" id="fatherName">S/O: —</div>
 
-<!-- VERIFIED SUCCESS SCREEN -->
+     <div class="info-grid">
+      <div class="info-item">
+       <small>VOLUNTEER ID</small>
+       <strong id="volunteerId">—</strong>
+      </div>
+      <div class="info-item">
+       <small>EVENT</small>
+       <strong>Ayaz Melo 2026</strong>
+      </div>
+     </div>
 
-<section id="verifiedScreen" class="verified-screen">
+     <div class="status-wrap">
+      <div class="status-label">OFFICIAL SELECTION STATUS</div>
+      <div class="status pending" id="statusBadge">UNDER REVIEW</div>
+      <div class="result-message" id="statusMessage"></div>
+     </div>
 
-<div class="verified-icon">✓</div>
+     <div class="assignment-grid hidden" id="assignmentGrid">
+      <div class="info-item">
+       <small>ASSIGNED COMMITTEE</small>
+       <strong id="committee">—</strong>
+      </div>
+      <div class="info-item">
+       <small>ASSIGNED ROLE</small>
+       <strong id="assignedRole">—</strong>
+      </div>
+     </div>
+    </div>
+   </div>
 
-<h3>Verification Successful</h3>
+   <div class="card-bottom">
+    <span>KHANABADOSH • SINDH</span>
+    <img src="assets/ayaz-melo-2026.png" alt="Ayaz Melo">
+    <span>18 — 20 DECEMBER 2026</span>
+   </div>
+  </div>
 
-<p>
-Your registration details have been verified successfully.
-Your volunteer selection result is ready.
-</p>
-
-<button id="openCardButton" class="gold-button">
-VIEW DIGITAL RESULT CARD
-</button>
-
-</section>
-
-<!-- RESULT CARD -->
-
-<section id="result" class="result">
-
-<div class="result-top">
-
-<img class="logo" src="assets/ayaz-melo-2026.png" alt="Ayaz Melo Logo">
-
-<h3>AYAZ MELO 2026</h3>
-
-<p>OFFICIAL VOLUNTEER RESULT CARD</p>
-
-</div>
-
-<div class="result-body">
-
-<img id="photo" class="photo" alt="Volunteer Profile Photo">
-
-<div id="photoPlaceholder" class="photo-placeholder hidden">
-PHOTO
-</div>
-
-<div id="fullName" class="volunteer-name"></div>
-
-<div id="fatherName" class="father"></div>
-
-<div id="volunteerId" class="volunteer-id"></div>
-
-<div id="status" class="status"></div>
-
-<div id="resultMessage" class="result-message"></div>
-
-<div id="assignment" class="assignment">
-
-<div>
-<strong>Committee:</strong>
-<span id="committee"></span>
-</div>
-
-<div>
-<strong>Assigned Role:</strong>
-<span id="assignedRole"></span>
-</div>
-
-</div>
-
-</div>
-
-<div class="card-footer">
-<img src="assets/ayaz-melo-2026.png" alt="Ayaz Melo Logo">
-<strong>AYAZ MELO 2026</strong><br>
-Every Volunteer. Every Contribution. One Celebration.
-</div>
-
-</section>
-
-<button id="anotherButton" class="hidden">
-CHECK ANOTHER RESULT
-</button>
+  <div class="card-actions">
+   <button class="reset-btn" id="checkAnotherButton">
+    CHECK ANOTHER RESULT
+   </button>
+  </div>
+ </section>
 
 </main>
 
-<footer class="footer">
-
-<img src="assets/ayaz-melo-2026.png" alt="Ayaz Melo Logo">
-
-<strong>AYAZ MELO 2026</strong><br>
-Official Volunteer Selection Portal
-
+<footer>
+ <img src="assets/ayaz-melo-2026.png" alt="Ayaz Melo Logo">
+ <div>AYAZ MELO 2026 • OFFICIAL VOLUNTEER PORTAL</div>
+ <div>Every Story • Every Voice • Every Volunteer</div>
 </footer>
 
-</div>
-</div>
-
 <script>
-
-const SUPABASE_URL =
-"https://fstkhwoxbgdcdfwycggu.supabase.co";
-
-const SUPABASE_ANON_KEY =
-"sb_publishable_BNRQfiLDVM-892aVwO_hJw_OAhEgTrq";
-
-const FUNCTION_URL =
-SUPABASE_URL + "/functions/v1/volunteer-result";
+const SUPABASE_URL = "https://fstkhwoxbgdcdfwycggu.supabase.co";
+const SUPABASE_KEY = "sb_publishable_BNRQfiLDVM-892aVwO_hJw_OAhEgTrq";
+const RESULT_API = SUPABASE_URL + "/functions/v1/volunteer-result";
 
 const $ = id => document.getElementById(id);
 
-let volunteerData = null;
-
-function digits(value){
- return String(value || "")
- .replace(/[۰-۹]/g,d=>String("۰۱۲۳۴۵۶۷۸۹".indexOf(d)))
- .replace(/[٠-٩]/g,d=>String("٠١٢٣٤٥٦٧٨٩".indexOf(d)))
- .replace(/\D/g,"");
+function onlyDigits(value){
+ return String(value || "").replace(/\D/g,"");
 }
 
-function showMessage(text,type="error"){
- const el=$("message");
- el.textContent=text;
- el.className="message "+type;
-}
+function showPhoto(url){
+ const img = $("volunteerPhoto");
+ const placeholder = $("photoPlaceholder");
 
-function resetPortal(){
+ img.classList.add("hidden");
+ placeholder.classList.remove("hidden");
 
- volunteerData=null;
+ if(!url) return;
 
- $("verificationSection").style.display="block";
- $("verifiedScreen").style.display="none";
- $("result").style.display="none";
-
- $("anotherButton").classList.add("hidden");
-
- $("verifyForm").reset();
-
- $("message").className="message";
-
- $("photo").style.display="none";
- $("photo").removeAttribute("src");
-
- $("photoPlaceholder").classList.add("hidden");
-}
-
-function renderResult(data){
-
- $("fullName").textContent=data.fullName || "";
-
- $("fatherName").textContent=data.fatherName
-  ? "S/O "+data.fatherName
-  : "";
-
- $("volunteerId").textContent=
-  "Volunteer ID: "+(data.volunteerId || "Not available");
-
- const status=String(data.status || "Pending").toLowerCase();
-
- const statusBox=$("status");
-
- statusBox.className="status";
-
- $("assignment").style.display="none";
-
- if(status==="selected"){
-
-  statusBox.textContent="SELECTED";
-  statusBox.classList.add("selected");
-
-  $("resultMessage").textContent=
-  "Congratulations! You are selected as a Volunteer for Ayaz Melo 2026. We are delighted to welcome you to our team. Your enthusiasm and dedication will help make this celebration memorable. Welcome aboard!";
-
-  $("committee").textContent=data.committee || "To be announced";
-
-  $("assignedRole").textContent=data.assignedRole || "To be announced";
-
-  $("assignment").style.display="block";
-
- }else if(status==="rejected"){
-
-  statusBox.textContent="NOT SELECTED";
-  statusBox.classList.add("rejected");
-
-  $("resultMessage").textContent=
-  "Thank you for your interest in Ayaz Melo 2026. Unfortunately, you have not been selected as a volunteer this time. We truly appreciate your time, interest, and willingness to be part of this celebration. We encourage you to stay connected with Ayaz Melo and participate in our future activities. Thank you for being part of our journey.";
-
- }else{
-
-  statusBox.textContent="UNDER REVIEW";
-  statusBox.classList.add("pending");
-
-  $("resultMessage").textContent=
-  "Your application is currently under review. The selection process is ongoing. Please stay connected with Ayaz Melo 2026 for further updates. Thank you for your patience.";
-
- }
-
- loadVolunteerPhoto(data.photoUrl);
-
-}
-
-function loadVolunteerPhoto(url){
-
- const photo=$("photo");
- const placeholder=$("photoPlaceholder");
-
- photo.style.display="none";
- placeholder.classList.add("hidden");
-
- if(!url){
-  placeholder.classList.remove("hidden");
-  return;
- }
-
- let fileId=null;
+ let fileId = "";
 
  try{
-  const parsed=new URL(url);
-  fileId=parsed.searchParams.get("id");
+  const parsed = new URL(url);
+  fileId = parsed.searchParams.get("id") || "";
  }catch(e){}
 
- const candidates=[];
-
- if(fileId){
-
-  candidates.push(
-   "https://drive.google.com/thumbnail?id="+encodeURIComponent(fileId)+"&sz=w600"
-  );
-
-  candidates.push(
-   "https://lh3.googleusercontent.com/d/"+encodeURIComponent(fileId)
-  );
-
-  candidates.push(
-   "https://drive.google.com/uc?export=view&id="+encodeURIComponent(fileId)
-  );
-
- }else{
-
-  candidates.push(url);
-
+ if(!fileId){
+  const match = url.match(/\/d\/([^/?]+)/);
+  if(match) fileId = match[1];
  }
 
- let index=0;
+ const urls = fileId ? [
+  `https://drive.google.com/thumbnail?id=${fileId}&sz=w800`,
+  `https://lh3.googleusercontent.com/d/${fileId}`,
+  `https://drive.google.com/uc?export=view&id=${fileId}`
+ ] : [url];
+
+ let index = 0;
 
  function tryNext(){
-
-  if(index>=candidates.length){
-
-   photo.style.display="none";
+  if(index >= urls.length){
+   img.classList.add("hidden");
    placeholder.classList.remove("hidden");
    return;
   }
 
-  const nextUrl=candidates[index++];
-
-  photo.onload=()=>{
-   photo.style.display="block";
+  img.onload = function(){
    placeholder.classList.add("hidden");
+   img.classList.remove("hidden");
   };
 
-  photo.onerror=tryNext;
-
-  photo.src=nextUrl;
+  img.onerror = tryNext;
+  img.src = urls[index++];
  }
 
  tryNext();
 }
 
-// VERIFY FORM
+function renderResult(data){
+ $("fullName").textContent = data.fullName || "Volunteer";
+ $("fatherName").textContent = "S/O: " + (data.fatherName || "—");
+ $("volunteerId").textContent = data.volunteerId || "—";
 
-$("verifyForm").addEventListener("submit",async event=>{
+ showPhoto(data.photoUrl);
 
- event.preventDefault();
+ const status = String(data.status || "Pending").toLowerCase();
+ const badge = $("statusBadge");
+ const message = $("statusMessage");
+ const assignment = $("assignmentGrid");
 
- const cnic=digits($("cnic").value);
- const mobileLast4=digits($("mobileLast4").value);
+ badge.className = "status";
+ assignment.classList.add("hidden");
 
- if(cnic.length!==13){
-  showMessage("Please enter a valid 13-digit CNIC number.");
+ if(status === "selected"){
+  badge.classList.add("selected");
+  badge.textContent = "SELECTED";
+  message.textContent =
+   "Congratulations! You have been selected as a volunteer for Ayaz Melo 2026.";
+
+  $("committee").textContent = data.committee || "—";
+  $("assignedRole").textContent = data.assignedRole || "—";
+  assignment.classList.remove("hidden");
+
+ }else if(status === "rejected"){
+  badge.classList.add("rejected");
+  badge.textContent = "NOT SELECTED";
+  message.textContent =
+   "Thank you for your interest and participation. We appreciate your willingness to be part of Ayaz Melo 2026.";
+
+ }else{
+  badge.classList.add("pending");
+  badge.textContent = "UNDER REVIEW";
+  message.textContent =
+   "Your application is currently under review. Please check again later for updates.";
+ }
+}
+
+$("verifyForm").addEventListener("submit",async function(e){
+ e.preventDefault();
+
+ const cnic = onlyDigits($("cnic").value);
+ const mobileLast4 = onlyDigits($("mobileLast4").value);
+ const button = $("verifyButton");
+ const message = $("formMessage");
+
+ message.textContent = "";
+
+ if(cnic.length !== 13){
+  message.textContent = "Please enter a valid 13-digit CNIC number.";
   return;
  }
 
- if(mobileLast4.length!==4){
-  showMessage("Please enter the last four digits of your registered mobile number.");
+ if(mobileLast4.length !== 4){
+  message.textContent = "Please enter the last 4 mobile digits.";
   return;
  }
 
- const button=$("verifyButton");
-
- button.disabled=true;
- button.textContent="VERIFYING...";
+ button.disabled = true;
+ button.textContent = "VERIFYING... PLEASE WAIT";
 
  try{
-
-  const response=await fetch(FUNCTION_URL,{
+  const response = await fetch(RESULT_API,{
    method:"POST",
    headers:{
     "Content-Type":"application/json",
-    "apikey":SUPABASE_ANON_KEY,
-    "Authorization":"Bearer "+SUPABASE_ANON_KEY
+    "apikey":SUPABASE_KEY
    },
-   body:JSON.stringify({
-    cnic,
-    mobileLast4
-   })
+   body:JSON.stringify({cnic,mobileLast4})
   });
 
-  const data=await response.json();
+  const data = await response.json();
 
-  if(!response.ok){
-   throw new Error(data.error || "Verification failed.");
+  if(!response.ok || !data.success){
+   throw new Error(data.error || "Verification failed. Please try again.");
   }
 
-  volunteerData=data;
-
-  // Hide CNIC and mobile form
-  $("verificationSection").style.display="none";
-
-  // Prepare digital card
   renderResult(data);
 
-  // Show verified screen
-  $("verifiedScreen").style.display="block";
+  $("verificationSection").classList.add("hidden");
+  $("successSection").classList.remove("hidden");
+  $("resultSection").classList.add("hidden");
+
+  window.scrollTo({top:0,behavior:"smooth"});
 
  }catch(error){
-
-  showMessage(
-   error.message || "Unable to connect. Please try again."
-  );
-
+  message.textContent = error.message || "Unable to verify. Please try again.";
  }finally{
-
-  button.disabled=false;
-  button.textContent="VERIFY SELECTION";
-
+  button.disabled = false;
+  button.textContent = "VERIFY SELECTION RESULT →";
  }
-
 });
 
-// OPEN DIGITAL CARD
-
-$("openCardButton").addEventListener("click",()=>{
-
- if(!volunteerData)return;
-
- $("verifiedScreen").style.display="none";
-
- $("result").style.display="block";
-
- $("anotherButton").classList.remove("hidden");
-
+$("viewCardButton").addEventListener("click",function(){
+ $("successSection").classList.add("hidden");
+ $("resultSection").classList.remove("hidden");
+ window.scrollTo({top:$("resultSection").offsetTop - 20,behavior:"smooth"});
 });
 
-// CHECK ANOTHER RESULT
+$("checkAnotherButton").addEventListener("click",function(){
+ $("verifyForm").reset();
+ $("formMessage").textContent = "";
 
-$("anotherButton").addEventListener("click",()=>{
+ $("resultSection").classList.add("hidden");
+ $("successSection").classList.add("hidden");
+ $("verificationSection").classList.remove("hidden");
 
- resetPortal();
+ $("volunteerPhoto").classList.add("hidden");
+ $("photoPlaceholder").classList.remove("hidden");
 
- window.scrollTo({
-  top:0,
-  behavior:"smooth"
- });
-
+ window.scrollTo({top:0,behavior:"smooth"});
 });
-
 </script>
 
 </body>
