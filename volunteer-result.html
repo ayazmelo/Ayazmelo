@@ -452,17 +452,14 @@ function getDriveFileId(fileId, photoUrl){
   const pathMatch = url.pathname.match(/\/(?:file\/)?d\/([^/?]+)/);
   if(pathMatch) return pathMatch[1];
 
-  const thumbnailMatch = url.pathname.match(/\/d\/([^/?]+)/);
-  if(thumbnailMatch) return thumbnailMatch[1];
-
  }catch(error){}
 
  const match = String(photoUrl).match(/(?:id=|\/d\/)([a-zA-Z0-9_-]{15,})/);
  return match ? match[1] : "";
 }
 
-/* Try multiple image addresses, starting with the tested Drive thumbnail URL. */
-function showPhoto(fileId, photoUrl){
+/* Try every image URL returned by the Edge Function. */
+function showPhoto(fileId, photoUrl, photoUrls){
  const img = $("volunteerPhoto");
  const placeholder = $("photoPlaceholder");
 
@@ -477,16 +474,28 @@ function showPhoto(fileId, photoUrl){
 
  img.classList.add("hidden");
  placeholder.classList.remove("hidden");
+ img.removeAttribute("src");
 
  const id = getDriveFileId(fileId, photoUrl);
  const urls = [];
 
+ if(Array.isArray(photoUrls)){
+  photoUrls.forEach(url=>{
+   if(url && typeof url === "string" && !urls.includes(url)){
+    urls.push(url);
+   }
+  });
+ }
+
  if(id){
-  urls.push(
+  [
    `https://drive.google.com/thumbnail?id=${encodeURIComponent(id)}&sz=w1000`,
    `https://lh3.googleusercontent.com/d/${encodeURIComponent(id)}`,
-   `https://drive.google.com/uc?export=view&id=${encodeURIComponent(id)}`
-  );
+   `https://drive.google.com/uc?export=view&id=${encodeURIComponent(id)}`,
+   `https://drive.google.com/uc?id=${encodeURIComponent(id)}&export=download`
+  ].forEach(url=>{
+   if(!urls.includes(url)) urls.push(url);
+  });
  }
 
  if(photoUrl && !urls.includes(photoUrl)){
@@ -505,7 +514,6 @@ function showPhoto(fileId, photoUrl){
   img.src = urls[index++];
  }
 
- img.removeAttribute("src");
  tryNext();
 }
 
@@ -528,7 +536,7 @@ function renderResult(data){
  $("fatherName").textContent = parentLabel + " " + father;
  $("volunteerId").textContent = data.volunteerId || "—";
 
- showPhoto(data.photoFileId, data.photoUrl);
+ showPhoto(data.photoFileId, data.photoUrl, data.photoUrls);
 
  const status = String(data.status || "Pending").toLowerCase();
  const badge = $("statusBadge");
@@ -592,13 +600,28 @@ $("verifyForm").addEventListener("submit", async function(e){
     "Content-Type":"application/json",
     "apikey":SUPABASE_KEY
    },
-   body:JSON.stringify({cnic,mobileLast4})
+
+   /* Edge Function expects the mobile field, not mobileLast4. */
+   body:JSON.stringify({
+    cnic:cnic,
+    mobile:mobileLast4
+   })
   });
 
-  const data = await response.json();
+  let data;
+
+  try{
+   data = await response.json();
+  }catch(parseError){
+   throw new Error("The server returned an invalid response. Please try again.");
+  }
 
   if(!response.ok || !data.success){
-   throw new Error(data.error || "Verification failed. Please try again.");
+   throw new Error(
+    data.message ||
+    data.error ||
+    "Verification failed. Please check your details and try again."
+   );
   }
 
   renderResult(data);
@@ -609,6 +632,7 @@ $("verifyForm").addEventListener("submit", async function(e){
   window.scrollTo({top:0,behavior:"smooth"});
 
  }catch(error){
+  console.error("Volunteer result verification:",error);
   message.textContent = error.message || "Unable to verify. Please try again.";
  }finally{
   button.disabled = false;
@@ -623,13 +647,7 @@ $("checkAnotherButton").addEventListener("click",function(){
  $("resultSection").classList.add("hidden");
  $("verificationSection").classList.remove("hidden");
 
- $("volunteerPhoto").classList.add("hidden");
- $("volunteerPhoto").removeAttribute("src");
- $("photoPlaceholder").classList.remove("hidden");
-
- window.scrollTo({top:0,behavior:"smooth"});
-});
-</script>
-
-</body>
-</html>
+ const img = $("volunteerPhoto");
+ img.classList.add("hidden");
+ img.removeAttribute("src");
+ $("
