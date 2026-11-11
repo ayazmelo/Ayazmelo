@@ -650,4 +650,11 @@ $("checkAnotherButton").addEventListener("click",function(){
  const img = $("volunteerPhoto");
  img.classList.add("hidden");
  img.removeAttribute("src");
- $("
+ $("photoPlaceholder").classList.remove("hidden");
+
+ window.scrollTo({top:0,behavior:"smooth"});
+});
+</script>
+
+</body>
+ </html>
