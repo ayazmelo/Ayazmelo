@@ -252,6 +252,34 @@ header{
 .card-bottom img{width:36px;height:36px;object-fit:contain}
 .card-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:20px 0 0}
 .reset-btn{color:var(--gold2);background:#ffffff0c;border:1px solid var(--border)}
+
+/* Result notice for rejected and pending applicants */
+.result-notice{
+ margin-top:28px;
+ text-align:center;
+}
+.result-notice h2{
+ font-family:"Cormorant Garamond",serif;
+ font-size:clamp(30px,6vw,43px);
+ color:var(--gold2);
+ margin:12px 0;
+}
+.result-notice p{
+ color:var(--muted);
+ font-size:12px;
+ line-height:1.8;
+ margin:0;
+}
+.notice-icon{
+ width:54px;height:54px;
+ border-radius:50%;
+ display:grid;place-items:center;
+ margin:0 auto 15px;
+ font-size:25px;
+ border:1px solid var(--border);
+ color:var(--gold2);
+ background:#d9ae6218;
+}
 footer{
  text-align:center;padding:35px 10px 25px;
  color:#9990ae;font-size:9px;line-height:2;
@@ -313,6 +341,7 @@ footer img{
   </p>
  </section>
 
+ <!-- VERIFICATION FORM -->
  <section class="panel" id="verificationSection">
   <div class="panel-heading">
    <div class="panel-icon">✦</div>
@@ -343,6 +372,7 @@ footer img{
   </form>
  </section>
 
+ <!-- SELECTED VOLUNTEER DIGITAL CARD -->
  <section id="resultSection" class="hidden">
   <div class="digital-card" id="digitalCard">
 
@@ -387,11 +417,11 @@ footer img{
 
      <div class="status-wrap">
       <div class="status-label">OFFICIAL SELECTION STATUS</div>
-      <div class="status pending" id="statusBadge">UNDER REVIEW</div>
+      <div class="status selected" id="statusBadge">SELECTED</div>
       <div class="result-message" id="statusMessage"></div>
      </div>
 
-     <div class="assignment-grid hidden" id="assignmentGrid">
+     <div class="assignment-grid" id="assignmentGrid">
       <div class="info-item">
        <small>ASSIGNED COMMITTEE</small>
        <strong id="committee">—</strong>
@@ -418,6 +448,21 @@ footer img{
   </div>
  </section>
 
+ <!-- REJECTED / PENDING MESSAGE ONLY -->
+ <section id="noticeSection" class="panel result-notice hidden">
+  <div class="notice-icon" id="noticeIcon">✦</div>
+  <h2 id="noticeTitle">YOU ARE NOT SELECTED</h2>
+  <p id="noticeText">
+   Thank you for your interest in Ayaz Melo 2026.
+  </p>
+
+  <div class="card-actions">
+   <button class="reset-btn" id="checkAnotherNoticeButton" type="button">
+    CHECK ANOTHER RESULT
+   </button>
+  </div>
+ </section>
+
 </main>
 
 <footer>
@@ -437,28 +482,25 @@ function onlyDigits(value){
  return String(value || "").replace(/\D/g,"");
 }
 
-/* Extract Google Drive file ID from common Google Drive URL formats. */
+/* Extract Google Drive file ID from common URL formats. */
 function getDriveFileId(fileId, photoUrl){
  if(fileId) return String(fileId).trim();
-
  if(!photoUrl) return "";
 
  try{
   const url = new URL(photoUrl);
-
   const queryId = url.searchParams.get("id");
   if(queryId) return queryId;
 
   const pathMatch = url.pathname.match(/\/(?:file\/)?d\/([^/?]+)/);
   if(pathMatch) return pathMatch[1];
-
  }catch(error){}
 
  const match = String(photoUrl).match(/(?:id=|\/d\/)([a-zA-Z0-9_-]{15,})/);
  return match ? match[1] : "";
 }
 
-/* Try every image URL returned by the Edge Function. */
+/* Load volunteer photo from Google Drive. */
 function showPhoto(fileId, photoUrl, photoUrls){
  const img = $("volunteerPhoto");
  const placeholder = $("photoPlaceholder");
@@ -517,7 +559,9 @@ function showPhoto(fileId, photoUrl, photoUrls){
  tryNext();
 }
 
-function renderResult(data){
+/* Render card only for selected volunteers. */
+function renderSelectedCard(data){
+
  $("fullName").textContent = data.fullName || "Volunteer";
 
  const father = data.fatherName || "—";
@@ -538,34 +582,34 @@ function renderResult(data){
 
  showPhoto(data.photoFileId, data.photoUrl, data.photoUrls);
 
- const status = String(data.status || "Pending").toLowerCase();
- const badge = $("statusBadge");
- const message = $("statusMessage");
- const assignment = $("assignmentGrid");
+ $("statusBadge").className = "status selected";
+ $("statusBadge").textContent = "SELECTED";
 
- badge.className = "status";
- assignment.classList.add("hidden");
+ $("statusMessage").textContent =
+  "Congratulations! You have been selected as a volunteer for Ayaz Melo 2026.";
 
- if(status === "selected"){
-  badge.classList.add("selected");
-  badge.textContent = "SELECTED";
-  message.textContent =
-   "Congratulations! You have been selected as a volunteer for Ayaz Melo 2026.";
+ $("committee").textContent = data.committee || "—";
+ $("assignedRole").textContent = data.assignedRole || "—";
+}
 
-  $("committee").textContent = data.committee || "—";
-  $("assignedRole").textContent = data.assignedRole || "—";
-  assignment.classList.remove("hidden");
+/* Show only a message for rejected or pending applicants. */
+function showNotice(status){
 
- }else if(status === "rejected"){
-  badge.classList.add("rejected");
-  badge.textContent = "NOT SELECTED";
-  message.textContent =
-   "Thank you for your interest and participation. We appreciate your willingness to be part of Ayaz Melo 2026.";
+ $("resultSection").classList.add("hidden");
+ $("noticeSection").classList.remove("hidden");
+
+ if(status === "rejected"){
+
+  $("noticeIcon").textContent = "✕";
+  $("noticeTitle").textContent = "YOU ARE NOT SELECTED";
+  $("noticeText").textContent =
+   "Thank you for your interest in Ayaz Melo 2026. We appreciate your willingness to be part of this event.";
 
  }else{
-  badge.classList.add("pending");
-  badge.textContent = "UNDER REVIEW";
-  message.textContent =
+
+  $("noticeIcon").textContent = "✦";
+  $("noticeTitle").textContent = "YOUR APPLICATION IS UNDER REVIEW";
+  $("noticeText").textContent =
    "Your application is currently under review. Please check again later for updates.";
  }
 }
@@ -575,6 +619,7 @@ function renderResult(data){
 ===================================================== */
 
 $("verifyForm").addEventListener("submit", async function(e){
+
  e.preventDefault();
 
  const cnic = onlyDigits($("cnic").value);
@@ -627,34 +672,47 @@ $("verifyForm").addEventListener("submit", async function(e){
    );
   }
 
-  /*
-   IMPORTANT:
-   First display the result section.
-   Then render the result.
-   Only hide the verification form after successful rendering.
-  */
+  const status = String(data.status || "Pending").trim().toLowerCase();
 
-  $("resultSection").classList.remove("hidden");
+  /* SELECTED: show the complete digital card only. */
+  if(status === "selected"){
 
-  try{
-   renderResult(data);
+   $("noticeSection").classList.add("hidden");
+   $("resultSection").classList.remove("hidden");
 
-   $("verificationSection").classList.add("hidden");
+   try{
+    renderSelectedCard(data);
+    $("verificationSection").classList.add("hidden");
+   }catch(displayError){
+    $("resultSection").classList.add("hidden");
+    $("verificationSection").classList.remove("hidden");
+    throw new Error("Unable to display result card: " + displayError.message);
+   }
 
-   window.scrollTo({
-    top:0,
-    behavior:"smooth"
-   });
-
-  }catch(displayError){
-
-   $("verificationSection").classList.remove("hidden");
-   $("resultSection").classList.add("hidden");
-
-   throw new Error(
-    "Result display error: " + displayError.message
-   );
   }
+
+  /* REJECTED: show message only, no personal details or card. */
+  else if(status === "rejected"){
+
+   $("resultSection").classList.add("hidden");
+   $("verificationSection").classList.add("hidden");
+   showNotice("rejected");
+
+  }
+
+  /* PENDING: show review message only, no personal details or card. */
+  else{
+
+   $("resultSection").classList.add("hidden");
+   $("verificationSection").classList.add("hidden");
+   showNotice("pending");
+
+  }
+
+  window.scrollTo({
+   top:0,
+   behavior:"smooth"
+  });
 
  }catch(error){
 
@@ -662,6 +720,7 @@ $("verifyForm").addEventListener("submit", async function(e){
 
   $("verificationSection").classList.remove("hidden");
   $("resultSection").classList.add("hidden");
+  $("noticeSection").classList.add("hidden");
 
   message.textContent =
    error.message || "Unable to verify. Please try again.";
@@ -670,24 +729,21 @@ $("verifyForm").addEventListener("submit", async function(e){
 
   button.disabled = false;
   button.textContent = "VERIFY SELECTION RESULT →";
+
  }
 });
 
-
-/* =====================================================
-   CHECK ANOTHER RESULT
-===================================================== */
-
-$("checkAnotherButton").addEventListener("click",function(){
+/* Reset portal for another verification. */
+function resetResultPortal(){
 
  $("verifyForm").reset();
  $("formMessage").textContent = "";
 
  $("resultSection").classList.add("hidden");
+ $("noticeSection").classList.add("hidden");
  $("verificationSection").classList.remove("hidden");
 
  const img = $("volunteerPhoto");
-
  img.classList.add("hidden");
  img.removeAttribute("src");
 
@@ -697,7 +753,11 @@ $("checkAnotherButton").addEventListener("click",function(){
   top:0,
   behavior:"smooth"
  });
-});
+}
+
+$("checkAnotherButton").addEventListener("click",resetResultPortal);
+$("checkAnotherNoticeButton").addEventListener("click",resetResultPortal);
+
 </script>
 
 </body>
