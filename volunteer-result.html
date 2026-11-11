@@ -412,7 +412,7 @@ footer img{
   </div>
 
   <div class="card-actions">
-   <button class="reset-btn" id="checkAnotherButton">
+   <button class="reset-btn" id="checkAnotherButton" type="button">
     CHECK ANOTHER RESULT
    </button>
   </div>
@@ -570,6 +570,10 @@ function renderResult(data){
  }
 }
 
+/* =====================================================
+   VERIFICATION
+===================================================== */
+
 $("verifyForm").addEventListener("submit", async function(e){
  e.preventDefault();
 
@@ -594,14 +598,13 @@ $("verifyForm").addEventListener("submit", async function(e){
  button.textContent = "VERIFYING... PLEASE WAIT";
 
  try{
+
   const response = await fetch(RESULT_API,{
    method:"POST",
    headers:{
     "Content-Type":"application/json",
     "apikey":SUPABASE_KEY
    },
-
-   /* Edge Function expects the mobile field, not mobileLast4. */
    body:JSON.stringify({
     cnic:cnic,
     mobile:mobileLast4
@@ -616,31 +619,67 @@ $("verifyForm").addEventListener("submit", async function(e){
    throw new Error("The server returned an invalid response. Please try again.");
   }
 
-  if(!response.ok || !data.success){
+  if(!response.ok || !data || !data.success){
    throw new Error(
-    data.message ||
-    data.error ||
+    data?.message ||
+    data?.error ||
     "Verification failed. Please check your details and try again."
    );
   }
 
-  renderResult(data);
+  /*
+   IMPORTANT:
+   First display the result section.
+   Then render the result.
+   Only hide the verification form after successful rendering.
+  */
 
-  $("verificationSection").classList.add("hidden");
   $("resultSection").classList.remove("hidden");
 
-  window.scrollTo({top:0,behavior:"smooth"});
+  try{
+   renderResult(data);
+
+   $("verificationSection").classList.add("hidden");
+
+   window.scrollTo({
+    top:0,
+    behavior:"smooth"
+   });
+
+  }catch(displayError){
+
+   $("verificationSection").classList.remove("hidden");
+   $("resultSection").classList.add("hidden");
+
+   throw new Error(
+    "Result display error: " + displayError.message
+   );
+  }
 
  }catch(error){
+
   console.error("Volunteer result verification:",error);
-  message.textContent = error.message || "Unable to verify. Please try again.";
+
+  $("verificationSection").classList.remove("hidden");
+  $("resultSection").classList.add("hidden");
+
+  message.textContent =
+   error.message || "Unable to verify. Please try again.";
+
  }finally{
+
   button.disabled = false;
   button.textContent = "VERIFY SELECTION RESULT →";
  }
 });
 
+
+/* =====================================================
+   CHECK ANOTHER RESULT
+===================================================== */
+
 $("checkAnotherButton").addEventListener("click",function(){
+
  $("verifyForm").reset();
  $("formMessage").textContent = "";
 
@@ -648,13 +687,18 @@ $("checkAnotherButton").addEventListener("click",function(){
  $("verificationSection").classList.remove("hidden");
 
  const img = $("volunteerPhoto");
+
  img.classList.add("hidden");
  img.removeAttribute("src");
+
  $("photoPlaceholder").classList.remove("hidden");
 
- window.scrollTo({top:0,behavior:"smooth"});
+ window.scrollTo({
+  top:0,
+  behavior:"smooth"
+ });
 });
 </script>
 
 </body>
- </html>
+</html>
