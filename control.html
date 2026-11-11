@@ -7,89 +7,318 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 :root{
- --navy:#21164d;--gold:#d9ae62;--cream:#faf5eb;
- --text:#252238;--muted:#777;--border:#e9e3d9;
- --green:#23865b;--red:#bd3545;
+ --navy:#171039;
+ --navy2:#241956;
+ --gold:#d9ae62;
+ --gold-light:#f3dfb5;
+ --cream:#f8f5ee;
+ --white:#ffffff;
+ --text:#252238;
+ --muted:#77738a;
+ --border:#e8e1d4;
+ --green:#23865b;
+ --red:#bd3545;
+ --shadow:0 8px 28px rgba(23,16,57,.08);
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--cream);color:var(--text);font-family:Montserrat,Arial,sans-serif}
+body{
+ margin:0;
+ background:var(--cream);
+ color:var(--text);
+ font-family:Montserrat,Arial,sans-serif;
+}
 button,input,select,textarea{font:inherit}
 button{cursor:pointer}
 .hidden{display:none!important}
 
-#loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
-.login-card{background:white;width:100%;max-width:420px;padding:30px;border-radius:14px;box-shadow:0 10px 35px #21164d18}
-.brand{font:700 34px "Cormorant Garamond",serif;color:var(--navy);text-align:center}
-.subtitle{text-align:center;color:var(--muted);font-size:11px;margin:5px 0 24px}
-
-input,select,textarea{width:100%;padding:10px;border:1px solid var(--border);border-radius:7px;margin:5px 0 12px;background:white}
+#loginScreen{
+ min-height:100vh;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ padding:20px;
+ background:linear-gradient(135deg,#171039,#30225e);
+}
+.login-card{
+ background:white;
+ width:100%;
+ max-width:430px;
+ padding:35px;
+ border-radius:18px;
+ box-shadow:0 20px 60px #0004;
+ border-top:5px solid var(--gold);
+}
+.brand{
+ font:700 38px "Cormorant Garamond",serif;
+ color:var(--navy);
+ text-align:center;
+}
+.subtitle{
+ text-align:center;
+ color:var(--muted);
+ font-size:11px;
+ letter-spacing:2px;
+ margin:5px 0 26px;
+}
+input,select,textarea{
+ width:100%;
+ padding:11px 12px;
+ border:1px solid var(--border);
+ border-radius:8px;
+ margin:5px 0 13px;
+ background:white;
+ outline:none;
+}
+input:focus,select:focus,textarea:focus{
+ border-color:var(--gold);
+ box-shadow:0 0 0 3px #d9ae6220;
+}
 label{font-size:12px;font-weight:700}
 
-.btn{border:0;border-radius:7px;padding:10px 13px;background:var(--navy);color:white;font-size:11px;font-weight:700}
+.btn{
+ border:0;
+ border-radius:8px;
+ padding:10px 14px;
+ background:var(--navy);
+ color:white;
+ font-size:11px;
+ font-weight:700;
+ transition:.2s;
+}
+.btn:hover{filter:brightness(1.12);transform:translateY(-1px)}
 .btn.gold{background:var(--gold);color:var(--navy)}
 .btn.green{background:var(--green)}
 .btn.red{background:var(--red)}
 .btn.gray{background:#777}
-.btn.small{padding:6px 8px;font-size:10px}
+.btn.small{padding:6px 9px;font-size:10px}
 .btn:disabled{opacity:.6;cursor:wait}
 
 #app{display:none;min-height:100vh}
-.topbar{background:var(--navy);color:white;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.topbar h2{font:700 26px "Cormorant Garamond",serif;margin:0}
-.layout{display:flex;min-height:calc(100vh - 60px)}
+.topbar{
+ background:linear-gradient(110deg,var(--navy),var(--navy2));
+ color:white;
+ padding:16px 23px;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:10px;
+ flex-wrap:wrap;
+ border-bottom:3px solid var(--gold);
+}
+.topbar h2{
+ font:700 28px "Cormorant Garamond",serif;
+ margin:0;
+}
+.layout{display:flex;min-height:calc(100vh - 65px)}
 
-.sidebar{width:225px;flex-shrink:0;background:white;border-right:1px solid var(--border);padding:12px 9px}
-.navbtn{width:100%;border:0;background:transparent;text-align:left;padding:11px;margin:2px 0;border-radius:7px;color:var(--navy);font-size:11px;font-weight:700}
-.navbtn.active,.navbtn:hover{background:var(--navy);color:white}
+.sidebar{
+ width:235px;
+ flex-shrink:0;
+ background:white;
+ border-right:1px solid var(--border);
+ padding:15px 10px;
+ box-shadow:3px 0 15px #17103908;
+}
+.navbtn{
+ width:100%;
+ border:0;
+ background:transparent;
+ text-align:left;
+ padding:12px;
+ margin:3px 0;
+ border-radius:8px;
+ color:var(--navy);
+ font-size:11px;
+ font-weight:700;
+ transition:.2s;
+}
+.navbtn.active,.navbtn:hover{
+ background:linear-gradient(110deg,var(--navy),var(--navy2));
+ color:white;
+ border-left:3px solid var(--gold);
+}
 
-.main{width:calc(100% - 225px);min-width:0;padding:20px}
+.main{
+ width:calc(100% - 235px);
+ min-width:0;
+ padding:23px;
+}
 .page{display:none}
 .page.active{display:block}
-.page-title{font:700 31px "Cormorant Garamond",serif;color:var(--navy);margin:0 0 16px}
+.page-title{
+ font:700 34px "Cormorant Garamond",serif;
+ color:var(--navy);
+ margin:0 0 20px;
+}
 
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px;margin-bottom:18px}
-.card,.panel{background:white;border:1px solid var(--border);border-radius:9px;padding:15px}
-.card small{font-size:10px;color:var(--muted)}
-.card strong{display:block;font-size:25px;color:var(--navy);margin-top:6px}
-.panel{margin-bottom:16px}
-.panel h3{font-size:15px;color:var(--navy);margin:0 0 12px}
+.cards{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(155px,1fr));
+ gap:13px;
+ margin-bottom:22px;
+}
+.card{
+ background:white;
+ border:1px solid var(--border);
+ border-radius:12px;
+ padding:17px;
+ box-shadow:var(--shadow);
+ border-bottom:3px solid var(--gold);
+ transition:.2s;
+}
+.card:hover{transform:translateY(-3px)}
+.card small{
+ font-size:10px;
+ color:var(--muted);
+ font-weight:700;
+ text-transform:uppercase;
+ letter-spacing:.4px;
+}
+.card strong{
+ display:block;
+ font-size:27px;
+ color:var(--navy);
+ margin-top:8px;
+ overflow-wrap:anywhere;
+}
 
-.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;align-items:center}
-.toolbar input,.toolbar select{width:auto;min-width:140px;margin:0}
+.panel{
+ background:white;
+ border:1px solid var(--border);
+ border-radius:12px;
+ padding:18px;
+ margin-bottom:18px;
+ box-shadow:var(--shadow);
+}
+.panel h3{
+ font-size:15px;
+ color:var(--navy);
+ margin:0 0 14px;
+}
+
+.toolbar{
+ display:flex;
+ flex-wrap:wrap;
+ gap:8px;
+ margin-bottom:14px;
+ align-items:center;
+}
+.toolbar input,.toolbar select{
+ width:auto;
+ min-width:140px;
+ margin:0;
+}
 
 .table-wrap{overflow-x:auto}
-table{border-collapse:collapse;width:100%;min-width:650px;font-size:10px}
-th,td{padding:9px 8px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;vertical-align:middle}
-th{background:#f7f2e9;color:var(--navy)}
+table{
+ border-collapse:collapse;
+ width:100%;
+ min-width:650px;
+ font-size:10px;
+}
+th,td{
+ padding:10px 9px;
+ text-align:left;
+ border-bottom:1px solid var(--border);
+ white-space:nowrap;
+ vertical-align:middle;
+}
+th{
+ background:#f4efe5;
+ color:var(--navy);
+ font-weight:800;
+}
+tbody tr:hover{background:#fcfaf6}
 
-.badge{padding:4px 8px;border-radius:20px;background:#fff1d5;color:#845a0c;font-size:10px}
+.badge{
+ display:inline-block;
+ padding:5px 9px;
+ border-radius:20px;
+ background:#fff1d5;
+ color:#845a0c;
+ font-size:10px;
+ font-weight:700;
+}
 .badge.green{background:#e0f3e9;color:#176d43}
 .badge.red{background:#fbe4e7;color:#a51f30}
 
-.notice{padding:10px;background:#f5f0e7;border-radius:7px;font-size:11px;margin:10px 0}
+.notice{
+ padding:12px;
+ background:#f5f0e7;
+ border-left:3px solid var(--gold);
+ border-radius:7px;
+ font-size:11px;
+ margin:10px 0;
+}
 .status{font-size:11px;color:var(--muted)}
 
-.modal{display:none;position:fixed;inset:0;background:#17112699;z-index:20;align-items:center;justify-content:center;padding:14px}
+.modal{
+ display:none;
+ position:fixed;
+ inset:0;
+ background:#171126bb;
+ z-index:20;
+ align-items:center;
+ justify-content:center;
+ padding:14px;
+}
 .modal.show{display:flex}
-.modal-box{background:white;border-radius:12px;width:100%;max-width:680px;max-height:90vh;overflow:auto;padding:20px}
+.modal-box{
+ background:white;
+ border-radius:14px;
+ width:100%;
+ max-width:680px;
+ max-height:90vh;
+ overflow:auto;
+ padding:22px;
+ border-top:4px solid var(--gold);
+}
 .modal-box h3{color:var(--navy);margin-top:0}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+.form-grid{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:0 12px;
+}
 .full{grid-column:1/-1}
 
-#toast{display:none;position:fixed;right:18px;bottom:18px;background:var(--navy);color:white;padding:12px 16px;border-radius:8px;z-index:50;max-width:90%;font-size:12px}
+#toast{
+ display:none;
+ position:fixed;
+ right:18px;
+ bottom:18px;
+ background:var(--navy);
+ color:white;
+ padding:13px 17px;
+ border-radius:9px;
+ border-left:4px solid var(--gold);
+ z-index:50;
+ max-width:90%;
+ font-size:12px;
+ box-shadow:var(--shadow);
+}
 
 @media(max-width:760px){
  .layout{display:block}
- .sidebar{width:100%;display:flex;overflow-x:auto;border:0;border-bottom:1px solid var(--border);padding:7px}
- .navbtn{width:auto;min-width:max-content;padding:9px}
- .main{width:100%;padding:12px}
- .topbar{padding:11px}
+ .sidebar{
+  width:100%;
+  display:flex;
+  overflow-x:auto;
+  border:0;
+  border-bottom:1px solid var(--border);
+  padding:7px;
+ }
+ .navbtn{width:auto;min-width:max-content;padding:10px}
+ .main{width:100%;padding:13px}
+ .topbar{padding:12px}
  .form-grid{grid-template-columns:1fr}
  .full{grid-column:auto}
+ .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .card{padding:13px}
+ .card strong{font-size:23px}
 }
 </style>
 </head>
@@ -146,7 +375,6 @@ th{background:#f7f2e9;color:var(--navy)}
 <main class="main">
 
 <section class="page active" id="page-dashboard">
-
  <h1 class="page-title">Dashboard Overview</h1>
 
  <div class="cards">
@@ -200,7 +428,6 @@ th{background:#f7f2e9;color:var(--navy)}
    </table>
   </div>
  </div>
-
 </section>
 
 <section class="page" id="page-visitors">
@@ -403,8 +630,24 @@ let currentUser=null;
 let visitors=[],checkins=[],volunteers=[],feedback=[],announcementsData=[],gallery=[],contents=[],attendanceData=[];
 let modalAction=null,modalRecord=null;
 
+/* HELPERS */
 const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+
 const fmt=v=>v?new Date(v).toLocaleString():"-";
+
+/* Always display the complete number. Never abbreviate as 1K or 1.2K. */
+function formatCount(value){
+ return Number(value||0).toLocaleString("en-US",{maximumFractionDigits:0});
+}
+
+/* Normalize only for comparison. Original city names remain unchanged in database. */
+function normalizeCity(city){
+ return String(city||"")
+  .normalize("NFKC")
+  .trim()
+  .replace(/\s+/g," ")
+  .toLocaleLowerCase();
+}
 
 function toast(message){
  const el=$("toast");
@@ -477,7 +720,7 @@ function values(form){
  return data;
 }
 
-/* AUTHENTICATION — FIXED LOGIN HANDLER */
+/* AUTHENTICATION */
 $("loginForm").addEventListener("submit",async event=>{
  event.preventDefault();
 
@@ -577,21 +820,41 @@ $("logoutBtn").addEventListener("click",async()=>{
 
 /* DATA LOADERS */
 async function loadVisitors(){
- visitors=await run(db.from("visitors").select("*").order("registration_date",{ascending:false}).limit(10000));
+ visitors=await run(
+  db.from("visitors")
+   .select("*")
+   .order("registration_date",{ascending:false})
+   .limit(10000)
+ );
  renderVisitors();
 }
 
 async function loadCheckins(){
- checkins=await run(db.from("visitor_checkins").select("*").order("scanned_at",{ascending:false}).limit(10000));
+ checkins=await run(
+  db.from("visitor_checkins")
+   .select("*")
+   .order("scanned_at",{ascending:false})
+   .limit(10000)
+ );
 }
 
 async function loadVolunteers(){
- volunteers=await run(db.from("volunteers").select("*").order("created_at",{ascending:false}).limit(10000));
+ volunteers=await run(
+  db.from("volunteers")
+   .select("*")
+   .order("created_at",{ascending:false})
+   .limit(10000)
+ );
  renderVolunteers();
 }
 
 async function loadFeedback(){
- feedback=await run(db.from("feedback_submissions").select("*").order("created_at",{ascending:false}).limit(5000));
+ feedback=await run(
+  db.from("feedback_submissions")
+   .select("*")
+   .order("created_at",{ascending:false})
+   .limit(5000)
+ );
  renderFeedback();
 }
 
@@ -636,15 +899,16 @@ document.querySelectorAll(".navbtn").forEach(button=>{
 
 /* DASHBOARD */
 function renderDashboard(){
- const male=visitors.filter(v=>String(v.gender||"").toLowerCase()==="male").length;
- const female=visitors.filter(v=>String(v.gender||"").toLowerCase()==="female").length;
+ const male=visitors.filter(v=>String(v.gender||"").trim().toLowerCase()==="male").length;
+ const female=visitors.filter(v=>String(v.gender||"").trim().toLowerCase()==="female").length;
 
- const family=visitors.filter(v=>String(v.attendance_type||"").toLowerCase()==="family");
- const individual=visitors.filter(v=>String(v.attendance_type||"").toLowerCase()!=="family");
+ const family=visitors.filter(v=>String(v.attendance_type||"").trim().toLowerCase()==="family");
+ const individual=visitors.filter(v=>String(v.attendance_type||"").trim().toLowerCase()!=="family");
 
  const familyTotal=family.reduce((sum,v)=>sum+(Number(v.family_members)||0),0);
  const attendees=individual.length+familyTotal;
- const put=(id,value)=>$(id).textContent=value;
+
+ const put=(id,value)=>$(id).textContent=formatCount(value);
 
  put("totalVisitors",visitors.length);
  put("maleVisitors",male);
@@ -656,16 +920,22 @@ function renderDashboard(){
  put("totalCheckins",checkins.length);
  put("totalVolunteers",volunteers.length);
 
- put("pendingVolunteers",volunteers.filter(v=>(v.selection_status||"Pending").toLowerCase()==="pending").length);
- put("selectedVolunteers",volunteers.filter(v=>(v.selection_status||"").toLowerCase()==="selected").length);
+ put("pendingVolunteers",volunteers.filter(v=>(v.selection_status||"Pending").trim().toLowerCase()==="pending").length);
+ put("selectedVolunteers",volunteers.filter(v=>(v.selection_status||"").trim().toLowerCase()==="selected").length);
 
  put("totalFeedback",feedback.length);
- put("totalCities",new Set(visitors.map(v=>v.city).filter(Boolean)).size);
+
+ /* Hyderabad / hyderabad / HYDERABAD count as one city.
+    Stored city names are not changed. */
+ const uniqueCities=new Set(
+  visitors.map(v=>normalizeCity(v.city)).filter(Boolean)
+ );
+ put("totalCities",uniqueCities.size);
 
  const operators={};
 
  visitors.forEach(v=>{
-  const key=v.gate_operator||"Not Recorded";
+  const key=String(v.gate_operator||"Not Recorded").trim()||"Not Recorded";
 
   if(!operators[key]){
    operators[key]={total:0,male:0,female:0,individual:0,family:0,attendees:0};
@@ -674,10 +944,10 @@ function renderDashboard(){
   const operator=operators[key];
   operator.total++;
 
-  if(String(v.gender||"").toLowerCase()==="male")operator.male++;
-  if(String(v.gender||"").toLowerCase()==="female")operator.female++;
+  if(String(v.gender||"").trim().toLowerCase()==="male")operator.male++;
+  if(String(v.gender||"").trim().toLowerCase()==="female")operator.female++;
 
-  if(String(v.attendance_type||"").toLowerCase()==="family"){
+  if(String(v.attendance_type||"").trim().toLowerCase()==="family"){
    operator.family++;
    operator.attendees+=Number(v.family_members)||0;
   }else{
@@ -690,24 +960,32 @@ function renderDashboard(){
   .sort((a,b)=>b[1].total-a[1].total)
   .map(([name,o])=>`
    <tr>
-    <td>${esc(name)}</td><td>${o.total}</td><td>${o.male}</td>
-    <td>${o.female}</td><td>${o.individual}</td>
-    <td>${o.family}</td><td>${o.attendees}</td>
+    <td>${esc(name)}</td>
+    <td>${formatCount(o.total)}</td>
+    <td>${formatCount(o.male)}</td>
+    <td>${formatCount(o.female)}</td>
+    <td>${formatCount(o.individual)}</td>
+    <td>${formatCount(o.family)}</td>
+    <td>${formatCount(o.attendees)}</td>
    </tr>
   `).join("");
 
  $("recentVisitors").innerHTML=visitors.slice(0,12).map(v=>`
   <tr>
-   <td>${esc(v.registration_id)}</td><td>${esc(v.full_name)}</td>
-   <td>${esc(v.gender)}</td><td>${esc(v.attendance_type)}</td>
-   <td>${esc(v.family_members)}</td><td>${esc(v.gate_operator)}</td>
+   <td>${esc(v.registration_id)}</td>
+   <td>${esc(v.full_name)}</td>
+   <td>${esc(v.gender)}</td>
+   <td>${esc(v.attendance_type)}</td>
+   <td>${esc(v.family_members)}</td>
+   <td>${esc(v.gate_operator)}</td>
    <td>${esc(fmt(v.registration_date))}</td>
   </tr>
  `).join("");
 
  $("recentVolunteers").innerHTML=volunteers.slice(0,10).map(v=>`
   <tr>
-   <td>${esc(v.full_name)}</td><td>${esc(v.cnic)}</td>
+   <td>${esc(v.full_name)}</td>
+   <td>${esc(v.cnic)}</td>
    <td>${esc(v.mobile_whatsapp)}</td>
    <td>${esc(v.selection_status||"Pending")}</td>
    <td>${esc(fmt(v.created_at||v.submitted_at))}</td>
@@ -719,31 +997,46 @@ function renderDashboard(){
 function renderVisitors(){
  const query=$("visitorSearch").value.toLowerCase();
  const oldCity=$("cityFilter").value;
- const cities=[...new Set(visitors.map(v=>v.city).filter(Boolean))].sort();
+
+ /* Keep one option per normalized city while preserving original display name. */
+ const cityMap=new Map();
+
+ visitors.forEach(v=>{
+  const key=normalizeCity(v.city);
+  if(key&&!cityMap.has(key))cityMap.set(key,String(v.city).trim());
+ });
+
+ const cities=[...cityMap.entries()].sort((a,b)=>a[1].localeCompare(b[1]));
 
  $("cityFilter").innerHTML='<option value="">All Cities</option>'+
-  cities.map(city=>`<option value="${esc(city)}">${esc(city)}</option>`).join("");
+  cities.map(([key,display])=>`<option value="${esc(key)}">${esc(display)}</option>`).join("");
 
- $("cityFilter").value=cities.includes(oldCity)?oldCity:"";
+ $("cityFilter").value=oldCity;
  const city=$("cityFilter").value;
 
  const list=visitors.filter(v=>
   [v.full_name,v.father_name,v.contact_number,v.city,v.registration_id]
-   .join(" ").toLowerCase().includes(query)&&(!city||v.city===city)
+   .join(" ").toLowerCase().includes(query)&&
+  (!city||normalizeCity(v.city)===city)
  );
 
  $("visitorRows").innerHTML=list.map(v=>`
   <tr>
-   <td>${esc(v.registration_id)}</td><td>${esc(v.full_name)}</td>
-   <td>${esc(v.father_name)}</td><td>${esc(v.contact_number)}</td>
-   <td>${esc(v.city)}</td><td>${esc(v.gender)}</td>
-   <td>${esc(v.attendance_type)}</td><td>${esc(v.family_members)}</td>
-   <td>${esc(v.gate_operator)}</td><td>${esc(fmt(v.registration_date))}</td>
+   <td>${esc(v.registration_id)}</td>
+   <td>${esc(v.full_name)}</td>
+   <td>${esc(v.father_name)}</td>
+   <td>${esc(v.contact_number)}</td>
+   <td>${esc(v.city)}</td>
+   <td>${esc(v.gender)}</td>
+   <td>${esc(v.attendance_type)}</td>
+   <td>${esc(v.family_members)}</td>
+   <td>${esc(v.gate_operator)}</td>
+   <td>${esc(fmt(v.registration_date))}</td>
    <td><button class="btn red small" data-del-visitor="${v.id}">Delete</button></td>
   </tr>
  `).join("");
 
- $("visitorCount").textContent=`Showing ${list.length} of ${visitors.length} registrations`;
+ $("visitorCount").textContent=`Showing ${formatCount(list.length)} of ${formatCount(visitors.length)} registrations`;
 }
 
 $("visitorSearch").addEventListener("input",renderVisitors);
@@ -790,19 +1083,22 @@ function renderVolunteers(){
 
  $("volunteerRows").innerHTML=list.map(v=>`
   <tr>
-   <td>${esc(v.volunteer_id)}</td><td>${esc(v.full_name)}</td>
-   <td>${esc(v.cnic)}</td><td>${esc(v.gender)}</td>
+   <td>${esc(v.volunteer_id)}</td>
+   <td>${esc(v.full_name)}</td>
+   <td>${esc(v.cnic)}</td>
+   <td>${esc(v.gender)}</td>
    <td>${esc(v.mobile_whatsapp)}</td>
    <td>${esc(v.university_college)} / ${esc(v.department_group)}</td>
    <td>${esc(v.cnic_review||"Pending")}</td>
    <td><span class="badge">${esc(v.selection_status||"Pending")}</span></td>
-   <td>${esc(v.committee)}</td><td>${esc(v.assigned_role)}</td>
+   <td>${esc(v.committee)}</td>
+   <td>${esc(v.assigned_role)}</td>
    <td><button class="btn small" data-doc="${v.id}">View docs</button></td>
    <td><button class="btn small" data-edit-vol="${v.id}">Manage</button></td>
   </tr>
  `).join("");
 
- $("volunteerCount").textContent=`Showing ${list.length} of ${volunteers.length} applications`;
+ $("volunteerCount").textContent=`Showing ${formatCount(list.length)} of ${formatCount(volunteers.length)} applications`;
 }
 
 $("volunteerSearch").addEventListener("input",renderVolunteers);
@@ -903,7 +1199,8 @@ async function loadAnnouncements(){
 
  $("announcementRows").innerHTML=announcementsData.map(a=>`
   <tr>
-   <td>${esc(a.title)}</td><td>${esc(a.announcement_type)}</td>
+   <td>${esc(a.title)}</td>
+   <td>${esc(a.announcement_type)}</td>
    <td>${a.is_published?"Yes":"No"}</td>
    <td>
     <button class="btn small" data-edit-ann="${a.id}">Edit</button>
@@ -949,8 +1246,10 @@ async function loadContent(){
 
  $("contentRows").innerHTML=contents.map(c=>`
   <tr>
-   <td>${esc(c.content_key)}</td><td>${esc(c.title)}</td>
-   <td>${esc(c.content_type)}</td><td>${c.is_published?"Yes":"No"}</td>
+   <td>${esc(c.content_key)}</td>
+   <td>${esc(c.title)}</td>
+   <td>${esc(c.content_type)}</td>
+   <td>${c.is_published?"Yes":"No"}</td>
    <td>
     <button class="btn small" data-edit-content="${c.id}">Edit</button>
     <button class="btn red small" data-del-content="${c.id}">Delete</button>
@@ -994,8 +1293,10 @@ $("contentRows").addEventListener("click",async event=>{
 function renderFeedback(){
  $("feedbackRows").innerHTML=feedback.map(f=>`
   <tr>
-   <td>${esc(f.full_name)}</td><td>${esc(f.email)}</td>
-   <td>${esc(f.participant_type)}</td><td>${esc(f.rating)}</td>
+   <td>${esc(f.full_name)}</td>
+   <td>${esc(f.email)}</td>
+   <td>${esc(f.participant_type)}</td>
+   <td>${esc(f.rating)}</td>
    <td>${esc(f.liked_most)}</td>
    <td>
     <button class="btn small" data-view-feedback="${f.id}">View</button>
@@ -1033,7 +1334,8 @@ async function loadGallery(){
 
  $("galleryRows").innerHTML=gallery.map(g=>`
   <tr>
-   <td>${esc(g.title)}</td><td>${esc(g.category)}</td>
+   <td>${esc(g.title)}</td>
+   <td>${esc(g.category)}</td>
    <td>${g.is_published?"Yes":"No"}</td>
    <td><button class="btn red small" data-del-gallery="${g.id}">Delete</button></td>
   </tr>
@@ -1127,8 +1429,10 @@ async function loadActivity(){
 
  $("activityRows").innerHTML=rows.map(a=>`
   <tr>
-   <td>${esc(a.action)}</td><td>${esc(a.module)}</td>
-   <td>${esc(a.record_id)}</td><td>${esc(fmt(a.created_at))}</td>
+   <td>${esc(a.action)}</td>
+   <td>${esc(a.module)}</td>
+   <td>${esc(a.record_id)}</td>
+   <td>${esc(fmt(a.created_at))}</td>
   </tr>
  `).join("");
 }
@@ -1298,4 +1602,4 @@ if(!db){
 }
 </script>
 </body>
-      </html>
+</html>
